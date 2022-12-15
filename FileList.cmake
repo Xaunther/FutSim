@@ -1,11 +1,13 @@
 # Core source files
-SET( FUTSIM_CORE_SOURCE )
+SET( FUTSIM_CORE_SOURCE
+	src/IWritable.cpp )
 
 # Core internal headers
 SET( FUTSIM_CORE_INTERNAL_HEADERS )
 
 # Core external headers
-SET( FUTSIM_CORE_EXTERNAL_HEADERS )
+SET( FUTSIM_CORE_EXTERNAL_HEADERS
+	include/IWritable.h )
 
 # Source files
 SET( FUTSIM_SOURCE ${FUTSIM_CORE_SOURCE} )
