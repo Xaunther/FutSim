@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.22)
 find_package(Doxygen)
 
 if(NOT DOXYGEN_FOUND)
-	message(FATAL_ERROR "Doxygen not found. Install it or set turn BUILD_DOCUMENTATION off.")
+	message(FATAL_ERROR "Doxygen not found. Install it or turn BUILD_DOCUMENTATION off.")
 endif()
 
 # Set input and output files
