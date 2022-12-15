@@ -1,0 +1,4 @@
+#pragma once
+
+// Include all external header files
+@INCLUDE_FUTSIM_EXTERNAL_HEADERS@

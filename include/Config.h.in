@@ -1,0 +1,5 @@
+#pragma once
+
+// Version
+#define FUTSIM_VERSION_MAJOR @FutSim_VERSION_MAJOR@
+#define FUTSIM_VERSION_MINOR @FutSim_VERSION_MINOR@

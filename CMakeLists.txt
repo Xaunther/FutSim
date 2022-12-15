@@ -64,6 +64,14 @@ endfunction()
 # List of source files
 include( FileList.cmake )
 
+# Add configuration files
+configure_file( ${FUTSIM_INCLUDE_DIR}/Config.h.in ${FUTSIM_INCLUDE_DIR}/Config.h )
+foreach( HEADER ${FUTSIM_EXTERNAL_HEADERS} )
+	string( REGEX REPLACE "include/" "" HEADER ${HEADER} )
+	set( INCLUDE_FUTSIM_EXTERNAL_HEADERS "${INCLUDE_FUTSIM_EXTERNAL_HEADERS}#include \"${HEADER}\"\n" )
+endforeach()
+configure_file( ${FUTSIM_INCLUDE_DIR}/FutSim.h.in ${FUTSIM_INCLUDE_DIR}/FutSim.h )
+
 # Include directories
 include_directories( ${FUTSIM_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/src )
 

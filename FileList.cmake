@@ -7,7 +7,10 @@ SET( FUTSIM_CORE_INTERNAL_HEADERS )
 
 # Core external headers
 SET( FUTSIM_CORE_EXTERNAL_HEADERS
-	include/IWritable.h )
+	include/Config.h
+	include/FutSim.h
+	include/IWritable.h
+	)
 
 # Source files
 SET( FUTSIM_SOURCE ${FUTSIM_CORE_SOURCE} )
