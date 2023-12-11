@@ -4,7 +4,6 @@ name: Full Build
 
 on:
   push:
-    branches: [ $default_branch ]
   workflow_call:
 
 jobs:
