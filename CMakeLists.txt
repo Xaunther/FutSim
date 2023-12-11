@@ -15,9 +15,9 @@ option(BUILD_TESTS "Rule to build tests" true)
 
 # Names of relevant directories
 set(FUTSIM_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-set(FUTSIM_BINARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bin)
-set(FUTSIM_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-set(FUTSIM_LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+set(FUTSIM_BINARY_DIR ${FUTSIM_DIR}/bin)
+set(FUTSIM_INCLUDE_DIR ${FUTSIM_DIR}/include)
+set(FUTSIM_LIBS_DIR ${FUTSIM_DIR}/lib)
 
 # Default build is "release"
 if(NOT CMAKE_BUILD_TYPE)
@@ -25,10 +25,10 @@ if(NOT CMAKE_BUILD_TYPE)
 endif(NOT CMAKE_BUILD_TYPE)
 
 # Compiler-specific flags
-if(CMAKE_COMPILER_IS_GNUCXX)
-	set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Werror")
-else()
-	set(CMAKE_CXX_FLAGS "-W4 -EHsc")
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+	set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Werror -Os")
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+	set(CMAKE_CXX_FLAGS "-W4 -WX -EHsc -Os")
 endif()
 
 set(CMAKE_CXX_FLAGS_RELEASE "-Os")
@@ -78,7 +78,7 @@ endforeach()
 configure_file(${FUTSIM_INCLUDE_DIR}/FutSim.h.in ${FUTSIM_INCLUDE_DIR}/FutSim.h)
 
 # Include directories
-include_directories(${FUTSIM_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${FUTSIM_INCLUDE_DIR} ${FUTSIM_DIR}/src)
 
 # Link directories
 link_directories(${FUTSIM_LIBS_DIR})
