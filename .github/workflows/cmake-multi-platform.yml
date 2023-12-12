@@ -67,17 +67,7 @@ jobs:
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
     - uses: actions/upload-artifact@v3
-      # Upload generated html folder
+      # Upload build folder
       with:
         name: ${{ matrix.os }}-${{ matrix.c_compiler }}-build-folder
         path: ${{ steps.strings.outputs.build-output-dir }}
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v2
-      with:
-        # Upload doc folder
-        path: ./doc/html
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v3
