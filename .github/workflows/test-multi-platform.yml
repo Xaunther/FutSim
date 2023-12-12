@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ matrix.os }}-${{ matrix.c_compiler }}build-folder
+          name: ${{ matrix.os }}-${{ matrix.c_compiler }}-build-folder
       - name: Test
         working-directory: ${{ github.workspace }}/build
         # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).

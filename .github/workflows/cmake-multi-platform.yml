@@ -4,6 +4,7 @@ name: Full Build
 
 on:
   push:
+    branches: [$default-branch]
   workflow_call:
 
 jobs:
@@ -62,10 +63,10 @@ jobs:
     - uses: actions/upload-artifact@v3
       # Upload build folder
       with:
-        name: ${{ matrix.os }}-${{ matrix.c_compiler }}build-folder
+        name: ${{ matrix.os }}-${{ matrix.c_compiler }}-build-folder
         path: ${{ steps.strings.outputs.build-output-dir }}
     - uses: actions/upload-artifact@v3
       # Upload doc folder
       with:
-        name: ${{ matrix.os }}-${{ matrix.c_compiler }}doc-folder
+        name: ${{ matrix.os }}-${{ matrix.c_compiler }}-doc-folder
         path: ${{ steps.strings.outputs.doc-output-dir }}
