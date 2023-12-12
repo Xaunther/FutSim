@@ -39,6 +39,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - uses: actions/download-artifact@v3
         with:
           name: ${{ matrix.os }}-${{ matrix.c_compiler }}-build-folder
