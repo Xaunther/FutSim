@@ -47,7 +47,7 @@ jobs:
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-        echo "doc-output-dir=${{ github.workspace }}/doc" >> "$GITHUB_OUTPUT"
+        echo "doc-output-dir=${{ github.workspace }}/doc/html" >> "$GITHUB_OUTPUT"
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
@@ -68,7 +68,7 @@ jobs:
         name: ${{ matrix.os }}-${{ matrix.c_compiler }}-build-folder
         path: ${{ steps.strings.outputs.build-output-dir }}
     - uses: actions/upload-artifact@v3
-      # Upload doc folder
+      # Upload generated html folder
       with:
         name: ${{ matrix.os }}-${{ matrix.c_compiler }}-doc-folder
         path: ${{ steps.strings.outputs.doc-output-dir }}
