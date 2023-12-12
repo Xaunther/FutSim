@@ -1,6 +1,6 @@
 # This starter workflow is for a CMake project running on multiple platforms. There is a different starter workflow if you just want a single platform.
 # See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-single-platform.yml
-name: Full Build
+name: Deploy docs
 
 on:
   push:
@@ -15,6 +15,9 @@ permissions:
 
 jobs:
   build:
+    uses: ./.github/workflows/cmake-multi-platform.yml
+  build-docs:
+    needs: build
     runs-on: ${{ matrix.os }}
     strategy:
       # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
@@ -25,21 +28,9 @@ jobs:
       #
       # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
         build_type: [Release]
-        c_compiler: [gcc, cl]
-        include:
-          - os: windows-latest
-            c_compiler: cl
-            cpp_compiler: cl
-          - os: ubuntu-latest
-            c_compiler: gcc
-            cpp_compiler: g++
-        exclude:
-          - os: windows-latest
-            c_compiler: gcc
-          - os: ubuntu-latest
-            c_compiler: cl
+        c_compiler: [gcc]
 
     steps:
     - uses: actions/checkout@v3
@@ -64,21 +55,14 @@ jobs:
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         -S ${{ github.workspace }}
 
-    - name: Build
-      # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
-      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+    - name: Build docs
+      # Build the docs with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
+      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} --target doc_doxygen
 
-    - uses: actions/upload-artifact@v3
-      # Upload generated html folder
-      with:
-        name: ${{ matrix.os }}-${{ matrix.c_compiler }}-build-folder
-        path: ${{ steps.strings.outputs.build-output-dir }}
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
-    - name: Upload artifact
+    - name: Upload pages artifact
       uses: actions/upload-pages-artifact@v2
       with:
-        # Upload doc folder
+        # Upload generated html folder
         path: ./doc/html
     - name: Deploy to GitHub Pages
       id: deployment
