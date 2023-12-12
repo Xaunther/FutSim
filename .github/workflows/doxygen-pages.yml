@@ -6,8 +6,11 @@ on:
     branches: [ $default-branch ]
 
 jobs:
+  build:
+    uses: ./.github/workflows/cmake-multi-platform.yml
   deploy:
     runs-on: ubuntu-latest
+    needs: build
     permissions:
       contents: write
     concurrency:
