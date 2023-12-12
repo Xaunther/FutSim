@@ -7,6 +7,9 @@ project(FutSim VERSION 0.1 DESCRIPTION "A football command-line simulator" HOMEP
 set(PROPERTIES CXX_STANDARD 20)
 set(PROPERTIES CXX_STANDARD_REQUIRED true)
 
+# Find json package
+add_subdirectory(externals/json)
+
 # Option to build documentation
 option(BUILD_DOCUMENTATION "Rule to build documentation" true)
 
@@ -60,7 +63,7 @@ function(add_futsim_module MODULE_NAME MODULE_TYPE SOURCES)
 		ARCHIVE_OUTPUT_DIRECTORY ${FUTSIM_LIBS_DIR}
 		LIBRARY_OUTPUT_DIRECTORY ${FUTSIM_LIBS_DIR}
 		RUNTIME_OUTPUT_DIRECTORY ${FUTSIM_LIBS_DIR})
-	target_link_libraries(${MODULE_NAME}${MODULE_SUFFIX})
+	target_link_libraries(${MODULE_NAME}${MODULE_SUFFIX} PRIVATE nlohmann_json::nlohmann_json)
 	message(STATUS "Added ${MODULE_TYPE} module ${MODULE_NAME}")
 endfunction()
 
