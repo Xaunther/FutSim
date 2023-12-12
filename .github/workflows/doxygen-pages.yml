@@ -22,15 +22,20 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  build: 
+    uses: ./.github/workflows/cmake-multi-platform.yml
   # Single deploy job since we're just deploying
   deploy:
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Download generated docs
+        uses: actions/download-artifact@v3
+        with:
+            name: ubuntu-latest-gcc-doc-folder
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
