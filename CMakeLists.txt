@@ -4,8 +4,8 @@ cmake_minimum_required(VERSION 3.22)
 project(FutSim VERSION 0.1 DESCRIPTION "A football command-line simulator" HOMEPAGE_URL "https://github.com/Xaunther/FutSim" LANGUAGES CXX)
 
 # C++ 20 required
-set(PROPERTIES CXX_STANDARD 20)
-set(PROPERTIES CXX_STANDARD_REQUIRED true)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
 
 # Option to build documentation
 option(BUILD_DOCUMENTATION "Rule to build documentation" true)
