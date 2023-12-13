@@ -25,6 +25,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 # Football external headers
 SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CPlayerSkills.h
+	include/football/CPlayerSkillsTypes.h
 )
 
 # Source files
