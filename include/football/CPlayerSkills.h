@@ -4,6 +4,8 @@
 
 #include "football/CPlayerSkillsTypes.h"
 
+#include <string_view>
+
 namespace futsim
 {
 
@@ -39,6 +41,24 @@ public:
 		const xp_type& aDFExperience,
 		const xp_type& aMFExperience,
 		const xp_type& aFWExperience );
+
+public:
+	//! JSON key for the \copybrief mGKSkill
+	static inline constexpr std::string_view JSON_GK_SKILL = "GK skill";
+	//! JSON key for the \copybrief mDFSkill
+	static inline constexpr std::string_view JSON_DF_SKILL = "DF skill";
+	//! JSON key for the \copybrief mMFSkill
+	static inline constexpr std::string_view JSON_MF_SKILL = "MF skill";
+	//! JSON key for the \copybrief mFWSkill
+	static inline constexpr std::string_view JSON_FW_SKILL = "FW skill";
+	//! JSON key for the \copybrief mGKExperience
+	static inline constexpr std::string_view JSON_GK_XP = "GK experience";
+	//! JSON key for the \copybrief mDFExperience
+	static inline constexpr std::string_view JSON_DF_XP = "DF experience";
+	//! JSON key for the \copybrief mMFExperience
+	static inline constexpr std::string_view JSON_MF_XP = "MF experience";
+	//! JSON key for the \copybrief mFWExperience
+	static inline constexpr std::string_view JSON_FW_XP = "FW experience";
 
 private:
 	//! Goalkeeping skill value.
