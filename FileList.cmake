@@ -1,6 +1,6 @@
 # Core source files
 SET(FUTSIM_CORE_SOURCE
-	src/IWritable.cpp)
+	src/IJsonable.cpp)
 
 # Core internal headers
 SET(FUTSIM_CORE_INTERNAL_HEADERS)
@@ -9,7 +9,7 @@ SET(FUTSIM_CORE_INTERNAL_HEADERS)
 SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/Config.h
 	include/FutSim.h
-	include/IWritable.h
+	include/IJsonable.h
 )
 
 # Source files
