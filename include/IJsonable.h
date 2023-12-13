@@ -1,9 +1,9 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 namespace futsim
 {
-
-namespace nlohmann { class json; }
 
 /**
  * @brief Interface for classes that can be converted into JSON.
