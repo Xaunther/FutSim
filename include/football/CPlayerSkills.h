@@ -42,6 +42,12 @@ public:
 		const xp_type& aMFExperience,
 		const xp_type& aFWExperience );
 
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CPlayerSkills( const json& aJSON );
+
 public:
 	//! JSON key for the \copybrief mGKSkill
 	static inline constexpr std::string_view JSON_GK_SKILL = "GK skill";

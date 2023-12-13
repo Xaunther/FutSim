@@ -49,6 +49,26 @@ catch( const std::exception& aException )
 	throw std::invalid_argument( ss.str() );
 }
 
+CPlayerSkills::CPlayerSkills( const json& aJSON ) try :
+	CPlayerSkills(
+		aJSON.at( JSON_GK_SKILL ),
+		aJSON.at( JSON_DF_SKILL ),
+		aJSON.at( JSON_MF_SKILL ),
+		aJSON.at( JSON_FW_SKILL ),
+		aJSON.at( JSON_GK_XP ),
+		aJSON.at( JSON_DF_XP ),
+		aJSON.at( JSON_MF_XP ),
+		aJSON.at( JSON_FW_XP )
+	)
+{
+}
+catch( const std::exception& aException )
+{
+	std::stringstream ss;
+	ss << aException.what() << "\n" << "Error creating the player skills from JSON.";
+	throw std::invalid_argument( ss.str() );
+}
+
 namespace
 {
 
