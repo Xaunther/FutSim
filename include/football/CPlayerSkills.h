@@ -18,6 +18,29 @@ class CPlayerSkills : public IJsonable
 	using skill_type = CPlayerSkillsTypes::skill_type;
 	using xp_type = CPlayerSkillsTypes::xp_type;
 
+public:
+	/**
+	 * @brief Member constructor.
+	 * @param aGKSkill \ref mGKSkill
+	 * @param aDFSkill \ref mDFSkill
+	 * @param aMFSkill \ref mMFSkill
+	 * @param aFWSkill \ref mFWSkill
+	 * @param aGKExperience \ref mGKExperience
+	 * @param aDFExperience \ref mDFExperience
+	 * @param aMFExperience \ref mMFExperience
+	 * @param aFWExperience \ref mFWExperience
+	*/
+	explicit CPlayerSkills(
+		const skill_type& aGKSkill,
+		const skill_type& aDFSkill,
+		const skill_type& aMFSkill,
+		const skill_type& aFWSkill,
+		const xp_type& aGKExperience,
+		const xp_type& aDFExperience,
+		const xp_type& aMFExperience,
+		const xp_type& aFWExperience );
+
+private:
 	//! Goalkeeping skill value.
 	skill_type mGKSkill;
 	//! Defensive skill value.
