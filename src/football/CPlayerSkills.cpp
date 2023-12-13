@@ -69,6 +69,46 @@ catch( const std::exception& aException )
 	throw std::invalid_argument( ss.str() );
 }
 
+const skill_type& CPlayerSkills::GetGKSkill() const noexcept
+{
+	return mGKSkill;
+}
+
+const skill_type& CPlayerSkills::GetDFSkill() const noexcept
+{
+	return mDFSkill;
+}
+
+const skill_type& CPlayerSkills::GetMFSkill() const noexcept
+{
+	return mMFSkill;
+}
+
+const skill_type& CPlayerSkills::GetFWSkill() const noexcept
+{
+	return mFWSkill;
+}
+
+const skill_type& CPlayerSkills::GetGKExperience() const noexcept
+{
+	return mGKExperience;
+}
+
+const skill_type& CPlayerSkills::GetDFExperience() const noexcept
+{
+	return mDFExperience;
+}
+
+const skill_type& CPlayerSkills::GetMFExperience() const noexcept
+{
+	return mMFExperience;
+}
+
+const skill_type& CPlayerSkills::GetFWExperience() const noexcept
+{
+	return mFWExperience;
+}
+
 namespace
 {
 

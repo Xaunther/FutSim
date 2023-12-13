@@ -48,7 +48,30 @@ public:
 	*/
 	explicit CPlayerSkills( const json& aJSON );
 
-public:
+	//! Retrieves the \copybrief mGKSkill
+	const skill_type& GetGKSkill() const noexcept;
+
+	//! Retrieves the \copybrief mDFSkill
+	const skill_type& GetDFSkill() const noexcept;
+
+	//! Retrieves the \copybrief mMFSkill
+	const skill_type& GetMFSkill() const noexcept;
+
+	//! Retrieves the \copybrief mFWSkill
+	const skill_type& GetFWSkill() const noexcept;
+
+	//!Retrieves the \copybrief mGKExperience
+	const skill_type& GetGKExperience() const noexcept;
+
+	//!Retrieves the \copybrief mDFExperience
+	const skill_type& GetDFExperience() const noexcept;
+
+	//!Retrieves the \copybrief mMFExperience
+	const skill_type& GetMFExperience() const noexcept;
+
+	//!Retrieves the \copybrief mFWExperience
+	const skill_type& GetFWExperience() const noexcept;
+
 	//! JSON key for the \copybrief mGKSkill
 	static inline constexpr std::string_view JSON_GK_SKILL = "GK skill";
 	//! JSON key for the \copybrief mDFSkill
