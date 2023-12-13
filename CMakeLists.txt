@@ -7,9 +7,6 @@ project(FutSim VERSION 0.1 DESCRIPTION "A football command-line simulator" HOMEP
 set(PROPERTIES CXX_STANDARD 20)
 set(PROPERTIES CXX_STANDARD_REQUIRED true)
 
-# Find json package
-add_subdirectory(externals/json)
-
 # Option to build documentation
 option(BUILD_DOCUMENTATION "Rule to build documentation" true)
 
@@ -35,6 +32,10 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 endif()
 
 set(CMAKE_CXX_FLAGS_RELEASE "-Os")
+
+# Find json package
+set(JSON_DIR ${FUTSIM_DIR}/externals/json)
+add_subdirectory(${JSON_DIR})
 
 # Function to add a new object module
 function(add_futsim_object_module MODULE_NAME SOURCES)
@@ -81,7 +82,7 @@ endforeach()
 configure_file(${FUTSIM_INCLUDE_DIR}/FutSim.h.in ${FUTSIM_INCLUDE_DIR}/FutSim.h)
 
 # Include directories
-include_directories(${FUTSIM_INCLUDE_DIR} ${FUTSIM_DIR}/src)
+include_directories(${FUTSIM_INCLUDE_DIR} ${FUTSIM_DIR}/src ${JSON_DIR}/include)
 
 # Link directories
 link_directories(${FUTSIM_LIBS_DIR})
