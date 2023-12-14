@@ -43,11 +43,16 @@ private:
 /**
  * @brief Macro to write the main function.
 */
-#define INITIALIZE_MAIN( CLASS )		\
-	int main()							\
-	{									\
-		CLASS{}.Run();					\
-		return 0;						\
+#define INITIALIZE_MAIN( CLASS )				\
+	int main() try								\
+	{											\
+		CLASS{}.Run();							\
+		return 0;								\
+	}											\
+	catch(const std::exception& aException)		\
+	{											\
+		std::cerr << aException.what() << "\n";	\
+		throw;									\
 	}
 
 /**

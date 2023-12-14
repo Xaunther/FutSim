@@ -20,9 +20,12 @@ void ITest::CheckException( const std::function<void()>& aFunction, const std::s
 		{
 			std::stringstream ss;
 			ss << "Expected error string did not match obtained error string:\n"
-				<< " - Expected: \"" << aExpectedErrorMsg << "\"\n"
-				<< " - Obtained: \"" << e.what() << "\"\n";
-			std::cerr << ss.str();
+				<< "Expected\n"
+				<< "-----------------------------------------\n"
+				<< aExpectedErrorMsg << "\n"
+				<< "Obtained\n"
+				<< "-----------------------------------------\n"
+				<< e.what() << "\n";
 			throw std::invalid_argument{ ss.str() };
 		}
 		else
@@ -30,7 +33,6 @@ void ITest::CheckException( const std::function<void()>& aFunction, const std::s
 	}
 	std::stringstream ss;
 	ss << "No exception was thrown when the following exception message was expected:\n"
-		<< "  \"" << aExpectedErrorMsg << "\"";
-	std::cerr << ss.str() << "\n";
+		<< aExpectedErrorMsg << "\n";
 	throw std::invalid_argument{ ss.str() };
 }
