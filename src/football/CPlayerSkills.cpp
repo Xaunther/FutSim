@@ -69,6 +69,22 @@ catch( const std::exception& aException )
 	throw std::invalid_argument( ss.str() );
 }
 
+CPlayerSkills::json CPlayerSkills::JSON() const noexcept
+{
+	json result;
+
+	result[ JSON_GK_SKILL ] = mGKSkill;
+	result[ JSON_DF_SKILL ] = mDFSkill;
+	result[ JSON_MF_SKILL ] = mMFSkill;
+	result[ JSON_FW_SKILL ] = mFWSkill;
+	result[ JSON_GK_XP ] = mGKExperience;
+	result[ JSON_DF_XP ] = mDFExperience;
+	result[ JSON_MF_XP ] = mMFExperience;
+	result[ JSON_FW_XP ] = mFWExperience;
+
+	return result;
+}
+
 const skill_type& CPlayerSkills::GetGKSkill() const noexcept
 {
 	return mGKSkill;

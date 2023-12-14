@@ -48,6 +48,13 @@ public:
 	*/
 	explicit CPlayerSkills( const json& aJSON );
 
+private:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	json JSON() const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mGKSkill
 	const skill_type& GetGKSkill() const noexcept;
 
