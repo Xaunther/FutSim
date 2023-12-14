@@ -1,6 +1,36 @@
 #include "ITest.h"
 
+#include <iostream>
+#include <sstream>
+
 void ITest::Run() const
 {
 	this->DoRun();
+}
+
+void ITest::CheckException( const std::function<void()>& aFunction, const std::string_view aExpectedErrorMsg )
+{
+	try
+	{
+		aFunction();
+	}
+	catch( const std::exception& e )
+	{
+		if( std::string_view{ e.what() }.find( aExpectedErrorMsg ) == std::string::npos )
+		{
+			std::stringstream ss;
+			ss << "Expected error string did not match obtained error string:\n"
+				<< " - Expected: \"" << aExpectedErrorMsg << "\"\n"
+				<< " - Obtained: \"" << e.what() << "\"\n";
+			std::cerr << ss.str();
+			throw std::invalid_argument{ ss.str() };
+		}
+		else
+			return;
+	}
+	std::stringstream ss;
+	ss << "No exception was thrown when the following exception message was expected:\n"
+		<< "  \"" << aExpectedErrorMsg << "\"";
+	std::cerr << ss.str() << "\n";
+	throw std::invalid_argument{ ss.str() };
 }
