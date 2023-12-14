@@ -944,7 +944,6 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = @FUTSIM_INCLUDE_DIR@ \
-                         @FUTSIM_DIR@/tests \
                          @FUTSIM_DIR@/README.md
 
 # This tag can be used to specify the character encoding of the source files
