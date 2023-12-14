@@ -107,13 +107,13 @@ foreach(FUTSIM_MODULE ${FUTSIM_MODULES})
 endforeach(FUTSIM_MODULE)
 
 # Build documentation
-include(CTest)
-
 if(BUILD_DOCUMENTATION)
 	add_subdirectory(doc)
 endif()
 
 # Build tests
 if(BUILD_TESTS)
+	include(CTest)
+	enable_testing()
 	add_subdirectory(tests)
 endif()
