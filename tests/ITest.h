@@ -1,5 +1,8 @@
 #pragma once
 
+#include <functional>
+#include <string_view>
+
 /**
  * @brief Interface class for all tests.
 */
@@ -15,6 +18,11 @@ public:
 	 * @brief Public interface to run the test.
 	*/
 	void Run() const;
+
+	/**
+	 * @brief Exception checker.
+	*/
+	static void CheckException( const std::function<void()>& aFunction, const std::string_view aExpectedErrorMsg );
 
 private:
 	/**
