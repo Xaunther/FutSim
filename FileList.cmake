@@ -8,6 +8,7 @@ SET(FUTSIM_CORE_INTERNAL_HEADERS)
 # Core external headers
 SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/Config.h
+	include/ExceptionUtils.h
 	include/FutSim.h
 	include/IJsonable.h
 )
