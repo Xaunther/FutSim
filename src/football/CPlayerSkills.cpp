@@ -1,6 +1,6 @@
 #include "football/CPlayerSkills.h"
 
-#include <exception>
+#include "ExceptionUtils.h"
 #include <iostream>
 
 namespace futsim
@@ -42,12 +42,7 @@ CPlayerSkills::CPlayerSkills(
 	mFWExperience( aFWExperience )
 {
 }
-catch( const std::exception& aException )
-{
-	std::stringstream ss;
-	ss << aException.what() << "\n" << "Error creating the player skills.";
-	throw std::invalid_argument( ss.str() );
-}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player skills." )
 
 CPlayerSkills::CPlayerSkills( const json& aJSON ) try :
 	CPlayerSkills(
@@ -62,12 +57,7 @@ CPlayerSkills::CPlayerSkills( const json& aJSON ) try :
 	)
 {
 }
-catch( const std::exception& aException )
-{
-	std::stringstream ss;
-	ss << aException.what() << "\n" << "Error creating the player skills from JSON.";
-	throw std::invalid_argument( ss.str() );
-}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player skills from JSON." )
 
 CPlayerSkills::json CPlayerSkills::JSON() const noexcept
 {
@@ -134,12 +124,7 @@ const skill_type& CheckSkill( const skill_type& aSkill ) try
 		throw std::domain_error( "The skill value must be greater than 0." );
 	return aSkill;
 }
-catch( const std::exception& aException )
-{
-	std::stringstream ss;
-	ss << aException.what() << "\n" << "Invalid skill value.";
-	throw std::invalid_argument( ss.str() );
-}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Invalid skill value." )
 
 } // anonymous namespace
 
