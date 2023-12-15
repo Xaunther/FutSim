@@ -26,18 +26,35 @@ public:
 
 private:
 	/**
-	 * @brief Private implementation to run the test.
+	 * @brief Results checker.
 	*/
-	virtual void DoRun() const = 0;
+	static void CheckResults( const std::vector<std::string>& aObtained, const std::vector<std::string>& aExpected );
+
+	/**
+	 * @brief Private implementation to test exceptions.
+	*/
+	virtual void TestExceptions() const = 0;
+
+	/**
+	 * @brief Private implementation to get the obtained results from the test.
+	*/
+	virtual std::vector<std::string> ObtainedResults() const noexcept = 0;
+
+	/**
+	 * @brief Private implementation to get the expected results from the test.
+	*/
+	virtual constexpr std::vector<std::string> ExpectedResults() const noexcept = 0;
 };
 
 /**
  * @brief Macro to initialize derived test class from ITest.
 */
-#define INITIALIZE_CLASS( CLASS )		\
-	class CLASS : public ITest			\
-	{									\
-		void DoRun() const override; 	\
+#define INITIALIZE_CLASS( CLASS )												\
+	class CLASS : public ITest													\
+	{																			\
+		void TestExceptions() const override; 									\
+		std::vector<std::string> ObtainedResults() const noexcept override; 	\
+		std::vector<std::string> ExpectedResults() const noexcept override; 	\
 	};
 
 /**
