@@ -39,8 +39,8 @@ add_subdirectory(${JSON_DIR})
 
 # Function to add a new object module
 function(add_futsim_object_module MODULE_NAME SOURCES)
-	add_Library(${MODULE_NAME}Objects OBJECT ${SOURCES} ${ARGN})
-	set_target_properties(${MODULE_NAME}Objects PROPERTIES
+	add_Library(${MODULE_NAME}_Objects OBJECT ${SOURCES} ${ARGN})
+	set_target_properties(${MODULE_NAME}_Objects PROPERTIES
 		POSITION_INDEPENDENT_CODE true
 		ARCHIVE_OUTPUT_DIRECTORY ${FUTSIM_LIBS_DIR}
 		LIBRARY_OUTPUT_DIRECTORY ${FUTSIM_LIBS_DIR}
@@ -58,13 +58,13 @@ function(add_futsim_module MODULE_NAME MODULE_TYPE SOURCES)
 		message(FATAL_ERROR "Module type ${MODULE_TYPE} not recognized. Only 'STATIC' and 'SHARED' are allowed.")
 	endif()
 
-	add_Library(${MODULE_NAME}${MODULE_SUFFIX} ${MODULE_TYPE} ${SOURCES} ${ARGN})
-	set_target_properties(${MODULE_NAME}${MODULE_SUFFIX} PROPERTIES
+	add_Library(${MODULE_NAME}_${MODULE_SUFFIX} ${MODULE_TYPE} ${SOURCES} ${ARGN})
+	set_target_properties(${MODULE_NAME}_${MODULE_SUFFIX} PROPERTIES
 		POSITION_INDEPENDENT_CODE true
 		ARCHIVE_OUTPUT_DIRECTORY ${FUTSIM_LIBS_DIR}
 		LIBRARY_OUTPUT_DIRECTORY ${FUTSIM_LIBS_DIR}
 		RUNTIME_OUTPUT_DIRECTORY ${FUTSIM_LIBS_DIR})
-	target_link_libraries(${MODULE_NAME}${MODULE_SUFFIX} PRIVATE nlohmann_json::nlohmann_json)
+	target_link_libraries(${MODULE_NAME}_${MODULE_SUFFIX} PRIVATE nlohmann_json::nlohmann_json)
 	message(STATUS "Added ${MODULE_TYPE} module ${MODULE_NAME}")
 endfunction()
 
@@ -87,26 +87,36 @@ include_directories(${FUTSIM_INCLUDE_DIR} ${FUTSIM_DIR}/src ${JSON_DIR}/include)
 # Link directories
 link_directories(${FUTSIM_LIBS_DIR})
 
-# Build FutSim
-add_futsim_object_module(${PROJECT_NAME}Core "${FUTSIM_CORE_SOURCE}")
-set(FUTSIM_CORE_OBJECTS $<TARGET_OBJECTS:${PROJECT_NAME}CoreObjects>)
-set(FUTSIM_OBJECTS ${FUTSIM_CORE_OBJECTS})
+# Build FutSim modules
+set(FUTSIM_MODULES
+	CORE
+	FOOTBALL
+)
 
-# Final build step. All objects must have been appended to FUTSIM_OBJECTS.
-add_futsim_module(${PROJECT_NAME}Core STATIC ${FUTSIM_OBJECTS})
+foreach(FUTSIM_MODULE ${FUTSIM_MODULES})
+	add_futsim_object_module(${PROJECT_NAME}_${FUTSIM_MODULE} "${FUTSIM_${FUTSIM_MODULE}_SOURCE}")
+	set(FUTSIM_${FUTSIM_MODULE}_OBJECTS $<TARGET_OBJECTS:${PROJECT_NAME}_${FUTSIM_MODULE}_Objects>)
 
-if(LIB_FUTSIM_SHARED)
-	add_futsim_module(${PROJECT_NAME}Core SHARED ${FUTSIM_OBJECTS})
-endif()
+	if(NOT FUTSIM_MODULE STREQUAL CORE)
+		list(APPEND FUTSIM_${FUTSIM_MODULE}_OBJECTS ${FUTSIM_CORE_OBJECTS})
+	endif()
+
+	# Final build step. All objects must have been appended to FUTSIM_OBJECTS.
+	add_futsim_module(${PROJECT_NAME}_${FUTSIM_MODULE} STATIC ${FUTSIM_${FUTSIM_MODULE}_OBJECTS})
+
+	if(LIB_FUTSIM_SHARED)
+		add_futsim_module(${PROJECT_NAME}_${FUTSIM_MODULE} SHARED ${FUTSIM_${FUTSIM_MODULE}_OBJECTS})
+	endif()
+endforeach(FUTSIM_MODULE)
 
 # Build documentation
-include(CTest)
-
 if(BUILD_DOCUMENTATION)
 	add_subdirectory(doc)
 endif()
 
 # Build tests
 if(BUILD_TESTS)
+	include(CTest)
+	enable_testing()
 	add_subdirectory(tests)
 endif()
