@@ -49,10 +49,12 @@ private:
 /**
  * @brief Macro to initialize derived test class from ITest.
 */
-#define INITIALIZE_CLASS( CLASS )		\
-	class CLASS : public ITest			\
-	{									\
-		void DoRun() const override; 	\
+#define INITIALIZE_CLASS( CLASS )												\
+	class CLASS : public ITest													\
+	{																			\
+		void TestExceptions() const override; 									\
+		std::vector<std::string> ObtainedResults() const noexcept override; 	\
+		std::vector<std::string> ExpectedResults() const noexcept override; 	\
 	};
 
 /**
