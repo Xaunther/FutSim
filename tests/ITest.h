@@ -26,9 +26,9 @@ public:
 
 private:
 	/**
-	 * @brief Private implementation to run the test.
+	 * @brief Private implementation to test exceptions.
 	*/
-	virtual void DoRun() const = 0;
+	virtual void TestExceptions() const = 0;
 };
 
 /**

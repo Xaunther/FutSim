@@ -5,7 +5,7 @@
 
 void ITest::Run() const
 {
-	this->DoRun();
+	this->TestExceptions();
 }
 
 void ITest::CheckException( const std::function<void()>& aFunction, const std::string_view aExpectedErrorMsg )
