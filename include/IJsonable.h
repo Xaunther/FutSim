@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "IJsonableTypes.h"
 
 namespace futsim
 {
@@ -10,8 +10,7 @@ namespace futsim
  */
 class IJsonable
 {
-protected:
-	using json = nlohmann::orderded_json;
+	using json = IJsonableTypes::json;
 
 public:
 	/**

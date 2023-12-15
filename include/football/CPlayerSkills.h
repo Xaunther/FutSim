@@ -17,6 +17,7 @@ namespace football
 */
 class CPlayerSkills : public IJsonable
 {
+	using json = IJsonableTypes::json;
 	using skill_type = CPlayerSkillsTypes::skill_type;
 	using xp_type = CPlayerSkillsTypes::xp_type;
 
