@@ -34,6 +34,11 @@ private:
 	 * @brief Private implementation to get the obtained results from the test.
 	*/
 	virtual std::vector<std::string> ObtainedResults() const noexcept = 0;
+
+	/**
+	 * @brief Private implementation to get the expected results from the test.
+	*/
+	virtual constexpr std::vector<std::string> ExpectedResults() const noexcept = 0;
 };
 
 /**
