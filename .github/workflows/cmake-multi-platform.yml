@@ -1,11 +1,16 @@
 # This starter workflow is for a CMake project running on multiple platforms. There is a different starter workflow if you just want a single platform.
 # See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-single-platform.yml
-name: Full Build
+name: Full Build and Deploy docs
 
 on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
@@ -60,3 +65,12 @@ jobs:
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+
+    - name: Upload pages artifact
+      uses: actions/upload-pages-artifact@v2
+      with:
+        # Upload generated html folder
+        path: ./doc/html
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v3
