@@ -26,6 +26,11 @@ public:
 
 private:
 	/**
+	 * @brief Results checker.
+	*/
+	static void CheckResults( const std::vector<std::string>& aObtained, const std::vector<std::string>& aExpected );
+
+	/**
 	 * @brief Private implementation to test exceptions.
 	*/
 	virtual void TestExceptions() const = 0;

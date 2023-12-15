@@ -36,3 +36,19 @@ void ITest::CheckException( const std::function<void()>& aFunction, const std::s
 		<< aExpectedErrorMsg << "\n";
 	throw std::invalid_argument{ ss.str() };
 }
+
+void ITest::CheckResults( const std::vector<std::string>& aObtained, const std::vector<std::string>& aExpected )
+{
+	if( aObtained != aExpected )
+	{
+		std::stringstream ss;
+		ss << "The obtained results do not match the expected results.\n"
+			<< "Expected\n"
+			<< "-----------------------------------------\n";
+		std::ranges::for_each( aExpected, [ &ss ]( const auto& aResult ) { ss << aResult << "\n"; } );
+		ss << "Obtained\n"
+			<< "-----------------------------------------\n";
+		std::ranges::for_each( aObtained, [ &ss ]( const auto& aResult ) { ss << aResult << "\n"; } );
+		throw std::invalid_argument{ ss.str() };
+	}
+}
