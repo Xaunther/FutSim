@@ -11,7 +11,7 @@ namespace futsim
 class IJsonable
 {
 protected:
-	using json = nlohmann::json;
+	using json = nlohmann::orderded_json;
 
 public:
 	/**
