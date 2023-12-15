@@ -219,6 +219,7 @@ std::vector<std::string> TPlayerSkills::ExpectedResults() const noexcept
 		"	}\n"
 		"}"
 	};
+	result.reserve( 2 * result.size() );
 	result.insert( result.cend(), result.cbegin(), result.cend() );
 	return result;
 }
