@@ -29,6 +29,11 @@ private:
 	 * @brief Private implementation to test exceptions.
 	*/
 	virtual void TestExceptions() const = 0;
+
+	/**
+	 * @brief Private implementation to get the obtained results from the test.
+	*/
+	virtual std::vector<std::string> ObtainedResults() const noexcept = 0;
 };
 
 /**
