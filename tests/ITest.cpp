@@ -1,11 +1,14 @@
 #include "ITest.h"
 
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 
 void ITest::Run() const
 {
 	this->TestExceptions();
+
+	CheckResults( this->ObtainedResults(), this->ExpectedResults() );
 }
 
 void ITest::CheckException( const std::function<void()>& aFunction, const std::string_view aExpectedErrorMsg )
