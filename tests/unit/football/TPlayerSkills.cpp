@@ -167,7 +167,7 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 		result.push_back( std::string{ CPlayerSkills::JSON_DF_XP } + ": " + std::to_string( playerSkills.GetDFExperience() ) );
 		result.push_back( std::string{ CPlayerSkills::JSON_MF_XP } + ": " + std::to_string( playerSkills.GetMFExperience() ) );
 		result.push_back( std::string{ CPlayerSkills::JSON_FW_XP } + ": " + std::to_string( playerSkills.GetFWExperience() ) );
-		json outputJSON;
+		futsim::IJsonableTypes::json outputJSON;
 		outputJSON[ CPlayerSkills::JSON_NAME ] = playerSkills.ToJSON();
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}
@@ -188,14 +188,14 @@ std::vector<std::string> TPlayerSkills::ExpectedResults() const noexcept
 		"FW experience: 0",
 		"{\n"
 		"	\"Player skills\": {\n"
-		"		\"DF experience\": 0,\n"
+		"		\"GK skill\": 1,\n"
 		"		\"DF skill\": 1,\n"
-		"		\"FW experience\": 0,\n"
+		"		\"MF skill\": 1,\n"
 		"		\"FW skill\": 1,\n"
 		"		\"GK experience\": 0,\n"
-		"		\"GK skill\": 1,\n"
+		"		\"DF experience\": 0,\n"
 		"		\"MF experience\": 0,\n"
-		"		\"MF skill\": 1\n"
+		"		\"FW experience\": 0\n"
 		"	}\n"
 		"}",
 		"GK skill: 99",
@@ -208,14 +208,14 @@ std::vector<std::string> TPlayerSkills::ExpectedResults() const noexcept
 		"FW experience: 0",
 		"{\n"
 		"	\"Player skills\": {\n"
-		"		\"DF experience\": 20,\n"
+		"		\"GK skill\": 99,\n"
 		"		\"DF skill\": 10,\n"
-		"		\"FW experience\": 0,\n"
+		"		\"MF skill\": 50,\n"
 		"		\"FW skill\": 10,\n"
 		"		\"GK experience\": 60,\n"
-		"		\"GK skill\": 99,\n"
+		"		\"DF experience\": 20,\n"
 		"		\"MF experience\": 45,\n"
-		"		\"MF skill\": 50\n"
+		"		\"FW experience\": 0\n"
 		"	}\n"
 		"}"
 	};

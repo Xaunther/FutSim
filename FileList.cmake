@@ -20,6 +20,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/ExceptionUtils.h
 	include/FutSim.h
 	include/IJsonable.h
+	include/IJsonableTypes.h
 )
 
 # Football external headers
