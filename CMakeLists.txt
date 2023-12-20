@@ -68,11 +68,43 @@ function(add_futsim_module MODULE_NAME MODULE_TYPE SOURCES)
 	message(STATUS "Added ${MODULE_TYPE} module ${MODULE_NAME}")
 endfunction()
 
+# List of country codes
+include(CountryList.cmake)
+
+# Create Nationality enumeration
+set(FUTSIM_NATIONALITY_ENUM "{\n")
+
+foreach(COUNTRY ${FUTSIM_COUNTRIES})
+	set(FUTSIM_NATIONALITY_ENUM "${FUTSIM_NATIONALITY_ENUM}\t${COUNTRY},\n")
+endforeach(COUNTRY)
+
+set(FUTSIM_NATIONALITY_ENUM "${FUTSIM_NATIONALITY_ENUM}}")
+
+# Create Nationality to string conversion map
+set(FUTSIM_TO_STRING_CONVERSION_MAP "{\n")
+
+foreach(COUNTRY ${FUTSIM_COUNTRIES})
+	set(FUTSIM_TO_STRING_CONVERSION_MAP "${FUTSIM_TO_STRING_CONVERSION_MAP}\t{E_NATIONALITY::${COUNTRY},\"${COUNTRY}\"},\n")
+endforeach(COUNTRY)
+
+set(FUTSIM_TO_STRING_CONVERSION_MAP "${FUTSIM_TO_STRING_CONVERSION_MAP}}")
+
+# Create string to nationality conversion map
+set(FUTSIM_TO_NATIONALITY_CONVERSION_MAP "{\n")
+
+foreach(COUNTRY ${FUTSIM_COUNTRIES})
+	set(FUTSIM_TO_NATIONALITY_CONVERSION_MAP "${FUTSIM_TO_NATIONALITY_CONVERSION_MAP}\t{\"${COUNTRY}\",E_NATIONALITY::${COUNTRY}},\n")
+endforeach(COUNTRY)
+
+set(FUTSIM_TO_NATIONALITY_CONVERSION_MAP "${FUTSIM_TO_NATIONALITY_CONVERSION_MAP}}")
+
 # List of source files
 include(FileList.cmake)
 
 # Add configuration files
 configure_file(${FUTSIM_INCLUDE_DIR}/Config.h.in ${FUTSIM_INCLUDE_DIR}/Config.h)
+configure_file(${FUTSIM_INCLUDE_DIR}/ENationality.h.in ${FUTSIM_INCLUDE_DIR}/ENationality.h)
+configure_file(${FUTSIM_DIR}/src/NationalityConversionMaps.h.in ${FUTSIM_DIR}/src/NationalityConversionMaps.h)
 
 foreach(HEADER ${FUTSIM_EXTERNAL_HEADERS})
 	string(REGEX REPLACE "include/" "" HEADER ${HEADER})
