@@ -1,7 +1,7 @@
 # Core source files
 SET(FUTSIM_CORE_SOURCE
 	src/IJsonable.cpp
-	src/ENationality.cpp
+	src/NationalityUtils.cpp
 )
 
 # Football source files
@@ -10,7 +10,9 @@ SET(FUTSIM_FOOTBALL_SOURCE
 )
 
 # Core internal headers
-SET(FUTSIM_CORE_INTERNAL_HEADERS)
+SET(FUTSIM_CORE_INTERNAL_HEADERS
+	src/NationalityConversionMaps.h
+)
 
 # Football internal headers
 SET(FUTSIM_FOOTBALL_INTERNAL_HEADERS)
@@ -23,6 +25,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/FutSim.h
 	include/IJsonable.h
 	include/IJsonableTypes.h
+	include/NationalityUtils.h
 )
 
 # Football external headers

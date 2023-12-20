@@ -1,24 +1,9 @@
 #pragma once
 
-#include <string>
-
 namespace futsim
 {
 
 //! @brief Enumeration of all possible nationalities following ISO 3166-1 alpha-3.
 enum class E_NATIONALITY @FUTSIM_NATIONALITY_ENUM@;
-
-/**
- * @brief Converts the nationality enum into a string.
- * @param aNationality Nationality enum.
-*/
-const std::string& ToString( const E_NATIONALITY& aNationality ) noexcept;
-
-/**
- * @brief Converts the nationality string into enum.
- * @param aNationality Nationality string.
-*/
-const E_NATIONALITY& ToNationality( const std::string_view aNationality );
-
 
 } // futsim namespace

@@ -104,7 +104,7 @@ include(FileList.cmake)
 # Add configuration files
 configure_file(${FUTSIM_INCLUDE_DIR}/Config.h.in ${FUTSIM_INCLUDE_DIR}/Config.h)
 configure_file(${FUTSIM_INCLUDE_DIR}/ENationality.h.in ${FUTSIM_INCLUDE_DIR}/ENationality.h)
-configure_file(${FUTSIM_DIR}/src/ENationality.cpp.in ${FUTSIM_DIR}/src/ENationality.cpp)
+configure_file(${FUTSIM_DIR}/src/NationalityConversionMaps.h.in ${FUTSIM_DIR}/src/NationalityConversionMaps.h)
 
 foreach(HEADER ${FUTSIM_EXTERNAL_HEADERS})
 	string(REGEX REPLACE "include/" "" HEADER ${HEADER})
