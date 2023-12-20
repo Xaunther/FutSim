@@ -72,6 +72,36 @@ CPlayer::json CPlayer::JSON() const noexcept
 	return result;
 }
 
+const std::string_view CPlayer::GetFirstName() const noexcept
+{
+	return mFirstName;
+}
+
+const std::string_view CPlayer::GetSurnames() const noexcept
+{
+	return mSurnames;
+}
+
+const std::string_view CPlayer::GetKnownName() const noexcept
+{
+	return mKnownName;
+}
+
+const unsigned short& CPlayer::GetAge() const noexcept
+{
+	return mAge;
+}
+
+const E_NATIONALITY& CPlayer::GetNationality() const noexcept
+{
+	return mNationality;
+}
+
+const CPlayerSkills CPlayer::GetPlayerSkills() const noexcept
+{
+	return mPlayerSkills;
+}
+
 namespace
 {
 

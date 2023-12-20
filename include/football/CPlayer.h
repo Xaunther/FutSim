@@ -52,6 +52,24 @@ private:
 	json JSON() const noexcept override;
 
 public:
+	//! Retrieves the \copybrief mFirstName
+	const std::string_view GetFirstName() const noexcept;
+
+	//! Retrieves the \copybrief mSurnames
+	const std::string_view GetSurnames() const noexcept;
+
+	//! Retrieves the \copybrief mKnownName
+	const std::string_view GetKnownName() const noexcept;
+
+	//! Retrieves the \copybrief mAge
+	const unsigned short& GetAge() const noexcept;
+
+	//! Retrieves the \copybrief mNationality
+	const E_NATIONALITY& GetNationality() const noexcept;
+
+	//! Retrieves the \copybrief mPlayerSkills
+	const CPlayerSkills GetPlayerSkills() const noexcept;
+
 	//! JSON key for the class-
 	static inline constexpr std::string_view JSON_NAME = "Player";
 	//! JSON key for the \copybrief mFirstName
