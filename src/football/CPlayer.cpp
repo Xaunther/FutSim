@@ -57,6 +57,21 @@ CPlayer::CPlayer( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player from JSON." )
 
+CPlayer::json CPlayer::JSON() const noexcept
+{
+	json result;
+
+	result[ JSON_FIRST_NAME ] = mFirstName;
+	result[ JSON_SURNAMES ] = mSurnames;
+	if( mKnownName != mSurnames )
+		result[ JSON_KNOWN_NAME ] = mKnownName;
+	result[ JSON_AGE ] = mAge;
+	result[ JSON_NATIONALITY ] = ToString( mNationality );
+	result[ CPlayerSkills::JSON_NAME ] = mPlayerSkills.ToJSON();
+
+	return result;
+}
+
 namespace
 {
 

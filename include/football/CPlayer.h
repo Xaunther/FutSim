@@ -45,6 +45,13 @@ public:
 	*/
 	explicit CPlayer( const json& aJSON );
 
+private:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	json JSON() const noexcept override;
+
+public:
 	//! JSON key for the class-
 	static inline constexpr std::string_view JSON_NAME = "Player";
 	//! JSON key for the \copybrief mFirstName
