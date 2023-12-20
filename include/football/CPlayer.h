@@ -16,6 +16,8 @@ namespace football
 */
 class CPlayer : public IJsonable
 {
+	using json = IJsonableTypes::json;
+
 public:
 	/**
 	 * @brief Member constructor.
@@ -36,6 +38,25 @@ public:
 		const unsigned short& aAge,
 		const E_NATIONALITY& aNationality,
 		const CPlayerSkills& aPlayerSkills );
+
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CPlayer( const json& aJSON );
+
+	//! JSON key for the class-
+	static inline constexpr std::string_view JSON_NAME = "Player";
+	//! JSON key for the \copybrief mFirstName
+	static inline constexpr std::string_view JSON_FIRST_NAME = "First name";
+	//! JSON key for the \copybrief mSurnames
+	static inline constexpr std::string_view JSON_SURNAMES = "Surnames";
+	//! JSON key for the \copybrief mKnownName
+	static inline constexpr std::string_view JSON_KNOWN_NAME = "Known name";
+	//! JSON key for the \copybrief mAge
+	static inline constexpr std::string_view JSON_AGE = "Age";
+	//! JSON key for the \copybrief mNationality
+	static inline constexpr std::string_view JSON_NATIONALITY = "Nationality";
 
 private:
 	//! First name.
