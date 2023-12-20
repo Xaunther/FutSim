@@ -1,0 +1,28 @@
+#include "ENationality.h"
+
+#include <unordered_map>
+
+namespace futsim
+{
+
+namespace
+{
+
+const std::unordered_map<E_NATIONALITY, std::string> TO_STRING_CONVERSION_MAP @FUTSIM_TO_STRING_CONVERSION_MAP@;
+
+const std::unordered_map<std::string, E_NATIONALITY> TO_NATIONALITY_CONVERSION_MAP @FUTSIM_TO_NATIONALITY_CONVERSION_MAP@;
+
+} // anonymous namespace
+
+const std::string& ToString( const E_NATIONALITY& aNationality ) noexcept
+{
+	return TO_STRING_CONVERSION_MAP.at( aNationality );
+}
+
+const E_NATIONALITY& ToNationality( const std::string_view aNationality )
+{
+	return TO_NATIONALITY_CONVERSION_MAP.at( aNationality.data() );
+
+}
+
+} // futsim namespace
