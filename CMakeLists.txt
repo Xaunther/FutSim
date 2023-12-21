@@ -26,10 +26,12 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 # Compiler-specific flags
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-	set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Werror -Os")
+	set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Werror")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-	set(CMAKE_CXX_FLAGS "-W4 -WX -EHsc -Os")
+	set(CMAKE_CXX_FLAGS "-W4 -WX -EHsc")
 endif()
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os -DJSON_USE_IMPLICIT_CONVERSIONS=0")
 
 set(CMAKE_CXX_FLAGS_RELEASE "-Os")
 
