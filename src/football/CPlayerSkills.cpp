@@ -1,6 +1,8 @@
 #include "football/CPlayerSkills.h"
 
 #include "ExceptionUtils.h"
+#include "JsonUtils.h"
+
 #include <iostream>
 
 namespace futsim
@@ -46,10 +48,10 @@ CPlayerSkills::CPlayerSkills(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player skills." )
 
 CPlayerSkills::CPlayerSkills( const json& aJSON ) try :
-	mGKSkill( CheckSkill( aJSON.at( JSON_GK_SKILL ).template get<skill_type>(), JSON_GK_SKILL ) ),
-	mDFSkill( CheckSkill( aJSON.at( JSON_DF_SKILL ).template get<skill_type>(), JSON_DF_SKILL ) ),
-	mMFSkill( CheckSkill( aJSON.at( JSON_MF_SKILL ).template get<skill_type>(), JSON_MF_SKILL ) ),
-	mFWSkill( CheckSkill( aJSON.at( JSON_FW_SKILL ).template get<skill_type>(), JSON_FW_SKILL ) ),
+	mGKSkill( CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_GK_SKILL ), JSON_GK_SKILL ) ),
+	mDFSkill( CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_DF_SKILL ), JSON_DF_SKILL ) ),
+	mMFSkill( CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_MF_SKILL ), JSON_MF_SKILL ) ),
+	mFWSkill( CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_FW_SKILL ), JSON_FW_SKILL ) ),
 	mGKExperience( aJSON.at( JSON_GK_XP ).template get<xp_type>() ),
 	mDFExperience( aJSON.at( JSON_DF_XP ).template get<xp_type>() ),
 	mMFExperience( aJSON.at( JSON_MF_XP ).template get<xp_type>() ),
