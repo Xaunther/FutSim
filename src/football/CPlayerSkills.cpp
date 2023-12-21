@@ -45,16 +45,14 @@ CPlayerSkills::CPlayerSkills(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player skills." )
 
 CPlayerSkills::CPlayerSkills( const json& aJSON ) try :
-	CPlayerSkills(
-		aJSON.at( JSON_GK_SKILL ).template get<skill_type>(),
-		aJSON.at( JSON_DF_SKILL ).template get<skill_type>(),
-		aJSON.at( JSON_MF_SKILL ).template get<skill_type>(),
-		aJSON.at( JSON_FW_SKILL ).template get<skill_type>(),
-		aJSON.at( JSON_GK_XP ).template get<xp_type>(),
-		aJSON.at( JSON_DF_XP ).template get<xp_type>(),
-		aJSON.at( JSON_MF_XP ).template get<xp_type>(),
-		aJSON.at( JSON_FW_XP ).template get<xp_type>()
-	)
+	mGKSkill( CheckSkill( aJSON.at( JSON_GK_SKILL ).template get<skill_type>() ) ),
+	mDFSkill( CheckSkill( aJSON.at( JSON_DF_SKILL ).template get<skill_type>() ) ),
+	mMFSkill( CheckSkill( aJSON.at( JSON_MF_SKILL ).template get<skill_type>() ) ),
+	mFWSkill( CheckSkill( aJSON.at( JSON_FW_SKILL ).template get<skill_type>() ) ),
+	mGKExperience( aJSON.at( JSON_GK_XP ).template get<xp_type>() ),
+	mDFExperience( aJSON.at( JSON_DF_XP ).template get<xp_type>() ),
+	mMFExperience( aJSON.at( JSON_MF_XP ).template get<xp_type>() ),
+	mFWExperience( aJSON.at( JSON_FW_XP ).template get<xp_type>() )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player skills from JSON." )
