@@ -46,14 +46,14 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the p
 
 CPlayerSkills::CPlayerSkills( const json& aJSON ) try :
 	CPlayerSkills(
-		aJSON.at( JSON_GK_SKILL ),
-		aJSON.at( JSON_DF_SKILL ),
-		aJSON.at( JSON_MF_SKILL ),
-		aJSON.at( JSON_FW_SKILL ),
-		aJSON.at( JSON_GK_XP ),
-		aJSON.at( JSON_DF_XP ),
-		aJSON.at( JSON_MF_XP ),
-		aJSON.at( JSON_FW_XP )
+		aJSON.at( JSON_GK_SKILL ).template get<skill_type>(),
+		aJSON.at( JSON_DF_SKILL ).template get<skill_type>(),
+		aJSON.at( JSON_MF_SKILL ).template get<skill_type>(),
+		aJSON.at( JSON_FW_SKILL ).template get<skill_type>(),
+		aJSON.at( JSON_GK_XP ).template get<xp_type>(),
+		aJSON.at( JSON_DF_XP ).template get<xp_type>(),
+		aJSON.at( JSON_MF_XP ).template get<xp_type>(),
+		aJSON.at( JSON_FW_XP ).template get<xp_type>()
 	)
 {
 }
