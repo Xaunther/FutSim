@@ -26,6 +26,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/FutSim.h
 	include/IJsonable.h
 	include/IJsonableTypes.h
+	include/JsonUtils.h
 	include/NationalityUtils.h
 )
 
