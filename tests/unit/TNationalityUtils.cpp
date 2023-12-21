@@ -6,15 +6,15 @@
 
 using namespace futsim;
 
-INITIALIZE_TEST( TPlayerSkills )
+INITIALIZE_TEST( TNationalityUtils )
 
-void TPlayerSkills::TestExceptions() const
+void TNationalityUtils::TestExceptions() const
 {
 	//! Test ToNationality exception
 	CheckException( []() { ToNationality( "AAA" ); }, "No nationality matching the code 'AAA'." );
 }
 
-std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
+std::vector<std::string> TNationalityUtils::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result{
 		ToString( E_NATIONALITY::AGO ),
@@ -27,7 +27,7 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TPlayerSkills::ExpectedResults() const noexcept
+std::vector<std::string> TNationalityUtils::ExpectedResults() const noexcept
 {
 	std::vector<std::string> result{
 		"AGO",
