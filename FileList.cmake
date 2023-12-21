@@ -7,6 +7,7 @@ SET(FUTSIM_CORE_SOURCE
 # Football source files
 SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CPlayerSkills.cpp
+	src/football/CPlayer.cpp
 )
 
 # Core internal headers
@@ -30,6 +31,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 
 # Football external headers
 SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
+	include/football/CPlayer.h
 	include/football/CPlayerSkills.h
 	include/football/CPlayerSkillsTypes.h
 )

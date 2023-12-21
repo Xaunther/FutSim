@@ -6,5 +6,6 @@ SET(FUTSIM_TESTS_UNIT_CORE_SOURCE
 )
 
 SET(FUTSIM_TESTS_UNIT_FOOTBALL_SOURCE
+	unit/football/TPlayer.cpp
 	unit/football/TPlayerSkills.cpp
 )
