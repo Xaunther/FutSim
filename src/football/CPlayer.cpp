@@ -1,6 +1,7 @@
 #include "football/CPlayer.h"
 
 #include "ExceptionUtils.h"
+#include "JsonUtils.h"
 #include "NationalityUtils.h"
 
 namespace futsim
@@ -18,13 +19,6 @@ namespace
  * @param aNameString String with the name label to add to the error message.
 */
 const std::string_view CheckName( const std::string_view aName, const std::string_view aNameString );
-
-/**
- * @brief Creates known name from JSON
- * @param aJSON JSON object.
- * @param aSurnames Surnames of the player.
-*/
-std::string_view CreateKnownName( const IJsonableTypes::json& aJSON, const std::string_view aSurnames ) noexcept;
 
 } // anonymous namespace
 
@@ -47,11 +41,11 @@ CPlayer::CPlayer(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player." )
 
 CPlayer::CPlayer( const json& aJSON ) try :
-	mFirstName( CheckName( aJSON.at( JSON_FIRST_NAME ).template get<std::string_view>(), "name" ) ),
-	mSurnames( CheckName( aJSON.at( JSON_SURNAMES ).template get<std::string_view>(), "surnames" ) ),
-	mKnownName( CreateKnownName( aJSON, mSurnames ) ),
-	mAge( aJSON.at( JSON_AGE ).template get<unsigned short>() ),
-	mNationality( ToNationality( aJSON.at( JSON_NATIONALITY ).template get<std::string_view>() ) ),
+	mFirstName( CheckName( ValueFromRequiredJSONKey<std::string>( aJSON, JSON_FIRST_NAME ), "name" ) ),
+	mSurnames( CheckName( ValueFromRequiredJSONKey<std::string>( aJSON, JSON_SURNAMES ), "surnames" ) ),
+	mKnownName( ValueFromOptionalJSONKey<std::string>( aJSON, JSON_KNOWN_NAME, mSurnames ) ),
+	mAge( ValueFromRequiredJSONKey<unsigned short>( aJSON, JSON_AGE ) ),
+	mNationality( ToNationality( ValueFromRequiredJSONKey<std::string_view>( aJSON, JSON_NATIONALITY ) ) ),
 	mPlayerSkills( aJSON.at( CPlayerSkills::JSON_NAME ) )
 {
 }
@@ -112,12 +106,6 @@ const std::string_view CheckName( const std::string_view aName, const std::strin
 	return aName;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the " << aNameString << "." )
-
-std::string_view CreateKnownName( const IJsonableTypes::json& aJSON, const std::string_view aSurnames ) noexcept
-{
-	const auto& found = aJSON.find( CPlayer::JSON_KNOWN_NAME );
-	return found != aJSON.cend() ? ( *found ).template get<std::string_view>() : aSurnames.data();
-}
 
 } // anonymous namespace
 
