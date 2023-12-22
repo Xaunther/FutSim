@@ -20,62 +20,62 @@ void TPlayerSkills::TestExceptions() const
 	CheckException( []() { CPlayerSkills{ 1, 1, 1, 0, 1, 1, 1, 1 }; }, "The FW skill value must be greater than 0." );
 
 	//! Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+	CheckException( []() { futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {}
-		} )" ) ); }, "key 'GK skill' not found" );
-	CheckException( []() { futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+		} )" ); }, "key 'GK skill' not found" );
+	CheckException( []() { futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK skill": 0
 			}
-		} )" ) ); }, "The GK skill value must be greater than 0." );
-	CheckException( []() { futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+		} )" ); }, "The GK skill value must be greater than 0." );
+	CheckException( []() { futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK skill": 1
 			}
-		} )" ) ); }, "key 'DF skill' not found" );
-	CheckException( []() { futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+		} )" ); }, "key 'DF skill' not found" );
+	CheckException( []() { futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"DF skill": 0
 			}
-		} )" ) ); }, "The DF skill value must be greater than 0." );
-	CheckException( []() { futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+		} )" ); }, "The DF skill value must be greater than 0." );
+	CheckException( []() { futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"DF skill": 1
 			}
-		} )" ) ); }, "key 'MF skill' not found" );
-	CheckException( []() { futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+		} )" ); }, "key 'MF skill' not found" );
+	CheckException( []() { futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"DF skill": 1,
 				"MF skill": 0
 			}
-		} )" ) ); }, "The MF skill value must be greater than 0." );
-	CheckException( []() { futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+		} )" ); }, "The MF skill value must be greater than 0." );
+	CheckException( []() { futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"DF skill": 1,
 				"MF skill": 1
 			}
-		} )" ) ); }, "key 'FW skill' not found" );
-	CheckException( []() { futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+		} )" ); }, "key 'FW skill' not found" );
+	CheckException( []() { futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"DF skill": 1,
 				"MF skill": 1,
 				"FW skill": 0
 			}
-		} )" ) ); }, "The FW skill value must be greater than 0." );
-	CheckException( []() { futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+		} )" ); }, "The FW skill value must be greater than 0." );
+	CheckException( []() { futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"DF skill": 1,
 				"MF skill": 1,
 				"FW skill": 1
 			}
-		} )" ) ); }, "key 'GK experience' not found" );
-	CheckException( []() { futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+		} )" ); }, "key 'GK experience' not found" );
+	CheckException( []() { futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"DF skill": 1,
@@ -83,8 +83,8 @@ void TPlayerSkills::TestExceptions() const
 				"FW skill": 1,
 				"GK experience": 0
 			}
-		} )" ) ); }, "key 'DF experience' not found" );
-	CheckException( []() { futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+		} )" ); }, "key 'DF experience' not found" );
+	CheckException( []() { futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"DF skill": 1,
@@ -93,8 +93,8 @@ void TPlayerSkills::TestExceptions() const
 				"GK experience": 0,
 				"DF experience": 0
 			}
-		} )" ) ); }, "key 'MF experience' not found" );
-	CheckException( []() { futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+		} )" ); }, "key 'MF experience' not found" );
+	CheckException( []() { futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"DF skill": 1,
@@ -104,7 +104,7 @@ void TPlayerSkills::TestExceptions() const
 				"DF experience": 0,
 				"MF experience": 0
 			}
-		} )" ) ); }, "key 'FW experience' not found" );
+		} )" ); }, "key 'FW experience' not found" );
 }
 
 std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
@@ -114,7 +114,7 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 	for( const auto& playerSkills : {
 		CPlayerSkills{ 1, 1, 1, 1, 0, 0, 0, 0 },
 		CPlayerSkills{ 99, 10, 50, 10, 60, 20, 45, 0 },
-		futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+		futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"MF skill": 1,
@@ -125,8 +125,8 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 				"MF experience": 0,
 				"FW experience": 0
 			}
-		} )" ) ),
-		futsim::ValueFromJSON<CPlayerSkills>( json::parse( R"( {
+		} )" ),
+		futsim::ValueFromJSONString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK experience": 60,
 				"GK skill": 99,
@@ -137,7 +137,7 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 				"DF experience": 20,
 				"FW experience": 0
 			}
-		} )" ) ) } )
+		} )" ) } )
 	{
 		result.push_back( std::string{ CPlayerSkills::JSON_GK_SKILL } + ": " + std::to_string( playerSkills.GetGKSkill() ) );
 		result.push_back( std::string{ CPlayerSkills::JSON_DF_SKILL } + ": " + std::to_string( playerSkills.GetDFSkill() ) );
