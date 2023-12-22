@@ -20,43 +20,43 @@ void TPlayerSkills::TestExceptions() const
 	//! Test JSON constructor
 	CheckException( []() { CPlayerSkills{ json::parse( R"( {
 			"Player skills": {}
-		} )" )[ CPlayerSkills::JSON_NAME ] }; }, "key 'GK skill' not found" );
+		} )" )[ CPlayerSkills::JSON_KEY ] }; }, "key 'GK skill' not found" );
 	CheckException( []() { CPlayerSkills{ json::parse( R"( {
 			"Player skills": {
 				"GK skill": 0
 			}
-		} )" )[ CPlayerSkills::JSON_NAME ] }; }, "The GK skill value must be greater than 0." );
+		} )" )[ CPlayerSkills::JSON_KEY ] }; }, "The GK skill value must be greater than 0." );
 	CheckException( []() { CPlayerSkills{ json::parse( R"( {
 			"Player skills": {
 				"GK skill": 1
 			}
-		} )" )[ CPlayerSkills::JSON_NAME ] }; }, "key 'DF skill' not found" );
+		} )" )[ CPlayerSkills::JSON_KEY ] }; }, "key 'DF skill' not found" );
 	CheckException( []() { CPlayerSkills{ json::parse( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"DF skill": 0
 			}
-		} )" )[ CPlayerSkills::JSON_NAME ] }; }, "The DF skill value must be greater than 0." );
+		} )" )[ CPlayerSkills::JSON_KEY ] }; }, "The DF skill value must be greater than 0." );
 	CheckException( []() { CPlayerSkills{ json::parse( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"DF skill": 1
 			}
-		} )" )[ CPlayerSkills::JSON_NAME ] }; }, "key 'MF skill' not found" );
+		} )" )[ CPlayerSkills::JSON_KEY ] }; }, "key 'MF skill' not found" );
 	CheckException( []() { CPlayerSkills{ json::parse( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"DF skill": 1,
 				"MF skill": 0
 			}
-		} )" )[ CPlayerSkills::JSON_NAME ] }; }, "The MF skill value must be greater than 0." );
+		} )" )[ CPlayerSkills::JSON_KEY ] }; }, "The MF skill value must be greater than 0." );
 	CheckException( []() { CPlayerSkills{ json::parse( R"( {
 			"Player skills": {
 				"GK skill": 1,
 				"DF skill": 1,
 				"MF skill": 1
 			}
-		} )" )[ CPlayerSkills::JSON_NAME ] }; }, "key 'FW skill' not found" );
+		} )" )[ CPlayerSkills::JSON_KEY ] }; }, "key 'FW skill' not found" );
 	CheckException( []() { CPlayerSkills{ json::parse( R"( {
 			"Player skills": {
 				"GK skill": 1,
@@ -64,7 +64,7 @@ void TPlayerSkills::TestExceptions() const
 				"MF skill": 1,
 				"FW skill": 0
 			}
-		} )" )[ CPlayerSkills::JSON_NAME ] }; }, "The FW skill value must be greater than 0." );
+		} )" )[ CPlayerSkills::JSON_KEY ] }; }, "The FW skill value must be greater than 0." );
 	CheckException( []() { CPlayerSkills{ json::parse( R"( {
 			"Player skills": {
 				"GK skill": 1,
@@ -72,7 +72,7 @@ void TPlayerSkills::TestExceptions() const
 				"MF skill": 1,
 				"FW skill": 1
 			}
-		} )" )[ CPlayerSkills::JSON_NAME ] }; }, "key 'GK experience' not found" );
+		} )" )[ CPlayerSkills::JSON_KEY ] }; }, "key 'GK experience' not found" );
 	CheckException( []() { CPlayerSkills{ json::parse( R"( {
 			"Player skills": {
 				"GK skill": 1,
@@ -81,7 +81,7 @@ void TPlayerSkills::TestExceptions() const
 				"FW skill": 1,
 				"GK experience": 0
 			}
-		} )" )[ CPlayerSkills::JSON_NAME ] }; }, "key 'DF experience' not found" );
+		} )" )[ CPlayerSkills::JSON_KEY ] }; }, "key 'DF experience' not found" );
 	CheckException( []() { CPlayerSkills{ json::parse( R"( {
 			"Player skills": {
 				"GK skill": 1,
@@ -91,7 +91,7 @@ void TPlayerSkills::TestExceptions() const
 				"GK experience": 0,
 				"DF experience": 0
 			}
-		} )" )[ CPlayerSkills::JSON_NAME ] }; }, "key 'MF experience' not found" );
+		} )" )[ CPlayerSkills::JSON_KEY ] }; }, "key 'MF experience' not found" );
 	CheckException( []() { CPlayerSkills{ json::parse( R"( {
 			"Player skills": {
 				"GK skill": 1,
@@ -102,7 +102,7 @@ void TPlayerSkills::TestExceptions() const
 				"DF experience": 0,
 				"MF experience": 0
 			}
-		} )" )[ CPlayerSkills::JSON_NAME ] }; }, "key 'FW experience' not found" );
+		} )" )[ CPlayerSkills::JSON_KEY ] }; }, "key 'FW experience' not found" );
 }
 
 std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
@@ -123,7 +123,7 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 				"MF experience": 0,
 				"FW experience": 0
 			}
-		} )" )[ CPlayerSkills::JSON_NAME ] },
+		} )" )[ CPlayerSkills::JSON_KEY ] },
 		CPlayerSkills{ json::parse( R"( {
 			"Player skills": {
 				"GK experience": 60,
@@ -135,7 +135,7 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 				"DF experience": 20,
 				"FW experience": 0
 			}
-		} )" )[ CPlayerSkills::JSON_NAME ] } } )
+		} )" )[ CPlayerSkills::JSON_KEY ] } } )
 	{
 		result.push_back( std::string{ CPlayerSkills::JSON_GK_SKILL } + ": " + std::to_string( playerSkills.GetGKSkill() ) );
 		result.push_back( std::string{ CPlayerSkills::JSON_DF_SKILL } + ": " + std::to_string( playerSkills.GetDFSkill() ) );
@@ -146,7 +146,7 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 		result.push_back( std::string{ CPlayerSkills::JSON_MF_XP } + ": " + std::to_string( playerSkills.GetMFExperience() ) );
 		result.push_back( std::string{ CPlayerSkills::JSON_FW_XP } + ": " + std::to_string( playerSkills.GetFWExperience() ) );
 		futsim::IJsonableTypes::json outputJSON;
-		outputJSON[ CPlayerSkills::JSON_NAME ] = playerSkills.ToJSON();
+		outputJSON[ CPlayerSkills::JSON_KEY ] = playerSkills.ToJSON();
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}
 
