@@ -33,6 +33,13 @@ T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyNa
 template<typename T, is_json_type JsonType>
 T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyName, const T& aDefault = T{} );
 
+/**
+ * @brief Helper function to construct a jsonable class from a JSON node.
+ * @details The class requires to have a json key defined in an accesible JSON_KEY member
+ * @param aJSON JSON object.
+*/
+template<is_json_constructible T, is_json_type JsonType> T ValueFromJSON( const JsonType& aJSON );
+
 template<typename T, is_json_type JsonType>
 T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName )
 {
@@ -44,6 +51,11 @@ T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyNa
 {
 	const auto& found = aJSON.find( aKeyName );
 	return found != aJSON.cend() ? ( *found ).template get<T>() : aDefault;
+}
+
+template<is_json_constructible T, is_json_type JsonType> T ValueFromJSON( const JsonType& aJSON )
+{
+	return T{ aJSON.at( T::JSON_KEY ) };
 }
 
 } //futsim namespace
