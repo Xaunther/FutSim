@@ -65,6 +65,15 @@ inline T ValueFromJSONString( const std::string_view& aJSONString, auto&&... aAr
 template<is_jsonable T, is_json_type JsonType>
 inline JsonType& AddToJSON( JsonType& aJSON, const T& aValue ) noexcept;
 
+/**
+ * @brief Helper function to add a value to a key in a JSON object.
+ * @param aJSON JSON object.
+ * @param aValue Value to add.
+ * @param aKeyName Name of the key to search.
+*/
+template<is_json_type JsonType>
+inline JsonType& AddToJSON( JsonType& aJSON, const auto& aValue, const std::string_view aKeyName ) noexcept;
+
 template<typename T, is_json_type JsonType>
 inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName )
 {
@@ -93,7 +102,13 @@ inline T ValueFromJSONString( const std::string_view& aJSONString, auto&&... aAr
 template<is_jsonable T, is_json_type JsonType>
 inline JsonType& AddToJSON( JsonType& aJSON, const T& aValue ) noexcept
 {
-	aJSON[ T::JSON_KEY ] = aValue.ToJSON();
+	return AddToJSON( aJSON, aValue.ToJSON(), T::JSON_KEY );
+}
+
+template<is_json_type JsonType>
+inline JsonType& AddToJSON( JsonType& aJSON, const auto& aValue, const std::string_view aKeyName ) noexcept
+{
+	aJSON[ aKeyName ] = aValue;
 	return aJSON;
 }
 
