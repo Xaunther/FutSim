@@ -52,10 +52,10 @@ CPlayerSkills::CPlayerSkills( const json& aJSON ) try :
 	mDFSkill( CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_DF_SKILL ), JSON_DF_SKILL ) ),
 	mMFSkill( CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_MF_SKILL ), JSON_MF_SKILL ) ),
 	mFWSkill( CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_FW_SKILL ), JSON_FW_SKILL ) ),
-	mGKExperience( aJSON.at( JSON_GK_XP ).template get<xp_type>() ),
-	mDFExperience( aJSON.at( JSON_DF_XP ).template get<xp_type>() ),
-	mMFExperience( aJSON.at( JSON_MF_XP ).template get<xp_type>() ),
-	mFWExperience( aJSON.at( JSON_FW_XP ).template get<xp_type>() )
+	mGKExperience( ValueFromRequiredJSONKey<xp_type>( aJSON, JSON_GK_XP ) ),
+	mDFExperience( ValueFromRequiredJSONKey<xp_type>( aJSON, JSON_DF_XP ) ),
+	mMFExperience( ValueFromRequiredJSONKey<xp_type>( aJSON, JSON_MF_XP ) ),
+	mFWExperience( ValueFromRequiredJSONKey<xp_type>( aJSON, JSON_FW_XP ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player skills from JSON." )
