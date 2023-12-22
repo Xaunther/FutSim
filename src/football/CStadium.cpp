@@ -1,6 +1,7 @@
 #include "football/CStadium.h"
 
 #include "ExceptionUtils.h"
+#include "JsonUtils.h"
 
 namespace futsim
 {
@@ -36,6 +37,14 @@ CStadium::CStadium(
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the stadium." )
+
+CStadium::CStadium( const json& aJSON ) try :
+	mName( CheckName( ValueFromRequiredJSONKey<std::string>( aJSON, JSON_NAME ) ) ),
+	mCapacity( ValueFromRequiredJSONKey<capacity>( aJSON, JSON_CAPACITY ) ),
+	mAmbientFactor( CheckAmbientFactor( ValueFromRequiredJSONKey<ambient_factor>( aJSON, JSON_AMBIENT_FACTOR ) ) )
+{
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the stadium from JSON." )
 
 namespace
 {
