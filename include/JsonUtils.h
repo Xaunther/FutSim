@@ -58,12 +58,12 @@ template<is_json_constructible T>
 inline T ValueFromJSONString( const std::string_view& aJSONString, auto&&... aArgs );
 
 /**
- * @brief Helper function to add a jsonable class to a JSON object.
+ * @brief Helper function to add a jsonable object to a JSON object.
  * @param aJSON JSON object.
- * @param aValue Value to add.
+ * @param aObject Value to add.
 */
 template<is_jsonable T, is_json_type JsonType>
-inline JsonType& AddToJSON( JsonType& aJSON, const T& aValue ) noexcept;
+inline JsonType& AddToJSON( JsonType& aJSON, const T& aObject ) noexcept;
 
 /**
  * @brief Helper function to add a value to a key in a JSON object.
@@ -100,9 +100,9 @@ inline T ValueFromJSONString( const std::string_view& aJSONString, auto&&... aAr
 }
 
 template<is_jsonable T, is_json_type JsonType>
-inline JsonType& AddToJSON( JsonType& aJSON, const T& aValue ) noexcept
+inline JsonType& AddToJSON( JsonType& aJSON, const T& aObject ) noexcept
 {
-	return AddToJSON( aJSON, aValue.ToJSON(), T::JSON_KEY );
+	return AddToJSON( aJSON, aObject.ToJSON(), T::JSON_KEY );
 }
 
 template<is_json_type JsonType>
