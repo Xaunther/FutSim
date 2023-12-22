@@ -21,7 +21,7 @@ template<typename T> concept is_json_constructible =
  * @param aKeyName Name of the key to search.
 */
 template<typename T, is_json_type JsonType>
-T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName );
+inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName );
 
 /**
  * @brief Helper function to get a value from a certain optional key in a JSON array.
@@ -31,7 +31,7 @@ T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyNa
  * @param aDefault Value to return if key is not found.
 */
 template<typename T, is_json_type JsonType>
-T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyName, const T& aDefault = T{} );
+inline T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyName, const T& aDefault = T{} );
 
 /**
  * @brief Helper function to construct a jsonable class from a JSON node.
@@ -39,24 +39,24 @@ T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyNa
  * @param aJSON JSON object.
  * @param aArgs Extra arguments to be forwarded to the JSON constructor.
 */
-template<is_json_constructible T, is_json_type JsonType> T
-ValueFromJSON( const JsonType& aJSON, auto&&... aArgs );
+template<is_json_constructible T, is_json_type JsonType>
+inline T ValueFromJSON( const JsonType& aJSON, auto&&... aArgs );
 
 template<typename T, is_json_type JsonType>
-T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName )
+inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName )
 {
 	return aJSON.at( aKeyName ).template get<T>();
 }
 
 template<typename T, is_json_type JsonType>
-T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyName, const T& aDefault )
+inline T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyName, const T& aDefault )
 {
 	const auto& found = aJSON.find( aKeyName );
 	return found != aJSON.cend() ? ( *found ).template get<T>() : aDefault;
 }
 
-template<is_json_constructible T, is_json_type JsonType> T
-ValueFromJSON( const JsonType& aJSON, auto&&... aArgs )
+template<is_json_constructible T, is_json_type JsonType>
+inline T ValueFromJSON( const JsonType& aJSON, auto&&... aArgs )
 {
 	return T{ aJSON.at( T::JSON_KEY ), std::forward<decltype( aArgs )>( aArgs )... };
 }
