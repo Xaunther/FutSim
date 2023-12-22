@@ -4,6 +4,8 @@
 
 #include "NationalityUtils.h"
 
+#include "JsonUtils.h"
+
 #include <iostream>
 
 using namespace futsim;
@@ -20,38 +22,38 @@ void TPerson::TestExceptions() const
 		"The surnames cannot be empty." );
 
 	//! Test JSON constructor
-	CheckException( []() { CPerson{ json::parse( R"( {
+	CheckException( []() { ValueFromJSON<CPerson>( json::parse( R"( {
 			"Person": {}
-		} )" )[ CPerson::JSON_KEY ] }; }, "key 'First name' not found" );
-	CheckException( []() { CPerson{ json::parse( R"( {
+		} )" ) ); }, "key 'First name' not found" );
+	CheckException( []() { ValueFromJSON<CPerson>( json::parse( R"( {
 			"Person": {
 				"First name": ""
 			}
-		} )" )[ CPerson::JSON_KEY ] }; }, "The name cannot be empty." );
-	CheckException( []() { CPerson{ json::parse( R"( {
+		} )" ) ); }, "The name cannot be empty." );
+	CheckException( []() { ValueFromJSON<CPerson>( json::parse( R"( {
 			"Person": {
 				"First name": "Lionel"
 			}
-		} )" )[ CPerson::JSON_KEY ] }; }, "key 'Surnames' not found" );
-	CheckException( []() { CPerson{ json::parse( R"( {
+		} )" ) ); }, "key 'Surnames' not found" );
+	CheckException( []() { ValueFromJSON<CPerson>( json::parse( R"( {
 			"Person": {
 				"First name": "Lionel",
 				"Surnames": ""
 			}
-		} )" )[ CPerson::JSON_KEY ] }; }, "The surnames cannot be empty." );
-	CheckException( []() { CPerson{ json::parse( R"( {
+		} )" ) ); }, "The surnames cannot be empty." );
+	CheckException( []() { ValueFromJSON<CPerson>( json::parse( R"( {
 			"Person": {
 				"First name": "Lionel",
 				"Surnames": "Messi"
 			}
-		} )" )[ CPerson::JSON_KEY ] }; }, "key 'Age' not found" );
-	CheckException( []() { CPerson{ json::parse( R"( {
+		} )" ) ); }, "key 'Age' not found" );
+	CheckException( []() { ValueFromJSON<CPerson>( json::parse( R"( {
 			"Person": {
 				"First name": "Lionel",
 				"Surnames": "Messi",
 				"Age": 35
 			}
-		} )" )[ CPerson::JSON_KEY ] }; }, "key 'Nationality' not found" );
+		} )" ) ); }, "key 'Nationality' not found" );
 }
 
 std::vector<std::string> TPerson::ObtainedResults() const noexcept
@@ -61,15 +63,15 @@ std::vector<std::string> TPerson::ObtainedResults() const noexcept
 	for( const auto& person : {
 		CPerson{ "Lorenzo", "Blanco", {}, 35, futsim::E_NATIONALITY::ARG },
 		CPerson{ "Pedro", "Pérez Martínez", "Perico", 20, futsim::E_NATIONALITY::ESP },
-		CPerson{ json::parse( R"( {
+		ValueFromJSON<CPerson>( json::parse( R"( {
 			"Person": {
 				"Surnames": "Blanco",
 				"First name": "Lorenzo",
 				"Age": 35,
 				"Nationality": "ARG"
 			}
-		} )" )[ CPerson::JSON_KEY ] },
-		CPerson{ json::parse( R"( {
+		} )" ) ),
+		ValueFromJSON<CPerson>( json::parse( R"( {
 			"Person": {
 				"First name": "Pedro",
 				"Surnames": "Pérez Martínez",
@@ -77,7 +79,7 @@ std::vector<std::string> TPerson::ObtainedResults() const noexcept
 				"Age": 20,
 				"Nationality": "ESP"
 			}
-		} )" )[ CPerson::JSON_KEY ] } } )
+		} )" ) ) } )
 	{
 		result.push_back( std::string{ CPerson::JSON_FIRST_NAME } + ": " + std::string{ person.GetFirstName() } );
 		result.push_back( std::string{ CPerson::JSON_SURNAMES } + ": " + std::string{ person.GetSurnames() } );
