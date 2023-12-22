@@ -36,6 +36,13 @@ public:
 	*/
 	explicit CStadium( const json& aJSON );
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	json JSON() const noexcept override;
+
+public:
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Stadium";
 	//! JSON key for the \copybrief mName

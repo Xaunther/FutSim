@@ -46,6 +46,17 @@ CStadium::CStadium( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the stadium from JSON." )
 
+CStadium::json CStadium::JSON() const noexcept
+{
+	json result;
+
+	result[ JSON_NAME ] = mName;
+	result[ JSON_CAPACITY ] = mCapacity;
+	result[ JSON_AMBIENT_FACTOR ] = mAmbientFactor;
+
+	return result;
+}
+
 namespace
 {
 
