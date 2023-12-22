@@ -81,7 +81,7 @@ public:
 	const skill_type& GetFWExperience() const noexcept;
 
 	//! JSON key for the \copybrief mGKSkill
-	static inline constexpr std::string_view JSON_NAME = "Player skills";
+	static inline constexpr std::string_view JSON_KEY = "Player skills";
 	//! JSON key for the \copybrief mGKSkill
 	static inline constexpr std::string_view JSON_GK_SKILL = "GK skill";
 	//! JSON key for the \copybrief mDFSkill

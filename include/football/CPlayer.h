@@ -55,7 +55,7 @@ public:
 	const CPlayerSkills GetPlayerSkills() const noexcept;
 
 	//! JSON key for the class-
-	static inline constexpr std::string_view JSON_NAME = "Player";
+	static inline constexpr std::string_view JSON_KEY = "Player";
 
 private:
 	//! Skills

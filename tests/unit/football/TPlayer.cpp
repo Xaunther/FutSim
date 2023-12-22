@@ -21,7 +21,7 @@ void TPlayer::TestExceptions() const
 				"Age": 35,
 				"Nationality": "ARG"
 			}
-		} )" )[ CPlayer::JSON_NAME ] }; }, "key 'Player skills' not found" );
+		} )" )[ CPlayer::JSON_KEY ] }; }, "key 'Player skills' not found" );
 }
 
 std::vector<std::string> TPlayer::ObtainedResults() const noexcept
@@ -48,7 +48,7 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 					"FW experience": 0
 				}
 			}
-		} )" )[ CPlayer::JSON_NAME ] },
+		} )" )[ CPlayer::JSON_KEY ] },
 		CPlayer{ json::parse( R"( {
 			"Player": {
 				"First name": "Ansu",
@@ -67,11 +67,11 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 					"FW experience": 0
 				}
 			}
-		} )" )[ CPlayer::JSON_NAME ] } } )
+		} )" )[ CPlayer::JSON_KEY ] } } )
 	{
-		result.push_back( std::string{ CPlayerSkills::JSON_NAME } + ": " + player.GetPlayerSkills().ToJSON().dump( 1, '\t' ) );
+		result.push_back( std::string{ CPlayerSkills::JSON_KEY } + ": " + player.GetPlayerSkills().ToJSON().dump( 1, '\t' ) );
 		futsim::IJsonableTypes::json outputJSON;
-		outputJSON[ CPlayer::JSON_NAME ] = player.ToJSON();
+		outputJSON[ CPlayer::JSON_KEY ] = player.ToJSON();
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}
 

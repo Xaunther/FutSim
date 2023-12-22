@@ -22,36 +22,36 @@ void TPerson::TestExceptions() const
 	//! Test JSON constructor
 	CheckException( []() { CPerson{ json::parse( R"( {
 			"Person": {}
-		} )" )[ CPerson::JSON_NAME ] }; }, "key 'First name' not found" );
+		} )" )[ CPerson::JSON_KEY ] }; }, "key 'First name' not found" );
 	CheckException( []() { CPerson{ json::parse( R"( {
 			"Person": {
 				"First name": ""
 			}
-		} )" )[ CPerson::JSON_NAME ] }; }, "The name cannot be empty." );
+		} )" )[ CPerson::JSON_KEY ] }; }, "The name cannot be empty." );
 	CheckException( []() { CPerson{ json::parse( R"( {
 			"Person": {
 				"First name": "Lionel"
 			}
-		} )" )[ CPerson::JSON_NAME ] }; }, "key 'Surnames' not found" );
+		} )" )[ CPerson::JSON_KEY ] }; }, "key 'Surnames' not found" );
 	CheckException( []() { CPerson{ json::parse( R"( {
 			"Person": {
 				"First name": "Lionel",
 				"Surnames": ""
 			}
-		} )" )[ CPerson::JSON_NAME ] }; }, "The surnames cannot be empty." );
+		} )" )[ CPerson::JSON_KEY ] }; }, "The surnames cannot be empty." );
 	CheckException( []() { CPerson{ json::parse( R"( {
 			"Person": {
 				"First name": "Lionel",
 				"Surnames": "Messi"
 			}
-		} )" )[ CPerson::JSON_NAME ] }; }, "key 'Age' not found" );
+		} )" )[ CPerson::JSON_KEY ] }; }, "key 'Age' not found" );
 	CheckException( []() { CPerson{ json::parse( R"( {
 			"Person": {
 				"First name": "Lionel",
 				"Surnames": "Messi",
 				"Age": 35
 			}
-		} )" )[ CPerson::JSON_NAME ] }; }, "key 'Nationality' not found" );
+		} )" )[ CPerson::JSON_KEY ] }; }, "key 'Nationality' not found" );
 }
 
 std::vector<std::string> TPerson::ObtainedResults() const noexcept
@@ -68,7 +68,7 @@ std::vector<std::string> TPerson::ObtainedResults() const noexcept
 				"Age": 35,
 				"Nationality": "ARG"
 			}
-		} )" )[ CPerson::JSON_NAME ] },
+		} )" )[ CPerson::JSON_KEY ] },
 		CPerson{ json::parse( R"( {
 			"Person": {
 				"First name": "Pedro",
@@ -77,7 +77,7 @@ std::vector<std::string> TPerson::ObtainedResults() const noexcept
 				"Age": 20,
 				"Nationality": "ESP"
 			}
-		} )" )[ CPerson::JSON_NAME ] } } )
+		} )" )[ CPerson::JSON_KEY ] } } )
 	{
 		result.push_back( std::string{ CPerson::JSON_FIRST_NAME } + ": " + std::string{ person.GetFirstName() } );
 		result.push_back( std::string{ CPerson::JSON_SURNAMES } + ": " + std::string{ person.GetSurnames() } );
@@ -85,7 +85,7 @@ std::vector<std::string> TPerson::ObtainedResults() const noexcept
 		result.push_back( std::string{ CPerson::JSON_AGE } + ": " + std::to_string( person.GetAge() ) );
 		result.push_back( std::string{ CPerson::JSON_NATIONALITY } + ": " + futsim::ToString( person.GetNationality() ) );
 		futsim::IJsonableTypes::json outputJSON;
-		outputJSON[ CPerson::JSON_NAME ] = person.ToJSON();
+		outputJSON[ CPerson::JSON_KEY ] = person.ToJSON();
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}
 
