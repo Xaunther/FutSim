@@ -87,7 +87,7 @@ std::vector<std::string> TPerson::ObtainedResults() const noexcept
 		result.push_back( std::string{ CPerson::JSON_AGE } + ": " + std::to_string( person.GetAge() ) );
 		result.push_back( std::string{ CPerson::JSON_NATIONALITY } + ": " + futsim::ToString( person.GetNationality() ) );
 		futsim::IJsonableTypes::json outputJSON;
-		outputJSON[ CPerson::JSON_KEY ] = person.ToJSON();
+		AddToJSONKey( outputJSON, person );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}
 

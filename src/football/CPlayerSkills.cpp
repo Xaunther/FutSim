@@ -60,20 +60,16 @@ CPlayerSkills::CPlayerSkills( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player skills from JSON." )
 
-CPlayerSkills::json CPlayerSkills::JSON() const noexcept
+void CPlayerSkills::JSON( json& aJSON ) const noexcept
 {
-	json result;
-
-	AddToJSONKey( result, mGKSkill, JSON_GK_SKILL );
-	AddToJSONKey( result, mDFSkill, JSON_DF_SKILL );
-	AddToJSONKey( result, mMFSkill, JSON_MF_SKILL );
-	AddToJSONKey( result, mFWSkill, JSON_FW_SKILL );
-	AddToJSONKey( result, mGKExperience, JSON_GK_XP );
-	AddToJSONKey( result, mDFExperience, JSON_DF_XP );
-	AddToJSONKey( result, mMFExperience, JSON_MF_XP );
-	AddToJSONKey( result, mFWExperience, JSON_FW_XP );
-
-	return result;
+	AddToJSONKey( aJSON, mGKSkill, JSON_GK_SKILL );
+	AddToJSONKey( aJSON, mDFSkill, JSON_DF_SKILL );
+	AddToJSONKey( aJSON, mMFSkill, JSON_MF_SKILL );
+	AddToJSONKey( aJSON, mFWSkill, JSON_FW_SKILL );
+	AddToJSONKey( aJSON, mGKExperience, JSON_GK_XP );
+	AddToJSONKey( aJSON, mDFExperience, JSON_DF_XP );
+	AddToJSONKey( aJSON, mMFExperience, JSON_MF_XP );
+	AddToJSONKey( aJSON, mFWExperience, JSON_FW_XP );
 }
 
 const skill_type& CPlayerSkills::GetGKSkill() const noexcept

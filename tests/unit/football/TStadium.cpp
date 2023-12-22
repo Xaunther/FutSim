@@ -73,7 +73,7 @@ std::vector<std::string> TStadium::ObtainedResults() const noexcept
 		result.push_back( std::string{ CStadium::JSON_CAPACITY } + ": " + std::to_string( stadium.GetCapacity() ) );
 		result.push_back( std::string{ CStadium::JSON_AMBIENT_FACTOR } + ": " + std::to_string( stadium.GetAmbientFactor() ) );
 		futsim::IJsonableTypes::json outputJSON;
-		outputJSON[ CStadium::JSON_KEY ] = stadium.ToJSON();
+		AddToJSONKey( outputJSON, stadium );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}
 

@@ -70,9 +70,9 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CPlayerSkills::JSON_KEY } + ": " + player.GetPlayerSkills().ToJSON().dump( 1, '\t' ) );
+		result.push_back( player.GetPlayerSkills().JSON_KEY.data() );
 		futsim::IJsonableTypes::json outputJSON;
-		outputJSON[ CPlayer::JSON_KEY ] = player.ToJSON();
+		AddToJSONKey( outputJSON, player );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}
 
@@ -82,16 +82,7 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 std::vector<std::string> TPlayer::ExpectedResults() const noexcept
 {
 	std::vector<std::string> result{
-		"Player skills: {\n"
-		"	\"GK skill\": 1,\n"
-		"	\"DF skill\": 1,\n"
-		"	\"MF skill\": 1,\n"
-		"	\"FW skill\": 99,\n"
-		"	\"GK experience\": 0,\n"
-		"	\"DF experience\": 0,\n"
-		"	\"MF experience\": 0,\n"
-		"	\"FW experience\": 0\n"
-		"}",
+		"Player skills",
 		"{\n"
 		"	\"Player\": {\n"
 		"		\"First name\": \"Lionel\",\n"
@@ -110,16 +101,7 @@ std::vector<std::string> TPlayer::ExpectedResults() const noexcept
 		"		}\n"
 		"	}\n"
 		"}",
-		"Player skills: {\n"
-		"	\"GK skill\": 1,\n"
-		"	\"DF skill\": 1,\n"
-		"	\"MF skill\": 1,\n"
-		"	\"FW skill\": 80,\n"
-		"	\"GK experience\": 0,\n"
-		"	\"DF experience\": 0,\n"
-		"	\"MF experience\": 0,\n"
-		"	\"FW experience\": 0\n"
-		"}",
+		"Player skills",
 		"{\n"
 		"	\"Player\": {\n"
 		"		\"First name\": \"Ansu\",\n"

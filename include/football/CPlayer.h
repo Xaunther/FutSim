@@ -48,7 +48,7 @@ protected:
 	/**
 	 * @copydoc IJsonable::ToJSON
 	*/
-	json JSON() const noexcept override;
+	void JSON( json& aJSON ) const noexcept override;
 
 public:
 	//! Retrieves the \copybrief mPlayerSkills

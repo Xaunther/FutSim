@@ -148,7 +148,7 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 		result.push_back( std::string{ CPlayerSkills::JSON_MF_XP } + ": " + std::to_string( playerSkills.GetMFExperience() ) );
 		result.push_back( std::string{ CPlayerSkills::JSON_FW_XP } + ": " + std::to_string( playerSkills.GetFWExperience() ) );
 		futsim::IJsonableTypes::json outputJSON;
-		outputJSON[ CPlayerSkills::JSON_KEY ] = playerSkills.ToJSON();
+		AddToJSONKey( outputJSON, playerSkills );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}
 

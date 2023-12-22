@@ -19,15 +19,15 @@ public:
 	virtual ~IJsonable() = default;
 
 	/**
-	 * @brief Returns the class represented as JSON.
+	 * @brief Adds the class to JSON object.
 	 */
-	json ToJSON() const noexcept;
+	void ToJSON( json& aJSON ) const noexcept;
 
 private:
 	/**
 	 * @copydoc ToJSON
 	*/
-	virtual json JSON() const noexcept = 0;
+	virtual void JSON( json& aJSON ) const noexcept = 0;
 };
 
 } // futsim namespace
