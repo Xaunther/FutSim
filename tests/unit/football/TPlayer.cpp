@@ -2,6 +2,7 @@
 
 #include "football/CPlayer.h"
 
+#include "JsonUtils.h"
 #include "NationalityUtils.h"
 
 #include <iostream>
@@ -14,14 +15,14 @@ INITIALIZE_TEST( TPlayer )
 void TPlayer::TestExceptions() const
 {
 	//! Test JSON constructor
-	CheckException( []() { CPlayer{ json::parse( R"( {
+	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayer>( R"( {
 			"Player": {
 				"First name": "Lionel",
 				"Surnames": "Messi",
 				"Age": 35,
 				"Nationality": "ARG"
 			}
-		} )" )[ CPlayer::JSON_KEY ] }; }, "key 'Player skills' not found" );
+		} )" ); }, "key 'Player skills' not found" );
 }
 
 std::vector<std::string> TPlayer::ObtainedResults() const noexcept
@@ -31,7 +32,7 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 	for( const auto& player : {
 		CPlayer{ "Lionel", "Messi", {}, 35, futsim::E_NATIONALITY::ARG, CPlayerSkills{ 1, 1, 1, 99, 0, 0, 0, 0 } },
 		CPlayer{ "Ansu", "Fati", "Ansu Fati", 20, futsim::E_NATIONALITY::ESP, CPlayerSkills{ 1, 1, 1, 80, 0, 0, 0, 0 } },
-		CPlayer{ json::parse( R"( {
+		futsim::ValueFromJSONKeyString<CPlayer>( R"( {
 			"Player": {
 				"Surnames": "Messi",
 				"First name": "Lionel",
@@ -48,8 +49,8 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 					"FW experience": 0
 				}
 			}
-		} )" )[ CPlayer::JSON_KEY ] },
-		CPlayer{ json::parse( R"( {
+		} )" ),
+		futsim::ValueFromJSONKeyString<CPlayer>( R"( {
 			"Player": {
 				"First name": "Ansu",
 				"Surnames": "Fati",
@@ -67,11 +68,11 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 					"FW experience": 0
 				}
 			}
-		} )" )[ CPlayer::JSON_KEY ] } } )
+		} )" ) } )
 	{
-		result.push_back( std::string{ CPlayerSkills::JSON_KEY } + ": " + player.GetPlayerSkills().ToJSON().dump( 1, '\t' ) );
+		result.push_back( player.GetPlayerSkills().JSON_KEY.data() );
 		futsim::IJsonableTypes::json outputJSON;
-		outputJSON[ CPlayer::JSON_KEY ] = player.ToJSON();
+		AddToJSONKey( outputJSON, player );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}
 
@@ -81,16 +82,7 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 std::vector<std::string> TPlayer::ExpectedResults() const noexcept
 {
 	std::vector<std::string> result{
-		"Player skills: {\n"
-		"	\"GK skill\": 1,\n"
-		"	\"DF skill\": 1,\n"
-		"	\"MF skill\": 1,\n"
-		"	\"FW skill\": 99,\n"
-		"	\"GK experience\": 0,\n"
-		"	\"DF experience\": 0,\n"
-		"	\"MF experience\": 0,\n"
-		"	\"FW experience\": 0\n"
-		"}",
+		"Player skills",
 		"{\n"
 		"	\"Player\": {\n"
 		"		\"First name\": \"Lionel\",\n"
@@ -109,16 +101,7 @@ std::vector<std::string> TPlayer::ExpectedResults() const noexcept
 		"		}\n"
 		"	}\n"
 		"}",
-		"Player skills: {\n"
-		"	\"GK skill\": 1,\n"
-		"	\"DF skill\": 1,\n"
-		"	\"MF skill\": 1,\n"
-		"	\"FW skill\": 80,\n"
-		"	\"GK experience\": 0,\n"
-		"	\"DF experience\": 0,\n"
-		"	\"MF experience\": 0,\n"
-		"	\"FW experience\": 0\n"
-		"}",
+		"Player skills",
 		"{\n"
 		"	\"Player\": {\n"
 		"		\"First name\": \"Ansu\",\n"

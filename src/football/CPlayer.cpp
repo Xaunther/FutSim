@@ -28,17 +28,15 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the p
 
 CPlayer::CPlayer( const json& aJSON ) try :
 	CPerson( aJSON ),
-	mPlayerSkills( ValueFromJSON<CPlayerSkills>( aJSON ) )
+	mPlayerSkills( ValueFromRequiredJSONKey<CPlayerSkills>( aJSON ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player from JSON." )
 
-CPlayer::json CPlayer::JSON() const noexcept
+void CPlayer::JSON( json& aJSON ) const noexcept
 {
-	json result = CPerson::JSON();
-	result[ CPlayerSkills::JSON_KEY ] = mPlayerSkills.ToJSON();
-
-	return result;
+	CPerson::JSON( aJSON );
+	AddToJSONKey( aJSON, mPlayerSkills );
 }
 
 const CPlayerSkills CPlayer::GetPlayerSkills() const noexcept

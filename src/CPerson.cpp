@@ -45,18 +45,14 @@ CPerson::CPerson( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player from JSON." )
 
-CPerson::json CPerson::JSON() const noexcept
+void CPerson::JSON( json& aJSON ) const noexcept
 {
-	json result;
-
-	result[ JSON_FIRST_NAME ] = mFirstName;
-	result[ JSON_SURNAMES ] = mSurnames;
+	AddToJSONKey( aJSON, mFirstName, JSON_FIRST_NAME );
+	AddToJSONKey( aJSON, mSurnames, JSON_SURNAMES );
 	if( mKnownName != mSurnames )
-		result[ JSON_KNOWN_NAME ] = mKnownName;
-	result[ JSON_AGE ] = mAge;
-	result[ JSON_NATIONALITY ] = ToString( mNationality );
-
-	return result;
+		AddToJSONKey( aJSON, mKnownName, JSON_KNOWN_NAME );
+	AddToJSONKey( aJSON, mAge, JSON_AGE );
+	AddToJSONKey( aJSON, ToString( mNationality ), JSON_NATIONALITY );
 }
 
 const std::string_view CPerson::GetFirstName() const noexcept

@@ -3,9 +3,9 @@
 namespace futsim
 {
 
-IJsonable::json IJsonable::ToJSON() const noexcept
+void IJsonable::ToJSON( json& aJSON ) const noexcept
 {
-	return this->JSON();
+	this->JSON( aJSON );
 }
 
 
