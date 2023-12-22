@@ -213,12 +213,14 @@ inline T ValueFromJSONKeyString( const std::string_view& aJSONString, const std:
 template<is_jsonable T, is_json_type JsonType>
 inline JsonType& AddToJSON( JsonType& aJSON, const T& aObject, auto&&... aArgs ) noexcept
 {
-	return aJSON = aObject.ToJSON( std::forward<decltype( aArgs )>( aArgs )... );
+	aJSON.push_back( aObject.ToJSON( std::forward<decltype( aArgs )>( aArgs )... ) );
+	return aJSON;
 }
 
 template<is_not_jsonable T, is_json_type JsonType>
 inline JsonType& AddToJSON( JsonType& aJSON, const T& aObject ) noexcept
 {
+	aJSON.push_back( aObject );
 	return aJSON = aObject;
 }
 
