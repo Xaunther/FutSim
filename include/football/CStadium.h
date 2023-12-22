@@ -43,6 +43,15 @@ protected:
 	json JSON() const noexcept override;
 
 public:
+	//! Retrieves the \copybrief mName
+	const std::string_view GetName() const noexcept;
+
+	//! Retrieves the \copybrief mCapacity
+	const capacity& GetCapacity() const noexcept;
+
+	//! Retrieves the \copybrief mAmbientFactor
+	const ambient_factor& GetAmbientFactor() const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Stadium";
 	//! JSON key for the \copybrief mName

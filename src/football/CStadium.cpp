@@ -57,6 +57,21 @@ CStadium::json CStadium::JSON() const noexcept
 	return result;
 }
 
+const std::string_view CStadium::GetName() const noexcept
+{
+	return mName;
+}
+
+const CStadium::capacity& CStadium::GetCapacity() const noexcept
+{
+	return mCapacity;
+}
+
+const CStadium::ambient_factor& CStadium::GetAmbientFactor() const noexcept
+{
+	return mAmbientFactor;
+}
+
 namespace
 {
 
