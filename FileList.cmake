@@ -37,6 +37,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CPlayer.h
 	include/football/CPlayerSkills.h
 	include/football/CPlayerSkillsTypes.h
+	include/football/CStadium.h
 )
 
 # Source files
