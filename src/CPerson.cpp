@@ -49,12 +49,12 @@ CPerson::json CPerson::JSON() const noexcept
 {
 	json result;
 
-	result[ JSON_FIRST_NAME ] = mFirstName;
-	result[ JSON_SURNAMES ] = mSurnames;
+	AddToJSONKey( result, mFirstName, JSON_FIRST_NAME );
+	AddToJSONKey( result, mSurnames, JSON_SURNAMES );
 	if( mKnownName != mSurnames )
-		result[ JSON_KNOWN_NAME ] = mKnownName;
-	result[ JSON_AGE ] = mAge;
-	result[ JSON_NATIONALITY ] = ToString( mNationality );
+		AddToJSONKey( result, mKnownName, JSON_KNOWN_NAME );
+	AddToJSONKey( result, mAge, JSON_AGE );
+	AddToJSONKey( result, ToString( mNationality ), JSON_NATIONALITY );
 
 	return result;
 }
