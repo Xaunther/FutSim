@@ -15,7 +15,7 @@ INITIALIZE_TEST( TPlayer )
 void TPlayer::TestExceptions() const
 {
 	//! Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONString<CPlayer>( R"( {
+	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayer>( R"( {
 			"Player": {
 				"First name": "Lionel",
 				"Surnames": "Messi",
@@ -32,7 +32,7 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 	for( const auto& player : {
 		CPlayer{ "Lionel", "Messi", {}, 35, futsim::E_NATIONALITY::ARG, CPlayerSkills{ 1, 1, 1, 99, 0, 0, 0, 0 } },
 		CPlayer{ "Ansu", "Fati", "Ansu Fati", 20, futsim::E_NATIONALITY::ESP, CPlayerSkills{ 1, 1, 1, 80, 0, 0, 0, 0 } },
-		futsim::ValueFromJSONString<CPlayer>( R"( {
+		futsim::ValueFromJSONKeyString<CPlayer>( R"( {
 			"Player": {
 				"Surnames": "Messi",
 				"First name": "Lionel",
@@ -50,7 +50,7 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 				}
 			}
 		} )" ),
-		futsim::ValueFromJSONString<CPlayer>( R"( {
+		futsim::ValueFromJSONKeyString<CPlayer>( R"( {
 			"Player": {
 				"First name": "Ansu",
 				"Surnames": "Fati",

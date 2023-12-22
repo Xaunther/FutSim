@@ -22,32 +22,32 @@ void TPerson::TestExceptions() const
 		"The surnames cannot be empty." );
 
 	//! Test JSON constructor
-	CheckException( []() { ValueFromJSONString<CPerson>( R"( {
+	CheckException( []() { ValueFromJSONKeyString<CPerson>( R"( {
 			"Person": {}
 		} )" ); }, "key 'First name' not found" );
-	CheckException( []() { ValueFromJSONString<CPerson>( R"( {
+	CheckException( []() { ValueFromJSONKeyString<CPerson>( R"( {
 			"Person": {
 				"First name": ""
 			}
 		} )" ); }, "The name cannot be empty." );
-	CheckException( []() { ValueFromJSONString<CPerson>( R"( {
+	CheckException( []() { ValueFromJSONKeyString<CPerson>( R"( {
 			"Person": {
 				"First name": "Lionel"
 			}
 		} )" ); }, "key 'Surnames' not found" );
-	CheckException( []() { ValueFromJSONString<CPerson>( R"( {
+	CheckException( []() { ValueFromJSONKeyString<CPerson>( R"( {
 			"Person": {
 				"First name": "Lionel",
 				"Surnames": ""
 			}
 		} )" ); }, "The surnames cannot be empty." );
-	CheckException( []() { ValueFromJSONString<CPerson>( R"( {
+	CheckException( []() { ValueFromJSONKeyString<CPerson>( R"( {
 			"Person": {
 				"First name": "Lionel",
 				"Surnames": "Messi"
 			}
 		} )" ); }, "key 'Age' not found" );
-	CheckException( []() { ValueFromJSONString<CPerson>( R"( {
+	CheckException( []() { ValueFromJSONKeyString<CPerson>( R"( {
 			"Person": {
 				"First name": "Lionel",
 				"Surnames": "Messi",
@@ -63,7 +63,7 @@ std::vector<std::string> TPerson::ObtainedResults() const noexcept
 	for( const auto& person : {
 		CPerson{ "Lorenzo", "Blanco", {}, 35, futsim::E_NATIONALITY::ARG },
 		CPerson{ "Pedro", "Pérez Martínez", "Perico", 20, futsim::E_NATIONALITY::ESP },
-		ValueFromJSONString<CPerson>( R"( {
+		ValueFromJSONKeyString<CPerson>( R"( {
 			"Person": {
 				"Surnames": "Blanco",
 				"First name": "Lorenzo",
@@ -71,7 +71,7 @@ std::vector<std::string> TPerson::ObtainedResults() const noexcept
 				"Nationality": "ARG"
 			}
 		} )" ),
-		ValueFromJSONString<CPerson>( R"( {
+		ValueFromJSONKeyString<CPerson>( R"( {
 			"Person": {
 				"First name": "Pedro",
 				"Surnames": "Pérez Martínez",
