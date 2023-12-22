@@ -50,9 +50,9 @@ CStadium::json CStadium::JSON() const noexcept
 {
 	json result;
 
-	result[ JSON_NAME ] = mName;
-	result[ JSON_CAPACITY ] = mCapacity;
-	result[ JSON_AMBIENT_FACTOR ] = mAmbientFactor;
+	AddToJSONKey( result, mName, JSON_NAME );
+	AddToJSONKey( result, mCapacity, JSON_CAPACITY );
+	AddToJSONKey( result, mAmbientFactor, JSON_AMBIENT_FACTOR );
 
 	return result;
 }
