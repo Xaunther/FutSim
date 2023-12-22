@@ -42,6 +42,15 @@ inline T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view
 template<is_json_constructible T, is_json_type JsonType>
 inline T ValueFromJSON( const JsonType& aJSON, auto&&... aArgs );
 
+/**
+ * @brief Helper function to construct a jsonable class from a string JSON node.
+ * @details The class requires to be constructible from a json type and any other set of arguments.
+ * @param aJSONString JSON string.
+ * @param aArgs Extra arguments to be forwarded to the JSON constructor.
+*/
+template<is_json_constructible T>
+inline T ValueFromJSONString( const std::string_view& aJSONString, auto&&... aArgs );
+
 template<typename T, is_json_type JsonType>
 inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName )
 {
@@ -59,6 +68,12 @@ template<is_json_constructible T, is_json_type JsonType>
 inline T ValueFromJSON( const JsonType& aJSON, auto&&... aArgs )
 {
 	return T{ aJSON.at( T::JSON_KEY ), std::forward<decltype( aArgs )>( aArgs )... };
+}
+
+template<is_json_constructible T>
+inline T ValueFromJSONString( const std::string_view& aJSONString, auto&&... aArgs )
+{
+	return ValueFromJSON<T>( nlohmann::json::parse( aJSONString ), std::forward<decltype( aArgs )>( aArgs )... );
 }
 
 } //futsim namespace
