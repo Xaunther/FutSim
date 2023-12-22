@@ -15,14 +15,14 @@ INITIALIZE_TEST( TPlayer )
 void TPlayer::TestExceptions() const
 {
 	//! Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSON<CPlayer>( json::parse( R"( {
+	CheckException( []() { futsim::ValueFromJSONString<CPlayer>( R"( {
 			"Player": {
 				"First name": "Lionel",
 				"Surnames": "Messi",
 				"Age": 35,
 				"Nationality": "ARG"
 			}
-		} )" ) ); }, "key 'Player skills' not found" );
+		} )" ); }, "key 'Player skills' not found" );
 }
 
 std::vector<std::string> TPlayer::ObtainedResults() const noexcept
@@ -32,7 +32,7 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 	for( const auto& player : {
 		CPlayer{ "Lionel", "Messi", {}, 35, futsim::E_NATIONALITY::ARG, CPlayerSkills{ 1, 1, 1, 99, 0, 0, 0, 0 } },
 		CPlayer{ "Ansu", "Fati", "Ansu Fati", 20, futsim::E_NATIONALITY::ESP, CPlayerSkills{ 1, 1, 1, 80, 0, 0, 0, 0 } },
-		futsim::ValueFromJSON<CPlayer>( json::parse( R"( {
+		futsim::ValueFromJSONString<CPlayer>( R"( {
 			"Player": {
 				"Surnames": "Messi",
 				"First name": "Lionel",
@@ -49,8 +49,8 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 					"FW experience": 0
 				}
 			}
-		} )" ) ),
-		futsim::ValueFromJSON<CPlayer>( json::parse( R"( {
+		} )" ),
+		futsim::ValueFromJSONString<CPlayer>( R"( {
 			"Player": {
 				"First name": "Ansu",
 				"Surnames": "Fati",
@@ -68,7 +68,7 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 					"FW experience": 0
 				}
 			}
-		} )" ) ) } )
+		} )" ) } )
 	{
 		result.push_back( std::string{ CPlayerSkills::JSON_KEY } + ": " + player.GetPlayerSkills().ToJSON().dump( 1, '\t' ) );
 		futsim::IJsonableTypes::json outputJSON;
