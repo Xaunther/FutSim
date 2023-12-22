@@ -13,6 +13,11 @@ template<class T> struct is_json : std::bool_constant<
 //! Helper value template.
 template<class T> inline constexpr bool is_json_v = is_json<T>::value;
 
+//! Concept for a type that must have a JSON_KEY member.
+template<typename T> concept is_json_constructible =
+( std::is_constructible_v<T, nlohmann::json> || std::is_constructible_v<T, nlohmann::ordered_json> ) &&
+	requires{ T::JSON_KEY; };
+
 /**
  * @brief Helper function to get a value from a certain key in a JSON array.
  * @param aJSON JSON object.
