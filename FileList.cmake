@@ -9,6 +9,7 @@ SET(FUTSIM_CORE_SOURCE
 SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CPlayerSkills.cpp
 	src/football/CPlayer.cpp
+	src/football/CStadium.cpp
 )
 
 # Core internal headers
