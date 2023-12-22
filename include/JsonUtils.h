@@ -15,6 +15,12 @@ template<typename T> concept is_json_constructible =
 ( std::is_constructible_v<T, nlohmann::json> || std::is_constructible_v<T, nlohmann::ordered_json> ) &&
 	requires{ T::JSON_KEY; };
 
+//! Concept for a type that can be converted to JSON
+template<typename T> concept is_jsonable = requires { T::JSON_KEY; }&& requires ( T aT )
+{
+	{ aT.ToJSON() } -> std::convertible_to<nlohmann::json>;
+};
+
 /**
  * @brief Helper function to get a value from a certain key in a JSON array.
  * @param aJSON JSON object.
@@ -51,6 +57,14 @@ inline T ValueFromJSON( const JsonType& aJSON, auto&&... aArgs );
 template<is_json_constructible T>
 inline T ValueFromJSONString( const std::string_view& aJSONString, auto&&... aArgs );
 
+/**
+ * @brief Helper function to add a jsonable class to a JSON object.
+ * @param aJSON JSON object.
+ * @param aValue Value to add.
+*/
+template<is_jsonable T, is_json_type JsonType>
+inline JsonType& AddToJSON( JsonType& aJSON, const T& aValue ) noexcept;
+
 template<typename T, is_json_type JsonType>
 inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName )
 {
@@ -74,6 +88,13 @@ template<is_json_constructible T>
 inline T ValueFromJSONString( const std::string_view& aJSONString, auto&&... aArgs )
 {
 	return ValueFromJSON<T>( nlohmann::json::parse( aJSONString ), std::forward<decltype( aArgs )>( aArgs )... );
+}
+
+template<is_jsonable T, is_json_type JsonType>
+inline JsonType& AddToJSON( JsonType& aJSON, const T& aValue ) noexcept
+{
+	aJSON[ T::JSON_KEY ] = aValue.ToJSON();
+	return aJSON;
 }
 
 } //futsim namespace
