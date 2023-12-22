@@ -6,20 +6,26 @@ namespace futsim
 {
 
 //! Concept to check that a given type is a supported json type.
-template<typename T> concept is_json_type =
-std::is_same_v<T, nlohmann::ordered_json> ||
-std::is_same_v<T, nlohmann::json>;
+template<typename T> concept is_json_type = std::convertible_to <T, nlohmann::json>;
+
+//! Concept for a type that has a JSON_KEY member.
+template<typename T> concept has_json_key = requires { T::JSON_KEY; };
 
 //! Concept for a type that must have a JSON_KEY member.
-template<typename T> concept is_json_constructible =
-( std::is_constructible_v<T, nlohmann::json> || std::is_constructible_v<T, nlohmann::ordered_json> ) &&
-	requires{ T::JSON_KEY; };
+template<typename T> concept is_json_constructible = std::is_constructible_v<T, nlohmann::json>&&
+has_json_key<T>;
 
-//! Concept for a type that can be converted to JSON
-template<typename T> concept is_jsonable = requires { T::JSON_KEY; }&& requires ( T aT )
+//! Concept for a type that has a ToJson method.
+template<typename T> concept has_to_json = requires ( T aT )
 {
 	{ aT.ToJSON() } -> std::convertible_to<nlohmann::json>;
 };
+
+//! Concept for a type that can be converted to JSON.
+template<typename T> concept is_jsonable = has_json_key<T> && has_to_json<T>;
+
+//! Concept for a type that cannot be converted to JSON.
+template<typename T> concept is_not_jsonable = ( has_json_key<T> == false || has_to_json<T> == false );
 
 /**
  * @brief Helper function to get a value from a certain key in a JSON array.
@@ -61,18 +67,19 @@ inline T ValueFromJSONString( const std::string_view& aJSONString, auto&&... aAr
  * @brief Helper function to add a jsonable object to a JSON object.
  * @param aJSON JSON object.
  * @param aObject Value to add.
+ * @param aKeyName Name of the key.
 */
 template<is_jsonable T, is_json_type JsonType>
-inline JsonType& AddToJSON( JsonType& aJSON, const T& aObject ) noexcept;
+inline JsonType& AddToJSON( JsonType& aJSON, const T& aObject, const std::string_view aKeyName = T::JSON_KEY ) noexcept;
 
 /**
  * @brief Helper function to add a value to a key in a JSON object.
  * @param aJSON JSON object.
- * @param aValue Value to add.
- * @param aKeyName Name of the key to search.
+ * @param aObject Value to add.
+ * @param aKeyName Name of the key.
 */
-template<is_json_type JsonType>
-inline JsonType& AddToJSON( JsonType& aJSON, const auto& aValue, const std::string_view aKeyName ) noexcept;
+template<is_not_jsonable T, is_json_type JsonType>
+inline JsonType& AddToJSON( JsonType& aJSON, const T& aObject, const std::string_view aKeyName ) noexcept;
 
 template<typename T, is_json_type JsonType>
 inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName )
@@ -100,15 +107,15 @@ inline T ValueFromJSONString( const std::string_view& aJSONString, auto&&... aAr
 }
 
 template<is_jsonable T, is_json_type JsonType>
-inline JsonType& AddToJSON( JsonType& aJSON, const T& aObject ) noexcept
+inline JsonType& AddToJSON( JsonType& aJSON, const T& aObject, const std::string_view aKeyName ) noexcept
 {
-	return AddToJSON( aJSON, aObject.ToJSON(), T::JSON_KEY );
+	return AddToJSON( aJSON, aObject.ToJSON(), aKeyName );
 }
 
-template<is_json_type JsonType>
-inline JsonType& AddToJSON( JsonType& aJSON, const auto& aValue, const std::string_view aKeyName ) noexcept
+template<is_not_jsonable T, is_json_type JsonType>
+inline JsonType& AddToJSON( JsonType& aJSON, const T& aObject, const std::string_view aKeyName ) noexcept
 {
-	aJSON[ aKeyName ] = aValue;
+	aJSON[ aKeyName ] = aObject;
 	return aJSON;
 }
 
