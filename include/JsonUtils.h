@@ -35,10 +35,12 @@ T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyNa
 
 /**
  * @brief Helper function to construct a jsonable class from a JSON node.
- * @details The class requires to have a json key defined in an accesible JSON_KEY member
+ * @details The class requires to be constructible from a json type and any other set of arguments.
  * @param aJSON JSON object.
+ * @param aArgs Extra arguments to be forwarded to the JSON constructor.
 */
-template<is_json_constructible T, is_json_type JsonType> T ValueFromJSON( const JsonType& aJSON );
+template<is_json_constructible T, is_json_type JsonType> T
+ValueFromJSON( const JsonType& aJSON, auto&&... aArgs );
 
 template<typename T, is_json_type JsonType>
 T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName )
@@ -53,9 +55,10 @@ T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyNa
 	return found != aJSON.cend() ? ( *found ).template get<T>() : aDefault;
 }
 
-template<is_json_constructible T, is_json_type JsonType> T ValueFromJSON( const JsonType& aJSON )
+template<is_json_constructible T, is_json_type JsonType> T
+ValueFromJSON( const JsonType& aJSON, auto&&... aArgs )
 {
-	return T{ aJSON.at( T::JSON_KEY ) };
+	return T{ aJSON.at( T::JSON_KEY ), std::forward<decltype( aArgs )>( aArgs )... };
 }
 
 } //futsim namespace
