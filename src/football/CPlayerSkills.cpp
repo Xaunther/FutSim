@@ -64,14 +64,14 @@ CPlayerSkills::json CPlayerSkills::JSON() const noexcept
 {
 	json result;
 
-	result[ JSON_GK_SKILL ] = mGKSkill;
-	result[ JSON_DF_SKILL ] = mDFSkill;
-	result[ JSON_MF_SKILL ] = mMFSkill;
-	result[ JSON_FW_SKILL ] = mFWSkill;
-	result[ JSON_GK_XP ] = mGKExperience;
-	result[ JSON_DF_XP ] = mDFExperience;
-	result[ JSON_MF_XP ] = mMFExperience;
-	result[ JSON_FW_XP ] = mFWExperience;
+	AddToJSONKey( result, mGKSkill, JSON_GK_SKILL );
+	AddToJSONKey( result, mDFSkill, JSON_DF_SKILL );
+	AddToJSONKey( result, mMFSkill, JSON_MF_SKILL );
+	AddToJSONKey( result, mFWSkill, JSON_FW_SKILL );
+	AddToJSONKey( result, mGKExperience, JSON_GK_XP );
+	AddToJSONKey( result, mDFExperience, JSON_DF_XP );
+	AddToJSONKey( result, mMFExperience, JSON_MF_XP );
+	AddToJSONKey( result, mFWExperience, JSON_FW_XP );
 
 	return result;
 }
