@@ -10,4 +10,5 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CPlayerSkills.cpp
 	src/football/CPlayer.cpp
 	src/football/CStadium.cpp
+	src/football/CTeam.cpp
 )
