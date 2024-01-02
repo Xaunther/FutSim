@@ -108,13 +108,6 @@ configure_file(${FUTSIM_INCLUDE_DIR}/Config.h.in ${FUTSIM_INCLUDE_DIR}/Config.h)
 configure_file(${FUTSIM_INCLUDE_DIR}/ENationality.h.in ${FUTSIM_INCLUDE_DIR}/ENationality.h)
 configure_file(${FUTSIM_DIR}/src/NationalityConversionMaps.h.in ${FUTSIM_DIR}/src/NationalityConversionMaps.h)
 
-foreach(HEADER ${FUTSIM_EXTERNAL_HEADERS})
-	string(REGEX REPLACE "include/" "" HEADER ${HEADER})
-	set(INCLUDE_FUTSIM_EXTERNAL_HEADERS "${INCLUDE_FUTSIM_EXTERNAL_HEADERS}#include \"${HEADER}\"\n")
-endforeach()
-
-configure_file(${FUTSIM_INCLUDE_DIR}/FutSim.h.in ${FUTSIM_INCLUDE_DIR}/FutSim.h)
-
 # Include directories
 include_directories(${FUTSIM_INCLUDE_DIR} ${FUTSIM_DIR}/src ${JSON_DIR}/include)
 
