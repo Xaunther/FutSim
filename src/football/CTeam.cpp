@@ -1,6 +1,7 @@
 #include "football/CTeam.h"
 
 #include "ExceptionUtils.h"
+#include "JsonUtils.h"
 
 #include <regex>
 
@@ -40,6 +41,12 @@ template <typename T> const T& CheckPositiveness( const T& aNumber, const std::s
 */
 template <typename T> const T& CheckNonNegativeness( const T& aNumber, const std::string_view aNumberDescription );
 
+/**
+ * @brief Create the players from JSON
+ * @param aJSON JSON object.
+*/
+CTeamTypes::players CreatePlayersFromJSON( const IJsonableTypes::json& aJSON );
+
 } // anonymous namespace
 
 CTeam::CTeam(
@@ -57,10 +64,22 @@ CTeam::CTeam(
 	mPlayers( aPlayers ),
 	mSupportFactor( CheckPositiveness( aSupportFactor, "support factor" ) ),
 	mAttendanceDistribution( CheckNonNegativeness( aMeanAttendance, "mean attendance" ),
-		CheckPositiveness( aStdDevAttendance, "standard deviation of fans willing to attend the match" ) )
+		CheckPositiveness( aStdDevAttendance, "standard deviation of the attendance" ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the team." )
+
+CTeam::CTeam( const json& aJSON ) try :
+	mName( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, JSON_NAME ), "name" ) ),
+	mAbbreviation( CheckAbbreviation( ValueFromRequiredJSONKey<name_type>( aJSON, JSON_ABBREVIATION ) ) ),
+	mManager( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, JSON_MANAGER ), "manager name" ) ),
+	mPlayers( CreatePlayersFromJSON( aJSON ) ),
+	mSupportFactor( CheckPositiveness( ValueFromRequiredJSONKey<support_factor>( aJSON, JSON_SUPPORT_FACTOR ), "support factor" ) ),
+	mAttendanceDistribution( CheckNonNegativeness( ValueFromRequiredJSONKey<double>( aJSON, JSON_MEAN_ATTENDANCE ), "mean attendance" ),
+		CheckPositiveness( ValueFromRequiredJSONKey<double>( aJSON, JSON_STD_DEV_ATTENDANCE ), "standard deviation of the attendance" ) )
+{
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the team from JSON." )
 
 namespace
 {
@@ -98,6 +117,15 @@ template <typename T> const T& CheckNonNegativeness( const T& aNumber, const std
 	return aNumber;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the " << aNumberDescription << "." )
+
+CTeamTypes::players CreatePlayersFromJSON( const IJsonableTypes::json& aJSON ) try
+{
+	CTeamTypes::players result;
+	for( const auto& JSONPlayer : ValueFromOptionalJSONKey<IJsonableTypes::json>( aJSON, CTeam::JSON_PLAYERS ) )
+		result.emplace_back( ValueFromRequiredJSONKey<CPlayer>( JSONPlayer ) );
+	return result;
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the players from JSON." )
 
 } // anonymous namespace
 

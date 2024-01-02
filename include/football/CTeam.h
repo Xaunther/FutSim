@@ -12,6 +12,7 @@ namespace futsim::football
 
 class CTeam : public IJsonable
 {
+	using json = IJsonableTypes::json;
 	using name_type = CTeamTypes::name_type;
 	using players = CTeamTypes::players;
 	using support_factor = CTeamTypes::support_factor;
@@ -41,6 +42,29 @@ public:
 		const support_factor& aSupportFactor,
 		const double& aMeanAttendance,
 		const double& aStdDevAttendance );
+
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CTeam( const json& aJSON );
+
+	//! JSON key for the class-
+	static inline constexpr std::string_view JSON_KEY = "Team";
+	//! JSON key for the \copybrief mName
+	static inline constexpr std::string_view JSON_NAME = "Name";
+	//! JSON key for the \copybrief mAbbreviation
+	static inline constexpr std::string_view JSON_ABBREVIATION = "Abbreviation";
+	//! JSON key for the \copybrief mManager
+	static inline constexpr std::string_view JSON_MANAGER = "Manager";
+	//! JSON key for the \copybrief mPlayers
+	static inline constexpr std::string_view JSON_PLAYERS = "Players";
+	//! JSON key for the \copybrief mSupportFactor
+	static inline constexpr std::string_view JSON_SUPPORT_FACTOR = "Support factor";
+	//! JSON key for the mean attendance.
+	static inline constexpr std::string_view JSON_MEAN_ATTENDANCE = "Mean attendance";
+	//! JSON key for the standard deviation of the attendance.
+	static inline constexpr std::string_view JSON_STD_DEV_ATTENDANCE = "StdDev attendance";
 
 private:
 	//! Team name.
