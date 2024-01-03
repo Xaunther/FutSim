@@ -93,6 +93,41 @@ void CTeam::JSON( json& aJSON ) const noexcept
 	AddToJSONKey( aJSON, mAttendanceDistribution.stddev(), JSON_STD_DEV_ATTENDANCE );
 }
 
+const std::string_view CTeam::GetName() const noexcept
+{
+	return mName;
+}
+
+const std::string_view CTeam::GetAbbreviation() const noexcept
+{
+	return mAbbreviation;
+}
+
+const std::string_view CTeam::GetManager() const noexcept
+{
+	return mManager;
+}
+
+const CTeam::players& CTeam::GetPlayers() const noexcept
+{
+	return mPlayers;
+}
+
+const CTeam::support_factor& CTeam::GetSupportFactor() const noexcept
+{
+	return mSupportFactor;
+}
+
+double CTeam::GetMeanAttendance() const noexcept
+{
+	return mAttendanceDistribution.mean();
+}
+
+double CTeam::GetStdDevAttendance() const noexcept
+{
+	return mAttendanceDistribution.stddev();
+}
+
 namespace
 {
 

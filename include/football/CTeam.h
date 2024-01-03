@@ -56,6 +56,27 @@ protected:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
+	//! Retrieves the \copybrief mName
+	const std::string_view GetName() const noexcept;
+
+	//! Retrieves the \copybrief mAbbreviation
+	const std::string_view GetAbbreviation() const noexcept;
+
+	//! Retrieves the \copybrief mManager
+	const std::string_view GetManager() const noexcept;
+
+	//! Retrieves the \copybrief mPlayers
+	const players& GetPlayers() const noexcept;
+
+	//! Retrieves the \copybrief mSupportFactor
+	const support_factor& GetSupportFactor() const noexcept;
+
+	//! Retrieves the mean attendance.
+	double GetMeanAttendance() const noexcept;
+
+	//! Retrieves the standard deviation of the attendance.
+	double GetStdDevAttendance() const noexcept;
+
 	//! JSON key for the class-
 	static inline constexpr std::string_view JSON_KEY = "Team";
 	//! JSON key for the \copybrief mName
