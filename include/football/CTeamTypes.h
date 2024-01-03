@@ -22,6 +22,8 @@ using name_type = std::string;
 using players = std::vector<CPlayer>;
 //! Type for the support factor.
 using support_factor = CStadiumTypes::ambient_factor;
+//! Type for the attendance.
+using attendance = unsigned int;
 
 } // CTeamTypes namespace
 

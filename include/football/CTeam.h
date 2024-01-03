@@ -16,6 +16,7 @@ class CTeam : public IJsonable
 	using name_type = CTeamTypes::name_type;
 	using players = CTeamTypes::players;
 	using support_factor = CTeamTypes::support_factor;
+	using attendance = CTeamTypes::attendance;
 
 public:
 	/**
@@ -76,6 +77,9 @@ public:
 
 	//! Retrieves the standard deviation of the attendance.
 	double GetStdDevAttendance() const noexcept;
+
+	//! Generates a random attendance.
+	template<std::uniform_random_bit_generator T> attendance GenerateAttendance( T& aGenerator ) noexcept;
 
 	//! JSON key for the class-
 	static inline constexpr std::string_view JSON_KEY = "Team";
