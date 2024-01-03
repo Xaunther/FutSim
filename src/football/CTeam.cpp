@@ -81,6 +81,18 @@ CTeam::CTeam( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the team from JSON." )
 
+void CTeam::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mName, JSON_NAME );
+	AddToJSONKey( aJSON, mAbbreviation, JSON_ABBREVIATION );
+	AddToJSONKey( aJSON, mManager, JSON_MANAGER );
+	if( !mPlayers.empty() )
+		AddKeyArrayToJSONKey( aJSON, mPlayers, JSON_PLAYERS );
+	AddToJSONKey( aJSON, mSupportFactor, JSON_SUPPORT_FACTOR );
+	AddToJSONKey( aJSON, mAttendanceDistribution.mean(), JSON_MEAN_ATTENDANCE );
+	AddToJSONKey( aJSON, mAttendanceDistribution.stddev(), JSON_STD_DEV_ATTENDANCE );
+}
+
 namespace
 {
 
