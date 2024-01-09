@@ -127,6 +127,15 @@ template<is_not_jsonable T, is_json_type JsonType>
 inline void AddToJSON( JsonType& aJSON, const T& aObject ) noexcept;
 
 /**
+ * @brief Helper function to add a container with keys to a JSON object.
+ * @param aJSON JSON object.
+ * @param aContainer Container to add.
+ * @param aArgs Arguments to be forwarded to the ToJSON method.
+*/
+template<is_json_type JsonType>
+inline void AddKeyArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept;
+
+/**
  * @brief Helper function to add a jsonable class to a JSON object.
  * @param aJSON JSON object.
  * @param aObject Value to add.
@@ -217,6 +226,19 @@ template<is_not_jsonable T, is_json_type JsonType>
 inline void AddToJSON( JsonType& aJSON, const T& aObject ) noexcept
 {
 	aJSON = aObject;
+}
+
+template<is_json_type JsonType>
+inline void AddKeyArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept
+{
+	JsonType arrayJSON;
+	for( const auto& element : aContainer )
+	{
+		JsonType elementJSON;
+		AddToJSONKey( elementJSON, element, std::forward<decltype( aArgs )>( aArgs )... );
+		arrayJSON.push_back( elementJSON );
+	}
+	AddToJSON( aJSON, arrayJSON );
 }
 
 template<is_jsonable T, is_json_type JsonType>
