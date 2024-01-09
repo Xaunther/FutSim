@@ -154,6 +154,16 @@ inline void AddToJSONKey( JsonType& aJSON, const T& aObject, auto&&... aArgs, co
 template<is_not_jsonable T, is_json_type JsonType>
 inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_view aKeyName ) noexcept;
 
+/**
+ * @brief Helper function to add a container with keys to a JSON object.
+ * @param aJSON JSON object.
+ * @param aContainer Container to add.
+ * @param aKeyName Name of the key under which to add it.
+ * @param aArgs Arguments to be forwarded to the ToJSON method.
+*/
+template<is_json_type JsonType>
+inline void AddKeyArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept;
+
 template<is_json_constructible T, is_json_type JsonType>
 inline T ValueFromJSON( const JsonType& aJSON, auto&&... aArgs )
 {
@@ -251,6 +261,12 @@ template<is_not_jsonable T, is_json_type JsonType>
 inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_view aKeyName ) noexcept
 {
 	AddToJSON( aJSON[ aKeyName ], aObject );
+}
+
+template<is_json_type JsonType>
+inline void AddKeyArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept
+{
+	AddKeyArrayToJSON( aJSON[ aKeyName ], aContainer, std::forward<decltype( aArgs )>( aArgs )... );
 }
 
 } //futsim namespace
