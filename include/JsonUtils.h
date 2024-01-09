@@ -127,6 +127,24 @@ template<is_not_jsonable T, is_json_type JsonType>
 inline void AddToJSON( JsonType& aJSON, const T& aObject ) noexcept;
 
 /**
+ * @brief Helper function to add a container to a JSON object.
+ * @param aJSON JSON object.
+ * @param aContainer Container to add.
+ * @param aArgs Arguments to be forwarded to the ToJSON method.
+*/
+template<is_json_type JsonType>
+inline void AddArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept;
+
+/**
+ * @brief Helper function to add a container with keys to a JSON object.
+ * @param aJSON JSON object.
+ * @param aContainer Container to add.
+ * @param aArgs Arguments to be forwarded to the ToJSON method.
+*/
+template<is_json_type JsonType>
+inline void AddKeyArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept;
+
+/**
  * @brief Helper function to add a jsonable class to a JSON object.
  * @param aJSON JSON object.
  * @param aObject Value to add.
@@ -144,6 +162,26 @@ inline void AddToJSONKey( JsonType& aJSON, const T& aObject, auto&&... aArgs, co
 */
 template<is_not_jsonable T, is_json_type JsonType>
 inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_view aKeyName ) noexcept;
+
+/**
+ * @brief Helper function to add a container with keys to a JSON object.
+ * @param aJSON JSON object.
+ * @param aContainer Container to add.
+ * @param aKeyName Name of the key under which to add it.
+ * @param aArgs Arguments to be forwarded to the ToJSON method.
+*/
+template<is_json_type JsonType>
+inline void AddArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept;
+
+/**
+ * @brief Helper function to add a container with keys to a JSON object.
+ * @param aJSON JSON object.
+ * @param aContainer Container to add.
+ * @param aKeyName Name of the key under which to add it.
+ * @param aArgs Arguments to be forwarded to the ToJSON method.
+*/
+template<is_json_type JsonType>
+inline void AddKeyArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept;
 
 template<is_json_constructible T, is_json_type JsonType>
 inline T ValueFromJSON( const JsonType& aJSON, auto&&... aArgs )
@@ -219,6 +257,32 @@ inline void AddToJSON( JsonType& aJSON, const T& aObject ) noexcept
 	aJSON = aObject;
 }
 
+template<is_json_type JsonType>
+inline void AddArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept
+{
+	JsonType arrayJSON;
+	for( const auto& element : aContainer )
+	{
+		JsonType elementJSON;
+		AddToJSON( elementJSON, element, std::forward<decltype( aArgs )>( aArgs )... );
+		arrayJSON.push_back( elementJSON );
+	}
+	AddToJSON( aJSON, arrayJSON );
+}
+
+template<is_json_type JsonType>
+inline void AddKeyArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept
+{
+	JsonType arrayJSON;
+	for( const auto& element : aContainer )
+	{
+		JsonType elementJSON;
+		AddToJSONKey( elementJSON, element, std::forward<decltype( aArgs )>( aArgs )... );
+		arrayJSON.push_back( elementJSON );
+	}
+	AddToJSON( aJSON, arrayJSON );
+}
+
 template<is_jsonable T, is_json_type JsonType>
 inline void AddToJSONKey( JsonType& aJSON, const T& aObject, auto&&... aArgs, const std::string_view aKeyName ) noexcept
 {
@@ -229,6 +293,18 @@ template<is_not_jsonable T, is_json_type JsonType>
 inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_view aKeyName ) noexcept
 {
 	AddToJSON( aJSON[ aKeyName ], aObject );
+}
+
+template<is_json_type JsonType>
+inline void AddArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept
+{
+	AddArrayToJSON( aJSON[ aKeyName ], aContainer, std::forward<decltype( aArgs )>( aArgs )... );
+}
+
+template<is_json_type JsonType>
+inline void AddKeyArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept
+{
+	AddKeyArrayToJSON( aJSON[ aKeyName ], aContainer, std::forward<decltype( aArgs )>( aArgs )... );
 }
 
 } //futsim namespace
