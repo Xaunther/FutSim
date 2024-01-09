@@ -186,7 +186,7 @@ inline void AddKeyArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const
 template<is_json_constructible T, is_json_type JsonType>
 inline T ValueFromJSON( const JsonType& aJSON, auto&&... aArgs )
 {
-	return T{ aJSON, std::forward<decltype( aArgs )>( aArgs )... };
+	return T( aJSON, std::forward<decltype( aArgs )>( aArgs )... );
 }
 
 template<is_not_json_constructible T, is_json_type JsonType>
