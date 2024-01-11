@@ -2,6 +2,7 @@
 
 #include "ExceptionUtils.h"
 #include "JsonUtils.h"
+#include "NameUtils.h"
 
 #include <regex>
 
@@ -13,13 +14,6 @@ namespace football
 
 namespace
 {
-
-/**
- * @brief Checks correctness of the name.
- * @param aName Name.
- * @param aNameString String with the name label to add to the error message.
-*/
-const std::string_view CheckName( const std::string_view aName, const std::string_view aNameString );
 
 /**
  * @brief Checks correctness of the abbreviation.
@@ -136,14 +130,6 @@ template<std::uniform_random_bit_generator T> CTeam::attendance CTeam::GenerateA
 
 namespace
 {
-
-const std::string_view CheckName( const std::string_view aName, const std::string_view aNameString ) try
-{
-	if( aName.empty() )
-		throw std::invalid_argument{ "The " + std::string( aNameString.data() ) + " cannot be empty." };
-	return aName;
-}
-FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the " << aNameString << "." )
 
 const std::string_view CheckAbbreviation( const std::string_view aAbbreviation ) try
 {

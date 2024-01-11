@@ -2,6 +2,7 @@
 SET(FUTSIM_CORE_SOURCE
 	src/CPerson.cpp
 	src/IJsonable.cpp
+	src/NameUtils.cpp
 	src/NationalityUtils.cpp
 )
 

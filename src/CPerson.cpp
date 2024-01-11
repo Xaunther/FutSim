@@ -2,22 +2,11 @@
 
 #include "ExceptionUtils.h"
 #include "JsonUtils.h"
+#include "NameUtils.h"
 #include "NationalityUtils.h"
 
 namespace futsim
 {
-
-namespace
-{
-
-/**
- * @brief Checks correctness of the ability
- * @param aSkill Skill value.
- * @param aNameString String with the name label to add to the error message.
-*/
-const std::string_view CheckName( const std::string_view aName, const std::string_view aNameString );
-
-} // anonymous namespace
 
 CPerson::CPerson(
 	const std::string_view aFirstName,
@@ -79,18 +68,5 @@ const E_NATIONALITY& CPerson::GetNationality() const noexcept
 {
 	return mNationality;
 }
-
-namespace
-{
-
-const std::string_view CheckName( const std::string_view aName, const std::string_view aNameString ) try
-{
-	if( aName.empty() )
-		throw std::invalid_argument{ "The " + std::string( aNameString.data() ) + " cannot be empty." };
-	return aName;
-}
-FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the " << aNameString << "." )
-
-} // anonymous namespace
 
 }  // futsim namespace

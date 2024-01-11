@@ -2,6 +2,7 @@
 
 #include "ExceptionUtils.h"
 #include "JsonUtils.h"
+#include "NameUtils.h"
 
 namespace futsim
 {
@@ -11,12 +12,6 @@ namespace football
 
 namespace
 {
-
-/**
- * @brief Checks correctness of stadium name.
- * @param aName Stadium name.
-*/
-const std::string_view CheckName( const std::string_view aName );
 
 /**
  * @brief Checks correctness of the ambient factor.
@@ -31,7 +26,7 @@ CStadium::CStadium(
 	const capacity aCapacity,
 	const ambient_factor aAmbientFactor
 ) try :
-	mName( CheckName( aName ) ),
+	mName( CheckName( aName, "stadium name" ) ),
 	mCapacity( aCapacity ),
 	mAmbientFactor( CheckAmbientFactor( aAmbientFactor ) )
 {
@@ -39,7 +34,7 @@ CStadium::CStadium(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the stadium." )
 
 CStadium::CStadium( const json& aJSON ) try :
-	mName( CheckName( ValueFromRequiredJSONKey<std::string>( aJSON, JSON_NAME ) ) ),
+	mName( CheckName( ValueFromRequiredJSONKey<std::string>( aJSON, JSON_NAME ), "stadium name" ) ),
 	mCapacity( ValueFromRequiredJSONKey<capacity>( aJSON, JSON_CAPACITY ) ),
 	mAmbientFactor( CheckAmbientFactor( ValueFromRequiredJSONKey<ambient_factor>( aJSON, JSON_AMBIENT_FACTOR ) ) )
 {
@@ -70,14 +65,6 @@ const CStadium::ambient_factor& CStadium::GetAmbientFactor() const noexcept
 
 namespace
 {
-
-const std::string_view CheckName( const std::string_view aName ) try
-{
-	if( aName.empty() )
-		throw std::invalid_argument( "The stadium name cannot be empty." );
-	return aName;
-}
-FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the stadium name." )
 
 const CStadiumTypes::ambient_factor& CheckAmbientFactor( const CStadiumTypes::ambient_factor& aAmbientFactor ) try
 {
