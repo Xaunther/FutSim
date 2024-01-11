@@ -46,6 +46,16 @@ void CTieCondition::JSON( json& aJSON ) const noexcept
 		AddToJSONKey( aJSON, *mHomeTeamGoals, JSON_HOME_TEAM_GOALS );
 }
 
+const CTieCondition::goal_difference& CTieCondition::GetHomeTeamLead() const noexcept
+{
+	return mHomeTeamLead;
+}
+
+const CTieCondition::optional_goal_count& CTieCondition::GetHomeTeamGoals() const noexcept
+{
+	return mHomeTeamGoals;
+}
+
 namespace
 {
 

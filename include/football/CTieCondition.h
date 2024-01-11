@@ -42,6 +42,12 @@ protected:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
+	//! Retrieves the \copybrief mHomeTeamLead
+	const goal_difference& GetHomeTeamLead() const noexcept;
+
+	//! Retrieves the \copybrief mHomeTeamGoals
+	const optional_goal_count& GetHomeTeamGoals() const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Tie condition";
 	//! JSON key for the \copybrief mHomeTeamLead
