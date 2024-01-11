@@ -56,6 +56,12 @@ const CTieCondition::optional_goal_count& CTieCondition::GetHomeTeamGoals() cons
 	return mHomeTeamGoals;
 }
 
+bool CTieCondition::operator() ( const goal_count aHomeGoals, const goal_count aAwayGoals ) const noexcept
+{
+	return std::cmp_equal( mHomeTeamLead + aAwayGoals, aHomeGoals )
+		&& ( !mHomeTeamGoals || *mHomeTeamGoals == aHomeGoals );
+}
+
 namespace
 {
 

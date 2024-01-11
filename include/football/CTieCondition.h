@@ -17,6 +17,7 @@ class CTieCondition : public IJsonable
 {
 	using json = IJsonableTypes::json;
 	using goal_difference = CTieConditionTypes::goal_difference;
+	using goal_count = CTieConditionTypes::goal_count;
 	using optional_goal_count = CTieConditionTypes::optional_goal_count;
 
 public:
@@ -47,6 +48,13 @@ public:
 
 	//! Retrieves the \copybrief mHomeTeamGoals
 	const optional_goal_count& GetHomeTeamGoals() const noexcept;
+
+	/**
+	 * @brief Evaluates the tie condition for a given match result.
+	 * @param aHomeGoals Home team goal tally.
+	 * @param aAwayGoals Away team goal tally.
+	*/
+	bool operator() ( const goal_count aHomeGoals, const goal_count aAwayGoals ) const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Tie condition";
