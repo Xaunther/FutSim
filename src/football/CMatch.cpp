@@ -38,4 +38,24 @@ void CMatch::JSON( json& aJSON ) const noexcept
 	AddToJSONKey( aJSON, mReferee, JSON_REFEREE );
 }
 
+const CTeam& CMatch::GetHomeTeam() const noexcept
+{
+	return mHomeTeam;
+}
+
+const CTeam& CMatch::GetAwayTeam() const noexcept
+{
+	return mAwayTeam;
+}
+
+const CStadium& CMatch::GetStadium() const noexcept
+{
+	return mStadium;
+}
+
+const std::string_view CMatch::GetReferee() const noexcept
+{
+	return mReferee;
+}
+
 } // futsim::football namespace

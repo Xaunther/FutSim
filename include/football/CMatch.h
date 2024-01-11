@@ -41,6 +41,18 @@ protected:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
+	//! Retrieves the \copybrief mHomeTeam
+	const CTeam& GetHomeTeam() const noexcept;
+
+	//! Retrieves the \copybrief mAwayTeam
+	const CTeam& GetAwayTeam() const noexcept;
+
+	//! Retrieves the \copybrief mStadium
+	const CStadium& GetStadium() const noexcept;
+
+	//! Retrieves the \copybrief mReferee
+	const std::string_view GetReferee() const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Match";
 	//! JSON key for the \copybrief mHomeTeam
