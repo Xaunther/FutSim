@@ -39,6 +39,13 @@ CTieCondition::CTieCondition( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tie conditions from JSON." )
 
+void CTieCondition::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mHomeTeamLead, JSON_HOME_TEAM_LEAD );
+	if( mHomeTeamGoals )
+		AddToJSONKey( aJSON, *mHomeTeamGoals, JSON_HOME_TEAM_GOALS );
+}
+
 namespace
 {
 

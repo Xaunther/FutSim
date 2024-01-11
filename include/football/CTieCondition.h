@@ -35,6 +35,13 @@ public:
 	*/
 	explicit CTieCondition( const json& aJSON );
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Tie condition";
 	//! JSON key for the \copybrief mHomeTeamLead
