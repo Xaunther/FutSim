@@ -30,4 +30,12 @@ CMatch::CMatch( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the match from JSON." )
 
+void CMatch::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mHomeTeam, JSON_HOME_TEAM );
+	AddToJSONKey( aJSON, mAwayTeam, JSON_AWAY_TEAM );
+	AddToJSONKey( aJSON, mStadium );
+	AddToJSONKey( aJSON, mReferee, JSON_REFEREE );
+}
+
 } // futsim::football namespace
