@@ -15,6 +15,7 @@ namespace futsim::football
 */
 class CTieCondition : public IJsonable
 {
+	using json = IJsonableTypes::json;
 	using goal_difference = CTieConditionTypes::goal_difference;
 	using optional_goal_count = CTieConditionTypes::optional_goal_count;
 
@@ -27,6 +28,19 @@ public:
 	explicit CTieCondition(
 		const goal_difference aHomeTeamLead = 0,
 		const optional_goal_count& aHomeTeamGoals = {} );
+
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CTieCondition( const json& aJSON );
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Tie condition";
+	//! JSON key for the \copybrief mHomeTeamLead
+	static inline constexpr std::string_view JSON_HOME_TEAM_LEAD = "Home team lead";
+	//! JSON key for the \copybrief mHomeTeamGoals
+	static inline constexpr std::string_view JSON_HOME_TEAM_GOALS = "Home team goals";
 
 private:
 	//! Home team goal lead that results in a tie.

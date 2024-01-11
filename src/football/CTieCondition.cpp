@@ -3,6 +3,7 @@
 #include <utility>
 
 #include "ExceptionUtils.h"
+#include "JsonUtils.h"
 
 namespace futsim::football
 {
@@ -30,6 +31,13 @@ CTieCondition::CTieCondition(
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tie conditions." )
+
+CTieCondition::CTieCondition( const json& aJSON ) try :
+	mHomeTeamLead( ValueFromRequiredJSONKey<goal_difference>( aJSON, JSON_HOME_TEAM_LEAD ) ),
+	mHomeTeamGoals( CheckHomeTeamGoals( ValueFromOptionalJSONKey<optional_goal_count>( aJSON, JSON_HOME_TEAM_GOALS ), mHomeTeamLead ) )
+{
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tie conditions from JSON." )
 
 namespace
 {
