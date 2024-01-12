@@ -3,13 +3,13 @@
 #include "IJsonable.h"
 
 #include "football/CPenaltyShootoutConfigurationTypes.h"
+#include "football/EPenaltySequence.h"
 
 namespace futsim::football
 {
 
 class CPenaltyShootoutConfiguration : public IJsonable
 {
-	using E_SEQUENCE = CPenaltyShootoutConfigurationTypes::E_SEQUENCE;
 	using penalty_count = CPenaltyShootoutConfigurationTypes::penalty_count;
 
 public:
@@ -19,12 +19,12 @@ public:
 	 * @param aMinPenaltyCount \ref mMinPenaltyCount
 	*/
 	explicit CPenaltyShootoutConfiguration(
-		const E_SEQUENCE& aPenaltySequence = E_SEQUENCE::AB,
+		const E_PENALTY_SEQUENCE& aPenaltySequence = E_PENALTY_SEQUENCE::AB,
 		const penalty_count& aMinPenaltyCount = 5 ) noexcept;
 
 private:
 	//! Penalty sequence.
-	E_SEQUENCE mPenaltySequence;
+	E_PENALTY_SEQUENCE mPenaltySequence;
 	//! Minimum number of penalties to be taken by each team.
 	penalty_count mMinPenaltyCount;
 };

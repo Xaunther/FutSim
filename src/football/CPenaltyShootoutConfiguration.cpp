@@ -4,7 +4,7 @@ namespace futsim::football
 {
 
 CPenaltyShootoutConfiguration::CPenaltyShootoutConfiguration(
-	const E_SEQUENCE& aPenaltySequence,
+	const E_PENALTY_SEQUENCE& aPenaltySequence,
 	const penalty_count& aMinPenaltyCount
 ) noexcept :
 	mPenaltySequence( aPenaltySequence ),
