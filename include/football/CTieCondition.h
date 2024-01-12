@@ -31,6 +31,18 @@ public:
 		const optional_goal_count& aHomeTeamGoals = {} );
 
 	/**
+	 * @brief Constructor from a previous match result.
+	 * @details Assumes that the home team in the previous match now is the away team, and vice versa.
+	 * @param aHomeGoals Home team goal tally in the previous match.
+	 * @param aAwayGoals Away team goal tally in the previous match.
+	 * @param aAwayGoalsRule Whether away goals rule applies.
+	*/
+	explicit CTieCondition(
+		const goal_count aHomeGoals,
+		const goal_count aAwayGoals,
+		bool aUseAwayGoalsRule ) noexcept;
+
+	/**
 	 * @brief JSON constructor.
 	 * @param aJSON JSON object.
 	*/

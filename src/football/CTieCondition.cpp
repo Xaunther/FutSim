@@ -32,6 +32,16 @@ CTieCondition::CTieCondition(
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tie conditions." )
 
+CTieCondition::CTieCondition(
+	const goal_count aHomeGoals,
+	const goal_count aAwayGoals,
+	bool aUseAwayGoalsRule
+) noexcept :
+	mHomeTeamLead( aHomeGoals - aAwayGoals ),
+	mHomeTeamGoals( aUseAwayGoalsRule ? aHomeGoals : optional_goal_count{} )
+{
+}
+
 CTieCondition::CTieCondition( const json& aJSON ) try :
 	mHomeTeamLead( ValueFromRequiredJSONKey<goal_difference>( aJSON, JSON_HOME_TEAM_LEAD ) ),
 	mHomeTeamGoals( CheckHomeTeamGoals( ValueFromOptionalJSONKey<optional_goal_count>( aJSON, JSON_HOME_TEAM_GOALS ), mHomeTeamLead ) )
