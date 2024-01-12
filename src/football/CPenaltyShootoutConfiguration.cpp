@@ -29,4 +29,14 @@ void CPenaltyShootoutConfiguration::JSON( json& aJSON ) const noexcept
 	AddToJSONKey( aJSON, mMinPenaltyCount, JSON_MIN_PENALTY_COUNT );
 }
 
+const E_PENALTY_SEQUENCE& CPenaltyShootoutConfiguration::GetPenaltySequence() const noexcept
+{
+	return mPenaltySequence;
+}
+
+const CPenaltyShootoutConfigurationTypes::penalty_count& CPenaltyShootoutConfiguration::GetMinPenaltyCount() const noexcept
+{
+	return mMinPenaltyCount;
+}
+
 } // futsim::football namespace

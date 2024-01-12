@@ -36,6 +36,12 @@ protected:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
+	//! Retrieves the \copybrief mPenaltySequence
+	const E_PENALTY_SEQUENCE& GetPenaltySequence() const noexcept;
+
+	//! Retrieves the \copybrief mMinPenaltyCount
+	const penalty_count& GetMinPenaltyCount() const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Penalty shootout configuration";
 	//! JSON key for the \copybrief mPenaltySequence
