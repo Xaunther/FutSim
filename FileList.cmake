@@ -9,9 +9,11 @@ SET(FUTSIM_CORE_SOURCE
 # Football source files
 SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CMatch.cpp
+	src/football/CPenaltyShootoutConfiguration.cpp
 	src/football/CPlayerSkills.cpp
 	src/football/CPlayer.cpp
 	src/football/CStadium.cpp
 	src/football/CTeam.cpp
 	src/football/CTieCondition.cpp
+	src/football/PenaltySequenceUtils.cpp
 )
