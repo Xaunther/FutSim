@@ -31,11 +31,64 @@ void TTieCondition::TestExceptions() const
 std::vector<std::string> TTieCondition::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
+
+	for( const auto& tieCondition : {
+		CTieCondition{},
+		CTieCondition{ -2 },
+		CTieCondition{ 1, 2 },
+		futsim::ValueFromJSONKeyString<CTieCondition>( R"( {
+			"Tie condition": {
+				"Home team lead" : 0
+			}
+		} )" ),
+		futsim::ValueFromJSONKeyString<CTieCondition>( R"( {
+			"Tie condition": {
+				"Home team lead" : -2
+			}
+		} )" ),
+		futsim::ValueFromJSONKeyString<CTieCondition>( R"( {
+			"Tie condition": {
+				"Home team lead" : 1,
+				"Home team goals": 2
+			}
+		} )" ) } )
+	{
+		result.push_back( std::string{ CTieCondition::JSON_HOME_TEAM_LEAD } + ": " + std::to_string( tieCondition.GetHomeTeamLead() ) );
+		if( tieCondition.GetHomeTeamGoals() )
+			result.push_back( std::string{ CTieCondition::JSON_HOME_TEAM_GOALS } + ": " + std::to_string( *tieCondition.GetHomeTeamGoals() ) );
+		futsim::IJsonableTypes::json outputJSON;
+		AddToJSONKey( outputJSON, tieCondition );
+		result.push_back( outputJSON.dump( 1, '\t' ) );
+	}
+
 	return result;
 }
 
 std::vector<std::string> TTieCondition::ExpectedResults() const noexcept
 {
-	std::vector<std::string> result;
+	std::vector<std::string> result{
+		"Home team lead: 0",
+		"{\n"
+		"	\"Tie condition\": {\n"
+		"		\"Home team lead\": 0\n"
+		"	}\n"
+		"}",
+		"Home team lead: -2",
+		"{\n"
+		"	\"Tie condition\": {\n"
+		"		\"Home team lead\": -2\n"
+		"	}\n"
+		"}",
+		"Home team lead: 1",
+		"Home team goals: 2",
+		"{\n"
+		"	\"Tie condition\": {\n"
+		"		\"Home team lead\": 1,\n"
+		"		\"Home team goals\": 2\n"
+		"	}\n"
+		"}"
+	};
+	result.reserve( 2 * result.size() );
+	result.insert( result.cend(), result.cbegin(), result.cend() );
 	return result;
 }
