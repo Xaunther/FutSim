@@ -1,5 +1,9 @@
 #include "football/CPenaltyShootoutConfiguration.h"
 
+#include "ExceptionUtils.h"
+#include "JsonUtils.h"
+#include "football/PenaltySequenceUtils.h"
+
 namespace futsim::football
 {
 
@@ -11,5 +15,12 @@ CPenaltyShootoutConfiguration::CPenaltyShootoutConfiguration(
 	mMinPenaltyCount( aMinPenaltyCount )
 {
 }
+
+CPenaltyShootoutConfiguration::CPenaltyShootoutConfiguration( const json& aJSON ) try :
+	mPenaltySequence( ToPenaltySequence( ValueFromRequiredJSONKey<std::string_view>( aJSON, JSON_SEQUENCE ) ) ),
+	mMinPenaltyCount( ValueFromRequiredJSONKey<penalty_count>( aJSON, JSON_MIN_PENALTY_COUNT ) )
+{
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the penalty shootout configuration from JSON." )
 
 } // futsim::football namespace
