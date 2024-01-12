@@ -8,6 +8,8 @@ SET(FUTSIM_TESTS_UNIT_CORE_SOURCE
 
 SET(FUTSIM_TESTS_UNIT_FOOTBALL_SOURCE
 	unit/football/TMatch.cpp
+	unit/football/TPenaltySequenceUtils.cpp
+	unit/football/TPenaltyShootoutConfiguration.cpp
 	unit/football/TPlayer.cpp
 	unit/football/TPlayerSkills.cpp
 	unit/football/TStadium.cpp
