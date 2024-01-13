@@ -34,6 +34,13 @@ public:
 	*/
 	explicit CPlayTime( const json& aJSON );
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Play time";
 	//! JSON key for the \copybrief mPeriodCount

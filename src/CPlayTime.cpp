@@ -35,6 +35,12 @@ CPlayTime::CPlayTime( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the play time from JSON." )
 
+void CPlayTime::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mPeriodCount, JSON_PERIOD_COUNT );
+	AddToJSONKey( aJSON, mPeriodTime, JSON_PERIOD_TIME );
+}
+
 namespace
 {
 
