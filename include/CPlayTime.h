@@ -12,6 +12,7 @@ namespace futsim
 */
 class CPlayTime : public IJsonable
 {
+	using json = IJsonableTypes::json;
 	using period_count = CPlayTimeTypes::period_count;
 	using period_time = CPlayTimeTypes::period_time;
 
@@ -26,6 +27,19 @@ public:
 	explicit CPlayTime(
 		const period_count& aPeriodCount,
 		const period_time& aPeriodTime );
+
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CPlayTime( const json& aJSON );
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Play time";
+	//! JSON key for the \copybrief mPeriodCount
+	static inline constexpr std::string_view JSON_PERIOD_COUNT = "Period count";
+	//! JSON key for the \copybrief mPeriodTime
+	static inline constexpr std::string_view JSON_PERIOD_TIME = "Period time";
 
 private:
 	//! Number of periods.

@@ -1,6 +1,7 @@
 #include "CPlayTime.h"
 
 #include "ExceptionUtils.h"
+#include "JsonUtils.h"
 
 namespace futsim
 {
@@ -26,6 +27,13 @@ CPlayTime::CPlayTime(
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the play time." )
+
+CPlayTime::CPlayTime( const json& aJSON ) try :
+	mPeriodCount( CheckNonZero( ValueFromRequiredJSONKey<period_count>( aJSON, JSON_PERIOD_COUNT ), "number of periods" ) ),
+	mPeriodTime( CheckNonZero( ValueFromRequiredJSONKey<period_time>( aJSON, JSON_PERIOD_TIME ), "length of the period" ) )
+{
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the play time from JSON." )
 
 namespace
 {
