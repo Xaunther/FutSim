@@ -41,6 +41,12 @@ protected:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
+	//! Retrieves the \copybrief mPeriodCount
+	const period_count& GetPeriodCount() const noexcept;
+
+	//! Retrieves the \copybrief mPeriodTime
+	const period_time& GetPeriodTime() const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Play time";
 	//! JSON key for the \copybrief mPeriodCount

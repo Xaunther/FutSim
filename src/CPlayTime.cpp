@@ -41,6 +41,16 @@ void CPlayTime::JSON( json& aJSON ) const noexcept
 	AddToJSONKey( aJSON, mPeriodTime, JSON_PERIOD_TIME );
 }
 
+const CPlayTimeTypes::period_count& CPlayTime::GetPeriodCount() const noexcept
+{
+	return mPeriodCount;
+}
+
+const CPlayTimeTypes::period_time& CPlayTime::GetPeriodTime() const noexcept
+{
+	return mPeriodTime;
+}
+
 namespace
 {
 
