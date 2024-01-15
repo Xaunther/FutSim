@@ -44,11 +44,39 @@ void TPlayTime::TestExceptions() const
 std::vector<std::string> TPlayTime::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
+
+	for( const auto& playTime : {
+		CPlayTime{ 2, 45 },
+		ValueFromJSONKeyString<CPlayTime>( R"( {
+			"Play time": {
+				"Period count": 2,
+				"Period time": 45
+			}
+		} )" ) } )
+	{
+		result.push_back( std::string{ CPlayTime::JSON_PERIOD_COUNT } + ": " + std::to_string( playTime.GetPeriodCount() ) );
+		result.push_back( std::string{ CPlayTime::JSON_PERIOD_TIME } + ": " + std::to_string( playTime.GetPeriodTime() ) );
+		futsim::IJsonableTypes::json outputJSON;
+		AddToJSONKey( outputJSON, playTime );
+		result.push_back( outputJSON.dump( 1, '\t' ) );
+	}
+
 	return result;
 }
 
 std::vector<std::string> TPlayTime::ExpectedResults() const noexcept
 {
-	std::vector<std::string> result;
+	std::vector<std::string> result{
+		"Period count: 2",
+		"Period time: 45",
+		"{\n"
+		"	\"Play time\": {\n"
+		"		\"Period count\": 2,\n"
+		"		\"Period time\": 45\n"
+		"	}\n"
+		"}"
+	};
+	result.reserve( 2 * result.size() );
+	result.insert( result.cend(), result.cbegin(), result.cend() );
 	return result;
 }
