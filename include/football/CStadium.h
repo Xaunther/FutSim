@@ -10,6 +10,9 @@ namespace futsim
 namespace football
 {
 
+/**
+ * @brief Class that defines a football stadium.
+*/
 class CStadium : public IJsonable
 {
 	using json = IJsonableTypes::json;

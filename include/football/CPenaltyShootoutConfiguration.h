@@ -8,6 +8,9 @@
 namespace futsim::football
 {
 
+/**
+ * @brief Class to configure a penalty shootout.
+*/
 class CPenaltyShootoutConfiguration : public IJsonable
 {
 	using json = IJsonableTypes::json;

@@ -10,6 +10,9 @@
 namespace futsim::football
 {
 
+/**
+ * @brief Class that defines a football team.
+*/
 class CTeam : public IJsonable
 {
 	using json = IJsonableTypes::json;
