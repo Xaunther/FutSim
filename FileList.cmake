@@ -1,6 +1,7 @@
 # Core source files
 SET(FUTSIM_CORE_SOURCE
 	src/CPerson.cpp
+	src/CPlayTime.cpp
 	src/IJsonable.cpp
 	src/NameUtils.cpp
 	src/NationalityUtils.cpp
