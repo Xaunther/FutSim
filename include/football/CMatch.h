@@ -8,6 +8,9 @@
 namespace futsim::football
 {
 
+/**
+ * @brief Class that defines a football match.
+*/
 class CMatch : public IJsonable
 {
 	using json = IJsonableTypes::json;
