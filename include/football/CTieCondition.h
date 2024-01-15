@@ -35,7 +35,7 @@ public:
 	 * @details Assumes that the home team in the previous match now is the away team, and vice versa.
 	 * @param aHomeGoals Home team goal tally in the previous match.
 	 * @param aAwayGoals Away team goal tally in the previous match.
-	 * @param aAwayGoalsRule Whether away goals rule applies.
+	 * @param aUseAwayGoalsRule Whether away goals rule applies.
 	*/
 	explicit CTieCondition(
 		const goal_count aHomeGoals,
