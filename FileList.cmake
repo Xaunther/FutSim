@@ -13,6 +13,7 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CPenaltyShootoutConfiguration.cpp
 	src/football/CPlayerSkills.cpp
 	src/football/CPlayer.cpp
+	src/football/CPlayTime.cpp
 	src/football/CStadium.cpp
 	src/football/CTeam.cpp
 	src/football/CTieCondition.cpp
