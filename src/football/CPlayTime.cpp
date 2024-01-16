@@ -24,4 +24,10 @@ CPlayTime::CPlayTime( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the football play time from JSON." )
 
+void CPlayTime::JSON( json& aJSON ) const noexcept
+{
+	futsim::CPlayTime::JSON( aJSON );
+	AddToJSONKey( aJSON, mAvailableSubs, JSON_AVAILABLE_SUBS );
+}
+
 } // futsim::football namespace
