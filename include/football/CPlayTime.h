@@ -12,6 +12,7 @@ namespace futsim::football
 */
 class CPlayTime : public futsim::CPlayTime
 {
+	using json = IJsonableTypes::json;
 	using subs_count = CPlayTimeTypes::subs_count;
 	using period_count = futsim::CPlayTimeTypes::period_count;
 	using period_time = futsim::CPlayTimeTypes::period_time;
@@ -27,6 +28,15 @@ public:
 		const period_count& aPeriodCount = 2,
 		const period_time& aPeriodTime = 45,
 		const subs_count& aAvailableSubs = 5 );
+
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CPlayTime( const json& aJSON );
+
+	//! JSON key for the \copybrief mAvailableSubs
+	static inline constexpr std::string_view JSON_AVAILABLE_SUBS = "Available subs";
 
 private:
 	//! Number of available subs.
