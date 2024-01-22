@@ -12,7 +12,6 @@ namespace futsim
 */
 class CPlayTime : public IJsonable
 {
-	using json = IJsonableTypes::json;
 	using period_count = CPlayTimeTypes::period_count;
 	using period_time = CPlayTimeTypes::period_time;
 
