@@ -1,3 +1,41 @@
+# Core external headers
+SET(FUTSIM_CORE_EXTERNAL_HEADERS
+	include/Config.h
+	include/CPerson.h
+	include/CPlayTime.h
+	include/CPlayTimeTypes.h
+	include/ENationality.h
+	include/ExceptionUtils.h
+	include/IJsonable.h
+	include/IJsonableTypes.h
+	include/JsonUtils.h
+	include/NameUtils.h
+	include/NationalityUtils.h
+)
+
+# Football external headers
+SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
+	include/football/CExtraTime.h
+	include/football/CMatch.h
+	include/football/CPenaltyShootoutConfiguration.h
+	include/football/CPenaltyShootoutConfigurationTypes.h
+	include/football/CPlayer.h
+	include/football/CPlayerSkills.h
+	include/football/CPlayerSkillsTypes.h
+	include/football/CPlayTime.h
+	include/football/CPlayTimeTypes.h
+	include/football/CStadium.h
+	include/football/CStadiumTypes.h
+	include/football/CTeam.h
+	include/football/CTeamTypes.h
+	include/football/CTieCondition.h
+	include/football/CTieConditionTypes.h
+	include/football/EGoalRule.h
+	include/football/EPenaltySequence.h
+	include/football/GoalRuleUtils.h
+	include/football/PenaltySequenceUtils.h
+)
+
 # Core source files
 SET(FUTSIM_CORE_SOURCE
 	src/CPerson.cpp
@@ -20,4 +58,10 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CTieCondition.cpp
 	src/football/GoalRuleUtils.cpp
 	src/football/PenaltySequenceUtils.cpp
+)
+
+# External headers
+SET(FUTSIM_EXTERNAL_HEADERS
+	${FUTSIM_CORE_EXTERNAL_HEADERS}
+	${FUTSIM_FOOTBALL_EXTERNAL_HEADERS}
 )
