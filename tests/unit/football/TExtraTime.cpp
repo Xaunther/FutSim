@@ -3,7 +3,6 @@
 #include "football/CExtraTime.h"
 
 #include "JsonUtils.h"
-#include "football/GoalRuleUtils.h"
 
 #include <iostream>
 
@@ -48,7 +47,7 @@ std::vector<std::string> TExtraTime::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CExtraTime::JSON_GOAL_RULE } + ": " + ToString( extraTime.GetGoalRule() ) );
+		result.push_back( std::string{ CExtraTime::JSON_GOAL_RULE } + ": " + std::to_string( static_cast< int >( extraTime.GetGoalRule() ) ) );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, extraTime );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
