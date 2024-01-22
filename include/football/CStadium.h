@@ -15,6 +15,7 @@ namespace football
 */
 class CStadium : public IJsonable
 {
+protected:
 	using capacity = CStadiumTypes::capacity;
 	using ambient_factor = CStadiumTypes::ambient_factor;
 

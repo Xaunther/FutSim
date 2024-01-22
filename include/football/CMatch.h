@@ -13,6 +13,7 @@ namespace futsim::football
 */
 class CMatch : public IJsonable
 {
+protected:
 	using name_type = CTeamTypes::name_type;
 
 public:
