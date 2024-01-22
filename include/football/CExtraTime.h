@@ -41,6 +41,9 @@ protected:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
+	//! Retrieves the \copybrief mGoalRule
+	const E_GOAL_RULE& GetGoalRule() const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Extra time";
 	//! JSON key for the \copybrief mGoalRule

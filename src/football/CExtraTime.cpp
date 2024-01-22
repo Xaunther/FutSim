@@ -33,4 +33,9 @@ void CExtraTime::JSON( json& aJSON ) const noexcept
 		AddToJSONKey( aJSON, ToString( mGoalRule ), JSON_GOAL_RULE );
 }
 
+const E_GOAL_RULE& CExtraTime::GetGoalRule() const noexcept
+{
+	return mGoalRule;
+}
+
 } // futsim::football namespace
