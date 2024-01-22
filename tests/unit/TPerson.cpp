@@ -2,8 +2,6 @@
 
 #include "CPerson.h"
 
-#include "NationalityUtils.h"
-
 #include "JsonUtils.h"
 
 #include <iostream>
@@ -85,7 +83,7 @@ std::vector<std::string> TPerson::ObtainedResults() const noexcept
 		result.push_back( std::string{ CPerson::JSON_SURNAMES } + ": " + std::string{ person.GetSurnames() } );
 		result.push_back( std::string{ CPerson::JSON_KNOWN_NAME } + ": " + std::string{ person.GetKnownName() } );
 		result.push_back( std::string{ CPerson::JSON_AGE } + ": " + std::to_string( person.GetAge() ) );
-		result.push_back( std::string{ CPerson::JSON_NATIONALITY } + ": " + futsim::ToString( person.GetNationality() ) );
+		result.push_back( std::string{ CPerson::JSON_NATIONALITY } + ": " + std::to_string( static_cast< int >( person.GetNationality() ) ) );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, person );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

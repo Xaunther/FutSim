@@ -10,7 +10,6 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/IJsonableTypes.h
 	include/JsonUtils.h
 	include/NameUtils.h
-	include/NationalityUtils.h
 )
 
 # Football external headers
@@ -40,7 +39,6 @@ SET(FUTSIM_CORE_SOURCE
 	src/CPlayTime.cpp
 	src/IJsonable.cpp
 	src/NameUtils.cpp
-	src/NationalityUtils.cpp
 )
 
 # Football source files

@@ -1,9 +1,13 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 namespace futsim
 {
 
 //! @brief Enumeration of all possible nationalities following ISO 3166-1 alpha-3.
 enum class E_NATIONALITY @FUTSIM_NATIONALITY_ENUM@;
+
+NLOHMANN_JSON_SERIALIZE_ENUM( E_NATIONALITY, @FUTSIM_NATIONALITY_STRING_MAP@ )
 
 } // futsim namespace
