@@ -99,7 +99,7 @@ std::vector<std::string> TPerson::ExpectedResults() const noexcept
 		"Surnames: Blanco",
 		"Known name: Blanco",
 		"Age: 35",
-		"Nationality: ARG",
+		"Nationality: 8",
 		"{\n"
 		"	\"Person\": {\n"
 		"		\"First name\": \"Lorenzo\",\n"
@@ -112,7 +112,7 @@ std::vector<std::string> TPerson::ExpectedResults() const noexcept
 		"Surnames: Pérez Martínez",
 		"Known name: Perico",
 		"Age: 20",
-		"Nationality: ESP",
+		"Nationality: 69",
 		"{\n"
 		"	\"Person\": {\n"
 		"		\"First name\": \"Pedro\",\n"
