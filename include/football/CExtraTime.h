@@ -13,8 +13,6 @@ namespace futsim::football
 class CExtraTime : public CPlayTime
 {
 	using subs_count = CPlayTimeTypes::subs_count;
-	using period_count = futsim::CPlayTimeTypes::period_count;
-	using period_time = futsim::CPlayTimeTypes::period_time;
 
 public:
 	/**
