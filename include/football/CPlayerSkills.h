@@ -15,6 +15,7 @@ namespace football
 */
 class CPlayerSkills : public IJsonable
 {
+protected:
 	using skill_type = CPlayerSkillsTypes::skill_type;
 	using xp_type = CPlayerSkillsTypes::xp_type;
 
