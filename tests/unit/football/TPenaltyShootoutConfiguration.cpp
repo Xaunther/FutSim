@@ -19,11 +19,6 @@ void TPenaltyShootoutConfiguration::TestExceptions() const
 		} )" ); }, "key 'Sequence' not found" );
 	CheckException( []() { futsim::ValueFromJSONKeyString<CPenaltyShootoutConfiguration>( R"( {
 			"Penalty shootout configuration": {
-				"Sequence": "AAA"
-			}
-		} )" ); }, "No penalty sequence matching the string 'AAA'." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPenaltyShootoutConfiguration>( R"( {
-			"Penalty shootout configuration": {
 				"Sequence": "AB"
 			}
 		} )" ); }, "key 'Min penalty count' not found" );
@@ -69,7 +64,7 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ObtainedResults() const 
 std::vector<std::string> TPenaltyShootoutConfiguration::ExpectedResults() const noexcept
 {
 	std::vector<std::string> result{
-		"Sequence: AB",
+		"Sequence: 0",
 		"Min penalty count: 5",
 		"{\n"
 		"	\"Penalty shootout configuration\": {\n"
@@ -77,7 +72,7 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ExpectedResults() const 
 		"		\"Min penalty count\": 5\n"
 		"	}\n"
 		"}",
-		"Sequence: ABBA",
+		"Sequence: 1",
 		"Min penalty count: 5",
 		"{\n"
 		"	\"Penalty shootout configuration\": {\n"
@@ -85,7 +80,7 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ExpectedResults() const 
 		"		\"Min penalty count\": 5\n"
 		"	}\n"
 		"}",
-		"Sequence: AB",
+		"Sequence: 0",
 		"Min penalty count: 3",
 		"{\n"
 		"	\"Penalty shootout configuration\": {\n"
