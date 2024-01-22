@@ -30,4 +30,9 @@ void CPlayTime::JSON( json& aJSON ) const noexcept
 	AddToJSONKey( aJSON, mAvailableSubs, JSON_AVAILABLE_SUBS );
 }
 
+const CPlayTime::subs_count& CPlayTime::GetAvailableSubs() const noexcept
+{
+	return mAvailableSubs;
+}
+
 } // futsim::football namespace

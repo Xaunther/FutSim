@@ -42,6 +42,9 @@ protected:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
+	//! Retrieves the \copybrief mAvailableSubs
+	const subs_count& GetAvailableSubs() const noexcept;
+
 	//! JSON key for the \copybrief mAvailableSubs
 	static inline constexpr std::string_view JSON_AVAILABLE_SUBS = "Available subs";
 
