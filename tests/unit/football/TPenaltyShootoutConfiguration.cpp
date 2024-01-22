@@ -3,7 +3,6 @@
 #include "football/CPenaltyShootoutConfiguration.h"
 
 #include "JsonUtils.h"
-#include "football/PenaltySequenceUtils.h"
 
 #include <iostream>
 
@@ -18,11 +17,6 @@ void TPenaltyShootoutConfiguration::TestExceptions() const
 	CheckException( []() { futsim::ValueFromJSONKeyString<CPenaltyShootoutConfiguration>( R"( {
 			"Penalty shootout configuration": {}
 		} )" ); }, "key 'Sequence' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPenaltyShootoutConfiguration>( R"( {
-			"Penalty shootout configuration": {
-				"Sequence": "AAA"
-			}
-		} )" ); }, "No penalty sequence matching the string 'AAA'." );
 	CheckException( []() { futsim::ValueFromJSONKeyString<CPenaltyShootoutConfiguration>( R"( {
 			"Penalty shootout configuration": {
 				"Sequence": "AB"
@@ -57,7 +51,7 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ObtainedResults() const 
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CPenaltyShootoutConfiguration::JSON_SEQUENCE } + ": " + ToString( penaltyShootoutConfiguration.GetPenaltySequence() ) );
+		result.push_back( std::string{ CPenaltyShootoutConfiguration::JSON_SEQUENCE } + ": " + std::to_string( static_cast< int >( penaltyShootoutConfiguration.GetPenaltySequence() ) ) );
 		result.push_back( std::string{ CPenaltyShootoutConfiguration::JSON_MIN_PENALTY_COUNT } + ": " + std::to_string( penaltyShootoutConfiguration.GetMinPenaltyCount() ) );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, penaltyShootoutConfiguration );
@@ -70,7 +64,7 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ObtainedResults() const 
 std::vector<std::string> TPenaltyShootoutConfiguration::ExpectedResults() const noexcept
 {
 	std::vector<std::string> result{
-		"Sequence: AB",
+		"Sequence: 0",
 		"Min penalty count: 5",
 		"{\n"
 		"	\"Penalty shootout configuration\": {\n"
@@ -78,7 +72,7 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ExpectedResults() const 
 		"		\"Min penalty count\": 5\n"
 		"	}\n"
 		"}",
-		"Sequence: ABBA",
+		"Sequence: 1",
 		"Min penalty count: 5",
 		"{\n"
 		"	\"Penalty shootout configuration\": {\n"
@@ -86,7 +80,7 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ExpectedResults() const 
 		"		\"Min penalty count\": 5\n"
 		"	}\n"
 		"}",
-		"Sequence: AB",
+		"Sequence: 0",
 		"Min penalty count: 3",
 		"{\n"
 		"	\"Penalty shootout configuration\": {\n"

@@ -82,23 +82,14 @@ endforeach(COUNTRY)
 
 set(FUTSIM_NATIONALITY_ENUM "${FUTSIM_NATIONALITY_ENUM}}")
 
-# Create Nationality to string conversion map
-set(FUTSIM_TO_STRING_CONVERSION_MAP "{\n")
+# Create Nationality - string conversion map
+set(FUTSIM_NATIONALITY_STRING_MAP "{\n")
 
 foreach(COUNTRY ${FUTSIM_COUNTRIES})
-	set(FUTSIM_TO_STRING_CONVERSION_MAP "${FUTSIM_TO_STRING_CONVERSION_MAP}\t{E_NATIONALITY::${COUNTRY},\"${COUNTRY}\"},\n")
+	set(FUTSIM_NATIONALITY_STRING_MAP "${FUTSIM_NATIONALITY_STRING_MAP}\t{E_NATIONALITY::${COUNTRY},\"${COUNTRY}\"},\n")
 endforeach(COUNTRY)
 
-set(FUTSIM_TO_STRING_CONVERSION_MAP "${FUTSIM_TO_STRING_CONVERSION_MAP}}")
-
-# Create string to nationality conversion map
-set(FUTSIM_TO_NATIONALITY_CONVERSION_MAP "{\n")
-
-foreach(COUNTRY ${FUTSIM_COUNTRIES})
-	set(FUTSIM_TO_NATIONALITY_CONVERSION_MAP "${FUTSIM_TO_NATIONALITY_CONVERSION_MAP}\t{\"${COUNTRY}\",E_NATIONALITY::${COUNTRY}},\n")
-endforeach(COUNTRY)
-
-set(FUTSIM_TO_NATIONALITY_CONVERSION_MAP "${FUTSIM_TO_NATIONALITY_CONVERSION_MAP}}")
+set(FUTSIM_NATIONALITY_STRING_MAP "${FUTSIM_NATIONALITY_STRING_MAP}}")
 
 # List of source files
 include(FileList.cmake)
@@ -106,7 +97,6 @@ include(FileList.cmake)
 # Add configuration files
 configure_file(${FUTSIM_INCLUDE_DIR}/Config.h.in ${FUTSIM_INCLUDE_DIR}/Config.h)
 configure_file(${FUTSIM_INCLUDE_DIR}/ENationality.h.in ${FUTSIM_INCLUDE_DIR}/ENationality.h)
-configure_file(${FUTSIM_DIR}/src/NationalityConversionMaps.h.in ${FUTSIM_DIR}/src/NationalityConversionMaps.h)
 
 # Include directories
 include_directories(${FUTSIM_INCLUDE_DIR} ${FUTSIM_DIR}/src ${JSON_DIR}/include)

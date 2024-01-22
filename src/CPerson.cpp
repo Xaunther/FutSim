@@ -3,7 +3,6 @@
 #include "ExceptionUtils.h"
 #include "JsonUtils.h"
 #include "NameUtils.h"
-#include "NationalityUtils.h"
 
 namespace futsim
 {
@@ -29,7 +28,7 @@ CPerson::CPerson( const json& aJSON ) try :
 	mSurnames( CheckName( ValueFromRequiredJSONKey<std::string>( aJSON, JSON_SURNAMES ), "surnames" ) ),
 	mKnownName( ValueFromOptionalJSONKey<std::string>( aJSON, JSON_KNOWN_NAME, mSurnames ) ),
 	mAge( ValueFromRequiredJSONKey<unsigned short>( aJSON, JSON_AGE ) ),
-	mNationality( ToNationality( ValueFromRequiredJSONKey<std::string_view>( aJSON, JSON_NATIONALITY ) ) )
+	mNationality( ValueFromRequiredJSONKey<E_NATIONALITY>( aJSON, JSON_NATIONALITY ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player from JSON." )
@@ -41,7 +40,7 @@ void CPerson::JSON( json& aJSON ) const noexcept
 	if( mKnownName != mSurnames )
 		AddToJSONKey( aJSON, mKnownName, JSON_KNOWN_NAME );
 	AddToJSONKey( aJSON, mAge, JSON_AGE );
-	AddToJSONKey( aJSON, ToString( mNationality ), JSON_NATIONALITY );
+	AddToJSONKey( aJSON, mNationality, JSON_NATIONALITY );
 }
 
 const std::string_view CPerson::GetFirstName() const noexcept

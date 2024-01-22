@@ -1,7 +1,6 @@
 #include "football/CExtraTime.h"
 
 #include "ExceptionUtils.h"
-#include "football/GoalRuleUtils.h"
 #include "JsonUtils.h"
 
 namespace futsim::football
@@ -21,7 +20,7 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the f
 
 CExtraTime::CExtraTime( const json& aJSON ) try :
 	CPlayTime( aJSON ),
-	mGoalRule( ToGoalRule( ValueFromOptionalJSONKey<std::string_view>( aJSON, JSON_GOAL_RULE, ToString( E_GOAL_RULE::NO ) ) ) )
+	mGoalRule( ValueFromOptionalJSONKey<E_GOAL_RULE>( aJSON, JSON_GOAL_RULE, E_GOAL_RULE::NO ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the football extra time from JSON." )
@@ -30,7 +29,7 @@ void CExtraTime::JSON( json& aJSON ) const noexcept
 {
 	CPlayTime::JSON( aJSON );
 	if( mGoalRule != E_GOAL_RULE::NO )
-		AddToJSONKey( aJSON, ToString( mGoalRule ), JSON_GOAL_RULE );
+		AddToJSONKey( aJSON, mGoalRule, JSON_GOAL_RULE );
 }
 
 const E_GOAL_RULE& CExtraTime::GetGoalRule() const noexcept

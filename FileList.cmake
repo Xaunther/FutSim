@@ -10,7 +10,6 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/IJsonableTypes.h
 	include/JsonUtils.h
 	include/NameUtils.h
-	include/NationalityUtils.h
 )
 
 # Football external headers
@@ -32,8 +31,6 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CTieConditionTypes.h
 	include/football/EGoalRule.h
 	include/football/EPenaltySequence.h
-	include/football/GoalRuleUtils.h
-	include/football/PenaltySequenceUtils.h
 )
 
 # Core source files
@@ -42,7 +39,6 @@ SET(FUTSIM_CORE_SOURCE
 	src/CPlayTime.cpp
 	src/IJsonable.cpp
 	src/NameUtils.cpp
-	src/NationalityUtils.cpp
 )
 
 # Football source files
@@ -56,8 +52,6 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CStadium.cpp
 	src/football/CTeam.cpp
 	src/football/CTieCondition.cpp
-	src/football/GoalRuleUtils.cpp
-	src/football/PenaltySequenceUtils.cpp
 )
 
 # External headers
