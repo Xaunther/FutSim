@@ -32,7 +32,6 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CTieConditionTypes.h
 	include/football/EGoalRule.h
 	include/football/EPenaltySequence.h
-	include/football/PenaltySequenceUtils.h
 )
 
 # Core source files
@@ -55,7 +54,6 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CStadium.cpp
 	src/football/CTeam.cpp
 	src/football/CTieCondition.cpp
-	src/football/PenaltySequenceUtils.cpp
 )
 
 # External headers

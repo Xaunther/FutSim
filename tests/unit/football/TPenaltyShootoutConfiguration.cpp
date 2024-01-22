@@ -3,7 +3,6 @@
 #include "football/CPenaltyShootoutConfiguration.h"
 
 #include "JsonUtils.h"
-#include "football/PenaltySequenceUtils.h"
 
 #include <iostream>
 
@@ -57,7 +56,7 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ObtainedResults() const 
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CPenaltyShootoutConfiguration::JSON_SEQUENCE } + ": " + ToString( penaltyShootoutConfiguration.GetPenaltySequence() ) );
+		result.push_back( std::string{ CPenaltyShootoutConfiguration::JSON_SEQUENCE } + ": " + std::to_string( static_cast< int >( penaltyShootoutConfiguration.GetPenaltySequence() ) ) );
 		result.push_back( std::string{ CPenaltyShootoutConfiguration::JSON_MIN_PENALTY_COUNT } + ": " + std::to_string( penaltyShootoutConfiguration.GetMinPenaltyCount() ) );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, penaltyShootoutConfiguration );
