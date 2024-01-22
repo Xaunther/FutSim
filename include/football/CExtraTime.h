@@ -12,8 +12,6 @@ namespace futsim::football
 */
 class CExtraTime : public CPlayTime
 {
-	using subs_count = CPlayTimeTypes::subs_count;
-
 public:
 	/**
 	 * @copydoc futsim::football::CPlayTime::CPlayTime
