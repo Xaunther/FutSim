@@ -12,6 +12,7 @@ namespace futsim::football
 */
 class CPlayTime : public futsim::CPlayTime
 {
+protected:
 	using subs_count = CPlayTimeTypes::subs_count;
 
 public:
