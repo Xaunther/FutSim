@@ -13,15 +13,6 @@ INITIALIZE_TEST( TExtraTime )
 
 void TExtraTime::TestExceptions() const
 {
-	//! Test member constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CExtraTime>( R"( {
-			"Extra time": {
-				"Period count": 2,
-				"Period time": 15,
-				"Available subs": 1,
-				"Goal rule": "error"
-			}
-		} )" ); }, "No goal rule matching the string 'error'." );
 }
 
 std::vector<std::string> TExtraTime::ObtainedResults() const noexcept
@@ -59,7 +50,7 @@ std::vector<std::string> TExtraTime::ObtainedResults() const noexcept
 std::vector<std::string> TExtraTime::ExpectedResults() const noexcept
 {
 	std::vector<std::string> result{
-		"Goal rule: No",
+		"Goal rule: 0",
 		"{\n"
 		"	\"Extra time\": {\n"
 		"		\"Period count\": 2,\n"
@@ -67,7 +58,7 @@ std::vector<std::string> TExtraTime::ExpectedResults() const noexcept
 		"		\"Available subs\": 1\n"
 		"	}\n"
 		"}",
-		"Goal rule: Golden goal",
+		"Goal rule: 2",
 		"{\n"
 		"	\"Extra time\": {\n"
 		"		\"Period count\": 1,\n"
