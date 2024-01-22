@@ -15,8 +15,6 @@ namespace football
 */
 class CPlayer : public CPerson
 {
-	using json = IJsonableTypes::json;
-
 public:
 	/**
 	 * @brief Member constructor.

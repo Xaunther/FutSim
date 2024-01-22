@@ -12,8 +12,6 @@ namespace futsim
 */
 class CPerson : public IJsonable
 {
-	using json = IJsonableTypes::json;
-
 public:
 	/**
 	 * @brief Member constructor.

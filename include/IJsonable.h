@@ -10,6 +10,7 @@ namespace futsim
  */
 class IJsonable
 {
+protected:
 	using json = IJsonableTypes::json;
 
 public:

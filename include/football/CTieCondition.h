@@ -15,7 +15,6 @@ namespace futsim::football
 */
 class CTieCondition : public IJsonable
 {
-	using json = IJsonableTypes::json;
 	using goal_difference = CTieConditionTypes::goal_difference;
 	using goal_count = CTieConditionTypes::goal_count;
 	using optional_goal_count = CTieConditionTypes::optional_goal_count;

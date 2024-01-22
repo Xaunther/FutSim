@@ -13,7 +13,6 @@ namespace futsim::football
 */
 class CPenaltyShootoutConfiguration : public IJsonable
 {
-	using json = IJsonableTypes::json;
 	using penalty_count = CPenaltyShootoutConfigurationTypes::penalty_count;
 
 public:
