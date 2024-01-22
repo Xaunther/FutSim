@@ -17,5 +17,6 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CStadium.cpp
 	src/football/CTeam.cpp
 	src/football/CTieCondition.cpp
+	src/football/GoalRuleUtils.cpp
 	src/football/PenaltySequenceUtils.cpp
 )
