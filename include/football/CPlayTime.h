@@ -12,10 +12,8 @@ namespace futsim::football
 */
 class CPlayTime : public futsim::CPlayTime
 {
-	using json = IJsonableTypes::json;
+protected:
 	using subs_count = CPlayTimeTypes::subs_count;
-	using period_count = futsim::CPlayTimeTypes::period_count;
-	using period_time = futsim::CPlayTimeTypes::period_time;
 
 public:
 	/**

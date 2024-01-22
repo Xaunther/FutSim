@@ -15,7 +15,7 @@ namespace futsim::football
 */
 class CTeam : public IJsonable
 {
-	using json = IJsonableTypes::json;
+protected:
 	using name_type = CTeamTypes::name_type;
 	using players = CTeamTypes::players;
 	using support_factor = CTeamTypes::support_factor;
