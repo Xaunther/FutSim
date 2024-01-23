@@ -5,10 +5,7 @@
 
 #include <iostream>
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 CPlayer::CPlayer(
@@ -43,6 +40,4 @@ const CPlayerSkills CPlayer::GetPlayerSkills() const noexcept
 	return mPlayerSkills;
 }
 
-} // football namespace
-
-}  // futsim namespace
+} // futsim::football namespace
