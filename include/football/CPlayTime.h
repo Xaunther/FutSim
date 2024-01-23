@@ -19,8 +19,6 @@ public:
 	/**
 	 * @copydoc futsim::CPlayTime::CPlayTime
 	 * @param aAvailableSubs \ref mAvailableSubs
-	 * @pre At least 1 period must compose the play time.
-	 * @pre Each period must be at least 1 minute long.
 	*/
 	explicit CPlayTime(
 		const period_count& aPeriodCount = 2,
