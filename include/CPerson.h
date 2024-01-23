@@ -8,7 +8,7 @@ namespace futsim
 {
 
 /**
- * @brief Class that defines a person
+ * @brief Class that defines a person.
 */
 class CPerson : public IJsonable
 {
@@ -59,7 +59,7 @@ public:
 	//! Retrieves the \copybrief mNationality
 	const E_NATIONALITY& GetNationality() const noexcept;
 
-	//! JSON key for the class-
+	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Person";
 	//! JSON key for the \copybrief mFirstName
 	static inline constexpr std::string_view JSON_FIRST_NAME = "First name";
