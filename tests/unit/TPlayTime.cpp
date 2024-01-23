@@ -13,13 +13,13 @@ INITIALIZE_TEST( TPlayTime )
 
 void TPlayTime::TestExceptions() const
 {
-	//! Test member constructor
+	// Test member constructor
 	CheckException( []() { CPlayTime{ 0, 45 }; },
 		"The number of periods cannot be zero." );
 	CheckException( []() { CPlayTime{ 2, 0 }; },
 		"The length of the period cannot be zero." );
 
-	//! Test JSON constructor
+	// Test JSON constructor
 	CheckException( []() { ValueFromJSONKeyString<CPlayTime>( R"( {
 			"Play time": {}
 		} )" ); }, "key 'Period count' not found" );

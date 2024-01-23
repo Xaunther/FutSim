@@ -13,10 +13,10 @@ INITIALIZE_TEST( TTieCondition )
 
 void TTieCondition::TestExceptions() const
 {
-	//! Test member constructor.
+	// Test member constructor.
 	CheckException( []() { CTieCondition{ 5, 1 }; }, "The home team goals cannot be smaller than the home team lead." );
 
-	//! Test JSON constructor.
+	// Test JSON constructor.
 	CheckException( []() { futsim::ValueFromJSONKeyString<CTieCondition>( R"( {
 			"Tie condition": {}
 		} )" ); }, "key 'Home team lead' not found" );

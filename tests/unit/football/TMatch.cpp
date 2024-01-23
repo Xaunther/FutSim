@@ -13,13 +13,13 @@ INITIALIZE_TEST( TMatch )
 
 void TMatch::TestExceptions() const
 {
-	//! Test member constructor
+	// Test member constructor
 	CheckException( []() { CMatch{
 		CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 2000 },
 		CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 2000 },
 		CStadium{ "Camp Nou", 98000, 1 }, "" }; }, "The referee name cannot be empty." );
 
-	//! Test JSON constructor
+	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CMatch>( R"( {
 			"Match": {}
 		} )" ); }, "key 'Home team' not found" );

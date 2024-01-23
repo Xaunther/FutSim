@@ -13,7 +13,7 @@ INITIALIZE_TEST( TTeam )
 
 void TTeam::TestExceptions() const
 {
-	//! Test member constructor
+	// Test member constructor
 	CheckException( []() { CTeam{ "", "lut", "Rob Edwards", {}, 1, 11000, 2000 }; }, "The name cannot be empty." );
 	CheckException( []() { CTeam{ "Luton Town FC", "l", "Rob Edwards", {}, 1, 11000, 2000 }; }, "The abbreviation must contain 3 characters, not 1." );
 	CheckException( []() { CTeam{ "Luton Town FC", "a_c", "Rob Edwards", {}, 1, 11000, 2000 }; }, "The abbreviation can only contain letters from A to Z." );
@@ -22,7 +22,7 @@ void TTeam::TestExceptions() const
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, -1000, 2000 }; }, "The mean attendance must be non-negative." );
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 0 }; }, "The standard deviation of the attendance must be positive." );
 
-	//! Test JSON constructor
+	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {}
 		} )" ); }, "key 'Name' not found" );

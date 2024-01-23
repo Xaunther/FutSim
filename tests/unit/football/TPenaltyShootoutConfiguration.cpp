@@ -13,7 +13,7 @@ INITIALIZE_TEST( TPenaltyShootoutConfiguration )
 
 void TPenaltyShootoutConfiguration::TestExceptions() const
 {
-	//! Test JSON constructor.
+	// Test JSON constructor.
 	CheckException( []() { futsim::ValueFromJSONKeyString<CPenaltyShootoutConfiguration>( R"( {
 			"Penalty shootout configuration": {}
 		} )" ); }, "key 'Sequence' not found" );
