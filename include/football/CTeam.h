@@ -84,7 +84,7 @@ public:
 	//! Generates a random attendance.
 	template<std::uniform_random_bit_generator T> attendance GenerateAttendance( T& aGenerator ) noexcept;
 
-	//! JSON key for the class-
+	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Team";
 	//! JSON key for the \copybrief mName
 	static inline constexpr std::string_view JSON_NAME = "Name";
@@ -112,7 +112,7 @@ private:
 	players mPlayers;
 	//! Support factor that dictates the support the team receives from the fans.
 	support_factor mSupportFactor;
-	//! Local fan attendance distribution
+	//! Local fan attendance distribution.
 	std::normal_distribution<> mAttendanceDistribution;
 };
 
