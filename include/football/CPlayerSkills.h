@@ -4,10 +4,7 @@
 
 #include "football/CPlayerSkillsTypes.h"
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 /**
@@ -78,7 +75,7 @@ public:
 	//!Retrieves the \copybrief mFWExperience
 	const skill_type& GetFWExperience() const noexcept;
 
-	//! JSON key for the \copybrief mGKSkill
+	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Player skills";
 	//! JSON key for the \copybrief mGKSkill
 	static inline constexpr std::string_view JSON_GK_SKILL = "GK skill";
@@ -116,6 +113,4 @@ private:
 	xp_type mFWExperience;
 };
 
-} // football namespace
-
-} // futsim namespace
+} // futsim::football namespace

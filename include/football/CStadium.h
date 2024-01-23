@@ -4,10 +4,7 @@
 
 #include "CStadiumTypes.h"
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 /**
@@ -73,6 +70,4 @@ private:
 	ambient_factor mAmbientFactor;
 };
 
-} // football namespace
-
-} // futsim namespace
+} // futsim::football namespace

@@ -13,7 +13,7 @@ INITIALIZE_TEST( TPlayer )
 
 void TPlayer::TestExceptions() const
 {
-	//! Test JSON constructor
+	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayer>( R"( {
 			"Player": {
 				"First name": "Lionel",

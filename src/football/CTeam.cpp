@@ -6,10 +6,7 @@
 
 #include <regex>
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 namespace
@@ -36,7 +33,7 @@ template <typename T> const T& CheckPositiveness( const T& aNumber, const std::s
 template <typename T> const T& CheckNonNegativeness( const T& aNumber, const std::string_view aNumberDescription );
 
 /**
- * @brief Create the players from JSON
+ * @brief Create the players from JSON.
  * @param aJSON JSON object.
 */
 CTeamTypes::players CreatePlayersFromJSON( const IJsonableTypes::json& aJSON );
@@ -168,6 +165,4 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the p
 
 } // anonymous namespace
 
-} // football namespace
-
-} // futsim namespace
+} // futsim::football namespace

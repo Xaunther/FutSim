@@ -13,13 +13,13 @@ INITIALIZE_TEST( TPerson )
 
 void TPerson::TestExceptions() const
 {
-	//! Test member constructor
+	// Test member constructor
 	CheckException( []() { CPerson{ "", "López", {}, 35, futsim::E_NATIONALITY::ARG }; },
 		"The name cannot be empty." );
 	CheckException( []() { CPerson{ "Marcos", "", {}, 35, futsim::E_NATIONALITY::ARG }; },
 		"The surnames cannot be empty." );
 
-	//! Test JSON constructor
+	// Test JSON constructor
 	CheckException( []() { ValueFromJSONKeyString<CPerson>( R"( {
 			"Person": {}
 		} )" ); }, "key 'First name' not found" );

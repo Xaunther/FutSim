@@ -13,11 +13,11 @@ INITIALIZE_TEST( TStadium )
 
 void TStadium::TestExceptions() const
 {
-	//! Test member constructor
+	// Test member constructor
 	CheckException( []() { CStadium{ "", 1000, 1 }; }, "The stadium name cannot be empty." );
 	CheckException( []() { CStadium{ "Camp Nou", 98000, -2 }; }, "The ambient factor cannot be negative." );
 
-	//! Test JSON constructor
+	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CStadium>( R"( {
 			"Stadium": {}
 		} )" ); }, "key 'Name' not found" );

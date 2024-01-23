@@ -13,13 +13,13 @@ INITIALIZE_TEST( TPlayerSkills )
 
 void TPlayerSkills::TestExceptions() const
 {
-	//! Test member constructor
+	// Test member constructor
 	CheckException( []() { CPlayerSkills{ 0, 1, 1, 1, 1, 1, 1, 1 }; }, "The GK skill value must be greater than 0." );
 	CheckException( []() { CPlayerSkills{ 1, 0, 1, 1, 1, 1, 1, 1 }; }, "The DF skill value must be greater than 0." );
 	CheckException( []() { CPlayerSkills{ 1, 1, 0, 1, 1, 1, 1, 1 }; }, "The MF skill value must be greater than 0." );
 	CheckException( []() { CPlayerSkills{ 1, 1, 1, 0, 1, 1, 1, 1 }; }, "The FW skill value must be greater than 0." );
 
-	//! Test JSON constructor
+	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {}
 		} )" ); }, "key 'GK skill' not found" );
