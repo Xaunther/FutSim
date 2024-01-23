@@ -14,16 +14,8 @@ class CPlayer : public CPerson
 {
 public:
 	/**
-	 * @brief Member constructor.
-	 * @param aFirstName \ref mFirstName
-	 * @param aSurnames \ref mSurnames
-	 * @param aKnownName \ref mKnownName
-	 * @param aAge \ref mAge
-	 * @param aNationality \ref mNationality
+	 * @copydoc futsim::CPerson::CPerson
 	 * @param aPlayerSkills \ref mPlayerSkills
-	 * @pre The first name string cannot be empty.
-	 * @pre The surnames string cannot be empty.
-	 * @details If the passed known name is empty, it will default to the surnames.
 	*/
 	explicit CPlayer(
 		const std::string_view aFirstName,
