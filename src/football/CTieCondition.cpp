@@ -12,7 +12,7 @@ namespace
 {
 
 /**
- * @brief Checks correctness of the home team goals
+ * @brief Checks correctness of the home team goals.
  * @param aHomeTeamGoals Home team goals.
  * @param aHomeTeamLead Home team lead.
 */
