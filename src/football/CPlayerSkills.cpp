@@ -5,10 +5,7 @@
 
 #include <iostream>
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 using namespace CPlayerSkillsTypes;
@@ -125,6 +122,4 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Invalid skill value.
 
 } // anonymous namespace
 
-} // football namespace
-
-} // futsim namespace
+} // futsim::football namespace
