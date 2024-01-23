@@ -6,7 +6,7 @@
 #include <vector>
 
 /**
- * @brief Types defined for \ref CTeamTypes.
+ * @brief Types defined for \ref CTeam.
 */
 namespace futsim::football
 {
@@ -18,7 +18,7 @@ namespace CTeamTypes
 
 //! Type for a name.
 using name_type = std::string;
-//! Type for the roster of players
+//! Type for the roster of players.
 using players = std::vector<CPlayer>;
 //! Type for the support factor.
 using support_factor = CStadiumTypes::ambient_factor;
