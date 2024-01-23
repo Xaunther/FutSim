@@ -6,7 +6,7 @@
 namespace futsim::football::CStadiumTypes
 {
 
-//! Type for the stadium capacity
+//! Type for the stadium capacity.
 using capacity = unsigned int;
 //! Type for the ambient factor.
 using ambient_factor = double;
