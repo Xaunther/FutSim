@@ -4,10 +4,7 @@
 #include "JsonUtils.h"
 #include "NameUtils.h"
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 namespace
@@ -76,6 +73,4 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the a
 
 } // anonymous namespace
 
-} // football namespace
-
-} // futsim namespace
+} // futsim::football namespace
