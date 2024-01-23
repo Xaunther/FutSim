@@ -4,14 +4,11 @@
 
 #include "football/CPlayerSkills.h"
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 /**
- * @brief Class that defines a football player
+ * @brief Class that defines a football player.
 */
 class CPlayer : public CPerson
 {
@@ -52,14 +49,12 @@ public:
 	//! Retrieves the \copybrief mPlayerSkills
 	const CPlayerSkills GetPlayerSkills() const noexcept;
 
-	//! JSON key for the class-
+	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Player";
 
 private:
-	//! Skills
+	//! Skills.
 	CPlayerSkills mPlayerSkills;
 };
 
-} // football namespace
-
-} // futsim namespace
+} // futsim::football namespace
