@@ -13,12 +13,6 @@ INITIALIZE_TEST( TPlayTime )
 
 void TPlayTime::TestExceptions() const
 {
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayTime>( R"( {
-			"Play time": {
-				"Period count": 2,
-				"Period time": 45
-			}
-		} )" ); }, "key 'Available subs' not found" );
 }
 
 std::vector<std::string> TPlayTime::ObtainedResults() const noexcept
@@ -28,6 +22,7 @@ std::vector<std::string> TPlayTime::ObtainedResults() const noexcept
 	for( const auto& playTime : {
 		CPlayTime{},
 		CPlayTime{ 3, 15, 1 },
+		CPlayTime{ 2, 45, {} },
 		futsim::ValueFromJSONKeyString<CPlayTime>( R"( {
 			"Play time": {
 				"Period count": 2,
@@ -41,9 +36,15 @@ std::vector<std::string> TPlayTime::ObtainedResults() const noexcept
 				"Period time": 15,
 				"Available subs": 1
 			}
+		} )" ),
+		futsim::ValueFromJSONKeyString<CPlayTime>( R"( {
+			"Play time": {
+				"Period count": 2,
+				"Period time": 45
+			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CPlayTime::JSON_AVAILABLE_SUBS } + ": " + std::to_string( playTime.GetAvailableSubs() ) );
+		result.push_back( std::string{ CPlayTime::JSON_AVAILABLE_SUBS } + ": " + std::to_string( playTime.GetAvailableSubs().value_or( 9999 ) ) );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, playTime );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
@@ -69,6 +70,13 @@ std::vector<std::string> TPlayTime::ExpectedResults() const noexcept
 		"		\"Period count\": 3,\n"
 		"		\"Period time\": 15,\n"
 		"		\"Available subs\": 1\n"
+		"	}\n"
+		"}",
+		"Available subs: 9999",
+		"{\n"
+		"	\"Play time\": {\n"
+		"		\"Period count\": 2,\n"
+		"		\"Period time\": 45\n"
 		"	}\n"
 		"}"
 	};
