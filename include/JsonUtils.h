@@ -146,9 +146,10 @@ inline void AddKeyArrayToJSON( is_json_type auto& aJSON, const auto& aContainer,
  * @param aObject Value to add.
  * @param aKeyName Name of the key under which to add it.
  * @param aArgs Arguments to be forwarded to the ToJSON method.
+ * @todo Remove template in favour of auto once MSVC allows to use decltype on local arguments (compiler bug).
 */
-template<is_jsonable T, is_json_type JsonType>
-inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_view aKeyName = T::JSON_KEY, auto&&... aArgs ) noexcept;
+template<is_jsonable T>
+inline void AddToJSONKey( is_json_type auto& aJSON, const T& aObject, const std::string_view aKeyName = T::JSON_KEY, auto&&... aArgs ) noexcept;
 
 /**
  * @brief Helper function to add a non-jsonable type to a JSON object.
@@ -156,8 +157,7 @@ inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_v
  * @param aObject Value to add.
  * @param aKeyName Name of the key under which to add it.
 */
-template<is_not_jsonable T, is_json_type JsonType>
-inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_view aKeyName ) noexcept;
+inline void AddToJSONKey( is_json_type auto& aJSON, const is_not_jsonable auto& aObject, const std::string_view aKeyName ) noexcept;
 
 /**
  * @brief Helper function to add a container with keys to a JSON object.
@@ -276,14 +276,13 @@ inline void AddKeyArrayToJSON( is_json_type auto& aJSON, const auto& aContainer,
 	AddToJSON( aJSON, arrayJSON );
 }
 
-template<is_jsonable T, is_json_type JsonType>
-inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_view aKeyName, auto&&... aArgs ) noexcept
+template<is_jsonable T>
+inline void AddToJSONKey( is_json_type auto& aJSON, const T& aObject, const std::string_view aKeyName, auto&&... aArgs ) noexcept
 {
 	AddToJSON( aJSON[ aKeyName ], aObject, std::forward<decltype( aArgs )>( aArgs )... );
 }
 
-template<is_not_jsonable T, is_json_type JsonType>
-inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_view aKeyName ) noexcept
+inline void AddToJSONKey( is_json_type auto& aJSON, const is_not_jsonable auto& aObject, const std::string_view aKeyName ) noexcept
 {
 	AddToJSON( aJSON[ aKeyName ], aObject );
 }
