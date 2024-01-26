@@ -119,7 +119,7 @@ double CTeam::GetStdDevAttendance() const noexcept
 	return mAttendanceDistribution.stddev();
 }
 
-template<std::uniform_random_bit_generator T> CTeam::attendance CTeam::GenerateAttendance( T& aGenerator ) noexcept
+CTeam::attendance CTeam::GenerateAttendance( std::uniform_random_bit_generator auto& aGenerator ) noexcept
 {
 	auto result = mAttendanceDistribution( aGenerator );
 	return result < 0 ? 0 : std::lround( result );
