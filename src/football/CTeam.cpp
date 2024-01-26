@@ -23,14 +23,26 @@ const std::string_view CheckAbbreviation( const std::string_view aAbbreviation )
  * @param aNumber Number to check.
  * @param aNumberDescription Number description to add to the error message.
 */
-template <typename T> const T& CheckPositiveness( const T& aNumber, const std::string_view aNumberDescription );
+const auto& CheckPositiveness( const auto& aNumber, const std::string_view aNumberDescription ) try
+{
+	if( aNumber <= decltype( aNumber ){} )
+		throw std::invalid_argument{ "The " + std::string( aNumberDescription.data() ) + " must be positive." };
+	return aNumber;
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the " << aNumberDescription << "." )
 
 /**
  * @brief Checks non-negativeness of a number.
  * @param aNumber Number to check.
  * @param aNumberDescription Number description to add to the error message.
 */
-template <typename T> const T& CheckNonNegativeness( const T& aNumber, const std::string_view aNumberDescription );
+const auto& CheckNonNegativeness( const auto& aNumber, const std::string_view aNumberDescription ) try
+{
+	if( aNumber < decltype( aNumber ){} )
+		throw std::invalid_argument{ "The " + std::string( aNumberDescription.data() ) + " must be non-negative." };
+	return aNumber;
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the " << aNumberDescription << "." )
 
 /**
  * @brief Create the players from JSON.
@@ -137,22 +149,6 @@ const std::string_view CheckAbbreviation( const std::string_view aAbbreviation )
 	return aAbbreviation;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the abbreviation." )
-
-template <typename T> const T& CheckPositiveness( const T& aNumber, const std::string_view aNumberDescription ) try
-{
-	if( aNumber <= T{} )
-		throw std::invalid_argument{ "The " + std::string( aNumberDescription.data() ) + " must be positive." };
-	return aNumber;
-}
-FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the " << aNumberDescription << "." )
-
-template <typename T> const T& CheckNonNegativeness( const T& aNumber, const std::string_view aNumberDescription ) try
-{
-	if( aNumber < T{} )
-		throw std::invalid_argument{ "The " + std::string( aNumberDescription.data() ) + " must be non-negative." };
-	return aNumber;
-}
-FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the " << aNumberDescription << "." )
 
 CTeamTypes::players CreatePlayersFromJSON( const IJsonableTypes::json& aJSON ) try
 {
