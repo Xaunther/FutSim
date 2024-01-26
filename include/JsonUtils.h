@@ -31,15 +31,15 @@ template<typename T> concept is_not_jsonable = is_jsonable<T> == false;
  * @param aJSON JSON object.
  * @param aArgs Extra arguments to be forwarded to the JSON constructor.
 */
-template<is_json_constructible T, is_json_type JsonType>
-inline T ValueFromJSON( const JsonType& aJSON, auto&&... aArgs );
+template<is_json_constructible T>
+inline T ValueFromJSON( const is_json_type auto& aJSON, auto&&... aArgs );
 
 /**
  * @brief Helper function to construct a non-jsonable type from a JSON object.
  * @param aJSON JSON object.
 */
-template<is_not_json_constructible T, is_json_type JsonType>
-inline T ValueFromJSON( const JsonType& aJSON );
+template<is_not_json_constructible T>
+inline T ValueFromJSON( const is_json_type auto& aJSON );
 
 /**
  * @brief Helper function to construct a jsonable class under a key in a JSON object.
@@ -183,14 +183,14 @@ inline void AddArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const st
 template<is_json_type JsonType>
 inline void AddKeyArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept;
 
-template<is_json_constructible T, is_json_type JsonType>
-inline T ValueFromJSON( const JsonType& aJSON, auto&&... aArgs )
+template<is_json_constructible T>
+inline T ValueFromJSON( const is_json_type auto& aJSON, auto&&... aArgs )
 {
 	return T( aJSON, std::forward<decltype( aArgs )>( aArgs )... );
 }
 
-template<is_not_json_constructible T, is_json_type JsonType>
-inline T ValueFromJSON( const JsonType& aJSON )
+template<is_not_json_constructible T>
+inline T ValueFromJSON( const is_json_type auto& aJSON )
 {
 	return aJSON.template get<T>();
 }
