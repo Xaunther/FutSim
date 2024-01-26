@@ -14,7 +14,13 @@ namespace
  * @param aNumber Number.
  * @param aNameString String with the name label to add to the error message.
 */
-template<typename T> const T& CheckNonZero( const T& aNumber, const std::string_view aNameString );
+const auto& CheckNonZero( const auto& aNumber, const std::string_view aNameString ) try
+{
+	if( aNumber == 0 )
+		throw std::invalid_argument{ "The " + std::string( aNameString.data() ) + " cannot be zero." };
+	return aNumber;
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the " << aNameString << "." )
 
 } // anonymous namespace
 
@@ -50,18 +56,5 @@ const CPlayTimeTypes::period_time& CPlayTime::GetPeriodTime() const noexcept
 {
 	return mPeriodTime;
 }
-
-namespace
-{
-
-template<typename T> const T& CheckNonZero( const T& aNumber, const std::string_view aNameString ) try
-{
-	if( aNumber == 0 )
-		throw std::invalid_argument{ "The " + std::string( aNameString.data() ) + " cannot be zero." };
-	return aNumber;
-}
-FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the " << aNameString << "." )
-
-} // anonymous namespace
 
 } // futsim namespace

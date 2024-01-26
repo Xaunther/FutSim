@@ -31,15 +31,15 @@ template<typename T> concept is_not_jsonable = is_jsonable<T> == false;
  * @param aJSON JSON object.
  * @param aArgs Extra arguments to be forwarded to the JSON constructor.
 */
-template<is_json_constructible T, is_json_type JsonType>
-inline T ValueFromJSON( const JsonType& aJSON, auto&&... aArgs );
+template<is_json_constructible T>
+inline T ValueFromJSON( const is_json_type auto& aJSON, auto&&... aArgs );
 
 /**
  * @brief Helper function to construct a non-jsonable type from a JSON object.
  * @param aJSON JSON object.
 */
-template<is_not_json_constructible T, is_json_type JsonType>
-inline T ValueFromJSON( const JsonType& aJSON );
+template<is_not_json_constructible T>
+inline T ValueFromJSON( const is_json_type auto& aJSON );
 
 /**
  * @brief Helper function to construct a jsonable class under a key in a JSON object.
@@ -47,16 +47,16 @@ inline T ValueFromJSON( const JsonType& aJSON );
  * @param aArgs Extra arguments to be forwarded to the JSON constructor.
  * @param aKeyName Name of the key to search.
 */
-template<is_json_constructible T, is_json_type JsonType>
-inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName = T::JSON_KEY, auto&&... aArgs );
+template<is_json_constructible T>
+inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName = T::JSON_KEY, auto&&... aArgs );
 
 /**
  * @brief Helper function to construct a non-jsonable type under a key in a JSON object.
  * @param aJSON JSON object.
  * @param aKeyName Name of the key to search.
 */
-template<is_not_json_constructible T, is_json_type JsonType>
-inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName );
+template<is_not_json_constructible T>
+inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName );
 
 /**
  * @brief Helper function to construct a jsonable class under an optional key in a JSON object.
@@ -65,8 +65,8 @@ inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view
  * @param aKeyName Name of the key to search.
  * @param aDefaultValue Default value is key is not found.
 */
-template<is_json_constructible T, is_json_type JsonType>
-inline T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyName = T::JSON_KEY, const T& aDefaultValue = T{}, auto&&... aArgs );
+template<is_json_constructible T>
+inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName = T::JSON_KEY, const T& aDefaultValue = T{}, auto&&... aArgs );
 
 /**
  * @brief Helper function to construct a non-jsonable type under an optional key in a JSON object.
@@ -74,8 +74,8 @@ inline T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view
  * @param aKeyName Name of the key to search.
  * @param aDefaultValue Default value is key is not found.
 */
-template<is_not_json_constructible T, is_json_type JsonType>
-inline T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyName, const T& aDefaultValue = T{} );
+template<is_not_json_constructible T>
+inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName, const T& aDefaultValue = T{} );
 
 /**
  * @brief Helper function to construct a jsonable class from a JSON string.
@@ -115,16 +115,14 @@ inline T ValueFromJSONKeyString( const std::string_view& aJSONString, const std:
  * @param aObject Value to add.
  * @param aArgs Arguments to be forwarded to the ToJSON method.
 */
-template<is_jsonable T, is_json_type JsonType>
-inline void AddToJSON( JsonType& aJSON, const T& aObject, auto&&... aArgs ) noexcept;
+inline void AddToJSON( is_json_type auto& aJSON, const is_jsonable auto& aObject, auto&&... aArgs ) noexcept;
 
 /**
  * @brief Helper function to add a non-jsonable type to a JSON object.
  * @param aJSON JSON object.
  * @param aObject Value to add.
 */
-template<is_not_jsonable T, is_json_type JsonType>
-inline void AddToJSON( JsonType& aJSON, const T& aObject ) noexcept;
+inline void AddToJSON( is_json_type auto& aJSON, const is_not_jsonable auto& aObject ) noexcept;
 
 /**
  * @brief Helper function to add a container to a JSON object.
@@ -132,8 +130,7 @@ inline void AddToJSON( JsonType& aJSON, const T& aObject ) noexcept;
  * @param aContainer Container to add.
  * @param aArgs Arguments to be forwarded to the ToJSON method.
 */
-template<is_json_type JsonType>
-inline void AddArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept;
+inline void AddArrayToJSON( is_json_type auto& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept;
 
 /**
  * @brief Helper function to add a container with keys to a JSON object.
@@ -141,8 +138,7 @@ inline void AddArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... a
  * @param aContainer Container to add.
  * @param aArgs Arguments to be forwarded to the ToJSON method.
 */
-template<is_json_type JsonType>
-inline void AddKeyArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept;
+inline void AddKeyArrayToJSON( is_json_type auto& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept;
 
 /**
  * @brief Helper function to add a jsonable class to a JSON object.
@@ -150,9 +146,10 @@ inline void AddKeyArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&..
  * @param aObject Value to add.
  * @param aKeyName Name of the key under which to add it.
  * @param aArgs Arguments to be forwarded to the ToJSON method.
+ * @todo Remove template in favour of auto once MSVC allows to use decltype on local arguments (compiler bug).
 */
-template<is_jsonable T, is_json_type JsonType>
-inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_view aKeyName = T::JSON_KEY, auto&&... aArgs ) noexcept;
+template<is_jsonable T>
+inline void AddToJSONKey( is_json_type auto& aJSON, const T& aObject, const std::string_view aKeyName = T::JSON_KEY, auto&&... aArgs ) noexcept;
 
 /**
  * @brief Helper function to add a non-jsonable type to a JSON object.
@@ -160,8 +157,7 @@ inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_v
  * @param aObject Value to add.
  * @param aKeyName Name of the key under which to add it.
 */
-template<is_not_jsonable T, is_json_type JsonType>
-inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_view aKeyName ) noexcept;
+inline void AddToJSONKey( is_json_type auto& aJSON, const is_not_jsonable auto& aObject, const std::string_view aKeyName ) noexcept;
 
 /**
  * @brief Helper function to add a container with keys to a JSON object.
@@ -170,8 +166,7 @@ inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_v
  * @param aKeyName Name of the key under which to add it.
  * @param aArgs Arguments to be forwarded to the ToJSON method.
 */
-template<is_json_type JsonType>
-inline void AddArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept;
+inline void AddArrayToJSONKey( is_json_type auto& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept;
 
 /**
  * @brief Helper function to add a container with keys to a JSON object.
@@ -180,42 +175,41 @@ inline void AddArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const st
  * @param aKeyName Name of the key under which to add it.
  * @param aArgs Arguments to be forwarded to the ToJSON method.
 */
-template<is_json_type JsonType>
-inline void AddKeyArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept;
+inline void AddKeyArrayToJSONKey( is_json_type auto& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept;
 
-template<is_json_constructible T, is_json_type JsonType>
-inline T ValueFromJSON( const JsonType& aJSON, auto&&... aArgs )
+template<is_json_constructible T>
+inline T ValueFromJSON( const is_json_type auto& aJSON, auto&&... aArgs )
 {
 	return T( aJSON, std::forward<decltype( aArgs )>( aArgs )... );
 }
 
-template<is_not_json_constructible T, is_json_type JsonType>
-inline T ValueFromJSON( const JsonType& aJSON )
+template<is_not_json_constructible T>
+inline T ValueFromJSON( const is_json_type auto& aJSON )
 {
 	return aJSON.template get<T>();
 }
 
-template<is_json_constructible T, is_json_type JsonType>
-inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName, auto&&... aArgs )
+template<is_json_constructible T>
+inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName, auto&&... aArgs )
 {
 	return ValueFromJSON<T>( aJSON.at( aKeyName ), std::forward<decltype( aArgs )>( aArgs )... );
 }
 
-template<is_not_json_constructible T, is_json_type JsonType>
-inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName )
+template<is_not_json_constructible T>
+inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName )
 {
 	return ValueFromJSON<T>( aJSON.at( aKeyName ) );
 }
 
-template<is_json_constructible T, is_json_type JsonType>
-inline T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyName, const T& aDefaultValue, auto&&... aArgs )
+template<is_json_constructible T>
+inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName, const T& aDefaultValue, auto&&... aArgs )
 {
 	const auto& found = aJSON.find( aKeyName );
 	return found != aJSON.cend() ? ValueFromJSON<T>( *found, std::forward<decltype( aArgs )>( aArgs )... ) : aDefaultValue;
 }
 
-template<is_not_json_constructible T, is_json_type JsonType>
-inline T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyName, const T& aDefaultValue )
+template<is_not_json_constructible T>
+inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName, const T& aDefaultValue )
 {
 	const auto& found = aJSON.find( aKeyName );
 	return found != aJSON.cend() ? ValueFromJSON<T>( *found ) : aDefaultValue;
@@ -245,20 +239,18 @@ inline T ValueFromJSONKeyString( const std::string_view& aJSONString, const std:
 	return ValueFromRequiredJSONKey<T>( nlohmann::json::parse( aJSONString ), aKeyName );
 }
 
-template<is_jsonable T, is_json_type JsonType>
-inline void AddToJSON( JsonType& aJSON, const T& aObject, auto&&... aArgs ) noexcept
+inline void AddToJSON( is_json_type auto& aJSON, const is_jsonable auto& aObject, auto&&... aArgs ) noexcept
 {
 	aObject.ToJSON( aJSON, std::forward<decltype( aArgs )>( aArgs )... );
 }
 
-template<is_not_jsonable T, is_json_type JsonType>
-inline void AddToJSON( JsonType& aJSON, const T& aObject ) noexcept
+inline void AddToJSON( is_json_type auto& aJSON, const is_not_jsonable auto& aObject ) noexcept
 {
 	aJSON = aObject;
 }
 
 template<is_json_type JsonType>
-inline void AddArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept
+inline void AddArrayToJSON( is_json_type auto& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept
 {
 	JsonType arrayJSON;
 	for( const auto& element : aContainer )
@@ -270,39 +262,35 @@ inline void AddArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... a
 	AddToJSON( aJSON, arrayJSON );
 }
 
-template<is_json_type JsonType>
-inline void AddKeyArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept
+inline void AddKeyArrayToJSON( is_json_type auto& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept
 {
-	JsonType arrayJSON;
+	std::decay_t<decltype( aJSON )> arrayJSON;
 	for( const auto& element : aContainer )
 	{
-		JsonType elementJSON;
+		decltype( arrayJSON ) elementJSON;
 		AddToJSONKey( elementJSON, element, std::forward<decltype( aArgs )>( aArgs )... );
 		arrayJSON.push_back( elementJSON );
 	}
 	AddToJSON( aJSON, arrayJSON );
 }
 
-template<is_jsonable T, is_json_type JsonType>
-inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_view aKeyName, auto&&... aArgs ) noexcept
+template<is_jsonable T>
+inline void AddToJSONKey( is_json_type auto& aJSON, const T& aObject, const std::string_view aKeyName, auto&&... aArgs ) noexcept
 {
 	AddToJSON( aJSON[ aKeyName ], aObject, std::forward<decltype( aArgs )>( aArgs )... );
 }
 
-template<is_not_jsonable T, is_json_type JsonType>
-inline void AddToJSONKey( JsonType& aJSON, const T& aObject, const std::string_view aKeyName ) noexcept
+inline void AddToJSONKey( is_json_type auto& aJSON, const is_not_jsonable auto& aObject, const std::string_view aKeyName ) noexcept
 {
 	AddToJSON( aJSON[ aKeyName ], aObject );
 }
 
-template<is_json_type JsonType>
-inline void AddArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept
+inline void AddArrayToJSONKey( is_json_type auto& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept
 {
 	AddArrayToJSON( aJSON[ aKeyName ], aContainer, std::forward<decltype( aArgs )>( aArgs )... );
 }
 
-template<is_json_type JsonType>
-inline void AddKeyArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept
+inline void AddKeyArrayToJSONKey( is_json_type auto& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept
 {
 	AddKeyArrayToJSON( aJSON[ aKeyName ], aContainer, std::forward<decltype( aArgs )>( aArgs )... );
 }
