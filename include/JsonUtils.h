@@ -115,16 +115,14 @@ inline T ValueFromJSONKeyString( const std::string_view& aJSONString, const std:
  * @param aObject Value to add.
  * @param aArgs Arguments to be forwarded to the ToJSON method.
 */
-template<is_jsonable T, is_json_type JsonType>
-inline void AddToJSON( JsonType& aJSON, const T& aObject, auto&&... aArgs ) noexcept;
+inline void AddToJSON( is_json_type auto& aJSON, const is_jsonable auto& aObject, auto&&... aArgs ) noexcept;
 
 /**
  * @brief Helper function to add a non-jsonable type to a JSON object.
  * @param aJSON JSON object.
  * @param aObject Value to add.
 */
-template<is_not_jsonable T, is_json_type JsonType>
-inline void AddToJSON( JsonType& aJSON, const T& aObject ) noexcept;
+inline void AddToJSON( is_json_type auto& aJSON, const is_not_jsonable auto& aObject ) noexcept;
 
 /**
  * @brief Helper function to add a container to a JSON object.
@@ -245,14 +243,12 @@ inline T ValueFromJSONKeyString( const std::string_view& aJSONString, const std:
 	return ValueFromRequiredJSONKey<T>( nlohmann::json::parse( aJSONString ), aKeyName );
 }
 
-template<is_jsonable T, is_json_type JsonType>
-inline void AddToJSON( JsonType& aJSON, const T& aObject, auto&&... aArgs ) noexcept
+inline void AddToJSON( is_json_type auto& aJSON, const is_jsonable auto& aObject, auto&&... aArgs ) noexcept
 {
 	aObject.ToJSON( aJSON, std::forward<decltype( aArgs )>( aArgs )... );
 }
 
-template<is_not_jsonable T, is_json_type JsonType>
-inline void AddToJSON( JsonType& aJSON, const T& aObject ) noexcept
+inline void AddToJSON( is_json_type auto& aJSON, const is_not_jsonable auto& aObject ) noexcept
 {
 	aJSON = aObject;
 }
