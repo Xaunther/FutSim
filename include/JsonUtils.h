@@ -130,8 +130,7 @@ inline void AddToJSON( is_json_type auto& aJSON, const is_not_jsonable auto& aOb
  * @param aContainer Container to add.
  * @param aArgs Arguments to be forwarded to the ToJSON method.
 */
-template<is_json_type JsonType>
-inline void AddArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept;
+inline void AddArrayToJSON( is_json_type auto& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept;
 
 /**
  * @brief Helper function to add a container with keys to a JSON object.
@@ -254,7 +253,7 @@ inline void AddToJSON( is_json_type auto& aJSON, const is_not_jsonable auto& aOb
 }
 
 template<is_json_type JsonType>
-inline void AddArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept
+inline void AddArrayToJSON( is_json_type auto& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept
 {
 	JsonType arrayJSON;
 	for( const auto& element : aContainer )
