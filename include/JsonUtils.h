@@ -138,8 +138,7 @@ inline void AddArrayToJSON( is_json_type auto& aJSON, const auto& aContainer, au
  * @param aContainer Container to add.
  * @param aArgs Arguments to be forwarded to the ToJSON method.
 */
-template<is_json_type JsonType>
-inline void AddKeyArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept;
+inline void AddKeyArrayToJSON( is_json_type auto& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept;
 
 /**
  * @brief Helper function to add a jsonable class to a JSON object.
@@ -265,13 +264,12 @@ inline void AddArrayToJSON( is_json_type auto& aJSON, const auto& aContainer, au
 	AddToJSON( aJSON, arrayJSON );
 }
 
-template<is_json_type JsonType>
-inline void AddKeyArrayToJSON( JsonType& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept
+inline void AddKeyArrayToJSON( is_json_type auto& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept
 {
-	JsonType arrayJSON;
+	std::decay_t<decltype( aJSON )> arrayJSON;
 	for( const auto& element : aContainer )
 	{
-		JsonType elementJSON;
+		decltype( arrayJSON ) elementJSON;
 		AddToJSONKey( elementJSON, element, std::forward<decltype( aArgs )>( aArgs )... );
 		arrayJSON.push_back( elementJSON );
 	}
