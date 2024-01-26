@@ -65,8 +65,8 @@ inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::st
  * @param aKeyName Name of the key to search.
  * @param aDefaultValue Default value is key is not found.
 */
-template<is_json_constructible T, is_json_type JsonType>
-inline T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyName = T::JSON_KEY, const T& aDefaultValue = T{}, auto&&... aArgs );
+template<is_json_constructible T>
+inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName = T::JSON_KEY, const T& aDefaultValue = T{}, auto&&... aArgs );
 
 /**
  * @brief Helper function to construct a non-jsonable type under an optional key in a JSON object.
@@ -74,8 +74,8 @@ inline T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view
  * @param aKeyName Name of the key to search.
  * @param aDefaultValue Default value is key is not found.
 */
-template<is_not_json_constructible T, is_json_type JsonType>
-inline T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyName, const T& aDefaultValue = T{} );
+template<is_not_json_constructible T>
+inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName, const T& aDefaultValue = T{} );
 
 /**
  * @brief Helper function to construct a jsonable class from a JSON string.
@@ -207,15 +207,15 @@ inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::st
 	return ValueFromJSON<T>( aJSON.at( aKeyName ) );
 }
 
-template<is_json_constructible T, is_json_type JsonType>
-inline T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyName, const T& aDefaultValue, auto&&... aArgs )
+template<is_json_constructible T>
+inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName, const T& aDefaultValue, auto&&... aArgs )
 {
 	const auto& found = aJSON.find( aKeyName );
 	return found != aJSON.cend() ? ValueFromJSON<T>( *found, std::forward<decltype( aArgs )>( aArgs )... ) : aDefaultValue;
 }
 
-template<is_not_json_constructible T, is_json_type JsonType>
-inline T ValueFromOptionalJSONKey( const JsonType& aJSON, const std::string_view aKeyName, const T& aDefaultValue )
+template<is_not_json_constructible T>
+inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName, const T& aDefaultValue )
 {
 	const auto& found = aJSON.find( aKeyName );
 	return found != aJSON.cend() ? ValueFromJSON<T>( *found ) : aDefaultValue;
