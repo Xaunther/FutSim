@@ -175,8 +175,7 @@ inline void AddArrayToJSONKey( is_json_type auto& aJSON, const auto& aContainer,
  * @param aKeyName Name of the key under which to add it.
  * @param aArgs Arguments to be forwarded to the ToJSON method.
 */
-template<is_json_type JsonType>
-inline void AddKeyArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept;
+inline void AddKeyArrayToJSONKey( is_json_type auto& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept;
 
 template<is_json_constructible T>
 inline T ValueFromJSON( const is_json_type auto& aJSON, auto&&... aArgs )
@@ -291,8 +290,7 @@ inline void AddArrayToJSONKey( is_json_type auto& aJSON, const auto& aContainer,
 	AddArrayToJSON( aJSON[ aKeyName ], aContainer, std::forward<decltype( aArgs )>( aArgs )... );
 }
 
-template<is_json_type JsonType>
-inline void AddKeyArrayToJSONKey( JsonType& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept
+inline void AddKeyArrayToJSONKey( is_json_type auto& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept
 {
 	AddKeyArrayToJSON( aJSON[ aKeyName ], aContainer, std::forward<decltype( aArgs )>( aArgs )... );
 }
