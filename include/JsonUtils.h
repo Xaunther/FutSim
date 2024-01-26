@@ -47,16 +47,16 @@ inline T ValueFromJSON( const is_json_type auto& aJSON );
  * @param aArgs Extra arguments to be forwarded to the JSON constructor.
  * @param aKeyName Name of the key to search.
 */
-template<is_json_constructible T, is_json_type JsonType>
-inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName = T::JSON_KEY, auto&&... aArgs );
+template<is_json_constructible T>
+inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName = T::JSON_KEY, auto&&... aArgs );
 
 /**
  * @brief Helper function to construct a non-jsonable type under a key in a JSON object.
  * @param aJSON JSON object.
  * @param aKeyName Name of the key to search.
 */
-template<is_not_json_constructible T, is_json_type JsonType>
-inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName );
+template<is_not_json_constructible T>
+inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName );
 
 /**
  * @brief Helper function to construct a jsonable class under an optional key in a JSON object.
@@ -195,14 +195,14 @@ inline T ValueFromJSON( const is_json_type auto& aJSON )
 	return aJSON.template get<T>();
 }
 
-template<is_json_constructible T, is_json_type JsonType>
-inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName, auto&&... aArgs )
+template<is_json_constructible T>
+inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName, auto&&... aArgs )
 {
 	return ValueFromJSON<T>( aJSON.at( aKeyName ), std::forward<decltype( aArgs )>( aArgs )... );
 }
 
-template<is_not_json_constructible T, is_json_type JsonType>
-inline T ValueFromRequiredJSONKey( const JsonType& aJSON, const std::string_view aKeyName )
+template<is_not_json_constructible T>
+inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName )
 {
 	return ValueFromJSON<T>( aJSON.at( aKeyName ) );
 }
