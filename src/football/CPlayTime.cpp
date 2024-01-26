@@ -19,7 +19,7 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the f
 
 CPlayTime::CPlayTime( const json& aJSON ) try :
 	futsim::CPlayTime( aJSON ),
-	mAvailableSubs( ValueFromRequiredJSONKey<subs_count>( aJSON, JSON_AVAILABLE_SUBS ) )
+	mAvailableSubs( ValueFromOptionalJSONKey<subs_count>( aJSON, JSON_AVAILABLE_SUBS ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the football play time from JSON." )
@@ -27,7 +27,8 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the f
 void CPlayTime::JSON( json& aJSON ) const noexcept
 {
 	futsim::CPlayTime::JSON( aJSON );
-	AddToJSONKey( aJSON, mAvailableSubs, JSON_AVAILABLE_SUBS );
+	if( mAvailableSubs )
+		AddToJSONKey( aJSON, *mAvailableSubs, JSON_AVAILABLE_SUBS );
 }
 
 const CPlayTime::subs_count& CPlayTime::GetAvailableSubs() const noexcept
