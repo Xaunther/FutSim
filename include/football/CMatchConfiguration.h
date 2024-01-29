@@ -40,6 +40,19 @@ public:
 		const optional_extra_time& aExtraTime = {},
 		const optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration = {} );
 
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CMatchConfiguration( const json& aJSON );
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Match configuration";
+	//! JSON key for the \copybrief mBenchedPlayersCount
+	static inline constexpr std::string_view JSON_BENCHED_PLAYERS = "Benched players";
+	//! JSON key for the \copybrief mApplyAmbientFactor
+	static inline constexpr std::string_view JSON_APPLY_AMBIENT_FACTOR = "Apply ambient factor";
+
 private:
 	//! Play time configuration.
 	CPlayTime mPlayTime;
