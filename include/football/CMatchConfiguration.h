@@ -22,6 +22,24 @@ protected:
 	using optional_extra_time = CMatchConfigurationTypes::optional_extra_time;
 	using optional_penalty_shootout_configuration = CMatchConfigurationTypes::optional_penalty_shootout_configuration;
 
+public:
+	/**
+	 * @brief Member constructor.
+	 * @param aPlayTime \ref mPlayTime
+	 * @param aBenchedPlayersCount \ref mBenchedPlayersCount
+	 * @param aApplyAmbientFactor \ref mApplyAmbientFactor
+	 * @param aTieCondition \ref mTieCondition
+	 * @param aExtraTime \ref mExtraTime
+	 * @param aPenaltyShootoutConfiguration \ref mPenaltyShootoutConfiguration
+	*/
+	explicit CMatchConfiguration(
+		const CPlayTime& aPlayTime = CPlayTime{},
+		const benched_count& aBenchedPlayersCount = 9,
+		const bool aApplyAmbientFactor = true,
+		const optional_tie_condition& aTieCondition = {},
+		const optional_extra_time& aExtraTime = {},
+		const optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration = {} );
+
 private:
 	//! Play time configuration.
 	CPlayTime mPlayTime;
