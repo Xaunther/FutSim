@@ -64,6 +64,36 @@ void CMatchConfiguration::JSON( json& aJSON ) const noexcept
 		AddToJSONKey( aJSON, *mPenaltyShootoutConfiguration );
 }
 
+const CPlayTime& CMatchConfiguration::GetPlayTime() const noexcept
+{
+	return mPlayTime;
+}
+
+const CMatchConfiguration::benched_count& CMatchConfiguration::GetBenchedPlayersCount() const noexcept
+{
+	return mBenchedPlayersCount;
+}
+
+bool CMatchConfiguration::AppliesAmbientFactor() const noexcept
+{
+	return mApplyAmbientFactor;
+}
+
+const CMatchConfiguration::optional_tie_condition& CMatchConfiguration::GetTieCondition() const noexcept
+{
+	return mTieCondition;
+}
+
+const CMatchConfiguration::optional_extra_time& CMatchConfiguration::GetExtraTime() const noexcept
+{
+	return mExtraTime;
+}
+
+const CMatchConfiguration::optional_penalty_shootout_configuration& CMatchConfiguration::GetPenaltyShootoutConfiguration() const noexcept
+{
+	return mPenaltyShootoutConfiguration;
+}
+
 namespace
 {
 

@@ -53,6 +53,24 @@ protected:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
+	//! Retrieves the \copybrief mPlayTime
+	const CPlayTime& GetPlayTime() const noexcept;
+
+	//! Retrieves the \copybrief mBenchedPlayersCount
+	const benched_count& GetBenchedPlayersCount() const noexcept;
+
+	//! Retrieves the \copybrief mApplyAmbientFactor
+	bool AppliesAmbientFactor() const noexcept;
+
+	//! Retrieves the \copybrief mTieCondition
+	const optional_tie_condition& GetTieCondition() const noexcept;
+
+	//! Retrieves the \copybrief mExtraTime
+	const optional_extra_time& GetExtraTime() const noexcept;
+
+	//! Retrieves the \copybrief mPenaltyShootoutConfiguration
+	const optional_penalty_shootout_configuration& GetPenaltyShootoutConfiguration() const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Match configuration";
 	//! JSON key for the \copybrief mBenchedPlayersCount
