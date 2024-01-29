@@ -9,6 +9,7 @@ SET(FUTSIM_TESTS_UNIT_CORE_SOURCE
 SET(FUTSIM_TESTS_UNIT_FOOTBALL_SOURCE
 	unit/football/TExtraTime.cpp
 	unit/football/TMatch.cpp
+	unit/football/TMatchConfiguration.cpp
 	unit/football/TPenaltyShootoutConfiguration.cpp
 	unit/football/TPlayer.cpp
 	unit/football/TPlayerSkills.cpp

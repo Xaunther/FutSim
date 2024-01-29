@@ -16,6 +16,8 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CExtraTime.h
 	include/football/CMatch.h
+	include/football/CMatchConfiguration.h
+	include/football/CMatchConfigurationTypes.h
 	include/football/CPenaltyShootoutConfiguration.h
 	include/football/CPenaltyShootoutConfigurationTypes.h
 	include/football/CPlayer.h
@@ -45,6 +47,7 @@ SET(FUTSIM_CORE_SOURCE
 SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CExtraTime.cpp
 	src/football/CMatch.cpp
+	src/football/CMatchConfiguration.cpp
 	src/football/CPenaltyShootoutConfiguration.cpp
 	src/football/CPlayerSkills.cpp
 	src/football/CPlayer.cpp
