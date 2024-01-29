@@ -13,6 +13,10 @@ INITIALIZE_TEST( TMatchConfiguration )
 
 void TMatchConfiguration::TestExceptions() const
 {
+	// Test member constructor
+	CheckException( []() { CMatchConfiguration{ CPlayTime{}, {}, true, CTieCondition{}, {}, {} }; },
+		"There cannot be a tie condition without a penalty shootout configuration" );
+
 	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
 			"Match configuration": {
