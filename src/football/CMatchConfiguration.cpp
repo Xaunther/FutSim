@@ -50,6 +50,20 @@ CMatchConfiguration::CMatchConfiguration( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the match configuration from JSON." )
 
+void CMatchConfiguration::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mPlayTime );
+	if( mBenchedPlayersCount )
+		AddToJSONKey( aJSON, *mBenchedPlayersCount, JSON_BENCHED_PLAYERS );
+	AddToJSONKey( aJSON, mApplyAmbientFactor, JSON_APPLY_AMBIENT_FACTOR );
+	if( mTieCondition )
+		AddToJSONKey( aJSON, *mTieCondition );
+	if( mExtraTime )
+		AddToJSONKey( aJSON, *mExtraTime );
+	if( mPenaltyShootoutConfiguration )
+		AddToJSONKey( aJSON, *mPenaltyShootoutConfiguration );
+}
+
 namespace
 {
 
