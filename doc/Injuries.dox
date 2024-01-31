@@ -1,2 +1,57 @@
 /** \page pageInjuries Injuries
+
+
+\section sec_pageInjuries_Introduction Introduction
+
+
+The injury system is, for now, orthogonal to any other game system.
+Every minute, a draw is made to determine whether a player picks up an injury, and if the outcome is positive, a random player currently on the field is chosen.
+This means that neither fouls nor tiredness factor in the probability to pick up an injury, it is an independent system.
+
+
+\section sec_pageInjuries_InjuryProbability Injury probability
+
+
+As described before, every minute a draw is made to determine whether a player picks up an injury.
+The player itself is chosen from a uniform discrete distribution composed of all the players currently on the field.
+The probability to pick up an injury then corresponds to a Bernouilli distribution with probability \f$ p_{Inj} \f$.
+Naturally, after \f$ m \f$ minutes played, the probability of picking up \f$ k \f$ injuries follows a binomial distribution:
+
+\f[
+	P(k;m,p_{Inj})=\binom{m}{k}p_{Inj}^k(1-p_{Inj})^{m-k}
+\f]
+
+With the average number of injuries being \f$ \mu_{Inj}=mp_{Inj} \f$. For \f$ n \f$ matches of 90 minutes each (\f$ m=90n \f$), the average number of injuries per match is:
+\f[
+	\frac{\mu_{Inj}}{n}=90p_{Inj}
+\f]
+
+Regarding the standard deviation \f$ \sigma_{Inj}=\sqrt{mp_{Inj}(1-p_{Inj})} \f$, the standard deviation of the injuries per match follows:
+\f[
+	\frac{\sigma_{Inj}}{n}=\sqrt{\frac{90p_{Inj}(1-p_{Inj})}{n}}
+\f]
+
+As expected, the higher the number of matches played the smaller the uncertainty on the average number of injuries.
+
+
+\section sec_pageInjuries_InjuryTime Injury time
+
+
+After a match, the injuries picked up are evaluated and given a duration following a configurable discrete distribution.
+The injury time may range from 0 to any integer number, and corresponds to the number of incoming matches that the player will miss due to the injury.
+The probability to pick up an injury of time \f$ t \f$ is then \f$ p_t \f$, with:
+\f[
+	\sum_t p_t = 1
+\f]
+
+Combining both draws, the probability distribution of picking up \f$ k \f$ injuries of time \f$ t \f$ follows a binomial distribution too:
+\f[
+	P_t(k;m,p_{Inj}p_t)=\binom{m}{k}p_{Inj}^kp_t^k(1-p_{Inj}p_t)^{m-k}
+\f]
+
+Where the average number \f$\mu_{Inj}(t)\f$ and standard deviation \f$\sigma_{Inj}(t)\f$ of injuries of time t per match is:
+\f{eqnarray*}{
+	\frac{\mu_{Inj}(t)}{n}&=&90p_{Inj}p_t\\
+	\frac{\sigma_{Inj}(t)}{n}&=&\sqrt{\frac{90p_{Inj}p_t(1-p_{Inj}p_t)}{n}}
+\f}
 */
