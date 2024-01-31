@@ -1,2 +1,157 @@
 /** \page pageEvents Events
+
+
+\section sec_pageEvents_Introduction Introduction
+
+
+The events in a match contain "everything" that may happen during a match: fouls, chances, goals, subs, tactic changes...
+Every minute, the game proceeds and a game event may happen, followed by injuries and any manager decision that may trigger.
+The triggered event is determined at random, with the probability depending on a number of factors such as the player skills, the team tactics, formation, home team bonus...
+
+
+\section sec_pageEvents_MatchSimulation Match simulation
+
+
+At the beginning of each play time (either ordinary or extra time), a toin-coss-like draw is performed to determine the team that kicks off.
+If the play time has several parts, the kick-off team alternates between the two teams.
+The kick-off also determines which team starts with the possession of the ball.
+Once started, for every minute a series of draws are performed to determine the triggered event:
+	-# Determine possession. The passing ability of the attacking team \f$Ps_A\f$ is put against the tackling ability of the defending team \f$Tk_D\f$.
+	   If the attacking team keeps the ball we proceed to point 2. Otherwise, a draw is performed to determine what happens:
+		- Possession change: The defending team gets the ball and gets a chance for a counterattack (proceed to point 2).
+		- Foul: The defending team commits a foul while trying to steal the ball. A player of the defending team may get a yellow/red car in consequence.
+		  The foul might be far away from the goal or near, in which case a set piece is triggered (proceed to point 3).
+	-# Determine goal chance. The shooting ability of the attacking team \f$Sh_A\f$ is put against the tackling ability of the defending team \f$Tk_D\f$.
+	   If the outcome is positive, proceed to point 3. Otherwise nothing happens (attacking team keeps the ball).
+	-# Determine chance type. A draw determines which type of chance happens and then we proceed to point 4. In the case of a chance not triggered by a foul:
+		- 1-on-1 vs goalkeeper. With or without assist.
+		- 1-on-1 vs defender. With or without assist.
+		- Corner kick. Assist by the corner kicker.
+		- Near shot. With or without assist.
+		- Far shot. With or without assist.
+	  If the chance has been triggered by a foul, a set piece occurs:
+	    - Indirect free kick. With assist from the kicker.
+		- Direct free kick. No assist.
+		- Penalty kick. No assist
+	-# Determine players involved. Draws are made to determine each player involved and then we proceed to point 5. The position of the player dictate their chance to be involved in each role:
+		- Shooter: FW > AM > MF > DM > DF > GK
+		- Assist: AM > MF > FW  > DM > DF > GK
+		- Defender: DF > DM > MF > AM > FW > GK
+	-# Determine chance outcome. Depending on the individual abilities of the players involved:
+		- Goal. In consequence, possession changes to the defending team
+		- Miss followed by corner kick.
+		- Miss and attacking team keeps possession.
+		- Miss and defending team gets possession.
+
+
+\section sec_pageEvents_PossessionProbability Possession probability
+
+
+At the beginning of the m-th minute of play, the probability for each team to have the possession of the ball \f$\vec{P}_m\f$ can be written as:
+\f[
+	\vec{P}_m = T\vec{P}_{m-1} = T^{m-1}\vec{P}_1
+\f]
+Where \f$T\f$ is the transition matrix, which models the probability for each team to either keep or lose possession. In matrix form, it expands to:
+\f[
+	\begin{pmatrix} P_m(H) \\ P_m(A)\end{pmatrix} =
+	\begin{pmatrix} P(H) & 1-P(A) \\ 1-P(H) & P(A) \end{pmatrix}^{m-1} \begin{pmatrix} P_1(H) \\ P_1(A) \end{pmatrix} =
+	\begin{pmatrix} P(H) & 1-P(A) \\ 1-P(H) & P(A) \end{pmatrix}^{m-1} \frac{1}{2}\begin{pmatrix} 1 \\ 1 \end{pmatrix}
+\f]
+With \f$P(H),P(A)\f$ the probability for the home/away team to keep the possession for the next minute.
+We have also used that at the beginning of the match a toin coss is made to determine the team starting with the possession of the ball.
+
+The ball possession during a n-minute game is then:
+\f[
+	\vec{P}(possession) = \frac{1}{n}\sum_{m=1}^{n}\vec{P}_m = \frac{1}{n}\sum_{m=1}^{n}T^{m-1}\vec{P}_1
+\f]
+
+In order to compute the geometric sum over the matrix \f$T\f$ we can write it as \f$T=I+Q\f$, with \f$I\f$ the identity matrix and \f$Q\f$:
+\f[
+	Q = \begin{pmatrix} -(1-P(H)) & 1-P(A) \\ 1-P(H) & -(1-P(A)) \end{pmatrix}
+\f]
+
+It can be easily shown that the matrix \f$Q\f$ fulfills:
+\f[
+	Q^m = (P(H)+P(A)-2)^{m-1}Q,\forall m\geq 1
+\f]
+
+Using this property, we can compute the sum:
+\f{eqnarray*}{
+	\sum_{m=1}^{n}T^{m-1} &=& \sum_{m=0}^{n-1}T^m = \sum_{m=0}^{n-1}(I+Q)^m = \sum_{m=0}^{n-1}\sum_{k=0}^{m}\binom{m}{k}Q^k = I + \sum_{m=1}^{n-1}\sum_{k=0}^{m}\binom{m}{k}Q^k \\
+	&=& I + \sum_{m=1}^{n-1}\left[I+\sum_{k=1}^{m}\binom{m}{k}Q^k\right] = nI + Q\sum_{m=1}^{n-1}\sum_{k=1}^{m}\binom{m}{k}\left(P(H)+P(A)-2\right)^{m-1} \\
+	&=& nI + Q \sum_{m=1}^{n-1}\left[\sum_{k=m}^{n-1}\binom{k}{m}\right]\left(P(H)+P(A)-2\right)^{m-1} = nI + Q \sum_{m=1}^{n-1}\binom{n}{m+1}\left(P(H)+P(A)-2\right)^{m-1} \\
+	&=& nI + \frac{(P(H)+P(A)-1)^n-n(P(H)+P(A)-2)-1}{(P(H)+P(A)-2)^2}Q
+\f}
+
+Expression that is only valid when \f$P(H)+P(A)<2\f$. In the case of \f$P(H)+P(A)=2\f$ we have \f$T=I\f$ and therefore \f$\vec{P}=\vec{P}_1\f$. All in all:
+\f[
+	\vec{P} = \left[I + \frac{(P(H)+P(A)-1)^n-n(P(H)+P(A)-2)-1}{n(P(H)+P(A)-2)^2}Q\right]\vec{P}_1
+\f]
+
+And in the case of an initial coin toss we get:
+\f{eqnarray*}{
+	P(possession(H)) &=& \frac{1}{2}\left[1 + \frac{(P(H)+P(A)-1)^n-n(P(H)+P(A)-2)-1}{n(P(H)+P(A)-2)^2}(P(H)-P(A))\right] \\
+	P(possession(A)) &=& \frac{1}{2}\left[1 - \frac{(P(H)+P(A)-1)^n-n(P(H)+P(A)-2)-1}{n(P(H)+P(A)-2)^2}(P(H)-P(A))\right]
+\f}
+
+We also show the case of \f$n\rightarrow\infty\f$:
+\f{eqnarray*}{
+	P(possession(H)) &=& \frac{1-P(A)}{2-P(H)-P(A)} \\
+	P(possession(A)) &=& \frac{1-P(H)}{2-P(H)-P(A)}
+\f}
+
+Which corresponds to the stable state for the Markov chain.
+
+It is also worth noting that for a match consisting of 2 parts of 45 minutes each, the expected ball possession should be averaged between the possession of each part.
+Since the initial state in each part is always the same because it is decided in a fair toin coss, the possession for the full match should be taken with \f$n=45\f$ instead of \f$n=90\f$.
+This is, \f$n\f$ is the length of each part, not the full match length.
+
+Now, we can finally write \f$P(H)\f$ and \f$P(A)\f$ in terms of the events of the match:
+\f{eqnarray*}{
+	P(T) &=& P( keepPossession(T)\mid possession(T) )\left[\left(1-P( chance(T)\mid keepPossession(T) )\right) + P( chance(T)\mid keepPossession(T) )P(keepPossession(T)\mid chance(T))\right]\\
+			&+& P(foul(T)\mid possession(T))\left[(1-P( setPiece(T)\mid foul(T) )) + P(setPiece(T)\mid foul(T))P(keepPossession(T)\mid setPiece(T))\right]\\
+			&+& P( counterAttack(!T)\mid possession(T) )P( chance(!T)\mid counterAttack(!T) )\left[P(goal(!T)\mid chance(!T))+P(losePossession(!T)\mid chance(!T))\right]
+\f}
+
+Let's unfold each unknown term:
+\f{eqnarray*}{
+	P(keepPossession(T)\mid chance(T)) &=& \sum_i P(chance_i(T)\mid chance(T))P(keepPossession(T)\mid chance_i(T)) \\
+			&=& \sum_i \left[P(missAndKeep(T)\mid chance_i(T)) + P(extraCorner(T)\mid chance_i(T))P(missAndKeep(T)\mid corner(T))\sum_{n=0}^\infty P(extraCorner(T)\mid corner(T))^n\right]P(chance_i(T)\mid chance(T)) \\
+			&=& \sum_i \left[P(missAndKeep(T)\mid chance_i(T)) + \frac{P(extraCorner(T)\mid chance_i(T))P(missAndKeep(T)\mid corner(T))}{1-P(extraCorner(T)\mid corner(T))}\right]P(chance_i(T)\mid chance(T))\\
+			&=& \frac{P(extraCorner(T)\mid chance(T))P(missAndKeep(T)\mid corner(T))}{1-P(extraCorner(T)\mid chance(T))} + \sum_i P(missAndKeep(T)\mid chance_i(T))P(chance_i(T)\mid chance(T))\\
+	P(losePossession(T)\mid chance(T)) &=& P(keepPossession(T)\mid chance(T)) \\
+	P(goal(T)\mid chance(T)) &=& 1 - 2P(keepPossession(T)\mid chance(T)) \\
+	P(keepPossession(T)\mid setPiece(T)) &=& \sum_i P(setPiece_i(T)\mid setPiece(T))P(keepPossession(T)\mid setPiece_i(T)) \\
+			&=& \sum_i \left[P(missAndKeep(T)\mid setPiece_i(T)) + P(extraCorner(T)\mid setPiece_i(T))P(missAndKeep(T)\mid corner(T))\sum_{n=0}^\infty P(extraCorner(T)\mid corner(T))^n\right]P(setPiece_i(T)\mid setPiece(T)) \\
+			&=& \sum_i \left[P(missAndKeep(T)\mid setPiece_i(T)) + \frac{P(extraCorner(T)\mid setPiece_i(T))P(missAndKeep(T)\mid corner(T))}{1-P(extraCorner(T)\mid corner(T))}\right]P(setPiece_i(T)\mid setPiece(T))\\
+			&=& \frac{P(extraCorner(T)\mid chance(T))P(missAndKeep(T)\mid corner(T))}{1-P(extraCorner(T)\mid chance(T))} + \sum_i P(missAndKeep(T)\mid setPiece_i(T))P(setPiece_i(T)\mid setPiece(T))\\
+\f}
+
+Where we have used that the probability to get an extra corner is independent of the given chance or set-piece.
+
+Let's also write the average number of corner kicks per minute for the team T:
+\f{eqnarray*}{
+	N(corner/min(T)) &=& \sum_{i=1}^\infty i*P(i(corner/min(T))) = \sum_{i=1}^\infty i\left[P(possession(T))P( i(corner/min(T))\mid posession(T) ) + \left(1-P(possession(T))\right)P( i(corner/min(T))\mid posession(!T) )\right] \\
+			&=& \sum_{i=1}^\infty i\left[P(possession(T))\left[P( keepPossession(T)\mid possession(T) )P( i(corner/min(T))\mid keepPossession(T) ) + P( foul(T)\mid possession(T) )P( i(corner/min(T))\mid foul(T) )\right]\right.\\
+			&+& \left.\left(1-P(possession(T))\right)P( counterattack(T)\mid posession(!T) )P( i(corner/min(T))\mid counterattack(T) )\right]\\
+			&=& \sum_{i=1}^\infty i\left[P(possession(T))\left[P( keepPossession(T)\mid possession(T) )P( chance(T)\mid keepPossession(T) )P( i(corner/min(T))\mid chance(T) ) + P( foul(T)\mid possession(T) )P( i(corner/min(T))\mid foul(T) )\right]\right.\\
+			&+& \left.\left(1-P(possession(T))\right)P( counterattack(T)\mid posession(!T) )P( chance(T)\mid keepPossession(T) )P( i(corner/min(T))\mid chance(T) )\right]\\
+			&=& P(possession(T))P( keepPossession(T)\mid possession(T) )P( chance(T)\mid keepPossession(T) )\sum_{i=1}^\infty i*P( i(corner/min(T))\mid chance(T) )\\
+			&+& P(possession(T))P( foul(T)\mid possession(T) )P( setPiece(T)\mid foul(T) )\sum_{i=1}^\infty i*P( i(corner/min(T))\mid setPiece(T) ) \\
+			&+& \left(1-P(possession(T))\right)P( counterattack(T)\mid posession(!T) )P( chance(T)\mid keepPossession(T) ) \sum_{i=1}^\infty i*P( i(corner/min(T))\mid chance(T) )
+\f}
+
+Where:
+\f{eqnarray*}{
+	P( i(corner/min(T))\mid chance(T) ) &=& (1-P(extraCorner(T)\mid chance(T)))P(extraCorner(T)\mid corner(T))^{i}(1-P(corner(T)\mid chance(T))) \\
+			&+& (1-P(extraCorner(T)\mid chance(T)))P(extraCorner(T)\mid chance(T))^{i-1}P(corner(T)\mid chance(T))\\
+	P( i(corner/min(T))\mid setPiece(T) ) &=& (1-P(extraCorner(T)\mid chance(T)))P(extraCorner(T)\mid chance(T))^{i}
+\f}
+
+And therefore:
+\f{eqnarray*}{
+	\sum_{i=1}^\infty i*P( i(corner/min(T))\mid chance(T) ) &=& \frac{1}{1-P(extraCorner(T)\mid chance(T))}\left[P(corner(T)\mid chance(T))+P(extraCorner(T)\mid chance(T))(1-P(corner(T)\mid chance(T)))\right]\\
+	\sum_{i=1}^\infty i*P( i(corner/min(T))\mid setPiece(T) ) &=& \frac{P(extraCorner(T)\mid chance(T))}{1-P(extraCorner(T)\mid chance(T))}
+\f}
+
 */
