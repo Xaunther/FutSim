@@ -945,6 +945,7 @@ WARN_LOGFILE           =
 
 INPUT                  = @FUTSIM_INCLUDE_DIR@ \
                          @FUTSIM_DIR@/README.md \
+						 @FUTSIM_DIR@/doc/EventProbabilities.dox \
 						 @FUTSIM_DIR@/doc/Events.dox \
 						 @FUTSIM_DIR@/doc/Injuries.dox \
 						 @FUTSIM_DIR@/doc/Tactics.dox
