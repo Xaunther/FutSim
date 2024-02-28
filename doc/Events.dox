@@ -15,33 +15,154 @@ The triggered event is determined at random, with the probability depending on a
 At the beginning of each play time (either ordinary or extra time), a toin-coss-like draw is performed to determine the team that kicks off.
 If the play time has several parts, the kick-off team alternates between the two teams.
 The kick-off also determines which team starts with the possession of the ball.
-Once started, for every minute a series of draws are performed to determine the triggered event:
-	-# Determine possession. The passing ability of the attacking team \f$Ps_A\f$ is put against the tackling ability of the defending team \f$Tk_D\f$.
-	   If the attacking team keeps the ball we proceed to point 2. Otherwise, a draw is performed to determine what happens:
-		- Possession change: The defending team gets the ball and gets a chance for a counterattack (proceed to point 2).
-		- Foul: The defending team commits a foul while trying to steal the ball. A player of the defending team may get a yellow/red car in consequence.
-		  The foul might be far away from the goal or near, in which case a set piece is triggered (proceed to point 3).
-	-# Determine goal chance. The shooting ability of the attacking team \f$Sh_A\f$ is put against the tackling ability of the defending team \f$Tk_D\f$.
-	   If the outcome is positive, proceed to point 3. Otherwise nothing happens (attacking team keeps the ball).
-	-# Determine chance type. A draw determines which type of chance happens and then we proceed to point 4. In the case of a chance not triggered by a foul:
-		- 1-on-1 vs goalkeeper. With or without assist.
-		- 1-on-1 vs defender. With or without assist.
-		- Corner kick. Assist by the corner kicker.
-		- Near shot. With or without assist.
-		- Far shot. With or without assist.
-	  If the chance has been triggered by a foul, a set piece occurs:
-	    - Indirect free kick. With assist from the kicker.
-		- Direct free kick. No assist.
-		- Penalty kick. No assist
-	-# Determine players involved. Draws are made to determine each player involved and then we proceed to point 5. The position of the player dictate their chance to be involved in each role:
-		- Shooter: FW > AM > MF > DM > DF > GK
-		- Assist: AM > MF > FW  > DM > DF > GK
-		- Defender: DF > DM > MF > AM > FW > GK
-	-# Determine chance outcome. Depending on the individual abilities of the players involved:
-		- Goal. In consequence, possession changes to the defending team
-		- Miss followed by corner kick.
-		- Miss and attacking team keeps possession.
-		- Miss and defending team gets possession.
+Once started, for every minute a series of draws are performed to determine the triggered event
+
+\dot Flow chart of the match events drawn every minute
+digraph
+{
+    {
+		node[shape=box]
+		node[label="Start"] start;
+		node[label="Possession change"] posChange;
+		node[label="1vs1 GK"] vsGK;
+		node[label="1vs1 DF"] vsDF;
+		node[label="Corner"] corner;
+		node[label="Near shot"] nearShot;
+		node[label="Far shot"] farShot;
+		node[label="Show yellow card"] showYellow;
+		node[label="Show red card"] showRed;
+		node[label="Penalty"] penalty;
+		node[label="Direct free kick"] directFreeKick;
+		node[label="Indirect free kick"] indirectFreeKick;
+		node[label="Goal"] goal;
+		node[label="End"] end;
+		node[label="Possession change"] posChangeChance;
+	}
+	{
+		node[shape=diamond]
+		node[label="Keep possession?"] keepPos;
+		node[label="Foul?"] foul;
+		node[label="Chance?"] chance;
+		node[label="1vs1 GK?"] vsGKQ;
+		node[label="1vs1 DF?"] vsDFQ;
+		node[label="Corner?"] cornerQ;
+		node[label="Near shot?"] nearShotQ;
+		node[label="Card?"] card;
+		node[label="Set piece?"] setPiece;
+		node[label="Penalty?"] penaltyQ;
+		node[label="Direct free kick?"] directFreeKickQ;
+		node[label="Goal?"] goalQ;
+		node[label="Extra corner?"] extraCorner;
+		node[label="Keep possession?"] keepPosChance;
+	}
+	rankdir="TB"
+	{
+		rank = "source";
+		start;
+	}
+	{
+		rank = "same";
+		keepPos;
+		foul;
+		card;
+	}
+	{
+		rank = "same";
+		showRed;
+		showYellow;
+	}
+	{
+		rank = "same";
+		chance;
+		setPiece;
+	}
+	{
+		rank = "same";
+		penaltyQ;
+		vsDFQ;
+	}
+	{
+		rank = "same";
+		cornerQ;
+		directFreeKickQ;
+	}
+	{
+		rank = "same";
+		corner;
+		goalQ;
+	}
+	{
+		rank = "same";
+		nearShot;
+		farShot;
+		directFreeKick;
+		indirectFreeKick;
+	}
+
+	start -> keepPos;
+	
+	keepPos -> chance [label="yes"];
+	keepPos -> foul [label="no"];
+
+	posChange -> chance;
+
+	chance -> end[label="no"];
+	chance -> vsGKQ[label="yes"];
+
+	vsGKQ -> vsGK[label="yes"];
+	vsGKQ -> vsDFQ[label="no"];
+
+	vsDFQ -> vsDF[label="yes"];
+	vsDFQ -> cornerQ[label="no"];
+
+	cornerQ -> corner[label="yes"];
+	cornerQ -> nearShotQ[label="no"];
+
+	nearShotQ -> nearShot[label="yes"];
+	nearShotQ -> farShot[label="no"];
+
+	foul -> card [label="yes"];
+	foul -> posChange [label="no"];
+
+	card-> showYellow [label="yellow"];
+	card-> showRed [label="red"];
+	card-> setPiece;
+
+	showYellow -> setPiece;
+	showRed -> setPiece;
+
+	setPiece -> end[label="no"];
+	setPiece -> penaltyQ[label="yes"];
+
+	penaltyQ -> penalty[label="yes"];
+	penaltyQ -> directFreeKickQ[label="no"];
+
+	directFreeKickQ -> directFreeKick[label="yes"];
+	directFreeKickQ -> indirectFreeKick[label="no"];
+
+	vsGK -> goalQ;
+	vsDF -> goalQ;
+	corner -> goalQ;
+	nearShot -> goalQ;
+	farShot -> goalQ;
+	penalty -> goalQ;
+	directFreeKick -> goalQ;
+	indirectFreeKick -> goalQ;
+
+	goalQ -> goal[label="yes"];
+	goalQ -> extraCorner[label="no"];
+
+	goal -> end;
+
+	extraCorner -> corner[label="yes"];
+	extraCorner -> keepPosChance[label="no"];
+
+	keepPosChance -> end[label="yes"];
+	keepPosChance -> posChangeChance[label="no"];
+
+	posChangeChance -> end;
+}
+\enddot
 
 
 \section sec_pageEvents_PossessionProbability Possession probability
