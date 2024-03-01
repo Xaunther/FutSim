@@ -1,0 +1,79 @@
+/** \page pageIndividualities Individualities
+
+
+\section sec_pageIndividualities_Overview Overview
+
+
+There are two cases in which individual player skills may come to use, in addition to the overall team skill that dictates the possibility to have a chance or keep the possession:
+ -# Selecting the player that has participated in a team skill clash.
+ -# Selecting the players whose skills will be measured against.
+
+
+\subsection sec_pageIndividualities_sectionOverview_TeamClash Team clash
+
+
+ The first case applies to when the possession is kept by a team or a counter attack triggers in a possession draw.
+ In these, a pass or a tackle is assigned to a player, with a probability depending on their passing or tackle ability, respectively:
+ \f{eqnarray*}{
+	P(player) = \frac{EffectivePlayerSkill}{TotalEffectiveSkill}
+\f}
+
+
+\subsection sec_pageIndividualities_sectionOverview_Chance Chance
+
+
+The second case is used in every chance or set piece to determine the set of players involved. For St skill:
+ \f{eqnarray*}{
+	P(GK\mid St) &=& 1\\
+	P(DF\mid St) = P(DM\mid St) = P(MF\mid St) = P(AM\mid St) = P(FW\mid St) &=& 0
+\f}
+
+For the Tk skill:
+ \f{eqnarray*}{
+	P(GK\mid Tk) &=& 0\\
+	P(DF\mid Tk) &=& 0.6\\
+	P(DM\mid Tk) &=& 0.2\\
+	P(MF\mid Tk) &=& 0.1\\
+	P(AM\mid Tk) &=& 0.075\\
+	P(FW\mid Tk) &=& 0.025\\
+\f}
+
+For the Ps skill:
+ \f{eqnarray*}{
+	P(GK\mid Ps) &=& 0\\
+	P(DF\mid Ps) &=& 0.05\\
+	P(DM\mid Ps) &=& 0.15\\
+	P(MF\mid Ps) &=& 0.4\\
+	P(AM\mid Ps) &=& 0.25\\
+	P(FW\mid Ps) &=& 0.15\\
+\f}
+
+For the Sh skill:
+ \f{eqnarray*}{
+	P(GK\mid Sh) &=& 0\\
+	P(DF\mid Sh) &=& 0.025\\
+	P(DM\mid Sh) &=& 0.075\\
+	P(MF\mid Sh) &=& 0.1\\
+	P(AM\mid Sh) &=& 0.2\\
+	P(FW\mid Sh) &=& 0.6\\
+\f}
+
+In the case of drawing a position with no players, the position is drawn again.
+
+
+\section sec_pageIndividualities_ActionAttribution Action attribution
+
+Actions can be attributed to players after a team clash:
+ - After successfully keeping possession, a pass is assigned randomly to a player proportionally to their contribution to the team's passing score.
+ - After successfully starting a counter attack, a tackle is assigned randomly to a player proportionally to their contribution to the team's defensive score.
+
+ Actions are also attributed after a chance is resolved:
+ - If the chance resolves with a goal, the player selected for the Sh skill is awarded a shot and a goal, while the player selected for Ps skill (if applicable) is awarded a pass and an assist.
+ - If the chance resolves losing possession, the player selected for the Sh skill is awarded a shot, while the player selected for Ps skill (if applicable) is awarded a pass.
+ - If the chance resolves with an extra corner or keeping possession and only the goalkeeper intervenes, the player selected for the Sh skill is awarded a shot, the player selected for the Ps skill is awarded a pass and the goalkeeper is awarded a save.
+ - If the chance resolves with an extra corner or keeping possession and both a goalkeeper and a defender intervene, a draw is performed to the determine whether the defender or the goalkpeer get the credit. \f$\frac{P(goalkeeper)}{P(defender)} = \frac{St_D}{Tk_D}\f$
+  - If the defender is selected, the player selected for the Tk skill is awarded a tackle.
+  - If the goalkeeper is selected, the player selected for the Sh skill is awarded a shot, the player selected for Ps skill (if applicable) is awarded a pass and the goalkeeper is awarded a save.
+
+
+*/

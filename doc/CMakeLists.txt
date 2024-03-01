@@ -25,7 +25,7 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/html/index.html
 	COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 	COMMENT "Generating documentation with Doxygen"
-	DEPENDS ${FULL_PATH_FUTSIM_EXTERNAL_HEADERS}
+	DEPENDS ${FULL_PATH_FUTSIM_EXTERNAL_HEADERS} ${DOXYGEN_IN} EventProbabilities.dox Events.dox Individualities.dox Injuries.dox Tactics.dox
 	VERBATIM)
 
 # Add custom target

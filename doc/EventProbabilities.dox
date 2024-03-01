@@ -1,0 +1,227 @@
+/** \page pageEventProbabilities Event probabilities
+
+
+\section sec_pageEventProbabilities_Variables Variables
+
+
+Following the event structure described in \ref pageEvents, there are a total of \f$49\f$ probabilities describing the match simulation:
+ - 3 probabilities regarding the possession outcome: keep possession, foul or counter attack.
+ - 2 probabilities regarding the chance after keeping possession: chance, no chance.
+ - 2 probabilities regarding the chance after a counter attack: chance, no chance.
+ - 3 probabilities regarding the foul gravity: no card, yellow card, red card.
+ - 2 probabilities regarding the foul chance: set piece chance, no set piece chance.
+ - 5 probabilities regarding the chance type: 1 on 1 vs goalkeeper, 1 on 1 vs defender, corner kick, near shot, far shot.
+ - 3 probabilities regarding the set piece type: penalty, direct free kick, indirect free kick.
+ - \f$4\times8=32\f$ probabilities regarding the chance outcome, for every of the 8 chance types: goal, extra corner, no goal keeping possession, no goal losing possession.
+
+Out of the \f$52\f$, \f$15\f$ are determined because the probability of each draw must be \f$1\f$.
+We also impose several constraints to further reduce the degrees of freedom of the system:
+ - \f$P(chance(T)\mid keepPossession(T))=P(chance(T)\mid counterAttack(T))\f$. \f$1\f$ constraint.
+ - \f$P(extraCorner(T)\mid chance_i)=P(extraCorner(T)\mid setPiece_i)=0.1\forall i\f$. \f$8\f$ constraints.
+ - \f$P(keepAttacking(T)\mid chance_i)=P(possessionChange(T)\mid chance_i)\forall i\f$ \f$5\f$ constraints.
+ - \f$P(keepAttacking(T)\mid setPiece_i)=P(possessionChange(T)\mid setPiece_i)\forall i\f$ \f$3\f$ constraints.
+
+Which leaves us with only \f$20\f$ degrees of freedom that will be bound to real data from the Premier League 2022-23.
+ -# \f$N(fouls/match)\f$
+ -# \f$N(yellowCards/match)\f$
+ -# \f$N(redCards/match)\f$
+ -# \f$N(chances/match)\f$
+ -# \f$N(setPieces/match)\f$
+ -# \f$N(penalties/match)\f$
+ -# \f$N(directFreeKicks/match)\f$
+ -# \f$N(corners/match)\f$
+ -# \f$N(1vs1GK/match)\f$
+ -# \f$N(1vs1DF/match)\f$
+ -# \f$N(nearShots/match)\f$
+ -# \f$N(goals/match)\f$
+ -# \f$N(penaltyGoals/match)\f$
+ -# \f$N(directFreeKickGoals/match)\f$
+ -# \f$N(indirectFreeKickGoals/match)\f$
+ -# \f$N(cornerGoals/match)\f$
+ -# \f$N(farShotGoals/match)\f$
+ -# \f$P(goal(T)\mid 1vs1GK(T))\f$
+ -# \f$P(goal(T)\mid 1vs1DF(T))\f$
+ -# \f$P(keepPossession(T)\mid possession(T))\f$
+ 
+
+\section sec_pageEventProbabilities_probabilityCalculation Probability calculation
+
+
+\subsection sec_pageEventProbabilities_sectionProbabilityCalculation_possessionDraw Possession draw
+
+
+The probabilities of the possession draw are obtained as follows:
+\f{eqnarray*}{
+	P(keepPossession(T)\mid possession(T)) &\leftarrow& P(keepPossession(T)\mid possession(T)) \\
+	P(foul(T)\mid possession(T)) &=& \frac{N(fouls/match)}{N_{min}} \\
+	P(counterAttack(!T)\mid possession(T)) &=& 1 - P(keepPossession(T)\mid possession(T)) - P(foul(T)\mid possession(T)) \\
+\f}
+
+
+\subsection sec_pageEventProbabilities_sectionProbabilityCalculation_cardDraw Card draw
+
+
+The probabilities of the card draw are obtained as follows:
+\f{eqnarray*}{
+	P(yellowCard(!T)\mid foul(T)) &=& \frac{N(yellowCards/match)}{N(fouls/match)} \\
+	P(redCard(!T)\mid foul(T)) &=& \frac{N(redCards/match)}{N(fouls/match)} \\
+	P(noCard(!T)\mid foul(T)) &=& 1 - (yellowCard(!T)\mid foul(T)) - P(redCard(!T)\mid foul(T)) \\
+\f}
+
+
+\subsection sec_pageEventProbabilities_sectionProbabilityCalculation_setPieceDraw Set piece draw
+
+
+The probabilities of the set piece draw are obtained as follows:
+\f{eqnarray*}{
+	P(setPiece(T)\mid foul(T)) &=& \frac{N(setPieces/match)}{N(fouls/match)} \\
+	P(noSetPiece(T)\mid foul(T)) &=& 1 - P(setPiece(T)\mid foul(T)) \\
+\f}
+
+
+\subsection sec_pageEventProbabilities_sectionProbabilityCalculation_chanceDraw Chance draw
+
+
+The probabilities of the chance draw are obtained as follows:
+\f{eqnarray*}{
+	P(chance(T)\mid keepPossession(T)) = P(chance(T)\mid counterAttack(T)) &=& \frac{(1-P(extraCorner(T)\mid chance(T)))\frac{N(chances/match)}{N_{min}}-P(foul(T)\mid possession(T))P(setPiece(T)\mid foul(T))}{1-P(foul(T)\mid possession(T))} \\
+	P(noChance(T)\mid keepPossession(T)) = P(noChance(T)\mid counterAttack(T)) &=& 1 - P(chance(T)\mid keepPossession(T)) \\
+\f}
+
+
+\subsection sec_pageEventProbabilities_sectionProbabilityCalculation_setPieceTypeDraw Set piece type draw
+
+
+The probabilities of the set piece type draw are obtained as follows:
+\f{eqnarray*}{
+	P(penalty(T)\mid setPiece(T)) &=& \frac{N(penalties/match)}{N(setPieces/match)} \\
+	P(directFreeKick(T)\mid setPiece(T)) &=& \frac{N(directFreeKicks/match)}{N(setPieces/match)} \\
+	P(indirectFreeKick(T)\mid setPiece(T)) &=& 1 - P(penalty(T)\mid setPiece(T)) - P(directFreeKick(T)\mid setPiece(T)) \\
+\f}
+
+
+\subsection sec_pageEventProbabilities_sectionProbabilityCalculation_chanceTypeDraw Chance type draw
+
+
+Let us define first:
+\f{eqnarray*}{
+	N(extraCorners/match) &=& N_{min}\frac{P(extraCorner(T)\mid chance(T))}{1-P(extraCorner(T)\mid chance(T))}[P(chance(T)\mid keepPossession(T))(1-P(foul(T)\mid possession(T)))+P(foul(T)\mid possession(T))P(setPiece(T)\mid foul(T))] \\
+	N(openPlayChances/match) &=& N(chances/match) - N(extraCorners/match) - N(setPieces/match)
+\f}
+
+The probabilities of the chance type draw are obtained as follows:
+\f{eqnarray*}{
+	P(corner(T)\mid chance(T)) &=& \frac{1}{1-P(extraCorner(T)\mid chance(T))}\left[\frac{(1-P(extraCorner(T)\mid chance(T)))\frac{N(corners/match)}{N_{min}}-P(extraCorner(T)\mid chance(T))P(foul(T)\mid possession(T))P(setPiece(T)\mid foul(T))}{P(chance(T)\mid keepPossession(T))(1-P(foul(T)\mid possession(T)))} - P(extraCorner(T)\mid chance(T))\right]\\
+	P(1vs1GK(T)\mid chance(T)) &=& \frac{N(1vs1GK/match)}{N(openPlayChances/match)} \\
+	P(1vs1DF(T)\mid chance(T)) &=& \frac{N(1vs1DF/match)}{N(openPlayChances/match)} \\
+	P(nearShot(T)\mid chance(T)) &=& \frac{N(nearShots/match)}{N(openPlayChances/match)} \\
+	P(farShot(T)\mid chance(T)) &=& 1 - P(corner(T)\mid chance(T)) - P(1vs1GK(T)\mid chance(T)) - P(1vs1DF(T)\mid chance(T)) - P(nearShot(T)\mid chance(T)) \\
+\f}
+
+
+\subsection sec_pageEventProbabilities_sectionProbabilityCalculation_chanceOutcomesDraws Chance outcomes draws
+
+
+The probabilities for the penalty outcome are:
+\f{eqnarray*}{
+	P(goal(T)\mid penalty(T)) &=& \frac{N(penaltyGoals/match)}{N(penalties/match)} \\
+	P(extraCorner(T)\mid penalty(T)) &\leftarrow& P(extraCorner(T)\mid chance(T)) \\
+	P(keepAttacking(T)\mid penalty(T)) &=& \frac{1}{2}(1-P(goal(T)\mid penalty(T))-P(extraCorner(T)\mid penalty(T))) \\
+	P(losePossession(T)\mid penalty(T)) &=& P(keepAttacking(T)\mid penalty(T)) \\
+\f}
+
+The probabilities for the direct free kick outcome are:
+\f{eqnarray*}{
+	P(goal(T)\mid directFreeKick(T)) &=& \frac{N(directFreeKickGoals/match)}{N(directFreeKicks/match)} \\
+	P(extraCorner(T)\mid directFreeKick(T)) &\leftarrow& P(extraCorner(T)\mid chance(T)) \\
+	P(keepAttacking(T)\mid directFreeKick(T)) &=& \frac{1}{2}(1-P(goal(T)\mid directFreeKick(T))-P(extraCorner(T)\mid directFreeKick(T))) \\
+	P(losePossession(T)\mid directFreeKick(T)) &=& P(keepAttacking(T)\mid directFreeKick(T)) \\
+\f}
+
+The probabilities for the indirect free kick outcome are:
+\f{eqnarray*}{
+	P(goal(T)\mid indirectFreeKick(T)) &=& \frac{N(indirectFreeKickGoals/match)}{N(setPiece/match)-N(penalties/match)-N(directFreeKicks/match)} \\
+	P(extraCorner(T)\mid indirectFreeKick(T)) &\leftarrow& P(extraCorner(T)\mid chance(T)) \\
+	P(keepAttacking(T)\mid indirectFreeKick(T)) &=& \frac{1}{2}(1-P(goal(T)\mid indirectFreeKick(T))-P(extraCorner(T)\mid indirectFreeKick(T))) \\
+	P(losePossession(T)\mid indirectFreeKick(T)) &=& P(keepAttacking(T)\mid indirectFreeKick(T)) \\
+\f}
+
+The probabilities for the corner kick outcome are:
+\f{eqnarray*}{
+	P(goal(T)\mid corner(T)) &=& \frac{N(cornerGoals/match)}{N(corners/match)} \\
+	P(extraCorner(T)\mid corner(T)) &\leftarrow& P(extraCorner(T)\mid chance(T)) \\
+	P(keepAttacking(T)\mid corner(T)) &=& \frac{1}{2}(1-P(goal(T)\mid corner(T))-P(extraCorner(T)\mid corner(T))) \\
+	P(losePossession(T)\mid corner(T)) &=& P(keepAttacking(T)\mid corner(T)) \\
+\f}
+
+The probabilities for the far shot outcome are:
+\f{eqnarray*}{
+	P(goal(T)\mid farShot(T)) &=& \frac{N(farShotGoals/match)}{N_{min} P(chance(T)\mid keepPossession(T)) P(farShot(T)\mid chance(T)) (1-P(foul(T)\mid possession(T)))} \\
+	P(extraCorner(T)\mid farShot(T)) &\leftarrow& P(extraCorner(T)\mid chance(T)) \\
+	P(keepAttacking(T)\mid farShot(T)) &=& \frac{1}{2}(1-P(goal(T)\mid farShot(T))-P(extraCorner(T)\mid farShot(T))) \\
+	P(losePossession(T)\mid farShot(T)) &=& P(keepAttacking(T)\mid farShot(T)) \\
+\f}
+
+The probabilities for the 1 on 1 vs GK shot outcome are:
+\f{eqnarray*}{
+	P(goal(T)\mid 1vs1GK(T)) &\leftarrow& P(goal(T)\mid 1vs1GK(T)) \\
+	P(extraCorner(T)\mid 1vs1GK(T)) &\leftarrow& P(extraCorner(T)\mid chance(T)) \\
+	P(keepAttacking(T)\mid 1vs1GK(T)) &=& \frac{1}{2}(1-P(goal(T)\mid 1vs1GK(T))-P(extraCorner(T)\mid 1vs1GK(T))) \\
+	P(losePossession(T)\mid 1vs1GK(T)) &=& P(keepAttacking(T)\mid 1vs1GK(T)) \\
+\f}
+
+The probabilities for the 1 on 1 vs DF shot outcome are:
+\f{eqnarray*}{
+	P(goal(T)\mid 1vs1DF(T)) &\leftarrow& P(goal(T)\mid 1vs1DF(T)) \\
+	P(extraCorner(T)\mid 1vs1DF(T)) &\leftarrow& P(extraCorner(T)\mid chance(T)) \\
+	P(keepAttacking(T)\mid 1vs1DF(T)) &=& \frac{1}{2}(1-P(goal(T)\mid 1vs1DF(T))-P(extraCorner(T)\mid 1vs1DF(T))) \\
+	P(losePossession(T)\mid 1vs1DF(T)) &=& P(keepAttacking(T)\mid 1vs1DF(T)) \\
+\f}
+
+The probabilities for the near shot outcome are:
+\f{eqnarray*}{
+	P(goal(T)\mid nearShot(T)) &=& \frac{N(goals/match)-N(penaltyGoals/match)-N(directFreeKickGoals/match)-N(indirectFreeKickGoals/match)-N(cornerGoals/match)-N(farShotGoals/match)-N(1vs1GK/match)P(goal(T)\mid 1vs1GK(T))-N(1vs1DF/match)P(goal(T)\mid 1vs1DF(T))}{N(openPlayChances/match)P(nearShot(T)\mid chance(T))} \\
+	P(extraCorner(T)\mid nearShot(T)) &\leftarrow& P(extraCorner(T)\mid chance(T)) \\
+	P(keepAttacking(T)\mid nearShot(T)) &=& \frac{1}{2}(1-P(goal(T)\mid nearShot(T))-P(extraCorner(T)\mid nearShot(T))) \\
+	P(losePossession(T)\mid nearShot(T)) &=& P(keepAttacking(T)\mid nearShot(T)) \\
+\f}
+
+
+\section sec_pageEventProbabilities_probabilityModifiers Probability modifiers
+
+
+The previous probabilities all serve as a reference to keep things realistic. However, there has to be a way to tip the balance when two teams clash, depending on their skills and strategy.
+To do that, the effective skills of the attacking and defending team will be put to the test to provide the probability to do a certain action, \f$P_A\f$.
+The \f$P_A\f$ must fulfill the following:
+ -# \f$P_A = P_A(x_A, y_D)\f$. It depends on a certain skill of the attacking team \f$x_A\f$ and a certain skill of the defending team \f$y_D\f$.
+ -# \f$P_A(\Lambda x_A, \Lambda y_D) = P_A(x_A, y_D)\f$. Scalability, the probability must remain constant if both skills are scaled by a factor \f$\Lambda\f$.
+ -# \f$P_A(x_A, y_D) = P \Leftrightarrow x_A = y_D\f$. When the skills are equally matched, the probabilty must revert to its natural value \f$P\f$.
+ -# \f$P_A(x_A, y_D) > P \Leftrightarrow x_A > y_D\f$. When the skill of the attacking team outperforms that of the defending team, the probability must increase.
+ -# \f$P_A(x_A, y_D) < P \Leftrightarrow x_A < y_D\f$. When the skill of the defending team outperforms that of the attacking team, the probability must decrease.
+ -# \f$\frac{\partial P_A(x_A, y_D)}{\partial x_A} > 0\f$. The probability must always increase with the attacking skill.
+ -# \f$\frac{\partial P_A(x_A, y_D)}{\partial y_D} < 0\f$. The probability must always decrease with the defending skill.
+ -# \f$\lim_{x_A/y_D\to\infty} P_A(x_A, y_D) = P_{max}\f$. The probability when the attacking team is infinitely superior to the defending team must equal a certain \f$P_{max} > P\f$
+ -# \f$\lim_{x_A/y_D\to 0} P_A(x_A, y_D) = 0\f$. The probability when the attacking team is infinitely inferior to the defending team must be zero.
+
+A simple function that fulfills all these requirements is:
+\f{eqnarray*}{
+	P_A(x_A, y_D) = \frac{P_{max}}{1+\frac{P_{max}-P}{P}\frac{y_D}{x_A}}
+\f}
+
+This function is introduced in several draws, modifying the probabilities:
+\f{eqnarray*}{
+	\tilde{P}(keepPossession(T)\mid possession(T)) &=& \frac{1-P(foul(T)\mid possession(T))}{1+\frac{1-P(foul(T)\mid possession(T))-P(keepPossession(T)\mid possession(T))}{P(keepPossession(T)\mid possession(T))}\frac{Tk(!T)}{Ps(T)}} \\
+	\tilde{P}(chance(T)\mid keepPossession(T)) = \tilde{P}(chance(T)\mid counterAttack(T)) &=& \frac{1}{1+\frac{1-P(chance(T)\mid keepPossession(T))}{P(chance(T)\mid keepPossession(T))}\frac{Tk(!T)}{Sh(T)}} \\
+	\tilde{P}(goal(T)\mid penalty(T)) &=& \frac{1-P(extraCorner(T)\mid chance(T))}{1+\frac{1-P(extraCorner(T)\mid chance(T))-P(goal(T)\mid penalty(T))}{P(goal(T)\mid penalty(T))}\frac{St_D(!T)}{Sh_A(T)}} \\
+	\tilde{P}(goal(T)\mid directFreeKick(T)) &=& \frac{1-P(extraCorner(T)\mid chance(T))}{1+\frac{1-P(extraCorner(T)\mid chance(T))-P(goal(T)\mid directFreeKick(T))}{P(goal(T)\mid directFreeKick(T))}\frac{St_D(!T)}{Sh_A(T)}} \\
+	\tilde{P}(goal(T)\mid indirectFreeKick(T)) &=& \frac{1-P(extraCorner(T)\mid chance(T))}{1+\frac{1-P(extraCorner(T)\mid chance(T))-P(goal(T)\mid indirectFreeKick(T))}{P(goal(T)\mid indirectFreeKick(T))}\frac{St_D(!T)+Tk_D(!T)}{Sh_A(T)+Ps_A(T)}} \\
+	\tilde{P}(goal(T)\mid corner(T)) &=& \frac{1-P(extraCorner(T)\mid chance(T))}{1+\frac{1-P(extraCorner(T)\mid chance(T))-P(goal(T)\mid corner(T))}{P(goal(T)\mid corner(T))}\frac{St_D(!T)+Tk_D(!T)}{Sh_A(T)+Ps_A(T)}} \\
+	\tilde{P}(goal(T)\mid farShot(T)) &=& \frac{1-P(extraCorner(T)\mid chance(T))}{1+\frac{1-P(extraCorner(T)\mid chance(T))-P(goal(T)\mid farShot(T))}{P(goal(T)\mid farShot(T))}\frac{St_D(!T)}{Sh_A(T)}} \\
+	\tilde{P}(goal(T)\mid 1vs1GK(T)) &=& \frac{1-P(extraCorner(T)\mid chance(T))}{1+\frac{1-P(extraCorner(T)\mid chance(T))-P(goal(T)\mid 1vs1GK(T))}{P(goal(T)\mid 1vs1GK(T))}\frac{2St_D(!T)}{Sh_A(T)+Ps_A(T)}} \\
+	\tilde{P}(goal(T)\mid 1vs1DF(T)) &=& \frac{1-P(extraCorner(T)\mid chance(T))}{1+\frac{1-P(extraCorner(T)\mid chance(T))-P(goal(T)\mid 1vs1DF(T))}{P(goal(T)\mid 1vs1DF(T))}\frac{St_D(!T)+Tk_D(!T)}{Sh_A(T)+Ps_A(T)}} \\
+	\tilde{P}(goal(T)\mid nearShot(T)) &=& \frac{1-P(extraCorner(T)\mid chance(T))}{1+\frac{1-P(extraCorner(T)\mid chance(T))-P(goal(T)\mid nearShot(T))}{P(goal(T)\mid nearShot(T))}\frac{St_D(!T)}{Sh_A(T)}} \\
+\f}
+
+
+
+*/

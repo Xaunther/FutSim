@@ -1,0 +1,161 @@
+/** \page pageTactics Tactics
+
+
+\section sec_pageTactics_Introduction Introduction
+
+
+There are a handful of tactics to use for your team to adhere to during a match.
+Each tactic enhances an aspect (or aspects) of the game, while sacrificing other(s),in the spirit of not having a tactic that beats all or one that is too bad to be used.
+The best tactic should be subjective for every team, depending on the strengths and flaws of their players, while also allowing for a rock-paper-scissors-like game with your opponent.
+The tactics are based on the ones introduced by ESMS.
+
+
+\section sec_pageTactics_Formations Formations
+
+
+There are a total of 6 positions, namely:
+	- **GK**: Goalkeeper. Not affected by tactics choice. There must always be a goalkeeper at all times.
+	- **DF**: Defender. For centre-backs and full-backs.
+	- **DM**: Defensive Midfielder. Usually play right in front of the defensive line. Focused on defensive duties rather than attacking.
+	- **MF**: Midfielder. Balanced midfielders between attacking and defensive duties. Excel at passing.
+	- **AM**: Attacking Midfielder. Midfielders connecting with the attacking line with a low defensive workload.
+	- **FW**: Forward. For strikers and wingers.
+
+The minimum and maximum number of defenders, midfielders and forwards is customizable, although it is assumed that there are usually 3-6 defenders, 2-6 midfielders and 0-4 strikers.
+
+
+\section sec_pageTactics_AbilityBonuses Ability bonuses
+
+
+In this section we detail the effects of each tactic on the performance of the team.
+The tactics do not affect the individual performance but the overall team performance.
+The reason behind this is that while an attacking tactic, for example, might yield a higher number of chances for the opposing team, the one-on-one ability of each defender should not be affected.
+There are a total of 3 team abilities:
+	- **Tk**: Tackling ability that measures the defensive capabilities. The higher it is, the less chances the opposing team has. Also helps recovering the ball quicker.
+	- **Ps**: Passing ability that measures the midfielding capabilities. The higher it is, the more difficult it is to lose possession.
+	- **Sh**: Shooting ability that measures the attacking capabilities. The higher it is, the more chances the team creates.
+
+The team abilities \f$t_i,i=Tk,Ps,Sh\f$ are therefore constituted by the sum of the abilities of each field player \f$ P_j \f$ (goalkeeper does not factor in) \f$p_{ij},i=1,...,10;j=Tk,Ps,Sh\f$:
+\f[
+	t_i \equiv \sum_{j=1}^{10}p_{ji}(1-b_{k(P_j)i})
+\f]
+Where \f$k(P_j)\f$ maps each player \f$ P_j \f$ to its position \f$ k,k=DF,DM,MF,AM,FW \f$ and \f$ b_{ij} \f$ is the bonus that is given to the ability \f$ j \f$ when playing in the position \f$ i \f$ for the used tactic.
+Therefore, a positive bonus enhances the ability while a negative bonus reduces it.
+Now, since we want all tactics to be balanced, we put constraints on the bonuses of every tactic, namely:
+\f[
+	\sum_{j}b_{ij} = 0, \forall i=DF,DM,MF,AM,FW
+\f]
+To guarantee that each field position is still equally important, and that:
+\f[
+	\sum_{i}\sum_{j}b_{ij} = 0
+\f]
+To guarantee that every tactic is globally neutral.
+
+This still leaves an indeterminate system with an infinite number of solutions because out of the \f$ 5\times 3 = 15 bonuses \f$ we've only introduced 5 constraints (6 equations but 2 are redundant).
+Our way to parameterize the bonuses for each tactic involves, first, to provide the overall bonus for each ability \f$ b_j \f$ which, in general, is different from zero:
+\f[
+	b_j \equiv \sum_{i}b_{ij}, \forall j=Tk,Ps,Sh
+\f]
+Now, in order to satisfy the previous condition on the bonuses we get that:
+\f[
+	\sum_{i}\sum_{j}b_{ij} = \sum_{j}b_j = 0
+\f]
+
+This allows us to input the values for \f$ b_{Tk} \f$ and \f$ b_{Ps} \f$ for every tactic, which will dictate the bonus given to every ability.
+Attacking tactics shall be given lower Tk values while defensive tactics should provide higher values.
+The remaining 10 constraints are all given the same values for every tactic and intituively represent how much a skill is misused in a given position.
+For example, the shooting ability is the most important one for a striker, followed by the passing ability and finally the tackling.
+Following that rule, we apply the following constraints:
+\f{eqnarray*}{
+	b_{DF,Ps} &\equiv& \frac{1}{3}b_{Ps} + a_1\\
+	b_{DF,Sh} &\equiv& \frac{1}{3}b_{Sh} + a_2\\
+	b_{DM,Tk} &\equiv& \frac{1}{3}b_{Tk} + a_0\\
+	b_{DM,Sh} &\equiv& \frac{1}{3}b_{Sh} + \frac{a_1+a_2}{2}\\
+	b_{MF,Tk} &\equiv& \frac{1}{3}b_{Tk} + a_1\\
+	b_{MF,Sh} &\equiv& \frac{1}{3}b_{Sh} + a_1\\
+	b_{AM,Tk} &\equiv& \frac{1}{3}b_{Tk} + \frac{a_1+a_2}{2}\\
+	b_{AM,Sh} &\equiv& \frac{1}{3}b_{Tk} + a_0\\
+	b_{FW,Tk} &\equiv& \frac{1}{3}b_{Tk} + a_2\\
+	b_{FW,Ps} &\equiv& \frac{1}{3}b_{Ps} + a_1\\
+\f}
+With \f$ a_i,i=0,1,2 \f$ representing the penalty to the bonus of an ability.
+\f$ a_0 \f$ being the penalty to the secondary ability of a defensive/attacking midfielder,
+\f$ a_1 \f$ the penalty to the secondary ability of a defender, midfielder or striker and
+\f$ a_2 \f$ the penalty to the tertiary ability of a defender, midfielder or striker.
+The values for \f$ a_i \f$ being:
+\f{eqnarray*}{
+	a_0 &=& 0\\
+	a_1 &=& -0.2\\
+	a_2 &=& -0.4\\
+\f}
+
+
+\section sec_pageTactics_Tactics Tactics
+
+
+With the bonuses described in the previous section, any tactic can be characterized by 2 values, represented as \f$ T( b_{Tk}, b_{Ps} ) \f$. The tactics provided by the library are defined in the following table:
+<center><table>
+<caption id="tactic_N">\f$\textrm{Tactic N} = T( 0, 0 )\f$</caption>
+<tr><th>Position	<th>Tk Bonus(\f$\times\frac{1}{10}\f$)	<th>Ps Bonus(\f$\times\frac{1}{10}\f$)	<th>Sh Bonus(\f$\times\frac{1}{10}\f$)
+<tr><td>DF			<td>6									<td>-0									<td>-4
+<tr><td>DM			<td>0									<td>3									<td>-3
+<tr><td>MF			<td>-2									<td>4									<td>-2
+<tr><td>AM			<td>-3									<td>3									<td>0
+<tr><td>FW			<td>-4									<td>-2									<td>6
+</table></center>
+<center><table>
+<caption id="tactic_A">\f$\textrm{Tactic A} = T( -0.5, -0.2 )\f$</caption>
+<tr><th>Position	<th>Tk Bonus(\f$\times\frac{1}{30}\f$)	<th>Ps Bonus(\f$\times\frac{1}{30}\f$)	<th>Sh Bonus(\f$\times\frac{1}{30}\f$)
+<tr><td>DF			<td>13									<td>-8									<td>-5
+<tr><td>DM			<td>-5									<td>7									<td>-2
+<tr><td>MF			<td>-11									<td>10									<td>-1
+<tr><td>AM			<td>-14									<td>7									<td>7
+<tr><td>FW			<td>-17									<td>-8									<td>25
+</table></center>
+<center><table>
+<caption id="tactic_D">\f$\textrm{Tactic D} = T( 0.7, -0.2 )\f$</caption>
+<tr><th>Position	<th>Tk Bonus(\f$\times\frac{1}{30}\f$)	<th>Ps Bonus(\f$\times\frac{1}{30}\f$)	<th>Sh Bonus(\f$\times\frac{1}{30}\f$)
+<tr><td>DF			<td>25									<td>-8									<td>-17
+<tr><td>DM			<td>7									<td>7									<td>-14
+<tr><td>MF			<td>1									<td>10									<td>-11
+<tr><td>AM			<td>-2									<td>7									<td>-5
+<tr><td>FW			<td>-5									<td>-8									<td>13
+</table></center>
+<center><table>
+<caption id="tactic_L">\f$\textrm{Tactic L} = T( 0.3, -0.6 )\f$</caption>
+<tr><th>Position	<th>Tk Bonus(\f$\times\frac{1}{10}\f$)	<th>Ps Bonus(\f$\times\frac{1}{10}\f$)	<th>Sh Bonus(\f$\times\frac{1}{10}\f$)
+<tr><td>DF			<td>7									<td>-4									<td>-3
+<tr><td>DM			<td>1									<td>1									<td>-2
+<tr><td>MF			<td>-1									<td>2									<td>-1
+<tr><td>AM			<td>-2									<td>1									<td>-1
+<tr><td>FW			<td>-3									<td>-4									<td>7
+</table></center>
+<center><table>
+<caption id="tactic_C">\f$\textrm{Tactic C} = T( 0.5, -0.8 )\f$</caption>
+<tr><th>Position	<th>Tk Bonus(\f$\times\frac{1}{30}\f$)	<th>Ps Bonus(\f$\times\frac{1}{30}\f$)	<th>Sh Bonus(\f$\times\frac{1}{30}\f$)
+<tr><td>DF			<td>23									<td>-14									<td>-9
+<tr><td>DM			<td>5									<td>1									<td>-6
+<tr><td>MF			<td>-1									<td>4									<td>-3
+<tr><td>AM			<td>-4									<td>1									<td>3
+<tr><td>FW			<td>-7									<td>-14									<td>21
+</table></center>
+<center><table>
+<caption id="tactic_P">\f$\textrm{Tactic P} = T( -0.2, 0.6 )\f$</caption>
+<tr><th>Position	<th>Tk Bonus(\f$\times\frac{1}{30}\f$)	<th>Ps Bonus(\f$\times\frac{1}{30}\f$)	<th>Sh Bonus(\f$\times\frac{1}{30}\f$)
+<tr><td>DF			<td>16									<td>0									<td>-16
+<tr><td>DM			<td>-2									<td>15									<td>-13
+<tr><td>MF			<td>-8									<td>18									<td>-10
+<tr><td>AM			<td>-11									<td>15									<td>-4
+<tr><td>FW			<td>-14									<td>0									<td>14
+</table></center>
+<center><table>
+<caption id="tactic_E">\f$\textrm{Tactic E} = T( -0.3, 0.2 )\f$</caption>
+<tr><th>Position	<th>Tk Bonus(\f$\times\frac{1}{30}\f$)	<th>Ps Bonus(\f$\times\frac{1}{30}\f$)	<th>Sh Bonus(\f$\times\frac{1}{30}\f$)
+<tr><td>DF			<td>15									<td>-4									<td>-11
+<tr><td>DM			<td>-3									<td>11									<td>-8
+<tr><td>MF			<td>-9									<td>14									<td>-5
+<tr><td>AM			<td>-12									<td>11									<td>1
+<tr><td>FW			<td>-15									<td>-4									<td>19
+</table></center>
+
+*/

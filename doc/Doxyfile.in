@@ -944,7 +944,12 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = @FUTSIM_INCLUDE_DIR@ \
-                         @FUTSIM_DIR@/README.md
+                         @FUTSIM_DIR@/README.md \
+						 @FUTSIM_DIR@/doc/EventProbabilities.dox \
+						 @FUTSIM_DIR@/doc/Events.dox \
+						 @FUTSIM_DIR@/doc/Individualities.dox \
+						 @FUTSIM_DIR@/doc/Injuries.dox \
+						 @FUTSIM_DIR@/doc/Tactics.dox
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -1682,7 +1687,7 @@ DISABLE_INDEX          = NO
 # The default value is: NO.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-GENERATE_TREEVIEW      = NO
+GENERATE_TREEVIEW      = YES
 
 # When both GENERATE_TREEVIEW and DISABLE_INDEX are set to YES, then the
 # FULL_SIDEBAR option determines if the side bar is limited to only the treeview
@@ -2468,7 +2473,7 @@ HIDE_UNDOC_RELATIONS   = YES
 # set to NO
 # The default value is: NO.
 
-HAVE_DOT               = NO
+HAVE_DOT               = YES
 
 # The DOT_NUM_THREADS specifies the number of dot invocations doxygen is allowed
 # to run in parallel. When set to 0 doxygen will base this on the number of
