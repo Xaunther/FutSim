@@ -109,14 +109,14 @@ const CTeam::support_factor& CTeam::GetSupportFactor() const noexcept
 	return mSupportFactor;
 }
 
-std::normal_distribution<>::param_type CTeam::GetAttendanceDistributionParameters() const noexcept
+CTeam::attendance_distribution::param_type CTeam::GetAttendanceDistributionParameters() const noexcept
 {
 	return mAttendanceDistributionParameters;
 }
 
 CTeam::attendance CTeam::GenerateAttendance( std::uniform_random_bit_generator auto& aGenerator ) const noexcept
 {
-	auto result = std::normal_distribution<>( mAttendanceDistributionParameters )( aGenerator );
+	auto result = attendance_distribution( mAttendanceDistributionParameters )( aGenerator );
 	return result < 0 ? 0 : std::lround( result );
 }
 

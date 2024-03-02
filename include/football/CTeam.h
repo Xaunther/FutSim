@@ -20,6 +20,7 @@ protected:
 	using players = CTeamTypes::players;
 	using support_factor = CTeamTypes::support_factor;
 	using attendance = CTeamTypes::attendance;
+	using attendance_distribution = CTeamTypes::attendance_distribution;
 
 public:
 	/**
@@ -76,7 +77,7 @@ public:
 	const support_factor& GetSupportFactor() const noexcept;
 
 	//! Retrieves the attendance distribution parameters.
-	std::normal_distribution<>::param_type GetAttendanceDistributionParameters() const noexcept;
+	attendance_distribution::param_type GetAttendanceDistributionParameters() const noexcept;
 
 	//! Generates a random attendance.
 	attendance GenerateAttendance( std::uniform_random_bit_generator auto& aGenerator ) const noexcept;
@@ -110,7 +111,7 @@ private:
 	//! Support factor that dictates the support the team receives from the fans.
 	support_factor mSupportFactor;
 	//! Local fan attendance distribution parameters.
-	std::normal_distribution<>::param_type mAttendanceDistributionParameters;
+	attendance_distribution::param_type mAttendanceDistributionParameters;
 };
 
 } // futsim::football namespace
