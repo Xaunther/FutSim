@@ -191,8 +191,8 @@ std::vector<std::string> TTeam::ObtainedResults() const noexcept
 		for( const auto& player : team.GetPlayers() )
 			result.push_back( std::string{ CPlayer::JSON_KEY } + ": " + std::string{ player.GetKnownName() } );
 		result.push_back( std::string{ CTeam::JSON_SUPPORT_FACTOR } + ": " + std::to_string( team.GetSupportFactor() ) );
-		result.push_back( std::string{ CTeam::JSON_MEAN_ATTENDANCE } + ": " + std::to_string( team.GetMeanAttendance() ) );
-		result.push_back( std::string{ CTeam::JSON_STD_DEV_ATTENDANCE } + ": " + std::to_string( team.GetStdDevAttendance() ) );
+		result.push_back( std::string{ CTeam::JSON_MEAN_ATTENDANCE } + ": " + std::to_string( team.GetAttendanceDistributionParameters().mean() ) );
+		result.push_back( std::string{ CTeam::JSON_STD_DEV_ATTENDANCE } + ": " + std::to_string( team.GetAttendanceDistributionParameters().stddev() ) );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, team );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

@@ -54,7 +54,7 @@ CTeam::CTeam(
 	mManager( CheckName( aManager, "manager name" ) ),
 	mPlayers( aPlayers ),
 	mSupportFactor( CheckPositiveness( aSupportFactor, "support factor" ) ),
-	mAttendanceDistribution( CheckNonNegativeness( aMeanAttendance, "mean attendance" ),
+	mAttendanceDistributionParameters( CheckNonNegativeness( aMeanAttendance, "mean attendance" ),
 		CheckPositiveness( aStdDevAttendance, "standard deviation of the attendance" ) )
 {
 }
@@ -66,7 +66,7 @@ CTeam::CTeam( const json& aJSON ) try :
 	mManager( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, JSON_MANAGER ), "manager name" ) ),
 	mPlayers( CreatePlayersFromJSON( aJSON ) ),
 	mSupportFactor( CheckPositiveness( ValueFromRequiredJSONKey<support_factor>( aJSON, JSON_SUPPORT_FACTOR ), "support factor" ) ),
-	mAttendanceDistribution( CheckNonNegativeness( ValueFromRequiredJSONKey<double>( aJSON, JSON_MEAN_ATTENDANCE ), "mean attendance" ),
+	mAttendanceDistributionParameters( CheckNonNegativeness( ValueFromRequiredJSONKey<double>( aJSON, JSON_MEAN_ATTENDANCE ), "mean attendance" ),
 		CheckPositiveness( ValueFromRequiredJSONKey<double>( aJSON, JSON_STD_DEV_ATTENDANCE ), "standard deviation of the attendance" ) )
 {
 }
@@ -80,8 +80,8 @@ void CTeam::JSON( json& aJSON ) const noexcept
 	if( !mPlayers.empty() )
 		AddKeyArrayToJSONKey( aJSON, mPlayers, JSON_PLAYERS );
 	AddToJSONKey( aJSON, mSupportFactor, JSON_SUPPORT_FACTOR );
-	AddToJSONKey( aJSON, mAttendanceDistribution.mean(), JSON_MEAN_ATTENDANCE );
-	AddToJSONKey( aJSON, mAttendanceDistribution.stddev(), JSON_STD_DEV_ATTENDANCE );
+	AddToJSONKey( aJSON, mAttendanceDistributionParameters.mean(), JSON_MEAN_ATTENDANCE );
+	AddToJSONKey( aJSON, mAttendanceDistributionParameters.stddev(), JSON_STD_DEV_ATTENDANCE );
 }
 
 const std::string_view CTeam::GetName() const noexcept
@@ -109,19 +109,14 @@ const CTeam::support_factor& CTeam::GetSupportFactor() const noexcept
 	return mSupportFactor;
 }
 
-double CTeam::GetMeanAttendance() const noexcept
+std::normal_distribution<>::param_type CTeam::GetAttendanceDistributionParameters() const noexcept
 {
-	return mAttendanceDistribution.mean();
+	return mAttendanceDistributionParameters;
 }
 
-double CTeam::GetStdDevAttendance() const noexcept
+CTeam::attendance CTeam::GenerateAttendance( std::uniform_random_bit_generator auto& aGenerator ) const noexcept
 {
-	return mAttendanceDistribution.stddev();
-}
-
-CTeam::attendance CTeam::GenerateAttendance( std::uniform_random_bit_generator auto& aGenerator ) noexcept
-{
-	auto result = mAttendanceDistribution( aGenerator );
+	auto result = std::normal_distribution<>( mAttendanceDistributionParameters )( aGenerator );
 	return result < 0 ? 0 : std::lround( result );
 }
 

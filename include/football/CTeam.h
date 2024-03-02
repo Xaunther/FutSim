@@ -75,14 +75,11 @@ public:
 	//! Retrieves the \copybrief mSupportFactor
 	const support_factor& GetSupportFactor() const noexcept;
 
-	//! Retrieves the mean attendance.
-	double GetMeanAttendance() const noexcept;
-
-	//! Retrieves the standard deviation of the attendance.
-	double GetStdDevAttendance() const noexcept;
+	//! Retrieves the attendance distribution parameters.
+	std::normal_distribution<>::param_type GetAttendanceDistributionParameters() const noexcept;
 
 	//! Generates a random attendance.
-	attendance GenerateAttendance( std::uniform_random_bit_generator auto& aGenerator ) noexcept;
+	attendance GenerateAttendance( std::uniform_random_bit_generator auto& aGenerator ) const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Team";
@@ -112,8 +109,8 @@ private:
 	players mPlayers;
 	//! Support factor that dictates the support the team receives from the fans.
 	support_factor mSupportFactor;
-	//! Local fan attendance distribution.
-	std::normal_distribution<> mAttendanceDistribution;
+	//! Local fan attendance distribution parameters.
+	std::normal_distribution<>::param_type mAttendanceDistributionParameters;
 };
 
 } // futsim::football namespace
