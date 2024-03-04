@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ExceptionUtils.h"
+#include "NumberUtils.h"
 
 namespace futsim
 {
@@ -12,8 +13,7 @@ namespace futsim
 */
 const auto& CheckProbability( const auto& aValue, const std::string_view aNameString ) try
 {
-	if( aValue < 0 )
-		throw std::invalid_argument{ "The " + std::string( aNameString.data() ) + " cannot be negative." };
+	CheckNonNegativeness( aValue, aNameString );
 	if( aValue > 1 )
 		throw std::invalid_argument{ "The " + std::string( aNameString.data() ) + " cannot be greater than 1." };
 	return aValue;
