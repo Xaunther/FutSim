@@ -21,6 +21,28 @@ void TFoulDrawConfiguration::TestExceptions() const
 		"The average number of red cards cannot be negative." );
 	CheckException( []() { CFoulDrawConfiguration{ 0 }; },
 		"The average number of fouls minus the average number of yellow and red cards cannot be negative." );
+
+	// Test JSON constructor
+	CheckException( []() { futsim::ValueFromJSONKeyString<CFoulDrawConfiguration>( R"( {
+			"Foul draw configuration": {
+				"Average fouls": -1
+			}
+		} )" ); }, "The average number of fouls cannot be negative." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CFoulDrawConfiguration>( R"( {
+			"Foul draw configuration": {
+				"Average yellow cards": -1
+			}
+		} )" ); }, "The average number of yellow cards cannot be negative." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CFoulDrawConfiguration>( R"( {
+			"Foul draw configuration": {
+				"Average red cards": -1
+			}
+		} )" ); }, "The average number of red cards cannot be negative." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CFoulDrawConfiguration>( R"( {
+			"Foul draw configuration": {
+				"Average fouls": 0
+			}
+		} )" ); }, "The average number of fouls minus the average number of yellow and red cards cannot be negative." );
 }
 
 std::vector<std::string> TFoulDrawConfiguration::ObtainedResults() const noexcept
