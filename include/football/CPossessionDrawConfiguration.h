@@ -43,6 +43,8 @@ public:
 	static inline constexpr std::string_view JSON_KEY = "Possession draw configuration";
 	//! JSON key for the \copybrief mKeepPossessionProbability
 	static inline constexpr std::string_view JSON_KEEP_POSSESSION_PROBABILITY = "Keep possession probability";
+	//! Default keep posssession probability.
+	static inline constexpr probability DEFAULT_KEEP_POSSESSION_PROBABILITY = probability{ 295952 } / 460939;
 
 private:
 	//! Center probability to keep possession.
