@@ -21,6 +21,11 @@ CPossessionDrawConfiguration::CPossessionDrawConfiguration( const json& aJSON ) 
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the possession draw configuration from JSON." )
 
+void CPossessionDrawConfiguration::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mKeepPossessionProbability, JSON_KEEP_POSSESSION_PROBABILITY );
+}
+
 const CPossessionDrawConfiguration::probability& CPossessionDrawConfiguration::GetKeepPossessionProbability() const noexcept
 {
 	return mKeepPossessionProbability;
