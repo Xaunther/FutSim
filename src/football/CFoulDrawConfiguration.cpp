@@ -14,9 +14,10 @@ CFoulDrawConfiguration::CFoulDrawConfiguration(
 ) try :
 	mAverageFouls( CheckNonNegativeness( aAverageFouls, "average number of fouls" ) ),
 	mAverageYellowCards( CheckNonNegativeness( aAverageYellowCards, "average number of yellow cards" ) ),
-	mAverageRedCards( CheckNonNegativeness( aAverageRedCards, "average number of red cards" ) )
+	mAverageRedCards( CheckNonNegativeness( aAverageRedCards, "average number of red cards" ) ),
+	mFoulDistributionParameters( { mAverageYellowCards, mAverageRedCards, CheckNonNegativeness(
+		mAverageFouls - mAverageYellowCards - mAverageRedCards, "average number of fouls minus the average number of yellow and red cards" ) } )
 {
-	CheckNonNegativeness( mAverageFouls - mAverageYellowCards - mAverageRedCards, "average number of fouls minus the average number of yellow and red cards" );
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the foul draw configuration." )
 
@@ -26,9 +27,10 @@ CFoulDrawConfiguration::CFoulDrawConfiguration( const json& aJSON ) try :
 	mAverageYellowCards( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
 		aJSON, JSON_AVERAGE_YELLOW_CARDS, DEFAULT_AVERAGE_YELLOW_CARDS ), "average number of yellow cards" ) ),
 	mAverageRedCards( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, JSON_AVERAGE_RED_CARDS, DEFAULT_AVERAGE_RED_CARDS ), "average number of red cards" ) )
+		aJSON, JSON_AVERAGE_RED_CARDS, DEFAULT_AVERAGE_RED_CARDS ), "average number of red cards" ) ),
+	mFoulDistributionParameters( { mAverageYellowCards, mAverageRedCards, CheckNonNegativeness(
+		mAverageFouls - mAverageYellowCards - mAverageRedCards, "average number of fouls minus the average number of yellow and red cards" ) } )
 {
-	CheckNonNegativeness( mAverageFouls - mAverageYellowCards - mAverageRedCards, "average number of fouls minus the average number of yellow and red cards" );
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the foul draw configuration from JSON." )
 
@@ -56,7 +58,7 @@ const CFoulDrawConfiguration::stat& CFoulDrawConfiguration::GetAverageRedCards()
 
 CFoulDrawConfiguration::foul_distribution CFoulDrawConfiguration::CreateFoulDistribution() const noexcept
 {
-	return foul_distribution{ { mAverageYellowCards, mAverageRedCards, mAverageFouls - mAverageYellowCards - mAverageRedCards } };
+	return foul_distribution{ mFoulDistributionParameters };
 }
 
 } // futsim::football namespace
