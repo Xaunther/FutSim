@@ -75,6 +75,12 @@ public:
 	//! Retrieves the \copybrief mAverageDirectFreeKicks
 	const stat& GetAverageDirectFreeKicks() const noexcept;
 
+	/**
+	 * @brief Creates the set piece type draw distribution.
+	 * @details The list of outcomes is {penalty, indirect free kick, direct free kick}.
+	*/
+	set_piece_type_distribution CreateSetPieceTypeDistribution() const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Chances draw configuration";
 	//! JSON key for the \copybrief mAverageChances

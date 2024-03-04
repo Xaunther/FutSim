@@ -108,4 +108,9 @@ const CChancesDrawConfiguration::stat& CChancesDrawConfiguration::GetAverageDire
 	return mAverageDirectFreeKicks;
 }
 
+CChancesDrawConfiguration::set_piece_type_distribution CChancesDrawConfiguration::CreateSetPieceTypeDistribution() const noexcept
+{
+	return set_piece_type_distribution{ mSetPieceTypeDistributionParameters };
+}
+
 } // futsim::football namespace
