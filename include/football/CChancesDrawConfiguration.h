@@ -13,6 +13,7 @@ class CChancesDrawConfiguration : public IJsonable
 {
 protected:
 	using stat = CChancesDrawConfigurationTypes::stat;
+	using set_piece_type_distribution = CChancesDrawConfigurationTypes::set_piece_type_distribution;
 
 public:
 	/**
@@ -129,6 +130,9 @@ private:
 	stat mAveragePenalties;
 	//! Average number of direct free kicks per 90 minutes.
 	stat mAverageDirectFreeKicks;
+
+	//! Set piece type distribution parameters.
+	set_piece_type_distribution::param_type mSetPieceTypeDistributionParameters;
 };
 
 } // futsim namespace
