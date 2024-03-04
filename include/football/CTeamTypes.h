@@ -2,6 +2,7 @@
 
 #include "football/CStadiumTypes.h"
 
+#include <random>
 #include <string>
 #include <vector>
 
@@ -24,6 +25,8 @@ using players = std::vector<CPlayer>;
 using support_factor = CStadiumTypes::ambient_factor;
 //! Type for the attendance.
 using attendance = unsigned int;
+//! Type for the attendance distribution.
+using attendance_distribution = std::normal_distribution<>;
 
 } // CTeamTypes namespace
 
