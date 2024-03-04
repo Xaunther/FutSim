@@ -19,7 +19,7 @@ void TTeam::TestExceptions() const
 	CheckException( []() { CTeam{ "Luton Town FC", "a_c", "Rob Edwards", {}, 1, 11000, 2000 }; }, "The abbreviation can only contain letters from A to Z." );
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "", {}, 1, 11000, 2000 }; }, "The manager name cannot be empty." );
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 0, 11000, 2000 }; }, "The support factor must be positive." );
-	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, -1000, 2000 }; }, "The mean attendance must be non-negative." );
+	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, -1000, 2000 }; }, "The mean attendance cannot be negative." );
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 0 }; }, "The standard deviation of the attendance must be positive." );
 
 	// Test JSON constructor
@@ -94,7 +94,7 @@ void TTeam::TestExceptions() const
 				"Mean attendance": -1000,
 				"StdDev attendance": 1000
 			}
-		} )" ); }, "The mean attendance must be non-negative." );
+		} )" ); }, "The mean attendance cannot be negative." );
 	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC",
