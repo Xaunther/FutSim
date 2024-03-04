@@ -16,6 +16,13 @@ protected:
 	using probability = CPossessionDrawConfigurationTypes::probability;
 
 public:
+	/**
+	 * @brief Member constructor.
+	 * @param aKeepPossessionProbability \ref mKeepPossessionProbability
+	*/
+	explicit CPossessionDrawConfiguration(
+		const probability& aKeepPossessionProbability );
+
 	//! Retrieves the \copybrief mKeepPossessionProbability
 	const probability& GetKeepPossessionProbability() const noexcept;
 
