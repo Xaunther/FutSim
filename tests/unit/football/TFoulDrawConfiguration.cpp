@@ -13,6 +13,14 @@ INITIALIZE_TEST( TFoulDrawConfiguration )
 
 void TFoulDrawConfiguration::TestExceptions() const
 {
+	// Test member constructor
+	CheckException( []() { CFoulDrawConfiguration{ -1 }; }, "The average number of fouls cannot be negative." );
+	CheckException( []() { CFoulDrawConfiguration{ CFoulDrawConfiguration::DEFAULT_AVERAGE_FOULS, -1 }; },
+		"The average number of yellow cards cannot be negative." );
+	CheckException( []() { CFoulDrawConfiguration{ CFoulDrawConfiguration::DEFAULT_AVERAGE_FOULS, CFoulDrawConfiguration::DEFAULT_AVERAGE_YELLOW_CARDS, -1 }; },
+		"The average number of red cards cannot be negative." );
+	CheckException( []() { CFoulDrawConfiguration{ 0 }; },
+		"The average number of fouls minus the average number of yellow and red cards cannot be negative." );
 }
 
 std::vector<std::string> TFoulDrawConfiguration::ObtainedResults() const noexcept
