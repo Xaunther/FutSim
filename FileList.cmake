@@ -10,12 +10,15 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/IJsonableTypes.h
 	include/JsonUtils.h
 	include/NameUtils.h
+	include/NumberUtils.h
 	include/ProbabilityUtils.h
 )
 
 # Football external headers
 SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CExtraTime.h
+	include/football/CFoulDrawConfiguration.h
+	include/football/CFoulDrawConfigurationTypes.h
 	include/football/CMatch.h
 	include/football/CMatchConfiguration.h
 	include/football/CMatchConfigurationTypes.h
@@ -49,6 +52,7 @@ SET(FUTSIM_CORE_SOURCE
 # Football source files
 SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CExtraTime.cpp
+	src/football/CFoulDrawConfiguration.cpp
 	src/football/CMatch.cpp
 	src/football/CMatchConfiguration.cpp
 	src/football/CPenaltyShootoutConfiguration.cpp
