@@ -16,6 +16,21 @@ void TPossessionDrawConfiguration::TestExceptions() const
 	// Test member constructor
 	CheckException( []() { CPossessionDrawConfiguration{ -2 }; }, "The probability to keep possession cannot be negative." );
 	CheckException( []() { CPossessionDrawConfiguration{ 2 }; }, "The probability to keep possession cannot be greater than 1." );
+
+	// Test JSON constructor
+	CheckException( []() { futsim::ValueFromJSONKeyString<CPossessionDrawConfiguration>( R"( {
+			"Possession draw configuration": {}
+		} )" ); }, "key 'Keep possession probability' not found" );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CPossessionDrawConfiguration>( R"( {
+			"Possession draw configuration": {
+				"Keep possession probability": -2
+			}
+		} )" ); }, "The probability to keep possession cannot be negative." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CPossessionDrawConfiguration>( R"( {
+			"Possession draw configuration": {
+				"Keep possession probability": 2
+			}
+		} )" ); }, "The probability to keep possession cannot be greater than 1." );
 }
 
 std::vector<std::string> TPossessionDrawConfiguration::ObtainedResults() const noexcept
