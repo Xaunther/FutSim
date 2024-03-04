@@ -10,6 +10,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/IJsonableTypes.h
 	include/JsonUtils.h
 	include/NameUtils.h
+	include/ProbabilityUtils.h
 )
 
 # Football external headers
