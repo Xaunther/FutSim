@@ -19,9 +19,6 @@ void TPossessionDrawConfiguration::TestExceptions() const
 
 	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CPossessionDrawConfiguration>( R"( {
-			"Possession draw configuration": {}
-		} )" ); }, "key 'Keep possession probability' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPossessionDrawConfiguration>( R"( {
 			"Possession draw configuration": {
 				"Keep possession probability": -2
 			}
@@ -37,10 +34,16 @@ std::vector<std::string> TPossessionDrawConfiguration::ObtainedResults() const n
 {
 	std::vector<std::string> result;
 	for( const auto& possessionDrawConfiguration : {
-		CPossessionDrawConfiguration{ 295952.0 / 460939.0 },
+		CPossessionDrawConfiguration{},
+		CPossessionDrawConfiguration{ 0.6 },
 		futsim::ValueFromJSONKeyString<CPossessionDrawConfiguration>( R"( {
 			"Possession draw configuration": {
 				"Keep possession probability": 0.6420632665059802
+			}
+		} )" ),
+		futsim::ValueFromJSONKeyString<CPossessionDrawConfiguration>( R"( {
+			"Possession draw configuration": {
+				"Keep possession probability": 0.6
 			}
 		} )" ) } )
 	{
@@ -59,6 +62,12 @@ std::vector<std::string> TPossessionDrawConfiguration::ExpectedResults() const n
 		"{\n"
 		"	\"Possession draw configuration\": {\n"
 		"		\"Keep possession probability\": 0.6420632665059802\n"
+		"	}\n"
+		"}",
+		"Keep possession probability: 0.600000",
+		"{\n"
+		"	\"Possession draw configuration\": {\n"
+		"		\"Keep possession probability\": 0.6\n"
 		"	}\n"
 		"}"
 	};
