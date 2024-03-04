@@ -14,6 +14,7 @@ SET(FUTSIM_TESTS_UNIT_FOOTBALL_SOURCE
 	unit/football/TPlayer.cpp
 	unit/football/TPlayerSkills.cpp
 	unit/football/TPlayTime.cpp
+	unit/football/TPossessionDrawConfiguration.cpp
 	unit/football/TStadium.cpp
 	unit/football/TTeam.cpp
 	unit/football/TTieCondition.cpp
