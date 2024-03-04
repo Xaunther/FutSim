@@ -80,6 +80,9 @@ private:
 	stat mAverageYellowCards;
 	//! Average number of red cards per 90 minutes.
 	stat mAverageRedCards;
+
+	//! Foul distribution parameters.
+	foul_distribution::param_type mFoulDistributionParameters;
 };
 
 } // futsim namespace
