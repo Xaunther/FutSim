@@ -21,7 +21,7 @@ public:
 	 * @param aKeepPossessionProbability \ref mKeepPossessionProbability
 	*/
 	explicit CPossessionDrawConfiguration(
-		const probability& aKeepPossessionProbability );
+		const probability& aKeepPossessionProbability = DEFAULT_KEEP_POSSESSION_PROBABILITY );
 
 	/**
 	 * @brief JSON constructor.
