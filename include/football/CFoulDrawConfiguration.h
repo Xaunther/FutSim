@@ -14,6 +14,7 @@ class CFoulDrawConfiguration : public IJsonable
 {
 protected:
 	using stat = CFoulDrawConfigurationTypes::stat;
+	using foul_distribution = CFoulDrawConfigurationTypes::foul_distribution;
 
 public:
 	/**
@@ -49,6 +50,12 @@ public:
 
 	//! Retrieves the \copybrief mAverageRedCards
 	const stat& GetAverageRedCards() const noexcept;
+
+	/**
+	 * @brief Creates the foul draw distribution.
+	 * @details The list of outcomes is {yellow card, red card, no card}.
+	*/
+	foul_distribution CreateFoulDistribution() const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Foul draw configuration";

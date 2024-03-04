@@ -54,4 +54,9 @@ const CFoulDrawConfiguration::stat& CFoulDrawConfiguration::GetAverageRedCards()
 	return mAverageRedCards;
 }
 
+CFoulDrawConfiguration::foul_distribution CFoulDrawConfiguration::CreateFoulDistribution() const noexcept
+{
+	return foul_distribution{ { mAverageYellowCards, mAverageRedCards, mAverageFouls - mAverageYellowCards - mAverageRedCards } };
+}
+
 } // futsim::football namespace
