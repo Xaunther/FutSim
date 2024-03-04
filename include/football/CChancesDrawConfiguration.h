@@ -15,6 +15,28 @@ protected:
 	using stat = CChancesDrawConfigurationTypes::stat;
 
 public:
+	/**
+	 * @brief Member constructor.
+	 * @param aAverageChances \ref mAverageChances
+	 * @param aAverageCornerKicks \ref mAverageCornerKicks
+	 * @param aAverage1vs1GKs \ref mAverage1vs1GKs
+	 * @param aAverage1vs1DFs \ref mAverage1vs1DFs
+	 * @param aAverageNearShots \ref mAverageNearShots
+	 * @param aAverageSetPieces \ref mAverageSetPieces
+	 * @param aAveragePenalties \ref mAveragePenalties
+	 * @param aAverageDirectFreeKicks \ref mAverageDirectFreeKicks
+	*/
+	explicit CChancesDrawConfiguration(
+		const stat& aAverageChances = DEFAULT_AVERAGE_CHANCES,
+		const stat& aAverageCornerKicks = DEFAULT_AVERAGE_CORNER_KICKS,
+		const stat& aAverage1vs1GKs = DEFAULT_AVERAGE_1VS1_GKS,
+		const stat& aAverage1vs1DFs = DEFAULT_AVERAGE_1VS1_DFS,
+		const stat& aAverageNearShots = DEFAULT_AVERAGE_NEAR_SHOTS,
+		const stat& aAverageSetPieces = DEFAULT_AVERAGE_SET_PIECES,
+		const stat& aAveragePenalties = DEFAULT_AVERAGE_PENALTIES,
+		const stat& aAverageDirectFreeKicks = DEFAULT_AVERAGE_DIRECT_FREE_KICKS
+	);
+
 	//! Retrieves the \copybrief mAverageChances
 	const stat& GetAverageChances() const noexcept;
 
@@ -38,6 +60,23 @@ public:
 
 	//! Retrieves the \copybrief mAverageDirectFreeKicks
 	const stat& GetAverageDirectFreeKicks() const noexcept;
+
+	//! Default \copybrief mAverageChances
+	static inline constexpr stat DEFAULT_AVERAGE_CHANCES = stat{ 9609 } / 380;
+	//! Default \copybrief mAverageCornerKicks
+	static inline constexpr stat DEFAULT_AVERAGE_CORNER_KICKS = stat{ 3830 } / 380;
+	//! Default \copybrief mAverage1vs1GKs
+	static inline constexpr stat DEFAULT_AVERAGE_1VS1_GKS = 2;
+	//! Default \copybrief mAverage1vs1DFs
+	static inline constexpr stat DEFAULT_AVERAGE_1VS1_DFS = 2.85;
+	//! Default \copybrief mAverageNearShots
+	static inline constexpr stat DEFAULT_AVERAGE_NEAR_SHOTS = 3;
+	//! Default \copybrief mAverageSetPieces
+	static inline constexpr stat DEFAULT_AVERAGE_SET_PIECES = stat{ 1545 } / 380;
+	//! Default \copybrief mAveragePenalties
+	static inline constexpr stat DEFAULT_AVERAGE_PENALTIES = stat{ 104 } / 380;
+	//! Default \copybrief mAverageDirectFreeKicks
+	static inline constexpr stat DEFAULT_AVERAGE_DIRECT_FREE_KICKS = stat{ 301 } / 380;
 
 private:
 	//! Average number of chances per 90 minutes.
