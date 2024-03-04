@@ -40,6 +40,53 @@ void TChancesDrawConfiguration::TestExceptions() const
 	CheckException( []() { CChancesDrawConfiguration{ CChancesDrawConfiguration::DEFAULT_AVERAGE_CHANCES, CChancesDrawConfiguration::DEFAULT_AVERAGE_CORNER_KICKS,
 		CChancesDrawConfiguration::DEFAULT_AVERAGE_1VS1_GKS, CChancesDrawConfiguration::DEFAULT_AVERAGE_1VS1_DFS, CChancesDrawConfiguration::DEFAULT_AVERAGE_NEAR_SHOTS, 0 }; },
 		"The average number of set pieces minus the average number of penalties and direct free kicks cannot be negative." );
+
+	// Test JSON constructor
+	CheckException( []() { futsim::ValueFromJSONKeyString<CChancesDrawConfiguration>( R"( {
+			"Chances draw configuration": {
+				"Average chances": -1
+			}
+		} )" ); }, "The average number of chances cannot be negative." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CChancesDrawConfiguration>( R"( {
+			"Chances draw configuration": {
+				"Average corner kicks": -1
+			}
+		} )" ); }, "The average number of corner kicks cannot be negative." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CChancesDrawConfiguration>( R"( {
+			"Chances draw configuration": {
+				"Average 1 on 1 vs GK chances": -1
+			}
+		} )" ); }, "The average number of 1 on 1 vs GK chances cannot be negative." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CChancesDrawConfiguration>( R"( {
+			"Chances draw configuration": {
+				"Average 1 on 1 vs DF chances": -1
+			}
+		} )" ); }, "The average number of 1 on 1 vs DF chances cannot be negative." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CChancesDrawConfiguration>( R"( {
+			"Chances draw configuration": {
+				"Average near shots": -1
+			}
+		} )" ); }, "The average number of near shots cannot be negative." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CChancesDrawConfiguration>( R"( {
+			"Chances draw configuration": {
+				"Average set pieces": -1
+			}
+		} )" ); }, "The average number of set pieces cannot be negative." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CChancesDrawConfiguration>( R"( {
+			"Chances draw configuration": {
+				"Average penalties": -1
+			}
+		} )" ); }, "The average number of penalties cannot be negative." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CChancesDrawConfiguration>( R"( {
+			"Chances draw configuration": {
+				"Average direct free kicks": -1
+			}
+		} )" ); }, "The average number of direct free kicks cannot be negative." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CChancesDrawConfiguration>( R"( {
+			"Chances draw configuration": {
+				"Average set pieces": 0
+			}
+		} )" ); }, "The average number of set pieces minus the average number of penalties and direct free kicks cannot be negative." );
 }
 
 std::vector<std::string> TChancesDrawConfiguration::ObtainedResults() const noexcept
