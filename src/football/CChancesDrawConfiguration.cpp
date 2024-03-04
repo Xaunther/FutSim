@@ -1,6 +1,7 @@
 #include "football/CChancesDrawConfiguration.h"
 
 #include "ExceptionUtils.h"
+#include "JsonUtils.h"
 #include "NumberUtils.h"
 
 namespace futsim::football
@@ -27,6 +28,27 @@ CChancesDrawConfiguration::CChancesDrawConfiguration(
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the chances draw configuration." )
+
+CChancesDrawConfiguration::CChancesDrawConfiguration( const json& aJSON ) try :
+	mAverageChances( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
+		aJSON, JSON_AVERAGE_CHANCES, DEFAULT_AVERAGE_CHANCES ), "average number of chances" ) ),
+	mAverageCornerKicks( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
+		aJSON, JSON_AVERAGE_CORNER_KICKS, DEFAULT_AVERAGE_CORNER_KICKS ), "average number of corner kicks" ) ),
+	mAverage1vs1GKs( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
+		aJSON, JSON_AVERAGE_1VS1_GKS, DEFAULT_AVERAGE_1VS1_GKS ), "average number of 1 on 1 vs GK chances" ) ),
+	mAverage1vs1DFs( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
+		aJSON, JSON_AVERAGE_1VS1_DFS, DEFAULT_AVERAGE_1VS1_DFS ), "average number of 1 on 1 vs DF chances" ) ),
+	mAverageNearShots( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
+		aJSON, JSON_AVERAGE_NEAR_SHOTS, DEFAULT_AVERAGE_NEAR_SHOTS ), "average number of near shots" ) ),
+	mAverageSetPieces( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
+		aJSON, JSON_AVERAGE_SET_PIECES, DEFAULT_AVERAGE_SET_PIECES ), "average number of set pieces" ) ),
+	mAveragePenalties( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
+		aJSON, JSON_AVERAGE_PENALTIES, DEFAULT_AVERAGE_PENALTIES ), "average number of penalties" ) ),
+	mAverageDirectFreeKicks( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
+		aJSON, JSON_AVERAGE_DIRECT_FREE_KICKS, DEFAULT_AVERAGE_DIRECT_FREE_KICKS ), "average number of direct free kicks" ) )
+{
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the chances draw configuration from JSON." )
 
 const CChancesDrawConfiguration::stat& CChancesDrawConfiguration::GetAverageChances() const noexcept
 {

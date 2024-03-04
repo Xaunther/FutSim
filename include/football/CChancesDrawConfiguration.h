@@ -37,6 +37,12 @@ public:
 		const stat& aAverageDirectFreeKicks = DEFAULT_AVERAGE_DIRECT_FREE_KICKS
 	);
 
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CChancesDrawConfiguration( const json& aJSON );
+
 	//! Retrieves the \copybrief mAverageChances
 	const stat& GetAverageChances() const noexcept;
 
@@ -60,6 +66,25 @@ public:
 
 	//! Retrieves the \copybrief mAverageDirectFreeKicks
 	const stat& GetAverageDirectFreeKicks() const noexcept;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Chances draw configuration";
+	//! JSON key for the \copybrief mAverageChances
+	static inline constexpr std::string_view JSON_AVERAGE_CHANCES = "Average chances";
+	//! JSON key for the \copybrief mAverageCornerKicks
+	static inline constexpr std::string_view JSON_AVERAGE_CORNER_KICKS = "Average corner kicks";
+	//! JSON key for the \copybrief mAverage1vs1GKs
+	static inline constexpr std::string_view JSON_AVERAGE_1VS1_GKS = "Average 1 on 1 vs GK chances";
+	//! JSON key for the \copybrief mAverage1vs1DFs
+	static inline constexpr std::string_view JSON_AVERAGE_1VS1_DFS = "Average 1 on 1 vs DF chances";
+	//! JSON key for the \copybrief mAverageNearShots
+	static inline constexpr std::string_view JSON_AVERAGE_NEAR_SHOTS = "Average near shots";
+	//! JSON key for the \copybrief mAverageSetPieces
+	static inline constexpr std::string_view JSON_AVERAGE_SET_PIECES = "Average set pieces";
+	//! JSON key for the \copybrief mAveragePenalties
+	static inline constexpr std::string_view JSON_AVERAGE_PENALTIES = "Average penalties";
+	//! JSON key for the \copybrief mAverageDirectFreeKicks
+	static inline constexpr std::string_view JSON_AVERAGE_DIRECT_FREE_KICKS = "Average direct free kicks";
 
 	//! Default \copybrief mAverageChances
 	static inline constexpr stat DEFAULT_AVERAGE_CHANCES = stat{ 9609 } / 380;
