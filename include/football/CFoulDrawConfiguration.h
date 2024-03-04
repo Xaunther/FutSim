@@ -28,6 +28,12 @@ public:
 		const stat& aAverageRedCards = DEFAULT_AVERAGE_RED_CARDS
 	);
 
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CFoulDrawConfiguration( const json& aJSON );
+
 	//! Retrieves the \copybrief mAverageFouls
 	const stat& GetAverageFouls() const noexcept;
 
@@ -36,6 +42,15 @@ public:
 
 	//! Retrieves the \copybrief mAverageRedCards
 	const stat& GetAverageRedCards() const noexcept;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Foul draw configuration";
+	//! JSON key for the \copybrief mAverageFouls
+	static inline constexpr std::string_view JSON_AVERAGE_FOULS = "Average fouls";
+	//! JSON key for the \copybrief mAverageYellowCards
+	static inline constexpr std::string_view JSON_AVERAGE_YELLOW_CARDS = "Average yellow cards";
+	//! JSON key for the \copybrief mAverageRedCards
+	static inline constexpr std::string_view JSON_AVERAGE_RED_CARDS = "Average red cards";
 
 	//! Default \copybrief mAverageFouls
 	static inline constexpr stat DEFAULT_AVERAGE_FOULS = stat{ 8195 } / 380;
