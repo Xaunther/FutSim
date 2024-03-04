@@ -23,8 +23,19 @@ public:
 	explicit CPossessionDrawConfiguration(
 		const probability& aKeepPossessionProbability );
 
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CPossessionDrawConfiguration( const json& aJSON );
+
 	//! Retrieves the \copybrief mKeepPossessionProbability
 	const probability& GetKeepPossessionProbability() const noexcept;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Possession draw configuration";
+	//! JSON key for the \copybrief mKeepPossessionProbability
+	static inline constexpr std::string_view JSON_KEEP_POSSESSION_PROBABILITY = "Keep possession probability";
 
 private:
 	//! Center probability to keep possession.
