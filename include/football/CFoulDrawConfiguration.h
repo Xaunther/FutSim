@@ -34,6 +34,13 @@ public:
 	*/
 	explicit CFoulDrawConfiguration( const json& aJSON );
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mAverageFouls
 	const stat& GetAverageFouls() const noexcept;
 

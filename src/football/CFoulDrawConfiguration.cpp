@@ -32,6 +32,13 @@ CFoulDrawConfiguration::CFoulDrawConfiguration( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the foul draw configuration from JSON." )
 
+void CFoulDrawConfiguration::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mAverageFouls, JSON_AVERAGE_FOULS );
+	AddToJSONKey( aJSON, mAverageYellowCards, JSON_AVERAGE_YELLOW_CARDS );
+	AddToJSONKey( aJSON, mAverageRedCards, JSON_AVERAGE_RED_CARDS );
+}
+
 const CFoulDrawConfiguration::stat& CFoulDrawConfiguration::GetAverageFouls() const noexcept
 {
 	return mAverageFouls;
