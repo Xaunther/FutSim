@@ -43,6 +43,13 @@ public:
 	*/
 	explicit CChancesDrawConfiguration( const json& aJSON );
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mAverageChances
 	const stat& GetAverageChances() const noexcept;
 

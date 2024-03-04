@@ -50,6 +50,18 @@ CChancesDrawConfiguration::CChancesDrawConfiguration( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the chances draw configuration from JSON." )
 
+void CChancesDrawConfiguration::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mAverageChances, JSON_AVERAGE_CHANCES );
+	AddToJSONKey( aJSON, mAverageCornerKicks, JSON_AVERAGE_CORNER_KICKS );
+	AddToJSONKey( aJSON, mAverage1vs1GKs, JSON_AVERAGE_1VS1_GKS );
+	AddToJSONKey( aJSON, mAverage1vs1DFs, JSON_AVERAGE_1VS1_DFS );
+	AddToJSONKey( aJSON, mAverageNearShots, JSON_AVERAGE_NEAR_SHOTS );
+	AddToJSONKey( aJSON, mAverageSetPieces, JSON_AVERAGE_SET_PIECES );
+	AddToJSONKey( aJSON, mAveragePenalties, JSON_AVERAGE_PENALTIES );
+	AddToJSONKey( aJSON, mAverageDirectFreeKicks, JSON_AVERAGE_DIRECT_FREE_KICKS );
+}
+
 const CChancesDrawConfiguration::stat& CChancesDrawConfiguration::GetAverageChances() const noexcept
 {
 	return mAverageChances;
