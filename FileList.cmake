@@ -17,6 +17,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CExtraTime.h
 	include/football/CFoulDrawConfiguration.h
+	include/football/CFoulDrawConfigurationTypes.h
 	include/football/CMatch.h
 	include/football/CMatchConfiguration.h
 	include/football/CMatchConfigurationTypes.h
