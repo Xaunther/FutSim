@@ -8,6 +8,7 @@ SET(FUTSIM_TESTS_UNIT_CORE_SOURCE
 
 SET(FUTSIM_TESTS_UNIT_FOOTBALL_SOURCE
 	unit/football/TExtraTime.cpp
+	unit/football/TChancesDrawConfiguration.cpp
 	unit/football/TFoulDrawConfiguration.cpp
 	unit/football/TMatch.cpp
 	unit/football/TMatchConfiguration.cpp
