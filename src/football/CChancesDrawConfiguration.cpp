@@ -24,7 +24,10 @@ CChancesDrawConfiguration::CChancesDrawConfiguration(
 	mAverageNearShots( CheckNonNegativeness( aAverageNearShots, "average number of near shots" ) ),
 	mAverageSetPieces( CheckNonNegativeness( aAverageSetPieces, "average number of set pieces" ) ),
 	mAveragePenalties( CheckNonNegativeness( aAveragePenalties, "average number of penalties" ) ),
-	mAverageDirectFreeKicks( CheckNonNegativeness( aAverageDirectFreeKicks, "average number of direct free kicks" ) )
+	mAverageDirectFreeKicks( CheckNonNegativeness( aAverageDirectFreeKicks, "average number of direct free kicks" ) ),
+	mSetPieceTypeDistributionParameters( { mAveragePenalties, mAverageDirectFreeKicks, CheckNonNegativeness(
+		mAverageSetPieces - mAveragePenalties - mAverageDirectFreeKicks,
+		"average number of set pieces minus the average number of penalties and direct free kicks" ) } )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the chances draw configuration." )
@@ -45,7 +48,10 @@ CChancesDrawConfiguration::CChancesDrawConfiguration( const json& aJSON ) try :
 	mAveragePenalties( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
 		aJSON, JSON_AVERAGE_PENALTIES, DEFAULT_AVERAGE_PENALTIES ), "average number of penalties" ) ),
 	mAverageDirectFreeKicks( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, JSON_AVERAGE_DIRECT_FREE_KICKS, DEFAULT_AVERAGE_DIRECT_FREE_KICKS ), "average number of direct free kicks" ) )
+		aJSON, JSON_AVERAGE_DIRECT_FREE_KICKS, DEFAULT_AVERAGE_DIRECT_FREE_KICKS ), "average number of direct free kicks" ) ),
+	mSetPieceTypeDistributionParameters( { mAveragePenalties, mAverageDirectFreeKicks, CheckNonNegativeness(
+		mAverageSetPieces - mAveragePenalties - mAverageDirectFreeKicks,
+		"average number of set pieces minus the average number of penalties and direct free kicks" ) } )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the chances draw configuration from JSON." )
