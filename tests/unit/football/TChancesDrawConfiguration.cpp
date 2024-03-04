@@ -13,6 +13,33 @@ INITIALIZE_TEST( TChancesDrawConfiguration )
 
 void TChancesDrawConfiguration::TestExceptions() const
 {
+	// Test member constructor
+	CheckException( []() { CChancesDrawConfiguration{ -1 }; },
+		"The average number of chances cannot be negative." );
+	CheckException( []() { CChancesDrawConfiguration{ CChancesDrawConfiguration::DEFAULT_AVERAGE_CHANCES, -1 }; },
+		"The average number of corner kicks cannot be negative." );
+	CheckException( []() { CChancesDrawConfiguration{ CChancesDrawConfiguration::DEFAULT_AVERAGE_CHANCES, CChancesDrawConfiguration::DEFAULT_AVERAGE_CORNER_KICKS, -1 }; },
+		"The average number of 1 on 1 vs GK chances cannot be negative." );
+	CheckException( []() { CChancesDrawConfiguration{ CChancesDrawConfiguration::DEFAULT_AVERAGE_CHANCES, CChancesDrawConfiguration::DEFAULT_AVERAGE_CORNER_KICKS,
+		CChancesDrawConfiguration::DEFAULT_AVERAGE_1VS1_GKS, -1 }; },
+		"The average number of 1 on 1 vs DF chances cannot be negative." );
+	CheckException( []() { CChancesDrawConfiguration{ CChancesDrawConfiguration::DEFAULT_AVERAGE_CHANCES, CChancesDrawConfiguration::DEFAULT_AVERAGE_CORNER_KICKS,
+		CChancesDrawConfiguration::DEFAULT_AVERAGE_1VS1_GKS, CChancesDrawConfiguration::DEFAULT_AVERAGE_1VS1_DFS, -1 }; },
+		"The average number of near shots cannot be negative." );
+	CheckException( []() { CChancesDrawConfiguration{ CChancesDrawConfiguration::DEFAULT_AVERAGE_CHANCES, CChancesDrawConfiguration::DEFAULT_AVERAGE_CORNER_KICKS,
+		CChancesDrawConfiguration::DEFAULT_AVERAGE_1VS1_GKS, CChancesDrawConfiguration::DEFAULT_AVERAGE_1VS1_DFS, CChancesDrawConfiguration::DEFAULT_AVERAGE_NEAR_SHOTS, -1 }; },
+		"The average number of set pieces cannot be negative." );
+	CheckException( []() { CChancesDrawConfiguration{ CChancesDrawConfiguration::DEFAULT_AVERAGE_CHANCES, CChancesDrawConfiguration::DEFAULT_AVERAGE_CORNER_KICKS,
+		CChancesDrawConfiguration::DEFAULT_AVERAGE_1VS1_GKS, CChancesDrawConfiguration::DEFAULT_AVERAGE_1VS1_DFS, CChancesDrawConfiguration::DEFAULT_AVERAGE_NEAR_SHOTS,
+		CChancesDrawConfiguration::DEFAULT_AVERAGE_SET_PIECES, -1 }; },
+		"The average number of penalties cannot be negative." );
+	CheckException( []() { CChancesDrawConfiguration{ CChancesDrawConfiguration::DEFAULT_AVERAGE_CHANCES, CChancesDrawConfiguration::DEFAULT_AVERAGE_CORNER_KICKS,
+		CChancesDrawConfiguration::DEFAULT_AVERAGE_1VS1_GKS, CChancesDrawConfiguration::DEFAULT_AVERAGE_1VS1_DFS, CChancesDrawConfiguration::DEFAULT_AVERAGE_NEAR_SHOTS,
+		CChancesDrawConfiguration::DEFAULT_AVERAGE_SET_PIECES, CChancesDrawConfiguration::DEFAULT_AVERAGE_PENALTIES, -1 }; },
+		"The average number of direct free kicks cannot be negative." );
+	CheckException( []() { CChancesDrawConfiguration{ CChancesDrawConfiguration::DEFAULT_AVERAGE_CHANCES, CChancesDrawConfiguration::DEFAULT_AVERAGE_CORNER_KICKS,
+		CChancesDrawConfiguration::DEFAULT_AVERAGE_1VS1_GKS, CChancesDrawConfiguration::DEFAULT_AVERAGE_1VS1_DFS, CChancesDrawConfiguration::DEFAULT_AVERAGE_NEAR_SHOTS, 0 }; },
+		"The average number of set pieces minus the average number of penalties and direct free kicks cannot be negative." );
 }
 
 std::vector<std::string> TChancesDrawConfiguration::ObtainedResults() const noexcept
