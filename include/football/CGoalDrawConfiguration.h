@@ -15,6 +15,8 @@ class CGoalDrawConfiguration : public IJsonable
 protected:
 	using probability = CGoalDrawConfigurationTypes::probability;
 	using stat = CGoalDrawConfigurationTypes::stat;
+	using effective_skill = CGoalDrawConfigurationTypes::effective_skill;
+	using chance_outcome_distribution = CGoalDrawConfigurationTypes::chance_outcome_distribution;
 
 public:
 	/**
@@ -80,6 +82,19 @@ public:
 
 	//! Retrieves the \copybrief mExtraCornerProbability
 	const probability& GetExtraCornerProbability() const noexcept;
+
+	/**
+	 * @brief Creates the 1 on 1 vs GK chance outcome draw distribution.
+	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
+	 * @param aEffectiveGKSKill Effective GK skill of the goalkeeper.
+	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
+	 * @param aEffectiveMFSkill Effective MF skill of the assister.
+	 * @pre All effective skills must be positive.
+	*/
+	chance_outcome_distribution Create1vs1GKOutcomeDistribution(
+		const effective_skill& aEffectiveGKSKill,
+		const effective_skill& aEffectiveFWSkill,
+		const effective_skill& aEffectiveMFSkill ) const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Goal draw configuration";
