@@ -47,6 +47,13 @@ public:
 	*/
 	explicit CGoalDrawConfiguration( const json& aJSON );
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mAverageGoals
 	const stat& GetAverageGoals() const noexcept;
 

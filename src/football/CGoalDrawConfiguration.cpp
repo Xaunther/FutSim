@@ -63,6 +63,19 @@ CGoalDrawConfiguration::CGoalDrawConfiguration( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the goal draw configuration." )
 
+void CGoalDrawConfiguration::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mAverageGoals, JSON_AVERAGE_GOALS );
+	AddToJSONKey( aJSON, mAveragePenaltyGoals, JSON_AVERAGE_PENALTY_GOALS );
+	AddToJSONKey( aJSON, mAverageDirectFreeKickGoals, JSON_AVERAGE_DIRECT_FREE_KICK_GOALS );
+	AddToJSONKey( aJSON, mAverageIndirectFreeKickGoals, JSON_AVERAGE_INDIRECT_FREE_KICK_GOALS );
+	AddToJSONKey( aJSON, mAverageCornerGoals, JSON_AVERAGE_CORNER_GOALS );
+	AddToJSONKey( aJSON, mAverageFarShotGoals, JSON_AVERAGE_FAR_SHOT_GOALS );
+	AddToJSONKey( aJSON, m1vs1GKGoalProbability, JSON_1VS1_GK_GOAL_PROBABILITY );
+	AddToJSONKey( aJSON, m1vs1DFGoalProbability, JSON_1VS1_DF_GOAL_PROBABILITY );
+	AddToJSONKey( aJSON, mExtraCornerProbability, JSON_EXTRA_CORNER_PROBABILITY );
+}
+
 const CGoalDrawConfiguration::stat& CGoalDrawConfiguration::GetAverageGoals() const noexcept
 {
 	return mAverageGoals;
