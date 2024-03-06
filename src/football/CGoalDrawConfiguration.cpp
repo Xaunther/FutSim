@@ -136,4 +136,20 @@ CGoalDrawConfiguration::chance_outcome_distribution CGoalDrawConfiguration::Crea
 	} };
 }
 
+CGoalDrawConfiguration::chance_outcome_distribution CGoalDrawConfiguration::Create1vs1DFOutcomeDistribution(
+	const effective_skill& aEffectiveGKSKill,
+	const effective_skill& aEffectiveDFSKill,
+	const effective_skill& aEffectiveFWSkill,
+	const effective_skill& aEffectiveMFSkill ) const noexcept
+{
+	const auto& modifiedGoalProbability = ModifiedProbability( 1 - mExtraCornerProbability, m1vs1DFGoalProbability,
+		aEffectiveGKSKill + aEffectiveDFSKill, aEffectiveFWSkill + aEffectiveMFSkill );
+	return chance_outcome_distribution{ {
+		modifiedGoalProbability,
+		mExtraCornerProbability,
+		( 1 - modifiedGoalProbability - mExtraCornerProbability ) / 2,
+		( 1 - modifiedGoalProbability - mExtraCornerProbability ) / 2
+	} };
+}
+
 } //futsim::football namespace
