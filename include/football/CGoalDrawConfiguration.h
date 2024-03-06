@@ -41,6 +41,12 @@ public:
 		const stat& aExtraCornerProbability = DEFAULT_EXTRA_CORNER_PROBABILITY
 	);
 
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CGoalDrawConfiguration( const json& aJSON );
+
 	//! Retrieves the \copybrief mAverageGoals
 	const stat& GetAverageGoals() const noexcept;
 
@@ -67,6 +73,27 @@ public:
 
 	//! Retrieves the \copybrief mExtraCornerProbability
 	const probability& GetExtraCornerProbability() const noexcept;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Goal draw configuration";
+	//! JSON key for the \copybrief mAverageGoals
+	static inline constexpr std::string_view JSON_AVERAGE_GOALS = "Average goals";
+	//! JSON key for the \copybrief mAveragePenaltyGoals
+	static inline constexpr std::string_view JSON_AVERAGE_PENALTY_GOALS = "Average penalty goals";
+	//! JSON key for the \copybrief mAverageDirectFreeKickGoals
+	static inline constexpr std::string_view JSON_AVERAGE_DIRECT_FREE_KICK_GOALS = "Average direct free kick goals";
+	//! JSON key for the \copybrief mAverageIndirectFreeKickGoals
+	static inline constexpr std::string_view JSON_AVERAGE_INDIRECT_FREE_KICK_GOALS = "Average indirect free kick goals";
+	//! JSON key for the \copybrief mAverageCornerGoals
+	static inline constexpr std::string_view JSON_AVERAGE_CORNER_GOALS = "Average corner goals";
+	//! JSON key for the \copybrief mAverageFarShotGoals
+	static inline constexpr std::string_view JSON_AVERAGE_FAR_SHOT_GOALS = "Average far shot goals";
+	//! JSON key for the \copybrief m1vs1GKGoalProbability
+	static inline constexpr std::string_view JSON_1VS1_GK_GOAL_PROBABILITY = "1 on 1 vs GK chance goal probability";
+	//! JSON key for the \copybrief m1vs1DFGoalProbability
+	static inline constexpr std::string_view JSON_1VS1_DF_GOAL_PROBABILITY = "1 on 1 vs DF chance goal probability";
+	//! JSON key for the \copybrief mExtraCornerProbability
+	static inline constexpr std::string_view JSON_EXTRA_CORNER_PROBABILITY = "Extra corner probability";
 
 	//! Default \copybrief mAverageGoals
 	static inline constexpr stat DEFAULT_AVERAGE_GOALS = stat{ 1039 } / 380;
