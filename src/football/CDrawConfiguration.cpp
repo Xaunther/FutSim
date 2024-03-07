@@ -1,6 +1,7 @@
 #include "football/CDrawConfiguration.h"
 
 #include "ExceptionUtils.h"
+#include "JsonUtils.h"
 
 namespace futsim::football
 {
@@ -18,6 +19,15 @@ CDrawConfiguration::CDrawConfiguration(
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the draw configuration." )
+
+CDrawConfiguration::CDrawConfiguration( const json& aJSON ) try :
+	mPossessionDrawConfiguration( ValueFromOptionalJSONKey<CPossessionDrawConfiguration>( aJSON ) ),
+	mFoulDrawConfiguration( ValueFromOptionalJSONKey<CFoulDrawConfiguration>( aJSON ) ),
+	mChancesDrawConfiguration( ValueFromOptionalJSONKey<CChancesDrawConfiguration>( aJSON ) ),
+	mGoalDrawConfiguration( ValueFromOptionalJSONKey<CGoalDrawConfiguration>( aJSON ) )
+{
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the draw configuration from JSON." )
 
 const CPossessionDrawConfiguration& CDrawConfiguration::GetPossessionDrawConfiguration() const noexcept
 {

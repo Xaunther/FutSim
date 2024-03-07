@@ -30,6 +30,12 @@ public:
 		const CGoalDrawConfiguration& aGoalDrawConfiguration = CGoalDrawConfiguration{}
 	);
 
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CDrawConfiguration( const json& aJSON );
+
 	//! Retrieves the \copybrief mPossessionDrawConfiguration
 	const CPossessionDrawConfiguration& GetPossessionDrawConfiguration() const noexcept;
 
