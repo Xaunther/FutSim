@@ -17,11 +17,11 @@ Following the event structure described in \ref pageEvents, there are a total of
 Out of the \f$52\f$, \f$15\f$ are determined because the probability of each draw must be \f$1\f$.
 We also impose several constraints to further reduce the degrees of freedom of the system:
  - \f$P(chance(T)\mid keepPossession(T))=P(chance(T)\mid counterAttack(T))\f$. \f$1\f$ constraint.
- - \f$P(extraCorner(T)\mid chance_i)=P(extraCorner(T)\mid setPiece_i)=0.1\forall i\f$. \f$8\f$ constraints.
+ - \f$P(extraCorner(T)\mid chance_i)=P(extraCorner(T)\mid setPiece_j)=\forall i,j\f$. \f$7\f$ constraints.
  - \f$P(keepAttacking(T)\mid chance_i)=P(possessionChange(T)\mid chance_i)\forall i\f$ \f$5\f$ constraints.
  - \f$P(keepAttacking(T)\mid setPiece_i)=P(possessionChange(T)\mid setPiece_i)\forall i\f$ \f$3\f$ constraints.
 
-Which leaves us with only \f$20\f$ degrees of freedom that will be bound to real data from the Premier League 2022-23.
+Which leaves us with only \f$21\f$ degrees of freedom that will be bound to real data from the Premier League 2022-23.
  -# \f$N(fouls/match)\f$
  -# \f$N(yellowCards/match)\f$
  -# \f$N(redCards/match)\f$
@@ -42,6 +42,7 @@ Which leaves us with only \f$20\f$ degrees of freedom that will be bound to real
  -# \f$P(goal(T)\mid 1vs1GK(T))\f$
  -# \f$P(goal(T)\mid 1vs1DF(T))\f$
  -# \f$P(keepPossession(T)\mid possession(T))\f$
+ -# \f$P(extraCorner(T)\mid chance(T))\f$
  
 
 \section sec_pageEventProbabilities_probabilityCalculation Probability calculation
