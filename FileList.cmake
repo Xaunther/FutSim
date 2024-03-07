@@ -18,6 +18,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CChancesDrawConfiguration.h
 	include/football/CChancesDrawConfigurationTypes.h
+	include/football/CDrawConfiguration.h
 	include/football/CExtraTime.h
 	include/football/CFoulDrawConfiguration.h
 	include/football/CFoulDrawConfigurationTypes.h
@@ -56,6 +57,7 @@ SET(FUTSIM_CORE_SOURCE
 # Football source files
 SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CChancesDrawConfiguration.cpp
+	src/football/CDrawConfiguration.cpp
 	src/football/CExtraTime.cpp
 	src/football/CFoulDrawConfiguration.cpp
 	src/football/CGoalDrawConfiguration.cpp
