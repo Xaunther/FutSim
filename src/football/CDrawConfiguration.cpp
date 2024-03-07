@@ -77,4 +77,9 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreatePossessionDi
 	};
 }
 
+CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateFoulDistribution() const noexcept
+{
+	return mFoulDrawConfiguration.CreateFoulDistribution();
+}
+
 } // futsim::football namespace

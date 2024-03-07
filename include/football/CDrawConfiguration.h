@@ -70,6 +70,9 @@ public:
 		const effective_skill& aEffectiveDFSkill,
 		const effective_skill& aEffectiveMFSkill ) const noexcept;
 
+	//! \copydoc CFoulDrawConfiguration::CreateFoulDistribution
+	discrete_distribution CreateFoulDistribution() const noexcept;
+
 private:
 	//! Possession draw configuration.
 	CPossessionDrawConfiguration mPossessionDrawConfiguration;
