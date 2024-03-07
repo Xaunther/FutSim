@@ -62,4 +62,19 @@ const CGoalDrawConfiguration& CDrawConfiguration::GetGoalDrawConfiguration() con
 	return mGoalDrawConfiguration;
 }
 
+CDrawConfiguration::discrete_distribution CDrawConfiguration::CreatePossessionDistribution(
+	const effective_skill& aEffectiveDFSkill,
+	const effective_skill& aEffectiveMFSkill ) const noexcept
+{
+	const auto& modifiedKeepPossessionProbability = ModifiedProbability(
+		1 - mFoulDrawConfiguration.GetFoulProbability(),
+		mPossessionDrawConfiguration.GetKeepPossessionProbability(),
+		aEffectiveDFSkill, aEffectiveMFSkill );
+	return discrete_distribution{
+		modifiedKeepPossessionProbability,
+		mFoulDrawConfiguration.GetFoulProbability(),
+		1 - modifiedKeepPossessionProbability - mFoulDrawConfiguration.GetFoulProbability()
+	};
+}
+
 } // futsim::football namespace
