@@ -7,6 +7,19 @@
 namespace futsim::football
 {
 
+namespace
+{
+
+/**
+ * @brief Calculates the set piece distribution parameters given a foul.
+ * @param aAverageSetPieces Average number of set pieces per 90 minutes.
+ * @param aAverageFouls Average number of fouls per 90 minutes.
+*/
+std::bernoulli_distribution::param_type CalculateSetPieceDistributionParameters( const CDrawConfigurationTypes::stat& aAverageSetPieces,
+	const CDrawConfigurationTypes::stat& aAverageFouls );
+
+} // anonymous namespace
+
 CDrawConfiguration::CDrawConfiguration(
 	const CPossessionDrawConfiguration& aPossessionDrawConfiguration,
 	const CFoulDrawConfiguration& aFoulDrawConfiguration,
@@ -16,7 +29,9 @@ CDrawConfiguration::CDrawConfiguration(
 	mPossessionDrawConfiguration( aPossessionDrawConfiguration ),
 	mFoulDrawConfiguration( aFoulDrawConfiguration ),
 	mChancesDrawConfiguration( aChancesDrawConfiguration ),
-	mGoalDrawConfiguration( aGoalDrawConfiguration )
+	mGoalDrawConfiguration( aGoalDrawConfiguration ),
+	mSetPieceDistributionParameters( CalculateSetPieceDistributionParameters(
+		mChancesDrawConfiguration.GetAverageSetPieces(), mFoulDrawConfiguration.GetAverageFouls() ) )
 {
 	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
 		"joint probability of keeping possession or receiving a foul" );
@@ -27,7 +42,9 @@ CDrawConfiguration::CDrawConfiguration( const json& aJSON ) try :
 	mPossessionDrawConfiguration( ValueFromOptionalJSONKey<CPossessionDrawConfiguration>( aJSON ) ),
 	mFoulDrawConfiguration( ValueFromOptionalJSONKey<CFoulDrawConfiguration>( aJSON ) ),
 	mChancesDrawConfiguration( ValueFromOptionalJSONKey<CChancesDrawConfiguration>( aJSON ) ),
-	mGoalDrawConfiguration( ValueFromOptionalJSONKey<CGoalDrawConfiguration>( aJSON ) )
+	mGoalDrawConfiguration( ValueFromOptionalJSONKey<CGoalDrawConfiguration>( aJSON ) ),
+	mSetPieceDistributionParameters( CalculateSetPieceDistributionParameters(
+		mChancesDrawConfiguration.GetAverageSetPieces(), mFoulDrawConfiguration.GetAverageFouls() ) )
 {
 	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
 		"joint probability of keeping possession or receiving a foul" );
@@ -81,5 +98,17 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateFoulDistribu
 {
 	return mFoulDrawConfiguration.CreateFoulDistribution();
 }
+
+namespace
+{
+
+std::bernoulli_distribution::param_type CalculateSetPieceDistributionParameters( const CDrawConfigurationTypes::stat& aAverageSetPieces,
+	const CDrawConfigurationTypes::stat& aAverageFouls )
+{
+	return std::bernoulli_distribution::param_type{ CheckProbability( aAverageSetPieces / aAverageFouls,
+		"probability to get a set piece chance given a foul" ) };
+}
+
+} // anonymous namespace
 
 } // futsim::football namespace

@@ -82,6 +82,9 @@ private:
 	CChancesDrawConfiguration mChancesDrawConfiguration;
 	//! Goal draw configuration.
 	CGoalDrawConfiguration mGoalDrawConfiguration;
+
+	//! Set piece distribution parameters.
+	std::bernoulli_distribution::param_type mSetPieceDistributionParameters;
 };
 
 } // futsim namespace
