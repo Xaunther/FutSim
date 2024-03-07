@@ -108,6 +108,9 @@ private:
 
 	//! Default chance distribution parameters.
 	std::bernoulli_distribution::param_type mDefaultChanceDistributionParameters;
+
+	//! Chance type distribution parameters.
+	discrete_distribution::param_type mChanceTypeDistributionParameters;
 };
 
 } // futsim namespace
