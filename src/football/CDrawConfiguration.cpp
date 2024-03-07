@@ -123,6 +123,14 @@ std::bernoulli_distribution CDrawConfiguration::CreateSetPieceDistribution() con
 	return std::bernoulli_distribution{ mSetPieceDistributionParameters };
 }
 
+std::bernoulli_distribution CDrawConfiguration::CreateChanceDistribution(
+	const effective_skill& aEffectiveDFSkill,
+	const effective_skill& aEffectiveFWSkill ) const noexcept
+{
+	return std::bernoulli_distribution{ ModifiedProbability(
+		1., mDefaultChanceDistributionParameters.p(), aEffectiveDFSkill, aEffectiveFWSkill ) };
+}
+
 namespace
 {
 

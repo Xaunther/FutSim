@@ -79,6 +79,17 @@ public:
 	*/
 	std::bernoulli_distribution CreateSetPieceDistribution() const noexcept;
 
+	/**
+	 * @brief Creates the chance draw distribution.
+	 * @details The list of outcomes is {chance, no chance}.
+	 * @param aEffectiveDFSkill Effective DF skill of the defending team.
+	 * @param aEffectiveFWSkill Effective FW skill of the attacking team.
+	 * @pre All effective skills must be positive.
+	*/
+	std::bernoulli_distribution CreateChanceDistribution(
+		const effective_skill& aEffectiveDFSkill,
+		const effective_skill& aEffectiveFWSkill ) const noexcept;
+
 private:
 	//! Possession draw configuration.
 	CPossessionDrawConfiguration mPossessionDrawConfiguration;
