@@ -36,6 +36,13 @@ public:
 	*/
 	explicit CDrawConfiguration( const json& aJSON );
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mPossessionDrawConfiguration
 	const CPossessionDrawConfiguration& GetPossessionDrawConfiguration() const noexcept;
 

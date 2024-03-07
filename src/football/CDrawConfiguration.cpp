@@ -29,6 +29,14 @@ CDrawConfiguration::CDrawConfiguration( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the draw configuration from JSON." )
 
+void CDrawConfiguration::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mPossessionDrawConfiguration );
+	AddToJSONKey( aJSON, mFoulDrawConfiguration );
+	AddToJSONKey( aJSON, mChancesDrawConfiguration );
+	AddToJSONKey( aJSON, mGoalDrawConfiguration );
+}
+
 const CPossessionDrawConfiguration& CDrawConfiguration::GetPossessionDrawConfiguration() const noexcept
 {
 	return mPossessionDrawConfiguration;
