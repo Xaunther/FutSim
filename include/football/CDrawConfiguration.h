@@ -93,6 +93,12 @@ public:
 	//! \copydoc CChancesDrawConfiguration::CreateSetPieceTypeDistribution
 	discrete_distribution CreateSetPieceTypeDistribution() const noexcept;
 
+	/**
+	 * @brief Creates the chance type draw distribution.
+	 * @details The list of outcomes is {corner, 1 on 1 vs GK, 1 on 1 vs DF, near shot, far shot}.
+	*/
+	discrete_distribution CreateChanceTypeDistribution() const noexcept;
+
 private:
 	//! Possession draw configuration.
 	CPossessionDrawConfiguration mPossessionDrawConfiguration;

@@ -157,6 +157,11 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateSetPieceType
 	return mChancesDrawConfiguration.CreateSetPieceTypeDistribution();
 }
 
+CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateChanceTypeDistribution() const noexcept
+{
+	return discrete_distribution{ mChanceTypeDistributionParameters };
+}
+
 namespace
 {
 
