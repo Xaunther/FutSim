@@ -90,6 +90,9 @@ public:
 		const effective_skill& aEffectiveDFSkill,
 		const effective_skill& aEffectiveFWSkill ) const noexcept;
 
+	//! \copydoc CChancesDrawConfiguration::CreateSetPieceTypeDistribution
+	discrete_distribution CreateSetPieceTypeDistribution() const noexcept;
+
 private:
 	//! Possession draw configuration.
 	CPossessionDrawConfiguration mPossessionDrawConfiguration;

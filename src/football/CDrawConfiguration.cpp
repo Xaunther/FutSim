@@ -131,6 +131,11 @@ std::bernoulli_distribution CDrawConfiguration::CreateChanceDistribution(
 		1., mDefaultChanceDistributionParameters.p(), aEffectiveDFSkill, aEffectiveFWSkill ) };
 }
 
+CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateSetPieceTypeDistribution() const noexcept
+{
+	return mChancesDrawConfiguration.CreateSetPieceTypeDistribution();
+}
+
 namespace
 {
 
