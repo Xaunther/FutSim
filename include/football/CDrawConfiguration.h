@@ -73,6 +73,12 @@ public:
 	//! \copydoc CFoulDrawConfiguration::CreateFoulDistribution
 	discrete_distribution CreateFoulDistribution() const noexcept;
 
+	/**
+	 * @brief Creates the set piece draw distribution.
+	 * @details The list of outcomes is {set piece, no set piece}.
+	*/
+	std::bernoulli_distribution CreateSetPieceDistribution() const noexcept;
+
 private:
 	//! Possession draw configuration.
 	CPossessionDrawConfiguration mPossessionDrawConfiguration;

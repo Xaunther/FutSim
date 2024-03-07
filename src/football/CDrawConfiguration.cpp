@@ -99,6 +99,11 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateFoulDistribu
 	return mFoulDrawConfiguration.CreateFoulDistribution();
 }
 
+std::bernoulli_distribution CDrawConfiguration::CreateSetPieceDistribution() const noexcept
+{
+	return std::bernoulli_distribution{ mSetPieceDistributionParameters };
+}
+
 namespace
 {
 
