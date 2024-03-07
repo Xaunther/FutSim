@@ -2,6 +2,7 @@
 
 #include "ExceptionUtils.h"
 #include "JsonUtils.h"
+#include "ProbabilityUtils.h"
 
 namespace futsim::football
 {
@@ -17,6 +18,8 @@ CDrawConfiguration::CDrawConfiguration(
 	mChancesDrawConfiguration( aChancesDrawConfiguration ),
 	mGoalDrawConfiguration( aGoalDrawConfiguration )
 {
+	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
+		"joint probability of keeping possession or receiving a foul" );
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the draw configuration." )
 
@@ -26,6 +29,8 @@ CDrawConfiguration::CDrawConfiguration( const json& aJSON ) try :
 	mChancesDrawConfiguration( ValueFromOptionalJSONKey<CChancesDrawConfiguration>( aJSON ) ),
 	mGoalDrawConfiguration( ValueFromOptionalJSONKey<CGoalDrawConfiguration>( aJSON ) )
 {
+	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
+		"joint probability of keeping possession or receiving a foul" );
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the draw configuration from JSON." )
 
