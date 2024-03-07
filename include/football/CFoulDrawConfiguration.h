@@ -14,6 +14,7 @@ class CFoulDrawConfiguration : public IJsonable
 {
 protected:
 	using stat = CDrawConfigurationTypes::stat;
+	using probability = CDrawConfigurationTypes::probability;
 	using discrete_distribution = CDrawConfigurationTypes::discrete_distribution;
 
 public:
@@ -51,6 +52,9 @@ public:
 	//! Retrieves the \copybrief mAverageRedCards
 	const stat& GetAverageRedCards() const noexcept;
 
+	//! Retrieves the \copybrief mFoulProbability
+	const probability& GetFoulProbability() const noexcept;
+
 	/**
 	 * @brief Creates the foul draw distribution.
 	 * @details The list of outcomes is {yellow card, red card, no card}.
@@ -73,6 +77,9 @@ public:
 	//! Default \copybrief mAverageRedCards
 	static inline constexpr stat DEFAULT_AVERAGE_RED_CARDS = stat{ 31 } / 380;
 
+	//! Number of minutes of the matches used to take the data from.
+	static inline constexpr unsigned int MATCH_MINUTES = 90;
+
 private:
 	//! Average number of fouls per 90 minutes.
 	stat mAverageFouls;
@@ -80,6 +87,9 @@ private:
 	stat mAverageYellowCards;
 	//! Average number of red cards per 90 minutes.
 	stat mAverageRedCards;
+
+	//! Foul probability.
+	probability mFoulProbability;
 
 	//! Foul distribution parameters.
 	discrete_distribution::param_type mFoulDistributionParameters;
