@@ -16,6 +16,20 @@ namespace futsim::football
 class CDrawConfiguration : public IJsonable
 {
 public:
+	/**
+	 * @brief Member constructor.
+	 * @param aPossessionDrawConfiguration \ref mPossessionDrawConfiguration
+	 * @param aFoulDrawConfiguration \ref mFoulDrawConfiguration
+	 * @param aChancesDrawConfiguration \ref mChancesDrawConfiguration
+	 * @param aGoalDrawConfiguration \ref mGoalDrawConfiguration
+	*/
+	explicit CDrawConfiguration(
+		const CPossessionDrawConfiguration& aPossessionDrawConfiguration = CPossessionDrawConfiguration{},
+		const CFoulDrawConfiguration& aFoulDrawConfiguration = CFoulDrawConfiguration{},
+		const CChancesDrawConfiguration& aChancesDrawConfiguration = CChancesDrawConfiguration{},
+		const CGoalDrawConfiguration& aGoalDrawConfiguration = CGoalDrawConfiguration{}
+	);
+
 	//! Retrieves the \copybrief mPossessionDrawConfiguration
 	const CPossessionDrawConfiguration& GetPossessionDrawConfiguration() const noexcept;
 
