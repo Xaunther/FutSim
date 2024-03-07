@@ -18,6 +18,19 @@ namespace
 std::bernoulli_distribution::param_type CalculateSetPieceDistributionParameters( const CDrawConfigurationTypes::stat& aAverageSetPieces,
 	const CDrawConfigurationTypes::stat& aAverageFouls );
 
+/**
+ * @brief Calculates the default chance distribution parameters after keeping possession or launching a counter attack.
+ * @param aExtraCornerProbability Extra corner probability after a chance.
+ * @param aAverageChances Average number of chances per 90 minutes.
+ * @param aFoulProbability Foul probability.
+ * @param aSetPieceProbability Set piece probability.
+*/
+std::bernoulli_distribution::param_type CalculateDefaultChanceDistributionParameters(
+	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
+	const CDrawConfigurationTypes::stat& aAverageChances,
+	const CDrawConfigurationTypes::probability& aFoulProbability,
+	const CDrawConfigurationTypes::probability& aSetPieceProbability );
+
 } // anonymous namespace
 
 CDrawConfiguration::CDrawConfiguration(
@@ -31,7 +44,10 @@ CDrawConfiguration::CDrawConfiguration(
 	mChancesDrawConfiguration( aChancesDrawConfiguration ),
 	mGoalDrawConfiguration( aGoalDrawConfiguration ),
 	mSetPieceDistributionParameters( CalculateSetPieceDistributionParameters(
-		mChancesDrawConfiguration.GetAverageSetPieces(), mFoulDrawConfiguration.GetAverageFouls() ) )
+		mChancesDrawConfiguration.GetAverageSetPieces(), mFoulDrawConfiguration.GetAverageFouls() ) ),
+	mDefaultChanceDistributionParameters( CalculateDefaultChanceDistributionParameters( mGoalDrawConfiguration.GetExtraCornerProbability(),
+		mChancesDrawConfiguration.GetAverageChances(), mFoulDrawConfiguration.GetFoulProbability(),
+		mSetPieceDistributionParameters.p() ) )
 {
 	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
 		"joint probability of keeping possession or receiving a foul" );
@@ -44,7 +60,10 @@ CDrawConfiguration::CDrawConfiguration( const json& aJSON ) try :
 	mChancesDrawConfiguration( ValueFromOptionalJSONKey<CChancesDrawConfiguration>( aJSON ) ),
 	mGoalDrawConfiguration( ValueFromOptionalJSONKey<CGoalDrawConfiguration>( aJSON ) ),
 	mSetPieceDistributionParameters( CalculateSetPieceDistributionParameters(
-		mChancesDrawConfiguration.GetAverageSetPieces(), mFoulDrawConfiguration.GetAverageFouls() ) )
+		mChancesDrawConfiguration.GetAverageSetPieces(), mFoulDrawConfiguration.GetAverageFouls() ) ),
+	mDefaultChanceDistributionParameters( CalculateDefaultChanceDistributionParameters( mGoalDrawConfiguration.GetExtraCornerProbability(),
+		mChancesDrawConfiguration.GetAverageChances(), mFoulDrawConfiguration.GetFoulProbability(),
+		mSetPieceDistributionParameters.p() ) )
 {
 	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
 		"joint probability of keeping possession or receiving a foul" );
@@ -112,6 +131,17 @@ std::bernoulli_distribution::param_type CalculateSetPieceDistributionParameters(
 {
 	return std::bernoulli_distribution::param_type{ CheckProbability( aAverageSetPieces / aAverageFouls,
 		"probability to get a set piece chance given a foul" ) };
+}
+
+std::bernoulli_distribution::param_type CalculateDefaultChanceDistributionParameters(
+	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
+	const CDrawConfigurationTypes::stat& aAverageChances,
+	const CDrawConfigurationTypes::probability& aFoulProbability,
+	const CDrawConfigurationTypes::probability& aSetPieceProbability )
+{
+	return std::bernoulli_distribution::param_type{ CheckProbability(
+		( ( 1 - aExtraCornerProbability ) * ( aAverageChances / CFoulDrawConfiguration::MATCH_MINUTES ) - aFoulProbability * aSetPieceProbability )
+		/ ( 1 - aFoulProbability ), "probability to get a chance after keeping possession or launching a counter attack" ) };
 }
 
 } // anonymous namespace

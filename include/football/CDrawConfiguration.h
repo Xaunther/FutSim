@@ -91,6 +91,9 @@ private:
 
 	//! Set piece distribution parameters.
 	std::bernoulli_distribution::param_type mSetPieceDistributionParameters;
+
+	//! Default chance distribution parameters.
+	std::bernoulli_distribution::param_type mDefaultChanceDistributionParameters;
 };
 
 } // futsim namespace
