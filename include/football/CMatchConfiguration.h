@@ -74,6 +74,9 @@ public:
 	//! Retrieves the \copybrief mPenaltyShootoutConfiguration
 	const optional_penalty_shootout_configuration& GetPenaltyShootoutConfiguration() const noexcept;
 
+	//! Retrieves the \copybrief mDrawConfiguration
+	const CDrawConfiguration& GetDrawConfiguration() const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Match configuration";
 	//! JSON key for the \copybrief mBenchedPlayersCount

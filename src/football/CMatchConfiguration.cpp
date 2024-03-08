@@ -98,6 +98,11 @@ const CMatchConfiguration::optional_penalty_shootout_configuration& CMatchConfig
 	return mPenaltyShootoutConfiguration;
 }
 
+const CDrawConfiguration& CMatchConfiguration::GetDrawConfiguration() const noexcept
+{
+	return mDrawConfiguration;
+}
+
 namespace
 {
 
