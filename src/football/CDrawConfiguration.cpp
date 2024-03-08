@@ -252,6 +252,22 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateIndirectFree
 		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2
 	};
 }
+
+CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateCornerOutcomeDistribution(
+	const effective_skill& aEffectiveGKSkill,
+	const effective_skill& aEffectiveDFSkill,
+	const effective_skill& aEffectiveMFSkill,
+	const effective_skill& aEffectiveFWSkill ) const noexcept
+{
+	const auto modifiedProbability = ModifiedProbability( 1 - mGoalDrawConfiguration.GetExtraCornerProbability(),
+		mDefaultCornerGoalProbability, aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
+	return discrete_distribution{ modifiedProbability,
+		mGoalDrawConfiguration.GetExtraCornerProbability(),
+		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2,
+		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2
+	};
+}
+
 namespace
 {
 
