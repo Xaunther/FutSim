@@ -167,6 +167,13 @@ public:
 		const effective_skill& aEffectiveMFSkill,
 		const effective_skill& aEffectiveFWSkill ) const noexcept;
 
+	//! \copybrief CGoalDrawConfiguration::Create1vs1DFOutcomeDistribution
+	discrete_distribution Create1vs1DFOutcomeDistribution(
+		const effective_skill& aEffectiveGKSkill,
+		const effective_skill& aEffectiveDFSkill,
+		const effective_skill& aEffectiveMFSkill,
+		const effective_skill& aEffectiveFWSkill ) const noexcept;
+
 private:
 	//! Possession draw configuration.
 	CPossessionDrawConfiguration mPossessionDrawConfiguration;
