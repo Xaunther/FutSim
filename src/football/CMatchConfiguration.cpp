@@ -65,6 +65,7 @@ void CMatchConfiguration::JSON( json& aJSON ) const noexcept
 		AddToJSONKey( aJSON, *mExtraTime );
 	if( mPenaltyShootoutConfiguration )
 		AddToJSONKey( aJSON, *mPenaltyShootoutConfiguration );
+	AddToJSONKey( aJSON, mDrawConfiguration );
 }
 
 const CPlayTime& CMatchConfiguration::GetPlayTime() const noexcept
