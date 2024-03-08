@@ -225,6 +225,20 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateDirectFreeKi
 	};
 }
 
+CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateIndirectFreeKickOutcomeDistribution(
+	const effective_skill& aEffectiveGKSkill,
+	const effective_skill& aEffectiveDFSkill,
+	const effective_skill& aEffectiveMFSkill,
+	const effective_skill& aEffectiveFWSkill ) const noexcept
+{
+	const auto modifiedProbability = ModifiedProbability( 1 - mGoalDrawConfiguration.GetExtraCornerProbability(),
+		mDefaultIndirectFreeKickGoalProbability, aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
+	return discrete_distribution{ modifiedProbability,
+		mGoalDrawConfiguration.GetExtraCornerProbability(),
+		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2,
+		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2
+	};
+}
 namespace
 {
 
