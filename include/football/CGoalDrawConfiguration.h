@@ -143,7 +143,7 @@ public:
 	//! Default \copybrief mAverageCornerGoals
 	static inline constexpr stat DEFAULT_AVERAGE_CORNER_GOALS = stat{ 151 } / 380;
 	//! Default \copybrief mAverageFarShotGoals
-	static inline constexpr stat DEFAULT_AVERAGE_FAR_SHOT_GOALS = stat{ 147 } / 380;
+	static inline constexpr stat DEFAULT_AVERAGE_FAR_SHOT_GOALS = stat{ 147 } / 380 - DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS;
 	//! Default \copybrief m1vs1GKGoalProbability
 	static inline constexpr stat DEFAULT_1VS1_GK_GOAL_PROBABILITY = 0.35;
 	//! Default \copybrief m1vs1DFGoalProbability

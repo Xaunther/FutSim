@@ -174,7 +174,7 @@ std::vector<std::string> TGoalDrawConfiguration::ExpectedResults() const noexcep
 		"Average direct free kick goals: 0.044737",
 		"Average indirect free kick goals: 0.100000",
 		"Average corner goals: 0.397368",
-		"Average far shot goals: 0.386842",
+		"Average far shot goals: 0.342105",
 		"1 on 1 vs GK chance goal probability: 0.350000",
 		"1 on 1 vs DF chance goal probability: 0.200000",
 		"Extra corner probability: 0.250000",
@@ -205,7 +205,7 @@ std::vector<std::string> TGoalDrawConfiguration::ExpectedResults() const noexcep
 		"		\"Average direct free kick goals\": 0.04473684210526316,\n"
 		"		\"Average indirect free kick goals\": 0.1,\n"
 		"		\"Average corner goals\": 0.3973684210526316,\n"
-		"		\"Average far shot goals\": 0.3868421052631579,\n"
+		"		\"Average far shot goals\": 0.3421052631578947,\n"
 		"		\"1 on 1 vs GK chance goal probability\": 0.35,\n"
 		"		\"1 on 1 vs DF chance goal probability\": 0.2,\n"
 		"		\"Extra corner probability\": 0.25\n"
