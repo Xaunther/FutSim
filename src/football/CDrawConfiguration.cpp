@@ -300,6 +300,14 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateFarShotOutco
 	};
 }
 
+CDrawConfiguration::discrete_distribution CDrawConfiguration::Create1vs1GKOutcomeDistribution(
+	const effective_skill& aEffectiveGKSkill,
+	const effective_skill& aEffectiveMFSkill,
+	const effective_skill& aEffectiveFWSkill ) const noexcept
+{
+	return mGoalDrawConfiguration.Create1vs1GKOutcomeDistribution( aEffectiveGKSkill, aEffectiveMFSkill, aEffectiveFWSkill );
+}
+
 namespace
 {
 
