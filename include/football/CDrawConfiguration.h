@@ -185,6 +185,9 @@ public:
 		const effective_skill& aEffectiveGKSkill,
 		const effective_skill& aEffectiveFWSkill ) const noexcept;
 
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Draw configuration";
+
 private:
 	//! Possession draw configuration.
 	CPossessionDrawConfiguration mPossessionDrawConfiguration;
