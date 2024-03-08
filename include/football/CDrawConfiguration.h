@@ -100,6 +100,16 @@ public:
 	*/
 	discrete_distribution CreateChanceTypeDistribution() const noexcept;
 
+	/**
+	 * @brief Creates the penalty chance outcome distribution.
+	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
+	 * @param aEffectiveGKSkill Effective GK skill of the goalkeeper.
+	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
+	 * @pre All effective skills must be positive.
+	*/
+	discrete_distribution CreatePenaltyOutcomeDistribution(
+		const effective_skill& aEffectiveGKSkill, const effective_skill& aEffectiveFWSkill ) const noexcept;
+
 private:
 	//! Possession draw configuration.
 	CPossessionDrawConfiguration mPossessionDrawConfiguration;
