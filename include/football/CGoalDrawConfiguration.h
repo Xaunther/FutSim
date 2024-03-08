@@ -2,7 +2,7 @@
 
 #include "IJsonable.h"
 
-#include "football/CGoalDrawConfigurationTypes.h"
+#include "football/CDrawConfigurationTypes.h"
 
 namespace futsim::football
 {
@@ -13,10 +13,10 @@ namespace futsim::football
 class CGoalDrawConfiguration : public IJsonable
 {
 protected:
-	using probability = CGoalDrawConfigurationTypes::probability;
-	using stat = CGoalDrawConfigurationTypes::stat;
-	using effective_skill = CGoalDrawConfigurationTypes::effective_skill;
-	using chance_outcome_distribution = CGoalDrawConfigurationTypes::chance_outcome_distribution;
+	using probability = CDrawConfigurationTypes::probability;
+	using stat = CDrawConfigurationTypes::stat;
+	using effective_skill = CDrawConfigurationTypes::effective_skill;
+	using discrete_distribution = CDrawConfigurationTypes::discrete_distribution;
 
 public:
 	/**
@@ -91,7 +91,7 @@ public:
 	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @pre All effective skills must be positive.
 	*/
-	chance_outcome_distribution Create1vs1GKOutcomeDistribution(
+	discrete_distribution Create1vs1GKOutcomeDistribution(
 		const effective_skill& aEffectiveGKSkill,
 		const effective_skill& aEffectiveMFSkill,
 		const effective_skill& aEffectiveFWSkill ) const noexcept;
@@ -105,7 +105,7 @@ public:
 	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @pre All effective skills must be positive.
 	*/
-	chance_outcome_distribution Create1vs1DFOutcomeDistribution(
+	discrete_distribution Create1vs1DFOutcomeDistribution(
 		const effective_skill& aEffectiveGKSkill,
 		const effective_skill& aEffectiveDFSkill,
 		const effective_skill& aEffectiveMFSkill,

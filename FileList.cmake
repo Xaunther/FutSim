@@ -17,13 +17,10 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 # Football external headers
 SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CChancesDrawConfiguration.h
-	include/football/CChancesDrawConfigurationTypes.h
 	include/football/CDrawConfiguration.h
 	include/football/CExtraTime.h
 	include/football/CFoulDrawConfiguration.h
-	include/football/CFoulDrawConfigurationTypes.h
 	include/football/CGoalDrawConfiguration.h
-	include/football/CGoalDrawConfigurationTypes.h
 	include/football/CMatch.h
 	include/football/CMatchConfiguration.h
 	include/football/CMatchConfigurationTypes.h
@@ -35,7 +32,6 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CPlayTime.h
 	include/football/CPlayTimeTypes.h
 	include/football/CPossessionDrawConfiguration.h
-	include/football/CPossessionDrawConfigurationTypes.h
 	include/football/CStadium.h
 	include/football/CStadiumTypes.h
 	include/football/CTeam.h

@@ -2,7 +2,7 @@
 
 #include "IJsonable.h"
 
-#include "football/CFoulDrawConfigurationTypes.h"
+#include "football/CDrawConfigurationTypes.h"
 
 namespace futsim::football
 {
@@ -13,8 +13,8 @@ namespace futsim::football
 class CFoulDrawConfiguration : public IJsonable
 {
 protected:
-	using stat = CFoulDrawConfigurationTypes::stat;
-	using foul_distribution = CFoulDrawConfigurationTypes::foul_distribution;
+	using stat = CDrawConfigurationTypes::stat;
+	using discrete_distribution = CDrawConfigurationTypes::discrete_distribution;
 
 public:
 	/**
@@ -55,7 +55,7 @@ public:
 	 * @brief Creates the foul draw distribution.
 	 * @details The list of outcomes is {yellow card, red card, no card}.
 	*/
-	foul_distribution CreateFoulDistribution() const noexcept;
+	discrete_distribution CreateFoulDistribution() const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Foul draw configuration";
@@ -82,7 +82,7 @@ private:
 	stat mAverageRedCards;
 
 	//! Foul distribution parameters.
-	foul_distribution::param_type mFoulDistributionParameters;
+	discrete_distribution::param_type mFoulDistributionParameters;
 };
 
 } // futsim namespace

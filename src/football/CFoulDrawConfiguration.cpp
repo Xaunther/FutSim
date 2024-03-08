@@ -56,9 +56,9 @@ const CFoulDrawConfiguration::stat& CFoulDrawConfiguration::GetAverageRedCards()
 	return mAverageRedCards;
 }
 
-CFoulDrawConfiguration::foul_distribution CFoulDrawConfiguration::CreateFoulDistribution() const noexcept
+CFoulDrawConfiguration::discrete_distribution CFoulDrawConfiguration::CreateFoulDistribution() const noexcept
 {
-	return foul_distribution{ mFoulDistributionParameters };
+	return discrete_distribution{ mFoulDistributionParameters };
 }
 
 } // futsim::football namespace
