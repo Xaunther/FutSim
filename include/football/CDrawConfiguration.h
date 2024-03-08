@@ -177,6 +177,8 @@ private:
 	probability mDefaultIndirectFreeKickGoalProbability;
 	//! Default goal probability from corner.
 	probability mDefaultCornerGoalProbability;
+	//! Default goal probability from far shot.
+	probability mDefaultFarShotGoalProbability;
 };
 
 } // futsim namespace
