@@ -26,14 +26,16 @@ CMatchConfiguration::CMatchConfiguration(
 	const bool aApplyAmbientFactor,
 	const optional_tie_condition& aTieCondition,
 	const optional_extra_time& aExtraTime,
-	const optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration
+	const optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration,
+	const CDrawConfiguration& aDrawConfiguration
 ) try :
 	mPlayTime( aPlayTime ),
 	mBenchedPlayersCount( aBenchedPlayersCount ),
 	mApplyAmbientFactor( aApplyAmbientFactor ),
 	mTieCondition( CheckTieCondition( aTieCondition, aPenaltyShootoutConfiguration ) ),
 	mExtraTime( aExtraTime ),
-	mPenaltyShootoutConfiguration( aPenaltyShootoutConfiguration )
+	mPenaltyShootoutConfiguration( aPenaltyShootoutConfiguration ),
+	mDrawConfiguration( aDrawConfiguration )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the match configuration." )

@@ -32,6 +32,7 @@ public:
 	 * @param aTieCondition \ref mTieCondition
 	 * @param aExtraTime \ref mExtraTime
 	 * @param aPenaltyShootoutConfiguration \ref mPenaltyShootoutConfiguration
+	 * @param aDrawConfiguration \ref mDrawConfiguration
 	*/
 	explicit CMatchConfiguration(
 		const CPlayTime& aPlayTime = CPlayTime{},
@@ -39,7 +40,8 @@ public:
 		const bool aApplyAmbientFactor = true,
 		const optional_tie_condition& aTieCondition = {},
 		const optional_extra_time& aExtraTime = {},
-		const optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration = {} );
+		const optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration = {},
+		const CDrawConfiguration& aDrawConfiguration = CDrawConfiguration{} );
 
 	/**
 	 * @brief JSON constructor.
