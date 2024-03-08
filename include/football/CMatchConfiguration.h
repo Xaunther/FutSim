@@ -2,6 +2,7 @@
 
 #include "IJsonable.h"
 
+#include "football/CDrawConfiguration.h"
 #include "football/CExtraTime.h"
 #include "football/CMatchConfigurationTypes.h"
 #include "football/CPenaltyShootoutConfiguration.h"
@@ -91,6 +92,9 @@ private:
 	optional_extra_time mExtraTime;
 	//! Penalty shootout configuration.
 	optional_penalty_shootout_configuration mPenaltyShootoutConfiguration;
+
+	//! Draw configuration
+	CDrawConfiguration mDrawConfiguration;
 };
 
 } // futsim namespace
