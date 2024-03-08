@@ -355,6 +355,19 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::Create1vs1DFOutcom
 	return mGoalDrawConfiguration.Create1vs1DFOutcomeDistribution( aEffectiveGKSkill, aEffectiveDFSkill, aEffectiveMFSkill, aEffectiveFWSkill );
 }
 
+CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateNearShotOutcomeDistribution(
+	const effective_skill& aEffectiveGKSkill,
+	const effective_skill& aEffectiveFWSkill ) const noexcept
+{
+	const auto modifiedProbability = ModifiedProbability( 1 - mGoalDrawConfiguration.GetExtraCornerProbability(),
+		mDefaultNearShotGoalProbability, aEffectiveGKSkill, aEffectiveFWSkill );
+	return discrete_distribution{ modifiedProbability,
+		mGoalDrawConfiguration.GetExtraCornerProbability(),
+		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2,
+		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2
+	};
+}
+
 namespace
 {
 
