@@ -164,6 +164,18 @@ CDrawConfiguration::CDrawConfiguration(
 {
 	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
 		"joint probability of keeping possession or receiving a foul" );
+	CheckProbability( mDefaultPenaltyGoalProbability + mGoalDrawConfiguration.GetExtraCornerProbability(),
+		"joint probability of scoring or getting an extra corner from a penalty" );
+	CheckProbability( mDefaultDirectFreeKickGoalProbability + mGoalDrawConfiguration.GetExtraCornerProbability(),
+		"joint probability of scoring or getting an extra corner from a direct free kick" );
+	CheckProbability( mDefaultIndirectFreeKickGoalProbability + mGoalDrawConfiguration.GetExtraCornerProbability(),
+		"joint probability of scoring or getting an extra corner from an indirect free kick" );
+	CheckProbability( mDefaultCornerGoalProbability + mGoalDrawConfiguration.GetExtraCornerProbability(),
+		"joint probability of scoring or getting an extra corner from a corner" );
+	CheckProbability( mDefaultFarShotGoalProbability + mGoalDrawConfiguration.GetExtraCornerProbability(),
+		"joint probability of scoring or getting an extra corner from a far shot" );
+	CheckProbability( mDefaultNearShotGoalProbability + mGoalDrawConfiguration.GetExtraCornerProbability(),
+		"joint probability of scoring or getting an extra corner from a near shot" );
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the draw configuration." )
 
@@ -197,6 +209,18 @@ CDrawConfiguration::CDrawConfiguration( const json& aJSON ) try :
 {
 	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
 		"joint probability of keeping possession or receiving a foul" );
+	CheckProbability( mDefaultPenaltyGoalProbability + mGoalDrawConfiguration.GetExtraCornerProbability(),
+		"joint probability of scoring or getting an extra corner from a penalty" );
+	CheckProbability( mDefaultDirectFreeKickGoalProbability + mGoalDrawConfiguration.GetExtraCornerProbability(),
+		"joint probability of scoring or getting an extra corner from a direct free kick" );
+	CheckProbability( mDefaultIndirectFreeKickGoalProbability + mGoalDrawConfiguration.GetExtraCornerProbability(),
+		"joint probability of scoring or getting an extra corner from an indirect free kick" );
+	CheckProbability( mDefaultCornerGoalProbability + mGoalDrawConfiguration.GetExtraCornerProbability(),
+		"joint probability of scoring or getting an extra corner from a corner" );
+	CheckProbability( mDefaultFarShotGoalProbability + mGoalDrawConfiguration.GetExtraCornerProbability(),
+		"joint probability of scoring or getting an extra corner from a far shot" );
+	CheckProbability( mDefaultNearShotGoalProbability + mGoalDrawConfiguration.GetExtraCornerProbability(),
+		"joint probability of scoring or getting an extra corner from a near shot" );
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the draw configuration from JSON." )
 
