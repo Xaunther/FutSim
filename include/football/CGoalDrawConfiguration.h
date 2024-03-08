@@ -101,15 +101,15 @@ public:
 	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
 	 * @param aEffectiveGKSKill Effective GK skill of the goalkeeper.
 	 * @param aEffectiveDFSKill Effective DF skill of the defender.
-	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @param aEffectiveMFSkill Effective MF skill of the assister.
+	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @pre All effective skills must be positive.
 	*/
 	chance_outcome_distribution Create1vs1DFOutcomeDistribution(
 		const effective_skill& aEffectiveGKSKill,
 		const effective_skill& aEffectiveDFSKill,
-		const effective_skill& aEffectiveFWSkill,
-		const effective_skill& aEffectiveMFSkill ) const noexcept;
+		const effective_skill& aEffectiveMFSkill,
+		const effective_skill& aEffectiveFWSkill ) const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Goal draw configuration";
