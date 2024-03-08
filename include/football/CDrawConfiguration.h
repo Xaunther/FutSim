@@ -131,6 +131,8 @@ private:
 
 	//! Default goal probability from penalty.
 	probability mDefaultPenaltyGoalProbability;
+	//! Default goal probability from direct free kick.
+	probability mDefaultDirectFreeKickGoalProbability;
 };
 
 } // futsim namespace

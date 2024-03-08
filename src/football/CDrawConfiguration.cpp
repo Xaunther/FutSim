@@ -55,6 +55,15 @@ CDrawConfigurationTypes::probability CalculateDefaultPenaltyGoalProbability(
 	const CDrawConfigurationTypes::stat& aAveragePenaltyGoals,
 	const CDrawConfigurationTypes::stat& aAveragePenalties );
 
+/**
+ * @brief Calculates the default goal probability from a direct free kick.
+ * @param aAverageDirectFreeKickGoals Average number of direct free kick goals per 90 minutes.
+ * @param aAverageDirectFreeKicks Average number of direct free kick per 90 minutes.
+*/
+CDrawConfigurationTypes::probability CalculateDefaultDirectFreeKickGoalProbability(
+	const CDrawConfigurationTypes::stat& aAverageDirectFreeKickGoals,
+	const CDrawConfigurationTypes::stat& aAverageDirectFreeKicks );
+
 } // anonymous namespace
 
 CDrawConfiguration::CDrawConfiguration(
@@ -76,7 +85,9 @@ CDrawConfiguration::CDrawConfiguration(
 		mGoalDrawConfiguration.GetExtraCornerProbability(), mFoulDrawConfiguration.GetFoulProbability(),
 		mSetPieceDistributionParameters.p(), mDefaultChanceDistributionParameters.p() ) ),
 	mDefaultPenaltyGoalProbability( CalculateDefaultPenaltyGoalProbability(
-		mGoalDrawConfiguration.GetAveragePenaltyGoals(), mChancesDrawConfiguration.GetAveragePenalties() ) )
+		mGoalDrawConfiguration.GetAveragePenaltyGoals(), mChancesDrawConfiguration.GetAveragePenalties() ) ),
+	mDefaultDirectFreeKickGoalProbability( CalculateDefaultDirectFreeKickGoalProbability(
+		mGoalDrawConfiguration.GetAverageDirectFreeKickGoals(), mChancesDrawConfiguration.GetAverageDirectFreeKicks() ) )
 {
 	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
 		"joint probability of keeping possession or receiving a foul" );
@@ -97,7 +108,9 @@ CDrawConfiguration::CDrawConfiguration( const json& aJSON ) try :
 		mGoalDrawConfiguration.GetExtraCornerProbability(), mFoulDrawConfiguration.GetFoulProbability(),
 		mSetPieceDistributionParameters.p(), mDefaultChanceDistributionParameters.p() ) ),
 	mDefaultPenaltyGoalProbability( CalculateDefaultPenaltyGoalProbability(
-		mGoalDrawConfiguration.GetAveragePenaltyGoals(), mChancesDrawConfiguration.GetAveragePenalties() ) )
+		mGoalDrawConfiguration.GetAveragePenaltyGoals(), mChancesDrawConfiguration.GetAveragePenalties() ) ),
+	mDefaultDirectFreeKickGoalProbability( CalculateDefaultDirectFreeKickGoalProbability(
+		mGoalDrawConfiguration.GetAverageDirectFreeKickGoals(), mChancesDrawConfiguration.GetAverageDirectFreeKicks() ) )
 {
 	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
 		"joint probability of keeping possession or receiving a foul" );
@@ -236,6 +249,13 @@ CDrawConfigurationTypes::probability CalculateDefaultPenaltyGoalProbability(
 	const CDrawConfigurationTypes::stat& aAveragePenalties )
 {
 	return CheckProbability( aAveragePenaltyGoals / aAveragePenalties, "penalty goal probability" );
+}
+
+CDrawConfigurationTypes::probability CalculateDefaultDirectFreeKickGoalProbability(
+	const CDrawConfigurationTypes::stat& aAverageDirectFreeKickGoals,
+	const CDrawConfigurationTypes::stat& aAverageDirectFreeKicks )
+{
+	return CheckProbability( aAverageDirectFreeKickGoals / aAverageDirectFreeKicks, "direct free kick goal probability" );
 }
 
 } // anonymous namespace
