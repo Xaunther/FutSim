@@ -203,6 +203,8 @@ private:
 	probability mDefaultCornerGoalProbability;
 	//! Default goal probability from far shot.
 	probability mDefaultFarShotGoalProbability;
+	//! Default goal probability from near shot.
+	probability mDefaultNearShotGoalProbability;
 };
 
 } // futsim namespace

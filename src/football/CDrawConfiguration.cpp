@@ -95,6 +95,38 @@ CDrawConfigurationTypes::probability CalculateDefaultFarShotGoalProbability(
 	const CDrawConfigurationTypes::probability& aFarShotProbability,
 	const CDrawConfigurationTypes::probability& aFoulProbability );
 
+/**
+ * @brief Calculates the default goal probability from a near shot.
+ * @param aChancesDrawConfiguration Configuration of the chances draw.
+ * @param aGoalDrawConfiguration Configuration of the goal draw.
+ * @param aFoulProbability Foul probability.
+ * @param aSetPieceProbability Set piece probability.
+ * @param aDefaultChanceProbability Default chance probability after keeping possession or launching a counter attack.
+ * @param aNearShotProbability Near shot probability when drawing a chance.
+*/
+CDrawConfigurationTypes::probability CalculateDefaultNearShotGoalProbability(
+	const CChancesDrawConfiguration& aChancesDrawConfiguration,
+	const CGoalDrawConfiguration& aGoalDrawConfiguration,
+	const CDrawConfigurationTypes::probability& aFoulProbability,
+	const CDrawConfigurationTypes::probability& aSetPieceProbability,
+	const CDrawConfigurationTypes::probability& aDefaultChanceProbability,
+	const CDrawConfigurationTypes::probability& aNearShotProbability );
+
+/**
+ * @brief Calculates the chance type distribution parameters.
+ * @param aChancesDrawConfiguration Configuration of the chances draw.
+ * @param aExtraCornerProbability Extra corner probability after a chance.
+ * @param aFoulProbability Foul probability.
+ * @param aSetPieceProbability Set piece probability.
+ * @param aDefaultChanceProbability Default chance probability after keeping possession or launching a counter attack.
+*/
+CDrawConfigurationTypes::stat CalculateAverageOpenPlayChances(
+	const CChancesDrawConfiguration& aChancesDrawConfiguration,
+	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
+	const CDrawConfigurationTypes::probability& aFoulProbability,
+	const CDrawConfigurationTypes::probability& aSetPieceProbability,
+	const CDrawConfigurationTypes::probability& aDefaultChanceProbability );
+
 } // anonymous namespace
 
 CDrawConfiguration::CDrawConfiguration(
@@ -125,7 +157,10 @@ CDrawConfiguration::CDrawConfiguration(
 		mGoalDrawConfiguration.GetAverageCornerGoals(), mChancesDrawConfiguration.GetAverageCornerKicks() ) ),
 	mDefaultFarShotGoalProbability( CalculateDefaultFarShotGoalProbability( mGoalDrawConfiguration.GetAverageFarShotGoals(),
 		mDefaultChanceDistributionParameters.p(), mChanceTypeDistributionParameters.probabilities().back(),
-		mFoulDrawConfiguration.GetFoulProbability() ) )
+		mFoulDrawConfiguration.GetFoulProbability() ) ),
+	mDefaultNearShotGoalProbability( CalculateDefaultNearShotGoalProbability( mChancesDrawConfiguration, mGoalDrawConfiguration,
+		mFoulDrawConfiguration.GetFoulProbability(), mSetPieceDistributionParameters.p(),
+		mDefaultChanceDistributionParameters.p(), mChanceTypeDistributionParameters.probabilities()[ 3 ] ) )
 {
 	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
 		"joint probability of keeping possession or receiving a foul" );
@@ -155,7 +190,10 @@ CDrawConfiguration::CDrawConfiguration( const json& aJSON ) try :
 		mGoalDrawConfiguration.GetAverageCornerGoals(), mChancesDrawConfiguration.GetAverageCornerKicks() ) ),
 	mDefaultFarShotGoalProbability( CalculateDefaultFarShotGoalProbability( mGoalDrawConfiguration.GetAverageFarShotGoals(),
 		mDefaultChanceDistributionParameters.p(), mChanceTypeDistributionParameters.probabilities().back(),
-		mFoulDrawConfiguration.GetFoulProbability() ) )
+		mFoulDrawConfiguration.GetFoulProbability() ) ),
+	mDefaultNearShotGoalProbability( CalculateDefaultNearShotGoalProbability( mChancesDrawConfiguration, mGoalDrawConfiguration,
+		mFoulDrawConfiguration.GetFoulProbability(), mSetPieceDistributionParameters.p(),
+		mDefaultChanceDistributionParameters.p(), mChanceTypeDistributionParameters.probabilities()[ 3 ] ) )
 {
 	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
 		"joint probability of keeping possession or receiving a foul" );
@@ -345,9 +383,8 @@ CDrawConfigurationTypes::discrete_distribution::param_type CalculateChanceTypeDi
 	const CDrawConfigurationTypes::probability& aSetPieceProbability,
 	const CDrawConfigurationTypes::probability& aDefaultChanceProbability ) try
 {
-	const auto averageExtraCorners = CFoulDrawConfiguration::MATCH_MINUTES * ( aExtraCornerProbability / ( 1 - aExtraCornerProbability ) )
-		* ( aDefaultChanceProbability * ( 1 - aFoulProbability ) + aFoulProbability * aSetPieceProbability );
-	const auto averageOpenPlayChances = aChancesDrawConfiguration.GetAverageChances() - averageExtraCorners - aChancesDrawConfiguration.GetAverageSetPieces();
+	const auto averageOpenPlayChances = CalculateAverageOpenPlayChances( aChancesDrawConfiguration,
+		aExtraCornerProbability, aFoulProbability, aSetPieceProbability, aDefaultChanceProbability );
 
 	std::array<double, 5> result{
 		CheckProbability( ( ( ( 1 - aExtraCornerProbability ) * ( aChancesDrawConfiguration.GetAverageCornerKicks() / CFoulDrawConfiguration::MATCH_MINUTES ) - aExtraCornerProbability * aFoulProbability * aSetPieceProbability )
@@ -405,6 +442,37 @@ CDrawConfigurationTypes::probability CalculateDefaultFarShotGoalProbability(
 	return CheckProbability( aAverageFarShotGoals /
 		( CFoulDrawConfiguration::MATCH_MINUTES * aDefaultChanceProbability * aFarShotProbability * ( 1 - aFoulProbability ) ),
 		"far shot goal probability" );
+}
+
+CDrawConfigurationTypes::probability CalculateDefaultNearShotGoalProbability(
+	const CChancesDrawConfiguration& aChancesDrawConfiguration,
+	const CGoalDrawConfiguration& aGoalDrawConfiguration,
+	const CDrawConfigurationTypes::probability& aFoulProbability,
+	const CDrawConfigurationTypes::probability& aSetPieceProbability,
+	const CDrawConfigurationTypes::probability& aDefaultChanceProbability,
+	const CDrawConfigurationTypes::probability& aNearShotProbability )
+{
+	const auto averageOpenPlayChances = CalculateAverageOpenPlayChances( aChancesDrawConfiguration, aGoalDrawConfiguration.GetExtraCornerProbability(),
+		aFoulProbability, aSetPieceProbability, aDefaultChanceProbability );
+	return CheckProbability( ( aGoalDrawConfiguration.GetAverageGoals() - aGoalDrawConfiguration.GetAveragePenaltyGoals()
+		- aGoalDrawConfiguration.GetAverageDirectFreeKickGoals() - aGoalDrawConfiguration.GetAverageIndirectFreeKickGoals()
+		- aGoalDrawConfiguration.GetAverageCornerGoals() - aGoalDrawConfiguration.GetAverageFarShotGoals()
+		- aGoalDrawConfiguration.Get1vs1GKGoalProbability() * aChancesDrawConfiguration.GetAverage1vs1GKs()
+		- aGoalDrawConfiguration.Get1vs1DFGoalProbability() * aChancesDrawConfiguration.GetAverage1vs1DFs() )
+		/ ( averageOpenPlayChances * aNearShotProbability ),
+		"near shot goal probability" );
+}
+
+CDrawConfigurationTypes::stat CalculateAverageOpenPlayChances(
+	const CChancesDrawConfiguration& aChancesDrawConfiguration,
+	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
+	const CDrawConfigurationTypes::probability& aFoulProbability,
+	const CDrawConfigurationTypes::probability& aSetPieceProbability,
+	const CDrawConfigurationTypes::probability& aDefaultChanceProbability )
+{
+	const auto averageExtraCorners = CFoulDrawConfiguration::MATCH_MINUTES * ( aExtraCornerProbability / ( 1 - aExtraCornerProbability ) )
+		* ( aDefaultChanceProbability * ( 1 - aFoulProbability ) + aFoulProbability * aSetPieceProbability );
+	return aChancesDrawConfiguration.GetAverageChances() - averageExtraCorners - aChancesDrawConfiguration.GetAverageSetPieces();
 }
 
 } // anonymous namespace
