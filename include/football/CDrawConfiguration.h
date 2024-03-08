@@ -18,6 +18,7 @@ class CDrawConfiguration : public IJsonable
 protected:
 	using discrete_distribution = CDrawConfigurationTypes::discrete_distribution;
 	using effective_skill = CDrawConfigurationTypes::effective_skill;
+	using probability = CDrawConfigurationTypes::probability;
 
 public:
 	/**
@@ -117,6 +118,9 @@ private:
 
 	//! Chance type distribution parameters.
 	discrete_distribution::param_type mChanceTypeDistributionParameters;
+
+	//! Default goal probability from penalty.
+	probability mDefaultPenaltyGoalProbability;
 };
 
 } // futsim namespace

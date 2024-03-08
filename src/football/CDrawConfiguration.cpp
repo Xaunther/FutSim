@@ -46,6 +46,15 @@ CDrawConfigurationTypes::discrete_distribution::param_type CalculateChanceTypeDi
 	const CDrawConfigurationTypes::probability& aSetPieceProbability,
 	const CDrawConfigurationTypes::probability& aDefaultChanceProbability );
 
+/**
+ * @brief Calculates the default goal probability from a penalty.
+ * @param aAveragePenaltyGoals Average number of penalty goals per 90 minutes.
+ * @param aAveragePenalties Average number of penalties per 90 minutes.
+*/
+CDrawConfigurationTypes::probability CalculateDefaultPenaltyGoalProbability(
+	const CDrawConfigurationTypes::stat& aAveragePenaltyGoals,
+	const CDrawConfigurationTypes::stat& aAveragePenalties );
+
 } // anonymous namespace
 
 CDrawConfiguration::CDrawConfiguration(
@@ -65,7 +74,9 @@ CDrawConfiguration::CDrawConfiguration(
 		mSetPieceDistributionParameters.p() ) ),
 	mChanceTypeDistributionParameters( CalculateChanceTypeDistributionParameters( mChancesDrawConfiguration,
 		mGoalDrawConfiguration.GetExtraCornerProbability(), mFoulDrawConfiguration.GetFoulProbability(),
-		mSetPieceDistributionParameters.p(), mDefaultChanceDistributionParameters.p() ) )
+		mSetPieceDistributionParameters.p(), mDefaultChanceDistributionParameters.p() ) ),
+	mDefaultPenaltyGoalProbability( CalculateDefaultPenaltyGoalProbability(
+		mGoalDrawConfiguration.GetAveragePenaltyGoals(), mChancesDrawConfiguration.GetAveragePenalties() ) )
 {
 	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
 		"joint probability of keeping possession or receiving a foul" );
@@ -84,7 +95,9 @@ CDrawConfiguration::CDrawConfiguration( const json& aJSON ) try :
 		mSetPieceDistributionParameters.p() ) ),
 	mChanceTypeDistributionParameters( CalculateChanceTypeDistributionParameters( mChancesDrawConfiguration,
 		mGoalDrawConfiguration.GetExtraCornerProbability(), mFoulDrawConfiguration.GetFoulProbability(),
-		mSetPieceDistributionParameters.p(), mDefaultChanceDistributionParameters.p() ) )
+		mSetPieceDistributionParameters.p(), mDefaultChanceDistributionParameters.p() ) ),
+	mDefaultPenaltyGoalProbability( CalculateDefaultPenaltyGoalProbability(
+		mGoalDrawConfiguration.GetAveragePenaltyGoals(), mChancesDrawConfiguration.GetAveragePenalties() ) )
 {
 	CheckProbability( mPossessionDrawConfiguration.GetKeepPossessionProbability() + mFoulDrawConfiguration.GetFoulProbability(),
 		"joint probability of keeping possession or receiving a foul" );
@@ -205,6 +218,13 @@ CDrawConfigurationTypes::discrete_distribution::param_type CalculateChanceTypeDi
 	return CDrawConfigurationTypes::discrete_distribution::param_type{ result.cbegin(), result.cend() };
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error calculating the chance type draw distribution." )
+
+CDrawConfigurationTypes::probability CalculateDefaultPenaltyGoalProbability(
+	const CDrawConfigurationTypes::stat& aAveragePenaltyGoals,
+	const CDrawConfigurationTypes::stat& aAveragePenalties )
+{
+	return CheckProbability( aAveragePenaltyGoals / aAveragePenalties, "penalty goal probability" );
+}
 
 } // anonymous namespace
 
