@@ -87,14 +87,14 @@ public:
 	 * @brief Creates the 1 on 1 vs GK chance outcome draw distribution.
 	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
 	 * @param aEffectiveGKSkill Effective GK skill of the goalkeeper.
-	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @param aEffectiveMFSkill Effective MF skill of the assister.
+	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @pre All effective skills must be positive.
 	*/
 	chance_outcome_distribution Create1vs1GKOutcomeDistribution(
 		const effective_skill& aEffectiveGKSkill,
-		const effective_skill& aEffectiveFWSkill,
-		const effective_skill& aEffectiveMFSkill ) const noexcept;
+		const effective_skill& aEffectiveMFSkill,
+		const effective_skill& aEffectiveFWSkill ) const noexcept;
 
 	/**
 	 * @brief Creates the 1 on 1 vs DF chance outcome draw distribution.
