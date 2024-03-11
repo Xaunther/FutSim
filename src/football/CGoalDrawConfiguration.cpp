@@ -126,14 +126,7 @@ CGoalDrawConfiguration::discrete_distribution CGoalDrawConfiguration::Create1vs1
 	const effective_skill& aEffectiveMFSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	const auto& modifiedGoalProbability = ModifiedProbability( 1 - mExtraCornerProbability, m1vs1GKGoalProbability,
-		2 * aEffectiveGKSkill, aEffectiveFWSkill + aEffectiveMFSkill );
-	return discrete_distribution{ {
-		modifiedGoalProbability,
-		mExtraCornerProbability,
-		( 1 - modifiedGoalProbability - mExtraCornerProbability ) / 2,
-		( 1 - modifiedGoalProbability - mExtraCornerProbability ) / 2
-	} };
+	return CreateChanceOutcomeDistribution( m1vs1GKGoalProbability, 2 * aEffectiveGKSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
 CGoalDrawConfiguration::discrete_distribution CGoalDrawConfiguration::Create1vs1DFOutcomeDistribution(
@@ -142,14 +135,7 @@ CGoalDrawConfiguration::discrete_distribution CGoalDrawConfiguration::Create1vs1
 	const effective_skill& aEffectiveMFSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	const auto& modifiedGoalProbability = ModifiedProbability( 1 - mExtraCornerProbability, m1vs1DFGoalProbability,
-		aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveFWSkill + aEffectiveMFSkill );
-	return discrete_distribution{ {
-		modifiedGoalProbability,
-		mExtraCornerProbability,
-		( 1 - modifiedGoalProbability - mExtraCornerProbability ) / 2,
-		( 1 - modifiedGoalProbability - mExtraCornerProbability ) / 2
-	} };
+	return CreateChanceOutcomeDistribution( m1vs1DFGoalProbability, aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
 CGoalDrawConfiguration::discrete_distribution CGoalDrawConfiguration::CreateChanceOutcomeDistribution(

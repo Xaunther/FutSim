@@ -298,25 +298,13 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateChanceTypeDi
 CDrawConfiguration::discrete_distribution CDrawConfiguration::CreatePenaltyOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill, const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	const auto modifiedProbability = ModifiedProbability( 1 - mGoalDrawConfiguration.GetExtraCornerProbability(),
-		mDefaultPenaltyGoalProbability, aEffectiveGKSkill, aEffectiveFWSkill );
-	return discrete_distribution{ modifiedProbability,
-		mGoalDrawConfiguration.GetExtraCornerProbability(),
-		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2,
-		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2
-	};
+	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultPenaltyGoalProbability, aEffectiveGKSkill, aEffectiveFWSkill );
 }
 
 CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateDirectFreeKickOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill, const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	const auto modifiedProbability = ModifiedProbability( 1 - mGoalDrawConfiguration.GetExtraCornerProbability(),
-		mDefaultDirectFreeKickGoalProbability, aEffectiveGKSkill, aEffectiveFWSkill );
-	return discrete_distribution{ modifiedProbability,
-		mGoalDrawConfiguration.GetExtraCornerProbability(),
-		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2,
-		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2
-	};
+	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultDirectFreeKickGoalProbability, aEffectiveGKSkill, aEffectiveFWSkill );
 }
 
 CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateIndirectFreeKickOutcomeDistribution(
@@ -325,13 +313,8 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateIndirectFree
 	const effective_skill& aEffectiveMFSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	const auto modifiedProbability = ModifiedProbability( 1 - mGoalDrawConfiguration.GetExtraCornerProbability(),
-		mDefaultIndirectFreeKickGoalProbability, aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
-	return discrete_distribution{ modifiedProbability,
-		mGoalDrawConfiguration.GetExtraCornerProbability(),
-		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2,
-		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2
-	};
+	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultIndirectFreeKickGoalProbability,
+		aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
 CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateCornerOutcomeDistribution(
@@ -340,26 +323,16 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateCornerOutcom
 	const effective_skill& aEffectiveMFSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	const auto modifiedProbability = ModifiedProbability( 1 - mGoalDrawConfiguration.GetExtraCornerProbability(),
-		mDefaultCornerGoalProbability, aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
-	return discrete_distribution{ modifiedProbability,
-		mGoalDrawConfiguration.GetExtraCornerProbability(),
-		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2,
-		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2
-	};
+	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultCornerGoalProbability,
+		aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
 CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateFarShotOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	const auto modifiedProbability = ModifiedProbability( 1 - mGoalDrawConfiguration.GetExtraCornerProbability(),
-		mDefaultFarShotGoalProbability, aEffectiveGKSkill, aEffectiveFWSkill );
-	return discrete_distribution{ modifiedProbability,
-		mGoalDrawConfiguration.GetExtraCornerProbability(),
-		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2,
-		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2
-	};
+	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultFarShotGoalProbability,
+		aEffectiveGKSkill, aEffectiveFWSkill );
 }
 
 CDrawConfiguration::discrete_distribution CDrawConfiguration::Create1vs1GKOutcomeDistribution(
@@ -383,13 +356,8 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateNearShotOutc
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	const auto modifiedProbability = ModifiedProbability( 1 - mGoalDrawConfiguration.GetExtraCornerProbability(),
-		mDefaultNearShotGoalProbability, aEffectiveGKSkill, aEffectiveFWSkill );
-	return discrete_distribution{ modifiedProbability,
-		mGoalDrawConfiguration.GetExtraCornerProbability(),
-		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2,
-		( 1 - modifiedProbability - mGoalDrawConfiguration.GetExtraCornerProbability() ) / 2
-	};
+	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultNearShotGoalProbability,
+		aEffectiveGKSkill, aEffectiveFWSkill );
 }
 
 namespace
