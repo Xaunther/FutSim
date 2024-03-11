@@ -152,4 +152,19 @@ CGoalDrawConfiguration::discrete_distribution CGoalDrawConfiguration::Create1vs1
 	} };
 }
 
+CGoalDrawConfiguration::discrete_distribution CGoalDrawConfiguration::CreateChanceOutcomeDistribution(
+	const probability& aDefaultGoalProbability,
+	const effective_skill& aEffectiveDefenceSkill,
+	const effective_skill& aEffectiveAttackSkill ) const noexcept
+{
+	const auto& modifiedGoalProbability = ModifiedProbability( 1 - mExtraCornerProbability, aDefaultGoalProbability,
+		aEffectiveDefenceSkill, aEffectiveAttackSkill );
+	return discrete_distribution{ {
+		modifiedGoalProbability,
+		mExtraCornerProbability,
+		( 1 - modifiedGoalProbability - mExtraCornerProbability ) / 2,
+		( 1 - modifiedGoalProbability - mExtraCornerProbability ) / 2
+	} };
+}
+
 } //futsim::football namespace

@@ -111,6 +111,20 @@ public:
 		const effective_skill& aEffectiveMFSkill,
 		const effective_skill& aEffectiveFWSkill ) const noexcept;
 
+	/**
+	 * @brief Creates a generic chance outcome draw distribution.
+	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
+	 * @param aDefaultGoalProbability Goal probability when defender and attacker skills are equal.
+	 * @param aEffectiveDefenceSkill Effective defence skill.
+	 * @param aEffectiveAttackSkill Effective attacking skill.
+	 * @pre All effective skills must be positive.
+	 * @pre The default goal probability must be smaller than the \copybrief mExtraCornerProbability
+	*/
+	discrete_distribution CreateChanceOutcomeDistribution(
+		const probability& aDefaultGoalProbability,
+		const effective_skill& aEffectiveDefenceSkill,
+		const effective_skill& aEffectiveAttackSkill ) const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Goal draw configuration";
 	//! JSON key for the \copybrief mAverageGoals
