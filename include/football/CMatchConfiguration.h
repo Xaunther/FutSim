@@ -2,6 +2,7 @@
 
 #include "IJsonable.h"
 
+#include "football/CDrawConfiguration.h"
 #include "football/CExtraTime.h"
 #include "football/CMatchConfigurationTypes.h"
 #include "football/CPenaltyShootoutConfiguration.h"
@@ -31,6 +32,7 @@ public:
 	 * @param aTieCondition \ref mTieCondition
 	 * @param aExtraTime \ref mExtraTime
 	 * @param aPenaltyShootoutConfiguration \ref mPenaltyShootoutConfiguration
+	 * @param aDrawConfiguration \ref mDrawConfiguration
 	*/
 	explicit CMatchConfiguration(
 		const CPlayTime& aPlayTime = CPlayTime{},
@@ -38,7 +40,8 @@ public:
 		const bool aApplyAmbientFactor = true,
 		const optional_tie_condition& aTieCondition = {},
 		const optional_extra_time& aExtraTime = {},
-		const optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration = {} );
+		const optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration = {},
+		const CDrawConfiguration& aDrawConfiguration = CDrawConfiguration{} );
 
 	/**
 	 * @brief JSON constructor.
@@ -71,6 +74,9 @@ public:
 	//! Retrieves the \copybrief mPenaltyShootoutConfiguration
 	const optional_penalty_shootout_configuration& GetPenaltyShootoutConfiguration() const noexcept;
 
+	//! Retrieves the \copybrief mDrawConfiguration
+	const CDrawConfiguration& GetDrawConfiguration() const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Match configuration";
 	//! JSON key for the \copybrief mBenchedPlayersCount
@@ -91,6 +97,9 @@ private:
 	optional_extra_time mExtraTime;
 	//! Penalty shootout configuration.
 	optional_penalty_shootout_configuration mPenaltyShootoutConfiguration;
+
+	//! Draw configuration
+	CDrawConfiguration mDrawConfiguration;
 };
 
 } // futsim namespace

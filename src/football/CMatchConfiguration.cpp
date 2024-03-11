@@ -26,14 +26,16 @@ CMatchConfiguration::CMatchConfiguration(
 	const bool aApplyAmbientFactor,
 	const optional_tie_condition& aTieCondition,
 	const optional_extra_time& aExtraTime,
-	const optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration
+	const optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration,
+	const CDrawConfiguration& aDrawConfiguration
 ) try :
 	mPlayTime( aPlayTime ),
 	mBenchedPlayersCount( aBenchedPlayersCount ),
 	mApplyAmbientFactor( aApplyAmbientFactor ),
 	mTieCondition( CheckTieCondition( aTieCondition, aPenaltyShootoutConfiguration ) ),
 	mExtraTime( aExtraTime ),
-	mPenaltyShootoutConfiguration( aPenaltyShootoutConfiguration )
+	mPenaltyShootoutConfiguration( aPenaltyShootoutConfiguration ),
+	mDrawConfiguration( aDrawConfiguration )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the match configuration." )
@@ -44,7 +46,8 @@ CMatchConfiguration::CMatchConfiguration( const json& aJSON ) try :
 	mApplyAmbientFactor( ValueFromRequiredJSONKey<bool>( aJSON, JSON_APPLY_AMBIENT_FACTOR ) ),
 	mTieCondition( ValueFromOptionalJSONKey<optional_tie_condition>( aJSON, CTieCondition::JSON_KEY, {} ) ),
 	mExtraTime( ValueFromOptionalJSONKey<optional_extra_time>( aJSON, CExtraTime::JSON_KEY, {} ) ),
-	mPenaltyShootoutConfiguration( ValueFromOptionalJSONKey<optional_penalty_shootout_configuration>( aJSON, CPenaltyShootoutConfiguration::JSON_KEY, {} ) )
+	mPenaltyShootoutConfiguration( ValueFromOptionalJSONKey<optional_penalty_shootout_configuration>( aJSON, CPenaltyShootoutConfiguration::JSON_KEY, {} ) ),
+	mDrawConfiguration( ValueFromOptionalJSONKey<CDrawConfiguration>( aJSON ) )
 {
 	CheckTieCondition( mTieCondition, mPenaltyShootoutConfiguration );
 }
@@ -62,6 +65,7 @@ void CMatchConfiguration::JSON( json& aJSON ) const noexcept
 		AddToJSONKey( aJSON, *mExtraTime );
 	if( mPenaltyShootoutConfiguration )
 		AddToJSONKey( aJSON, *mPenaltyShootoutConfiguration );
+	AddToJSONKey( aJSON, mDrawConfiguration );
 }
 
 const CPlayTime& CMatchConfiguration::GetPlayTime() const noexcept
@@ -92,6 +96,11 @@ const CMatchConfiguration::optional_extra_time& CMatchConfiguration::GetExtraTim
 const CMatchConfiguration::optional_penalty_shootout_configuration& CMatchConfiguration::GetPenaltyShootoutConfiguration() const noexcept
 {
 	return mPenaltyShootoutConfiguration;
+}
+
+const CDrawConfiguration& CMatchConfiguration::GetDrawConfiguration() const noexcept
+{
+	return mDrawConfiguration;
 }
 
 namespace

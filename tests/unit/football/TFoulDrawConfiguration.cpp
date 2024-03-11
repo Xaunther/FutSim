@@ -65,6 +65,7 @@ std::vector<std::string> TFoulDrawConfiguration::ObtainedResults() const noexcep
 		result.push_back( std::string{ CFoulDrawConfiguration::JSON_AVERAGE_FOULS } + ": " + std::to_string( foulDrawConfiguration.GetAverageFouls() ) );
 		result.push_back( std::string{ CFoulDrawConfiguration::JSON_AVERAGE_YELLOW_CARDS } + ": " + std::to_string( foulDrawConfiguration.GetAverageYellowCards() ) );
 		result.push_back( std::string{ CFoulDrawConfiguration::JSON_AVERAGE_RED_CARDS } + ": " + std::to_string( foulDrawConfiguration.GetAverageRedCards() ) );
+		result.push_back( "Foul probability: " + std::to_string( foulDrawConfiguration.GetFoulProbability() ) );
 		for( const auto& probability : foulDrawConfiguration.CreateFoulDistribution().probabilities() )
 			result.push_back( std::to_string( probability ) );
 		futsim::IJsonableTypes::json outputJSON;
@@ -80,6 +81,7 @@ std::vector<std::string> TFoulDrawConfiguration::ExpectedResults() const noexcep
 		"Average fouls: 21.565789",
 		"Average yellow cards: 3.618421",
 		"Average red cards: 0.081579",
+		"Foul probability: 0.239620",
 		"0.167785",
 		"0.003783",
 		"0.828432",
@@ -93,6 +95,7 @@ std::vector<std::string> TFoulDrawConfiguration::ExpectedResults() const noexcep
 		"Average fouls: 10.000000",
 		"Average yellow cards: 4.000000",
 		"Average red cards: 1.000000",
+		"Foul probability: 0.111111",
 		"0.400000",
 		"0.100000",
 		"0.500000",

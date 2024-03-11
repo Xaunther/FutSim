@@ -2,7 +2,7 @@
 
 #include "IJsonable.h"
 
-#include "CPossessionDrawConfigurationTypes.h"
+#include "football/CDrawConfigurationTypes.h"
 
 namespace futsim::football
 {
@@ -13,7 +13,7 @@ namespace futsim::football
 class CPossessionDrawConfiguration : public IJsonable
 {
 protected:
-	using probability = CPossessionDrawConfigurationTypes::probability;
+	using probability = CDrawConfigurationTypes::probability;
 
 public:
 	/**

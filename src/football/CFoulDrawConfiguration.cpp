@@ -3,9 +3,21 @@
 #include "ExceptionUtils.h"
 #include "JsonUtils.h"
 #include "NumberUtils.h"
+#include "ProbabilityUtils.h"
 
 namespace futsim::football
 {
+
+namespace
+{
+
+/**
+ * @brief Calculates the foul probability per minute.
+ * @param aAverageFouls Average number of fouls per 90 minutes.
+*/
+CDrawConfigurationTypes::probability CalculateFoulProbability( const CDrawConfigurationTypes::stat& aAverageFouls );
+
+} // anonymous namespace
 
 CFoulDrawConfiguration::CFoulDrawConfiguration(
 	const stat& aAverageFouls,
@@ -15,6 +27,7 @@ CFoulDrawConfiguration::CFoulDrawConfiguration(
 	mAverageFouls( CheckNonNegativeness( aAverageFouls, "average number of fouls" ) ),
 	mAverageYellowCards( CheckNonNegativeness( aAverageYellowCards, "average number of yellow cards" ) ),
 	mAverageRedCards( CheckNonNegativeness( aAverageRedCards, "average number of red cards" ) ),
+	mFoulProbability( CalculateFoulProbability( mAverageFouls ) ),
 	mFoulDistributionParameters( { mAverageYellowCards, mAverageRedCards, CheckNonNegativeness(
 		mAverageFouls - mAverageYellowCards - mAverageRedCards, "average number of fouls minus the average number of yellow and red cards" ) } )
 {
@@ -28,6 +41,7 @@ CFoulDrawConfiguration::CFoulDrawConfiguration( const json& aJSON ) try :
 		aJSON, JSON_AVERAGE_YELLOW_CARDS, DEFAULT_AVERAGE_YELLOW_CARDS ), "average number of yellow cards" ) ),
 	mAverageRedCards( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
 		aJSON, JSON_AVERAGE_RED_CARDS, DEFAULT_AVERAGE_RED_CARDS ), "average number of red cards" ) ),
+	mFoulProbability( CalculateFoulProbability( mAverageFouls ) ),
 	mFoulDistributionParameters( { mAverageYellowCards, mAverageRedCards, CheckNonNegativeness(
 		mAverageFouls - mAverageYellowCards - mAverageRedCards, "average number of fouls minus the average number of yellow and red cards" ) } )
 {
@@ -56,9 +70,24 @@ const CFoulDrawConfiguration::stat& CFoulDrawConfiguration::GetAverageRedCards()
 	return mAverageRedCards;
 }
 
-CFoulDrawConfiguration::foul_distribution CFoulDrawConfiguration::CreateFoulDistribution() const noexcept
+const CFoulDrawConfiguration::probability& CFoulDrawConfiguration::GetFoulProbability() const noexcept
 {
-	return foul_distribution{ mFoulDistributionParameters };
+	return mFoulProbability;
 }
+
+CFoulDrawConfiguration::discrete_distribution CFoulDrawConfiguration::CreateFoulDistribution() const noexcept
+{
+	return discrete_distribution{ mFoulDistributionParameters };
+}
+
+namespace
+{
+
+CDrawConfigurationTypes::probability CalculateFoulProbability( const CDrawConfigurationTypes::stat& aAverageFouls )
+{
+	return CheckProbability( aAverageFouls / CFoulDrawConfiguration::MATCH_MINUTES, "foul probability" );
+}
+
+} // anonymous namespace
 
 } // futsim::football namespace
