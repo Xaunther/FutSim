@@ -19,24 +19,24 @@ protected:
 public:
 	/**
 	 * @brief Member constructor.
-	 * @param aGKSkill \ref mGKSkill
-	 * @param aDFSkill \ref mDFSkill
-	 * @param aMFSkill \ref mMFSkill
-	 * @param aFWSkill \ref mFWSkill
-	 * @param aGKExperience \ref mGKExperience
-	 * @param aDFExperience \ref mDFExperience
-	 * @param aMFExperience \ref mMFExperience
-	 * @param aFWExperience \ref mFWExperience
+	 * @param aStSkill \ref mStSkill
+	 * @param aTkSkill \ref mTkSkill
+	 * @param aPsSkill \ref mPsSkill
+	 * @param aShSkill \ref mShSkill
+	 * @param aStExperience \ref mStExperience
+	 * @param aTkExperience \ref mTkExperience
+	 * @param aPsExperience \ref mPsExperience
+	 * @param aShExperience \ref mShExperience
 	*/
 	explicit CPlayerSkills(
-		const skill_type& aGKSkill,
-		const skill_type& aDFSkill,
-		const skill_type& aMFSkill,
-		const skill_type& aFWSkill,
-		const xp_type& aGKExperience,
-		const xp_type& aDFExperience,
-		const xp_type& aMFExperience,
-		const xp_type& aFWExperience );
+		const skill_type& aStSkill,
+		const skill_type& aTkSkill,
+		const skill_type& aPsSkill,
+		const skill_type& aShSkill,
+		const xp_type& aStExperience,
+		const xp_type& aTkExperience,
+		const xp_type& aPsExperience,
+		const xp_type& aShExperience );
 
 	/**
 	 * @brief JSON constructor.
@@ -51,66 +51,66 @@ private:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
-	//! Retrieves the \copybrief mGKSkill
-	const skill_type& GetGKSkill() const noexcept;
+	//! Retrieves the \copybrief mStSkill
+	const skill_type& GetStSkill() const noexcept;
 
-	//! Retrieves the \copybrief mDFSkill
-	const skill_type& GetDFSkill() const noexcept;
+	//! Retrieves the \copybrief mTkSkill
+	const skill_type& GetTkSkill() const noexcept;
 
-	//! Retrieves the \copybrief mMFSkill
-	const skill_type& GetMFSkill() const noexcept;
+	//! Retrieves the \copybrief mPsSkill
+	const skill_type& GetPsSkill() const noexcept;
 
-	//! Retrieves the \copybrief mFWSkill
-	const skill_type& GetFWSkill() const noexcept;
+	//! Retrieves the \copybrief mShSkill
+	const skill_type& GetShSkill() const noexcept;
 
-	//!Retrieves the \copybrief mGKExperience
-	const skill_type& GetGKExperience() const noexcept;
+	//!Retrieves the \copybrief mStExperience
+	const skill_type& GetStExperience() const noexcept;
 
-	//!Retrieves the \copybrief mDFExperience
-	const skill_type& GetDFExperience() const noexcept;
+	//!Retrieves the \copybrief mTkExperience
+	const skill_type& GetTkExperience() const noexcept;
 
-	//!Retrieves the \copybrief mMFExperience
-	const skill_type& GetMFExperience() const noexcept;
+	//!Retrieves the \copybrief mPsExperience
+	const skill_type& GetPsExperience() const noexcept;
 
-	//!Retrieves the \copybrief mFWExperience
-	const skill_type& GetFWExperience() const noexcept;
+	//!Retrieves the \copybrief mShExperience
+	const skill_type& GetShExperience() const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Player skills";
-	//! JSON key for the \copybrief mGKSkill
-	static inline constexpr std::string_view JSON_GK_SKILL = "GK skill";
-	//! JSON key for the \copybrief mDFSkill
-	static inline constexpr std::string_view JSON_DF_SKILL = "DF skill";
-	//! JSON key for the \copybrief mMFSkill
-	static inline constexpr std::string_view JSON_MF_SKILL = "MF skill";
-	//! JSON key for the \copybrief mFWSkill
-	static inline constexpr std::string_view JSON_FW_SKILL = "FW skill";
-	//! JSON key for the \copybrief mGKExperience
-	static inline constexpr std::string_view JSON_GK_XP = "GK experience";
-	//! JSON key for the \copybrief mDFExperience
-	static inline constexpr std::string_view JSON_DF_XP = "DF experience";
-	//! JSON key for the \copybrief mMFExperience
-	static inline constexpr std::string_view JSON_MF_XP = "MF experience";
-	//! JSON key for the \copybrief mFWExperience
-	static inline constexpr std::string_view JSON_FW_XP = "FW experience";
+	//! JSON key for the \copybrief mStSkill
+	static inline constexpr std::string_view JSON_ST_SKILL = "St skill";
+	//! JSON key for the \copybrief mTkSkill
+	static inline constexpr std::string_view JSON_TK_SKILL = "Tk skill";
+	//! JSON key for the \copybrief mPsSkill
+	static inline constexpr std::string_view JSON_PS_SKILL = "Ps skill";
+	//! JSON key for the \copybrief mShSkill
+	static inline constexpr std::string_view JSON_SH_SKILL = "Sh skill";
+	//! JSON key for the \copybrief mStExperience
+	static inline constexpr std::string_view JSON_ST_XP = "St experience";
+	//! JSON key for the \copybrief mTkExperience
+	static inline constexpr std::string_view JSON_TK_XP = "Tk experience";
+	//! JSON key for the \copybrief mPsExperience
+	static inline constexpr std::string_view JSON_PS_XP = "Ps experience";
+	//! JSON key for the \copybrief mShExperience
+	static inline constexpr std::string_view JSON_SH_XP = "Sh experience";
 
 private:
 	//! Goalkeeping skill value.
-	skill_type mGKSkill;
+	skill_type mStSkill;
 	//! Defensive skill value.
-	skill_type mDFSkill;
+	skill_type mTkSkill;
 	//! Midfielding skill value.
-	skill_type mMFSkill;
+	skill_type mPsSkill;
 	//! Attacking skill value.
-	skill_type mFWSkill;
+	skill_type mShSkill;
 	//! Goalkeeping skill experience.
-	xp_type mGKExperience;
+	xp_type mStExperience;
 	//! Defensive skill experience.
-	xp_type mDFExperience;
+	xp_type mTkExperience;
 	//! Midfielding skill experience.
-	xp_type mMFExperience;
+	xp_type mPsExperience;
 	//! Attacking skill experience.
-	xp_type mFWExperience;
+	xp_type mShExperience;
 };
 
 } // futsim::football namespace
