@@ -1,6 +1,7 @@
 #include "football/CTacticConfiguration.h"
 
 #include "ExceptionUtils.h"
+#include "JsonUtils.h"
 
 namespace futsim::football
 {
@@ -18,6 +19,15 @@ CTacticConfiguration::CTacticConfiguration(
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tactic configuration." )
+
+CTacticConfiguration::CTacticConfiguration( const json& aJSON ) try :
+	mTkBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, JSON_TK_BONUS ) ),
+	mPsBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, JSON_PS_BONUS ) ),
+	mFavourableTactics( ValueFromOptionalJSONKey<ids>( aJSON, JSON_FAVOURABLE_TACTICS, {} ) ),
+	mPositionPenalties( ValueFromOptionalJSONKey<skill_bonuses>( aJSON, JSON_POSITION_PENALTIES, DEFAULT_POSITION_PENALTIES ) )
+{
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tactic configuration from JSON." )
 
 const CTacticConfiguration::skill_bonus& CTacticConfiguration::GetTkBonus() const noexcept
 {
