@@ -1,6 +1,7 @@
 #include "football/CTacticsConfiguration.h"
 
 #include "ExceptionUtils.h"
+#include "JsonUtils.h"
 #include "NumberUtils.h"
 
 namespace futsim::football
@@ -16,6 +17,12 @@ namespace
 const CTacticsConfigurationTypes::tactic_configurations& CheckTacticConfigurations(
 	const CTacticsConfigurationTypes::tactic_configurations& aTacticConfigurations );
 
+/**
+ * @brief Creates the tactic configurations from JSON.
+ * @param aJSON JSON object.
+*/
+CTacticsConfigurationTypes::tactic_configurations CreateTacticConfigurationsFromJSON( const IJsonableTypes::json& aJSON );
+
 } // anonymous namespace
 
 CTacticsConfiguration::CTacticsConfiguration(
@@ -27,6 +34,15 @@ CTacticsConfiguration::CTacticsConfiguration(
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tactics configuration." )
+
+CTacticsConfiguration::CTacticsConfiguration( const json& aJSON ) try :
+	mTacticConfigurations( CheckTacticConfigurations( aJSON.find( JSON_TACTIC_CONFIGURATIONS ) != aJSON.cend() ?
+		CreateTacticConfigurationsFromJSON( aJSON.at( JSON_TACTIC_CONFIGURATIONS ) ) : DEFAULT_TACTIC_CONFIGURATIONS ) ),
+	mFavourableTacticSkillBonus( CheckNonNegativeness( ValueFromOptionalJSONKey<skill_bonus>(
+		aJSON, JSON_FAVOURABLE_TACTIC_SKILL_BONUS, DEFAULT_FAVOURABLE_TACTIC_SKILL_BONUS ), "favourable tactic skill bonus" ) )
+{
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tactics configuration from JSON." )
 
 const CTacticsConfiguration::tactic_configurations& CTacticsConfiguration::GetTacticConfigurations() const noexcept
 {
@@ -57,6 +73,16 @@ const CTacticsConfigurationTypes::tactic_configurations& CheckTacticConfiguratio
 	return aTacticConfigurations;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the tactic configurations." )
+
+CTacticsConfigurationTypes::tactic_configurations CreateTacticConfigurationsFromJSON( const IJsonableTypes::json& aJSON ) try
+{
+	CTacticsConfigurationTypes::tactic_configurations result;
+	for( const auto& JSONTacticConfiguration : aJSON.items() )
+		result.emplace( JSONTacticConfiguration.key(), ValueFromJSON<CTacticConfiguration>( JSONTacticConfiguration.value() ) );
+
+	return result;
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tactic configurations from JSON." )
 
 } // anonymous namespace
 

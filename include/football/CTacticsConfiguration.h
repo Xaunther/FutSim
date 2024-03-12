@@ -28,6 +28,12 @@ public:
 		const skill_bonus& aFavourableTacticSkillBonus = DEFAULT_FAVOURABLE_TACTIC_SKILL_BONUS
 	);
 
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CTacticsConfiguration( const json& aJSON );
+
 	//! Retrieves the \copybrief mTacticConfigurations
 	const tactic_configurations& GetTacticConfigurations() const noexcept;
 
@@ -47,6 +53,13 @@ public:
 
 	//! Default \copybrief mFavourableTacticSkillBonus
 	static inline constexpr skill_bonus DEFAULT_FAVOURABLE_TACTIC_SKILL_BONUS = 1.1;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Tactics configuration";
+	//! JSON key for the \copybrief mTacticConfigurations
+	static inline constexpr std::string_view JSON_TACTIC_CONFIGURATIONS = "Tactic configurations";
+	//! JSON key for the \copybrief mFavourableTacticSkillBonus
+	static inline constexpr std::string_view JSON_FAVOURABLE_TACTIC_SKILL_BONUS = "Favourable tactic skill bonus";
 
 private:
 	//! Tactic configurations.
