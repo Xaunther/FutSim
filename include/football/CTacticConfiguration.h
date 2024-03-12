@@ -40,6 +40,13 @@ public:
 	*/
 	explicit CTacticConfiguration( const json& aJSON );
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mTkBonus
 	const skill_bonus& GetTkBonus() const noexcept;
 
