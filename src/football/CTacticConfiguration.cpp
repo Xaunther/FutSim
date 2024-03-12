@@ -10,7 +10,7 @@ CTacticConfiguration::CTacticConfiguration(
 	const skill_bonus& aTkBonus,
 	const skill_bonus& aPsBonus,
 	const ids& aFavourableTactics,
-	const skill_bonuses& aPositionPenalties
+	const position_penalties& aPositionPenalties
 ) try :
 	mTkBonus( aTkBonus ),
 	mPsBonus( aPsBonus ),
@@ -24,7 +24,7 @@ CTacticConfiguration::CTacticConfiguration( const json& aJSON ) try :
 	mTkBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, JSON_TK_BONUS ) ),
 	mPsBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, JSON_PS_BONUS ) ),
 	mFavourableTactics( ValueFromOptionalJSONKey<ids>( aJSON, JSON_FAVOURABLE_TACTICS, {} ) ),
-	mPositionPenalties( ValueFromOptionalJSONKey<skill_bonuses>( aJSON, JSON_POSITION_PENALTIES, DEFAULT_POSITION_PENALTIES ) )
+	mPositionPenalties( ValueFromOptionalJSONKey<position_penalties>( aJSON, JSON_POSITION_PENALTIES, DEFAULT_POSITION_PENALTIES ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tactic configuration from JSON." )
@@ -44,7 +44,7 @@ const CTacticConfiguration::ids& CTacticConfiguration::GetFavourableTactics() co
 	return mFavourableTactics;
 }
 
-const CTacticConfiguration::skill_bonuses& CTacticConfiguration::GetPositionPenalties() const noexcept
+const CTacticConfiguration::position_penalties& CTacticConfiguration::GetPositionPenalties() const noexcept
 {
 	return mPositionPenalties;
 }

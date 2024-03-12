@@ -14,7 +14,7 @@ class CTacticConfiguration : public IJsonable
 {
 protected:
 	using skill_bonus = CTacticConfigurationTypes::skill_bonus;
-	using skill_bonuses = CTacticConfigurationTypes::skill_bonuses;
+	using position_penalties = CTacticConfigurationTypes::position_penalties;
 	using id = CTacticConfigurationTypes::id;
 	using ids = CTacticConfigurationTypes::ids;
 
@@ -30,7 +30,7 @@ public:
 		const skill_bonus& aTkBonus,
 		const skill_bonus& aPsBonus,
 		const ids& aFavourableTactics = {},
-		const skill_bonuses& aPositionPenalties = DEFAULT_POSITION_PENALTIES
+		const position_penalties& aPositionPenalties = DEFAULT_POSITION_PENALTIES
 	);
 
 	/**
@@ -49,7 +49,7 @@ public:
 	const ids& GetFavourableTactics() const noexcept;
 
 	//! Retrieves the \copybrief mPositionPenalties
-	const skill_bonuses& GetPositionPenalties() const noexcept;
+	const position_penalties& GetPositionPenalties() const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Tactic configuration";
@@ -63,7 +63,7 @@ public:
 	static inline constexpr std::string_view JSON_POSITION_PENALTIES = "Position penalties";
 
 	//! Default \copybrief mPositionPenalties
-	static inline constexpr skill_bonuses DEFAULT_POSITION_PENALTIES = { 0, -0.2, -0.4 };
+	static inline constexpr position_penalties DEFAULT_POSITION_PENALTIES = { 0, -0.2, -0.4 };
 
 private:
 	//! Tk bonus.
@@ -73,7 +73,7 @@ private:
 	//! Favourable tactic matchings.
 	ids mFavourableTactics;
 	//! Penalizers to unmatched skill in a position.
-	skill_bonuses mPositionPenalties;
+	position_penalties mPositionPenalties;
 };
 
 } // futsim namespace
