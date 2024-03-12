@@ -21,6 +21,10 @@ void TTeam::TestExceptions() const
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 0, 11000, 2000 }; }, "The support factor must be positive." );
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, -1000, 2000 }; }, "The mean attendance cannot be negative." );
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 0 }; }, "The standard deviation of the attendance must be positive." );
+	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
+		CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ 1, 1, 60, 1, 0, 0, 0, 0 } },
+		CPlayer{ "Sean", "Longstaff", "", 26, futsim::E_NATIONALITY::GBR, CPlayerSkills{ 1, 1, 80, 1, 0, 0, 0, 0 } },
+	}, 1, 11000, 0 }; }, "There are two players with the same known name 'Longstaff'." );
 
 	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
@@ -114,6 +118,54 @@ void TTeam::TestExceptions() const
 				"StdDev attendance": 0
 			}
 		} )" ); }, "The standard deviation of the attendance must be positive." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+			"Team": {
+				"Name": "Luton Town FC",
+				"Abbreviation": "lut",
+				"Manager": "Rob Edwards",
+				"Players": [
+					{
+						"Player": {
+							"Surnames": "Longstaff",
+							"First name": "Matty",
+							"Age": 23,
+							"Nationality": "GBR",
+							"Player skills": {
+								"GK skill": 1,
+								"DF skill": 1,
+								"MF skill": 60,
+								"FW skill": 1,  
+								"GK experience": 0,
+								"MF experience": 0,
+								"DF experience": 0,
+								"FW experience": 0
+							}
+						}
+					},
+					{
+						"Player": {
+							"First name": "Sean",
+							"Surnames": "Longstaff",
+							"Age": 26,
+							"Nationality": "GBR",
+							"Player skills": {
+								"GK skill": 1,
+								"DF skill": 1,
+								"MF skill": 80,
+								"FW skill": 1,
+								"GK experience": 0,
+								"MF experience": 0,
+								"DF experience": 0,
+								"FW experience": 0
+							}
+						}
+					}
+				],
+				"Support factor": 1,
+				"Mean attendance": 11000,
+				"StdDev attendance": 1000
+			}
+		} )" ); }, "There are two players with the same known name 'Longstaff'." );
 }
 
 std::vector<std::string> TTeam::ObtainedResults() const noexcept
