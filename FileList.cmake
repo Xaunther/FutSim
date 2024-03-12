@@ -40,6 +40,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CTieConditionTypes.h
 	include/football/EGoalRule.h
 	include/football/EPenaltySequence.h
+	include/football/EPlayerPosition.h
 )
 
 # Core source files
