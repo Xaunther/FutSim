@@ -15,6 +15,22 @@ void TTacticConfiguration::TestExceptions() const
 {
 	// Test member constructor
 	CheckException( []() { CTacticConfiguration{ 10, 10 }; }, "The Sh bonus for DF cannot be negative." );
+
+	// Test JSON constructor
+	CheckException( []() { futsim::ValueFromJSONKeyString<CTacticConfiguration>( R"( {
+			"Tactic configuration": {}
+		} )" ); }, "key 'Tk bonus' not found" );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CTacticConfiguration>( R"( {
+			"Tactic configuration": {
+				"Tk bonus": 0
+			}
+		} )" ); }, "key 'Ps bonus' not found" );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CTacticConfiguration>( R"( {
+			"Tactic configuration": {
+				"Tk bonus": 10,
+				"Ps bonus": 10
+			}
+		} )" ); }, "The Sh bonus for DF cannot be negative." );
 }
 
 std::vector<std::string> TTacticConfiguration::ObtainedResults() const noexcept
