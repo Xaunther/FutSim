@@ -22,8 +22,8 @@ void TTeam::TestExceptions() const
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, -1000, 2000 }; }, "The mean attendance cannot be negative." );
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 0 }; }, "The standard deviation of the attendance must be positive." );
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
-		CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ 1, 1, 60, 1, 0, 0, 0, 0 } },
-		CPlayer{ "Sean", "Longstaff", "", 26, futsim::E_NATIONALITY::GBR, CPlayerSkills{ 1, 1, 80, 1, 0, 0, 0, 0 } },
+		CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 60, 1 }, { 0, 0, 0, 0 } } },
+		CPlayer{ "Sean", "Longstaff", "", 26, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 80, 1 }, { 0, 0, 0, 0 } } },
 	}, 1, 11000, 0 }; }, "There are two players with the same known name 'Longstaff'." );
 
 	// Test JSON constructor
@@ -174,8 +174,8 @@ std::vector<std::string> TTeam::ObtainedResults() const noexcept
 	for( const auto& team : {
 		CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 2000 },
 		CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
-			CPlayer{ "Lionel", "Messi", {}, 35, futsim::E_NATIONALITY::ARG, CPlayerSkills{ 1, 1, 1, 99, 0, 0, 0, 0 } },
-			CPlayer{ "Ansu", "Fati", "Ansu Fati", 20, futsim::E_NATIONALITY::ESP, CPlayerSkills{ 1, 1, 1, 80, 0, 0, 0, 0 } } },
+			CPlayer{ "Lionel", "Messi", {}, 35, futsim::E_NATIONALITY::ARG, CPlayerSkills{ { 1, 1, 1, 99 }, { 0, 0, 0, 0 } } },
+			CPlayer{ "Ansu", "Fati", "Ansu Fati", 20, futsim::E_NATIONALITY::ESP, CPlayerSkills{ { 1, 1, 1, 80 }, { 0, 0, 0, 0 } } } },
 			1, 11000, 2000 },
 		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {

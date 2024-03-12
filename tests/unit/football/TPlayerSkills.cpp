@@ -14,10 +14,10 @@ INITIALIZE_TEST( TPlayerSkills )
 void TPlayerSkills::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CPlayerSkills{ 0, 1, 1, 1, 1, 1, 1, 1 }; }, "The GK skill value must be greater than 0." );
-	CheckException( []() { CPlayerSkills{ 1, 0, 1, 1, 1, 1, 1, 1 }; }, "The DF skill value must be greater than 0." );
-	CheckException( []() { CPlayerSkills{ 1, 1, 0, 1, 1, 1, 1, 1 }; }, "The MF skill value must be greater than 0." );
-	CheckException( []() { CPlayerSkills{ 1, 1, 1, 0, 1, 1, 1, 1 }; }, "The FW skill value must be greater than 0." );
+	CheckException( []() { CPlayerSkills{ { 0, 1, 1, 1 }, { 1, 1, 1, 1 } }; }, "The GK skill value must be greater than 0." );
+	CheckException( []() { CPlayerSkills{ { 1, 0, 1, 1 }, { 1, 1, 1, 1 } }; }, "The DF skill value must be greater than 0." );
+	CheckException( []() { CPlayerSkills{ { 1, 1, 0, 1 }, { 1, 1, 1, 1 } }; }, "The MF skill value must be greater than 0." );
+	CheckException( []() { CPlayerSkills{ { 1, 1, 1, 0 }, { 1, 1, 1, 1 } }; }, "The FW skill value must be greater than 0." );
 
 	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
@@ -112,8 +112,8 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 	std::vector<std::string> result;
 
 	for( const auto& playerSkills : {
-		CPlayerSkills{ 1, 1, 1, 1, 0, 0, 0, 0 },
-		CPlayerSkills{ 99, 10, 50, 10, 60, 20, 45, 0 },
+		CPlayerSkills{ { 1, 1, 1, 1 }, { 0, 0, 0, 0 } },
+		CPlayerSkills{ { 99, 10, 50, 10 }, { 60, 20, 45, 0 } },
 		futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"GK skill": 1,
@@ -139,14 +139,14 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CPlayerSkills::JSON_ST_SKILL } + ": " + std::to_string( playerSkills.GetStSkill() ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_TK_SKILL } + ": " + std::to_string( playerSkills.GetTkSkill() ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_PS_SKILL } + ": " + std::to_string( playerSkills.GetPsSkill() ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_SH_SKILL } + ": " + std::to_string( playerSkills.GetShSkill() ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_ST_XP } + ": " + std::to_string( playerSkills.GetStExperience() ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_TK_XP } + ": " + std::to_string( playerSkills.GetTkExperience() ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_PS_XP } + ": " + std::to_string( playerSkills.GetPsExperience() ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_SH_XP } + ": " + std::to_string( playerSkills.GetShExperience() ) );
+		result.push_back( std::string{ CPlayerSkills::JSON_ST_SKILL } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::St ) ) );
+		result.push_back( std::string{ CPlayerSkills::JSON_TK_SKILL } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Tk ) ) );
+		result.push_back( std::string{ CPlayerSkills::JSON_PS_SKILL } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Ps ) ) );
+		result.push_back( std::string{ CPlayerSkills::JSON_SH_SKILL } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Sh ) ) );
+		result.push_back( std::string{ CPlayerSkills::JSON_ST_XP } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::St ) ) );
+		result.push_back( std::string{ CPlayerSkills::JSON_TK_XP } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Tk ) ) );
+		result.push_back( std::string{ CPlayerSkills::JSON_PS_XP } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Ps ) ) );
+		result.push_back( std::string{ CPlayerSkills::JSON_SH_XP } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Sh ) ) );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, playerSkills );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
