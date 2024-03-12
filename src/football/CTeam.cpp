@@ -6,6 +6,7 @@
 #include "NumberUtils.h"
 
 #include <regex>
+#include <set>
 
 namespace futsim::football
 {
@@ -38,6 +39,12 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the "
 */
 CTeamTypes::players CreatePlayersFromJSON( const IJsonableTypes::json& aJSON );
 
+/**
+ * @brief Check the players.
+ * @param aPlayers Players.
+*/
+CTeamTypes::players CheckPlayers( const CTeamTypes::players& aPlayers );
+
 } // anonymous namespace
 
 CTeam::CTeam(
@@ -52,7 +59,7 @@ CTeam::CTeam(
 	mName( CheckName( aName, "name" ) ),
 	mAbbreviation( CheckAbbreviation( aAbbreviation ) ),
 	mManager( CheckName( aManager, "manager name" ) ),
-	mPlayers( aPlayers ),
+	mPlayers( CheckPlayers( aPlayers ) ),
 	mSupportFactor( CheckPositiveness( aSupportFactor, "support factor" ) ),
 	mAttendanceDistributionParameters( CheckNonNegativeness( aMeanAttendance, "mean attendance" ),
 		CheckPositiveness( aStdDevAttendance, "standard deviation of the attendance" ) )
@@ -64,7 +71,7 @@ CTeam::CTeam( const json& aJSON ) try :
 	mName( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, JSON_NAME ), "name" ) ),
 	mAbbreviation( CheckAbbreviation( ValueFromRequiredJSONKey<name_type>( aJSON, JSON_ABBREVIATION ) ) ),
 	mManager( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, JSON_MANAGER ), "manager name" ) ),
-	mPlayers( CreatePlayersFromJSON( aJSON ) ),
+	mPlayers( CheckPlayers( CreatePlayersFromJSON( aJSON ) ) ),
 	mSupportFactor( CheckPositiveness( ValueFromRequiredJSONKey<support_factor>( aJSON, JSON_SUPPORT_FACTOR ), "support factor" ) ),
 	mAttendanceDistributionParameters( CheckNonNegativeness( ValueFromRequiredJSONKey<double>( aJSON, JSON_MEAN_ATTENDANCE ), "mean attendance" ),
 		CheckPositiveness( ValueFromRequiredJSONKey<double>( aJSON, JSON_STD_DEV_ATTENDANCE ), "standard deviation of the attendance" ) )
@@ -141,6 +148,16 @@ CTeamTypes::players CreatePlayersFromJSON( const IJsonableTypes::json& aJSON ) t
 	return result;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the players from JSON." )
+
+CTeamTypes::players CheckPlayers( const CTeamTypes::players& aPlayers ) try
+{
+	for( auto playerIt = aPlayers.cbegin(); playerIt != aPlayers.cend(); ++playerIt )
+		if( std::any_of( aPlayers.cbegin(), playerIt, [ &playerIt ]( const auto& aPlayer )
+			{ return aPlayer.GetKnownName() == ( *playerIt ).GetKnownName(); } ) )
+			throw std::invalid_argument{ "There are two players with the same known name '" + std::string{ ( *playerIt ).GetKnownName() } + "'." };
+	return aPlayers;
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the players." )
 
 } // anonymous namespace
 
