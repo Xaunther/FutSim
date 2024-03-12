@@ -13,6 +13,8 @@ INITIALIZE_TEST( TTacticConfiguration )
 
 void TTacticConfiguration::TestExceptions() const
 {
+	// Test member constructor
+	CheckException( []() { CTacticConfiguration{ 10, 10 }; }, "The Sh bonus for DF cannot be negative." );
 }
 
 std::vector<std::string> TTacticConfiguration::ObtainedResults() const noexcept
