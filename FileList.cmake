@@ -37,6 +37,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CTacticConfiguration.h
 	include/football/CTacticConfigurationTypes.h
 	include/football/CTacticsConfiguration.h
+	include/football/CTacticsConfigurationTypes.h
 	include/football/CTeam.h
 	include/football/CTeamTypes.h
 	include/football/CTieCondition.h
