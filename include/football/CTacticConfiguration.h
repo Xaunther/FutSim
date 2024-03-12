@@ -17,6 +17,7 @@ protected:
 	using position_penalties = CTacticConfigurationTypes::position_penalties;
 	using id = CTacticConfigurationTypes::id;
 	using ids = CTacticConfigurationTypes::ids;
+	using bonuses_table = CTacticConfigurationTypes::bonuses_table;
 
 public:
 	/**
@@ -51,6 +52,21 @@ public:
 	//! Retrieves the \copybrief mPositionPenalties
 	const position_penalties& GetPositionPenalties() const noexcept;
 
+	/**
+	 * @brief Retrieves the skill bonus for a skill in a position.
+	 * @param aPlayerPosition Player position.
+	 * @param aPlayerSkill Player skill.
+	*/
+	const skill_bonus& GetSkillBonus( const E_PLAYER_POSITION& aPlayerPosition, const E_PLAYER_SKILL& aPlayerSkill ) const noexcept;
+
+private:
+	//! \copydoc GetSkillBonus
+	skill_bonus& SkillBonus( const E_PLAYER_POSITION& aPlayerPosition, const E_PLAYER_SKILL& aPlayerSkill ) noexcept;
+
+	//! Calculates the bonuses table.
+	void CalculateBonusesTable();
+
+public:
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Tactic configuration";
 	//! JSON key for the \copybrief mTkBonus
@@ -74,6 +90,9 @@ private:
 	ids mFavourableTactics;
 	//! Penalizers to unmatched skill in a position.
 	position_penalties mPositionPenalties;
+
+	//! Table containing the bonuses for each position and skill.
+	bonuses_table mBonusesTable{};
 };
 
 } // futsim namespace
