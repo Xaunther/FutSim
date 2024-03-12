@@ -19,6 +19,20 @@ protected:
 	using ids = CTacticConfigurationTypes::ids;
 
 public:
+	/**
+	 * @brief Member constructor.
+	 * @param aPositionPenalties \ref mPositionPenalties
+	 * @param aFavourableTactics \ref mFavourableTactics
+	 * @param aTkBonus \ref mTkBonus
+	 * @param aPsBonus \ref mPsBonus
+	*/
+	explicit CTacticConfiguration(
+		const skill_bonus& aTkBonus,
+		const skill_bonus& aPsBonus,
+		const ids& aFavourableTactics = {},
+		const skill_bonuses& aPositionPenalties = DEFAULT_POSITION_PENALTIES
+	);
+
 	//! Retrieves the \copybrief mTkBonus
 	const skill_bonus& GetTkBonus() const noexcept;
 
@@ -30,6 +44,9 @@ public:
 
 	//! Retrieves the \copybrief mPositionPenalties
 	const skill_bonuses& GetPositionPenalties() const noexcept;
+
+	//! Default \copybrief mPositionPenalties
+	static inline constexpr skill_bonuses DEFAULT_POSITION_PENALTIES = { 0, -0.2, -0.4 };
 
 private:
 	//! Tk bonus.
