@@ -45,6 +45,19 @@ CLineupConfiguration::CLineupConfiguration( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the lineup configuration from JSON." )
 
+void CLineupConfiguration::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mDFRange.first, JSON_MIN_DFS );
+	if( mDFRange.second )
+		AddToJSONKey( aJSON, *mDFRange.second, JSON_MAX_DFS );
+	AddToJSONKey( aJSON, mMFRange.first, JSON_MIN_MFS );
+	if( mMFRange.second )
+		AddToJSONKey( aJSON, *mMFRange.second, JSON_MAX_MFS );
+	AddToJSONKey( aJSON, mFWRange.first, JSON_MIN_FWS );
+	if( mFWRange.second )
+		AddToJSONKey( aJSON, *mFWRange.second, JSON_MAX_FWS );
+}
+
 const CLineupConfiguration::player_count_range& CLineupConfiguration::GetDFRange() const noexcept
 {
 	return mDFRange;
