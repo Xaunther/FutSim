@@ -18,6 +18,12 @@ protected:
 
 public:
 	/**
+	 * @brief Member constructor.
+	 * @param aPlayersLineup \ref mPlayersLineup
+	*/
+	explicit CLineup( const position_names& aPlayersLineup );
+
+	/**
 	 * @brief Retrieves the players at a certain position.
 	 * @param aPlayerPosition Position.
 	*/
@@ -27,6 +33,12 @@ public:
 	const names& GetSubs() const noexcept;
 
 private:
+	/**
+	 * @brief Checks the validity of the players lineup.
+	 * @param aPlayersLineup Players lineup.
+	*/
+	void CheckPlayersLineup() const;
+
 	//! Lined up players by position.
 	position_names mPlayersLineup;
 };
