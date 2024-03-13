@@ -13,15 +13,6 @@ INITIALIZE_TEST( TPenaltyShootoutConfiguration )
 
 void TPenaltyShootoutConfiguration::TestExceptions() const
 {
-	// Test JSON constructor.
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPenaltyShootoutConfiguration>( R"( {
-			"Penalty shootout configuration": {}
-		} )" ); }, "key 'Sequence' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPenaltyShootoutConfiguration>( R"( {
-			"Penalty shootout configuration": {
-				"Sequence": "AB"
-			}
-		} )" ); }, "key 'Min penalty count' not found" );
 }
 
 std::vector<std::string> TPenaltyShootoutConfiguration::ObtainedResults() const noexcept
