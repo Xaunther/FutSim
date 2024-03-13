@@ -22,11 +22,13 @@ const CLineupConfigurationTypes::player_count_range& CheckRange( const CLineupCo
 CLineupConfiguration::CLineupConfiguration(
 	const player_count_range& aDFRange,
 	const player_count_range& aMFRange,
-	const player_count_range& aFWRange
+	const player_count_range& aFWRange,
+	const optional_player_count& aBenchedPlayersCount
 ) try :
 	mDFRange( CheckRange( aDFRange, "DF" ) ),
 	mMFRange( CheckRange( aMFRange, "MF" ) ),
-	mFWRange( CheckRange( aFWRange, "FW" ) )
+	mFWRange( CheckRange( aFWRange, "FW" ) ),
+	mBenchedPlayersCount( aBenchedPlayersCount )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the lineup configuration." )
@@ -40,7 +42,8 @@ CLineupConfiguration::CLineupConfiguration( const json& aJSON ) try :
 		ValueFromOptionalJSONKey<player_count_range::second_type>( aJSON, JSON_MAX_MFS ) }, "MF" ) : DEFAULT_MF_RANGE ),
 	mFWRange( aJSON.contains( JSON_MIN_FWS ) || aJSON.contains( JSON_MAX_FWS ) ?
 		CheckRange( { ValueFromRequiredJSONKey<player_count_range::first_type>( aJSON, JSON_MIN_FWS ),
-		ValueFromOptionalJSONKey<player_count_range::second_type>( aJSON, JSON_MAX_FWS ) }, "FW" ) : DEFAULT_FW_RANGE )
+		ValueFromOptionalJSONKey<player_count_range::second_type>( aJSON, JSON_MAX_FWS ) }, "FW" ) : DEFAULT_FW_RANGE ),
+	mBenchedPlayersCount( ValueFromOptionalJSONKey<optional_player_count>( aJSON, JSON_BENCHED_PLAYERS ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the lineup configuration from JSON." )
@@ -56,6 +59,8 @@ void CLineupConfiguration::JSON( json& aJSON ) const noexcept
 	AddToJSONKey( aJSON, mFWRange.first, JSON_MIN_FWS );
 	if( mFWRange.second )
 		AddToJSONKey( aJSON, *mFWRange.second, JSON_MAX_FWS );
+	if( mBenchedPlayersCount )
+		AddToJSONKey( aJSON, *mBenchedPlayersCount, JSON_BENCHED_PLAYERS );
 }
 
 const CLineupConfiguration::player_count_range& CLineupConfiguration::GetDFRange() const noexcept
@@ -71,6 +76,11 @@ const CLineupConfiguration::player_count_range& CLineupConfiguration::GetMFRange
 const CLineupConfiguration::player_count_range& CLineupConfiguration::GetFWRange() const noexcept
 {
 	return mFWRange;
+}
+
+const CLineupConfiguration::optional_player_count& CLineupConfiguration::GetBenchedPlayersCount() const noexcept
+{
+	return mBenchedPlayersCount;
 }
 
 namespace
