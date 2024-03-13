@@ -13,6 +13,15 @@ INITIALIZE_TEST( TMatchStrategy )
 
 void TMatchStrategy::TestExceptions() const
 {
+	// Test JSON constructor
+	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchStrategy>( R"( {
+			"Match strategy": {}
+		} )" ); }, "key 'Tactic' not found" );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchStrategy>( R"( {
+			"Match strategy": {
+				"Tactic": "A"
+			}
+		} )" ); }, "key 'Lineup' not found" );
 }
 
 std::vector<std::string> TMatchStrategy::ObtainedResults() const noexcept
