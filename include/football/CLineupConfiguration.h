@@ -28,6 +28,12 @@ public:
 		const player_count_range& aFWRange = DEFAULT_FW_RANGE
 	);
 
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CLineupConfiguration( const json& aJSON );
+
 	//! Retrieves the \copybrief mDFRange
 	const player_count_range& GetDFRange() const noexcept;
 
@@ -36,6 +42,21 @@ public:
 
 	//! Retrieves the \copybrief mFWRange
 	const player_count_range& GetFWRange() const noexcept;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Lineup configuration";
+	//! JSON key for the minimum number of DFs.
+	static inline constexpr std::string_view JSON_MIN_DFS = "Min DFs";
+	//! JSON key for the minimum number of MFs.
+	static inline constexpr std::string_view JSON_MIN_MFS = "Min MFs";
+	//! JSON key for the minimum number of FWs.
+	static inline constexpr std::string_view JSON_MIN_FWS = "Min FWs";
+	//! JSON key for the maximum number of DFs.
+	static inline constexpr std::string_view JSON_MAX_DFS = "Max DFs";
+	//! JSON key for the maximum number of MFs.
+	static inline constexpr std::string_view JSON_MAX_MFS = "Max MFs";
+	//! JSON key for the maximum number of FWs.
+	static inline constexpr std::string_view JSON_MAX_FWS = "Max FWs";
 
 	//! Default \copybrief mDFRange
 	static inline constexpr player_count_range DEFAULT_DF_RANGE = { 3, 6 };
