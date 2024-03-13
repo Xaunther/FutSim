@@ -41,7 +41,7 @@ CMatchConfiguration::CMatchConfiguration(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the match configuration." )
 
 CMatchConfiguration::CMatchConfiguration( const json& aJSON ) try :
-	mPlayTime( ValueFromRequiredJSONKey<CPlayTime>( aJSON ) ),
+	mPlayTime( ValueFromOptionalJSONKey<CPlayTime>( aJSON ) ),
 	mLineupConfiguration( ValueFromOptionalJSONKey<CLineupConfiguration>( aJSON ) ),
 	mApplyAmbientFactor( ValueFromOptionalJSONKey<bool>( aJSON, JSON_APPLY_AMBIENT_FACTOR, DEFAULT_APPLY_AMBIENT_FACTOR ) ),
 	mTieCondition( ValueFromOptionalJSONKey<optional_tie_condition>( aJSON, CTieCondition::JSON_KEY, {} ) ),
