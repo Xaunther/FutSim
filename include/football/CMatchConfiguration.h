@@ -4,6 +4,7 @@
 
 #include "football/CDrawConfiguration.h"
 #include "football/CExtraTime.h"
+#include "football/CLineupConfiguration.h"
 #include "football/CMatchConfigurationTypes.h"
 #include "football/CPenaltyShootoutConfiguration.h"
 #include "football/CPlayTime.h"
@@ -26,6 +27,7 @@ public:
 	/**
 	 * @brief Member constructor.
 	 * @param aPlayTime \ref mPlayTime
+	 * @param aLineupConfiguration \ref mLineupConfiguration
 	 * @param aApplyAmbientFactor \ref mApplyAmbientFactor
 	 * @param aTieCondition \ref mTieCondition
 	 * @param aExtraTime \ref mExtraTime
@@ -34,6 +36,7 @@ public:
 	*/
 	explicit CMatchConfiguration(
 		const CPlayTime& aPlayTime = CPlayTime{},
+		const CLineupConfiguration& aLineupConfiguration = CLineupConfiguration{},
 		const bool aApplyAmbientFactor = DEFAULT_APPLY_AMBIENT_FACTOR,
 		const optional_tie_condition& aTieCondition = {},
 		const optional_extra_time& aExtraTime = {},
@@ -55,6 +58,9 @@ protected:
 public:
 	//! Retrieves the \copybrief mPlayTime
 	const CPlayTime& GetPlayTime() const noexcept;
+
+	//! Retrieves the \copybrief mLineupConfiguration
+	const CLineupConfiguration& GetLineupConfiguration() const noexcept;
 
 	//! Retrieves the \copybrief mApplyAmbientFactor
 	bool AppliesAmbientFactor() const noexcept;
@@ -82,6 +88,8 @@ public:
 private:
 	//! Play time configuration.
 	CPlayTime mPlayTime;
+	//! Lineup configuration.
+	CLineupConfiguration mLineupConfiguration;
 	//! Whether the ambient factor applies to the home team. Useful to play on neutral grounds.
 	bool mApplyAmbientFactor;
 	//! Tie condition.

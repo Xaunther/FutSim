@@ -14,7 +14,7 @@ INITIALIZE_TEST( TMatchConfiguration )
 void TMatchConfiguration::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CMatchConfiguration{ CPlayTime{}, true, CTieCondition{}, {}, {} }; },
+	CheckException( []() { CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTieCondition{}, {}, {} }; },
 		"There cannot be a tie condition without a penalty shootout configuration" );
 
 	// Test JSON constructor
@@ -40,7 +40,7 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 
 	for( const auto& matchConfiguration : {
 		CMatchConfiguration{},
-		CMatchConfiguration{ CPlayTime{}, false, CTieCondition{}, CExtraTime{}, CPenaltyShootoutConfiguration{} },
+		CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, false, CTieCondition{}, CExtraTime{}, CPenaltyShootoutConfiguration{} },
 		futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
 			"Match configuration": {
 				"Play time": {
@@ -75,6 +75,7 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 		} )" ) } )
 	{
 		result.push_back( matchConfiguration.GetPlayTime().JSON_KEY.data() );
+		result.push_back( matchConfiguration.GetLineupConfiguration().JSON_KEY.data() );
 		result.push_back( std::string{ CMatchConfiguration::JSON_APPLY_AMBIENT_FACTOR } + ": " + std::to_string( matchConfiguration.AppliesAmbientFactor() ) );
 		if( matchConfiguration.GetTieCondition() )
 			result.push_back( ( *matchConfiguration.GetTieCondition() ).JSON_KEY.data() );
@@ -94,6 +95,7 @@ std::vector<std::string> TMatchConfiguration::ExpectedResults() const noexcept
 {
 	std::vector<std::string> result{
 		"Play time",
+		"Lineup configuration",
 		"Apply ambient factor: 1",
 		"{\n"
 		"	\"Match configuration\": {\n"
@@ -101,6 +103,15 @@ std::vector<std::string> TMatchConfiguration::ExpectedResults() const noexcept
 		"			\"Period count\": 2,\n"
 		"			\"Period time\": 45,\n"
 		"			\"Available subs\": 5\n"
+		"		},\n"
+		"		\"Lineup configuration\": {\n"
+		"			\"Min DFs\": 3,\n"
+		"			\"Max DFs\": 6,\n"
+		"			\"Min MFs\": 2,\n"
+		"			\"Max MFs\": 6,\n"
+		"			\"Min FWs\": 0,\n"
+		"			\"Max FWs\": 4,\n"
+		"			\"Benched players\": 9\n"
 		"		},\n"
 		"		\"Apply ambient factor\": true,\n"
 		"		\"Draw configuration\": {\n"
@@ -137,6 +148,7 @@ std::vector<std::string> TMatchConfiguration::ExpectedResults() const noexcept
 		"	}\n"
 		"}",
 		"Play time",
+		"Lineup configuration",
 		"Apply ambient factor: 0",
 		"Tie condition",
 		"Extra time",
@@ -147,6 +159,15 @@ std::vector<std::string> TMatchConfiguration::ExpectedResults() const noexcept
 		"			\"Period count\": 2,\n"
 		"			\"Period time\": 45,\n"
 		"			\"Available subs\": 5\n"
+		"		},\n"
+		"		\"Lineup configuration\": {\n"
+		"			\"Min DFs\": 3,\n"
+		"			\"Max DFs\": 6,\n"
+		"			\"Min MFs\": 2,\n"
+		"			\"Max MFs\": 6,\n"
+		"			\"Min FWs\": 0,\n"
+		"			\"Max FWs\": 4,\n"
+		"			\"Benched players\": 9\n"
 		"		},\n"
 		"		\"Apply ambient factor\": false,\n"
 		"		\"Tie condition\": {\n"
