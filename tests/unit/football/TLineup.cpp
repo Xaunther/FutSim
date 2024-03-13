@@ -13,6 +13,8 @@ INITIALIZE_TEST( TLineup )
 
 void TLineup::TestExceptions() const
 {
+	// Test member constructor
+	CheckException( []() { CLineup{ CLineupTypes::position_names{} }; }, "There has to be exactly 1 GK." );
 }
 
 std::vector<std::string> TLineup::ObtainedResults() const noexcept
