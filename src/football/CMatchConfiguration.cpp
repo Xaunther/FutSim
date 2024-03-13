@@ -22,6 +22,7 @@ const CMatchConfigurationTypes::optional_tie_condition& CheckTieCondition(
 
 CMatchConfiguration::CMatchConfiguration(
 	const CPlayTime& aPlayTime,
+	const CLineupConfiguration& aLineupConfiguration,
 	const bool aApplyAmbientFactor,
 	const optional_tie_condition& aTieCondition,
 	const optional_extra_time& aExtraTime,
@@ -29,6 +30,7 @@ CMatchConfiguration::CMatchConfiguration(
 	const CDrawConfiguration& aDrawConfiguration
 ) try :
 	mPlayTime( aPlayTime ),
+	mLineupConfiguration( aLineupConfiguration ),
 	mApplyAmbientFactor( aApplyAmbientFactor ),
 	mTieCondition( CheckTieCondition( aTieCondition, aPenaltyShootoutConfiguration ) ),
 	mExtraTime( aExtraTime ),
@@ -40,6 +42,7 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the m
 
 CMatchConfiguration::CMatchConfiguration( const json& aJSON ) try :
 	mPlayTime( ValueFromRequiredJSONKey<CPlayTime>( aJSON ) ),
+	mLineupConfiguration( ValueFromOptionalJSONKey<CLineupConfiguration>( aJSON ) ),
 	mApplyAmbientFactor( ValueFromOptionalJSONKey<bool>( aJSON, JSON_APPLY_AMBIENT_FACTOR, DEFAULT_APPLY_AMBIENT_FACTOR ) ),
 	mTieCondition( ValueFromOptionalJSONKey<optional_tie_condition>( aJSON, CTieCondition::JSON_KEY, {} ) ),
 	mExtraTime( ValueFromOptionalJSONKey<optional_extra_time>( aJSON, CExtraTime::JSON_KEY, {} ) ),
@@ -53,6 +56,7 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the m
 void CMatchConfiguration::JSON( json& aJSON ) const noexcept
 {
 	AddToJSONKey( aJSON, mPlayTime );
+	AddToJSONKey( aJSON, mLineupConfiguration );
 	AddToJSONKey( aJSON, mApplyAmbientFactor, JSON_APPLY_AMBIENT_FACTOR );
 	if( mTieCondition )
 		AddToJSONKey( aJSON, *mTieCondition );
@@ -66,6 +70,11 @@ void CMatchConfiguration::JSON( json& aJSON ) const noexcept
 const CPlayTime& CMatchConfiguration::GetPlayTime() const noexcept
 {
 	return mPlayTime;
+}
+
+const CLineupConfiguration& CMatchConfiguration::GetLineupConfiguration() const noexcept
+{
+	return mLineupConfiguration;
 }
 
 bool CMatchConfiguration::AppliesAmbientFactor() const noexcept
