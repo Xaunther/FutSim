@@ -63,10 +63,7 @@ public:
 	static inline constexpr std::string_view JSON_SUBS = "Subs";
 
 private:
-	/**
-	 * @brief Checks the validity of the players lineup.
-	 * @param aPlayersLineup Players lineup.
-	*/
+	//! Checks the validity of the players lineup.
 	void CheckPlayersLineup() const;
 
 	//! Lined up players by position.
