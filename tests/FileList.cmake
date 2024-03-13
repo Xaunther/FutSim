@@ -21,6 +21,7 @@ SET(FUTSIM_TESTS_UNIT_FOOTBALL_SOURCE
 	unit/football/TPossessionDrawConfiguration.cpp
 	unit/football/TStadium.cpp
 	unit/football/TTacticConfiguration.cpp
+	unit/football/TTacticsConfiguration.cpp
 	unit/football/TTeam.cpp
 	unit/football/TTieCondition.cpp
 )
