@@ -28,6 +28,23 @@ CLineup::CLineup( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the lineup from JSON." )
 
+void CLineup::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, GetPlayers( E_PLAYER_POSITION::GK ), JSON_GK );
+	if( const auto& players = GetPlayers( E_PLAYER_POSITION::DF ); !players.empty() )
+		AddToJSONKey( aJSON, players, JSON_DFS );
+	if( const auto& players = GetPlayers( E_PLAYER_POSITION::DM ); !players.empty() )
+		AddToJSONKey( aJSON, players, JSON_DMS );
+	if( const auto& players = GetPlayers( E_PLAYER_POSITION::MF ); !players.empty() )
+		AddToJSONKey( aJSON, players, JSON_MFS );
+	if( const auto& players = GetPlayers( E_PLAYER_POSITION::AM ); !players.empty() )
+		AddToJSONKey( aJSON, players, JSON_AMS );
+	if( const auto& players = GetPlayers( E_PLAYER_POSITION::FW ); !players.empty() )
+		AddToJSONKey( aJSON, players, JSON_FWS );
+	if( const auto& players = GetSubs(); !players.empty() )
+		AddToJSONKey( aJSON, players, JSON_SUBS );
+}
+
 const CLineup::names& CLineup::GetPlayers( const E_PLAYER_POSITION& aPlayerPosition ) const noexcept
 {
 	return mPlayersLineup[ static_cast< position_names::size_type >( aPlayerPosition ) ];

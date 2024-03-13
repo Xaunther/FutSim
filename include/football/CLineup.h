@@ -29,6 +29,13 @@ public:
 	*/
 	explicit CLineup( const json& aJSON );
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	/**
 	 * @brief Retrieves the players at a certain position.
 	 * @param aPlayerPosition Position.
