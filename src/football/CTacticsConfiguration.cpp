@@ -63,7 +63,7 @@ const CTacticsConfiguration::skill_bonus& CTacticsConfiguration::GetFavourableTa
 }
 
 CTacticsConfiguration::skill_bonus CTacticsConfiguration::CalculateSkillBonus( const E_PLAYER_POSITION& aPlayerPosition, const E_PLAYER_SKILL& aPlayerSkill,
-	const std::string_view aPlayerTeamTactic, const std::string_view aRivalTeamTactic ) try
+	const std::string_view aPlayerTeamTactic, const std::string_view aRivalTeamTactic ) const try
 {
 	const auto& playerTeamTacticConfiguration = mTacticConfigurations.at( aPlayerTeamTactic.data() );
 	return ( playerTeamTacticConfiguration.GetFavourableTactics().contains( aRivalTeamTactic.data() ) ? mFavourableTacticSkillBonus : 1 )

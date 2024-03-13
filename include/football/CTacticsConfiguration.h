@@ -55,7 +55,7 @@ public:
 	 * @param aRivalTeamTactic Tactic in use by the rival's team.
 	*/
 	skill_bonus CalculateSkillBonus( const E_PLAYER_POSITION& aPlayerPosition, const E_PLAYER_SKILL& aPlayerSkill,
-		const std::string_view aPlayerTeamTactic, const std::string_view aRivalTeamTactic );
+		const std::string_view aPlayerTeamTactic, const std::string_view aRivalTeamTactic ) const;
 
 	//! Default \copybrief mTacticConfigurations
 	static inline tactic_configurations DEFAULT_TACTIC_CONFIGURATIONS = {
