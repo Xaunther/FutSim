@@ -23,90 +23,54 @@ const skill_type& CheckSkill( const skill_type& aSkill, const std::string_view a
 } // anonymous namespace
 
 CPlayerSkills::CPlayerSkills(
-	const skill_type& aGKSkill,
-	const skill_type& aDFSkill,
-	const skill_type& aMFSkill,
-	const skill_type& aFWSkill,
-	const xp_type& aGKExperience,
-	const xp_type& aDFExperience,
-	const xp_type& aMFExperience,
-	const xp_type& aFWExperience
+	const skills& aSkills,
+	const experiences& aExperiences
 ) try :
-	mGKSkill( CheckSkill( aGKSkill, JSON_GK_SKILL ) ),
-	mDFSkill( CheckSkill( aDFSkill, JSON_DF_SKILL ) ),
-	mMFSkill( CheckSkill( aMFSkill, JSON_MF_SKILL ) ),
-	mFWSkill( CheckSkill( aFWSkill, JSON_FW_SKILL ) ),
-	mGKExperience( aGKExperience ),
-	mDFExperience( aDFExperience ),
-	mMFExperience( aMFExperience ),
-	mFWExperience( aFWExperience )
+	mSkills( aSkills ),
+	mExperiences( aExperiences )
 {
+	CheckSkill( GetSkill( E_PLAYER_SKILL::St ), JSON_ST_SKILL );
+	CheckSkill( GetSkill( E_PLAYER_SKILL::Tk ), JSON_TK_SKILL );
+	CheckSkill( GetSkill( E_PLAYER_SKILL::Ps ), JSON_PS_SKILL );
+	CheckSkill( GetSkill( E_PLAYER_SKILL::Sh ), JSON_SH_SKILL );
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player skills." )
 
 CPlayerSkills::CPlayerSkills( const json& aJSON ) try :
-	mGKSkill( CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_GK_SKILL ), JSON_GK_SKILL ) ),
-	mDFSkill( CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_DF_SKILL ), JSON_DF_SKILL ) ),
-	mMFSkill( CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_MF_SKILL ), JSON_MF_SKILL ) ),
-	mFWSkill( CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_FW_SKILL ), JSON_FW_SKILL ) ),
-	mGKExperience( ValueFromRequiredJSONKey<xp_type>( aJSON, JSON_GK_XP ) ),
-	mDFExperience( ValueFromRequiredJSONKey<xp_type>( aJSON, JSON_DF_XP ) ),
-	mMFExperience( ValueFromRequiredJSONKey<xp_type>( aJSON, JSON_MF_XP ) ),
-	mFWExperience( ValueFromRequiredJSONKey<xp_type>( aJSON, JSON_FW_XP ) )
+	mSkills( { CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_ST_SKILL ), JSON_ST_SKILL ),
+		CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_TK_SKILL ), JSON_TK_SKILL ),
+		CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_PS_SKILL ), JSON_PS_SKILL ),
+		CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, JSON_SH_SKILL ), JSON_SH_SKILL )
+		} ),
+	mExperiences( { ValueFromRequiredJSONKey<xp_type>( aJSON, JSON_ST_XP ),
+		ValueFromRequiredJSONKey<xp_type>( aJSON, JSON_TK_XP ),
+		ValueFromRequiredJSONKey<xp_type>( aJSON, JSON_PS_XP ),
+		ValueFromRequiredJSONKey<xp_type>( aJSON, JSON_SH_XP )
+		} )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player skills from JSON." )
 
 void CPlayerSkills::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mGKSkill, JSON_GK_SKILL );
-	AddToJSONKey( aJSON, mDFSkill, JSON_DF_SKILL );
-	AddToJSONKey( aJSON, mMFSkill, JSON_MF_SKILL );
-	AddToJSONKey( aJSON, mFWSkill, JSON_FW_SKILL );
-	AddToJSONKey( aJSON, mGKExperience, JSON_GK_XP );
-	AddToJSONKey( aJSON, mDFExperience, JSON_DF_XP );
-	AddToJSONKey( aJSON, mMFExperience, JSON_MF_XP );
-	AddToJSONKey( aJSON, mFWExperience, JSON_FW_XP );
+	AddToJSONKey( aJSON, GetSkill( E_PLAYER_SKILL::St ), JSON_ST_SKILL );
+	AddToJSONKey( aJSON, GetSkill( E_PLAYER_SKILL::Tk ), JSON_TK_SKILL );
+	AddToJSONKey( aJSON, GetSkill( E_PLAYER_SKILL::Ps ), JSON_PS_SKILL );
+	AddToJSONKey( aJSON, GetSkill( E_PLAYER_SKILL::Sh ), JSON_SH_SKILL );
+	AddToJSONKey( aJSON, GetExperience( E_PLAYER_SKILL::St ), JSON_ST_XP );
+	AddToJSONKey( aJSON, GetExperience( E_PLAYER_SKILL::Tk ), JSON_TK_XP );
+	AddToJSONKey( aJSON, GetExperience( E_PLAYER_SKILL::Ps ), JSON_PS_XP );
+	AddToJSONKey( aJSON, GetExperience( E_PLAYER_SKILL::Sh ), JSON_SH_XP );
 }
 
-const skill_type& CPlayerSkills::GetGKSkill() const noexcept
+const skill_type& CPlayerSkills::GetSkill( const E_PLAYER_SKILL& aPlayerSkill ) const noexcept
 {
-	return mGKSkill;
+	return mSkills[ static_cast< std::size_t >( aPlayerSkill ) ];
 }
 
-const skill_type& CPlayerSkills::GetDFSkill() const noexcept
+const xp_type& CPlayerSkills::GetExperience( const E_PLAYER_SKILL& aPlayerSkill ) const noexcept
 {
-	return mDFSkill;
-}
-
-const skill_type& CPlayerSkills::GetMFSkill() const noexcept
-{
-	return mMFSkill;
-}
-
-const skill_type& CPlayerSkills::GetFWSkill() const noexcept
-{
-	return mFWSkill;
-}
-
-const skill_type& CPlayerSkills::GetGKExperience() const noexcept
-{
-	return mGKExperience;
-}
-
-const skill_type& CPlayerSkills::GetDFExperience() const noexcept
-{
-	return mDFExperience;
-}
-
-const skill_type& CPlayerSkills::GetMFExperience() const noexcept
-{
-	return mMFExperience;
-}
-
-const skill_type& CPlayerSkills::GetFWExperience() const noexcept
-{
-	return mFWExperience;
+	return mExperiences[ static_cast< std::size_t >( aPlayerSkill ) ];
 }
 
 namespace

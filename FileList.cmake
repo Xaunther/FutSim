@@ -34,12 +34,18 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CPossessionDrawConfiguration.h
 	include/football/CStadium.h
 	include/football/CStadiumTypes.h
+	include/football/CTacticConfiguration.h
+	include/football/CTacticConfigurationTypes.h
+	include/football/CTacticsConfiguration.h
+	include/football/CTacticsConfigurationTypes.h
 	include/football/CTeam.h
 	include/football/CTeamTypes.h
 	include/football/CTieCondition.h
 	include/football/CTieConditionTypes.h
 	include/football/EGoalRule.h
 	include/football/EPenaltySequence.h
+	include/football/EPlayerPosition.h
+	include/football/EPlayerSkill.h
 )
 
 # Core source files
@@ -65,6 +71,8 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CPlayTime.cpp
 	src/football/CPossessionDrawConfiguration.cpp
 	src/football/CStadium.cpp
+	src/football/CTacticConfiguration.cpp
+	src/football/CTacticsConfiguration.cpp
 	src/football/CTeam.cpp
 	src/football/CTieCondition.cpp
 )

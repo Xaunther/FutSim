@@ -22,8 +22,8 @@ void TTeam::TestExceptions() const
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, -1000, 2000 }; }, "The mean attendance cannot be negative." );
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 0 }; }, "The standard deviation of the attendance must be positive." );
 	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
-		CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ 1, 1, 60, 1, 0, 0, 0, 0 } },
-		CPlayer{ "Sean", "Longstaff", "", 26, futsim::E_NATIONALITY::GBR, CPlayerSkills{ 1, 1, 80, 1, 0, 0, 0, 0 } },
+		CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 60, 1 }, { 0, 0, 0, 0 } } },
+		CPlayer{ "Sean", "Longstaff", "", 26, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 80, 1 }, { 0, 0, 0, 0 } } },
 	}, 1, 11000, 0 }; }, "There are two players with the same known name 'Longstaff'." );
 
 	// Test JSON constructor
@@ -131,14 +131,14 @@ void TTeam::TestExceptions() const
 							"Age": 23,
 							"Nationality": "GBR",
 							"Player skills": {
-								"GK skill": 1,
-								"DF skill": 1,
-								"MF skill": 60,
-								"FW skill": 1,  
-								"GK experience": 0,
-								"MF experience": 0,
-								"DF experience": 0,
-								"FW experience": 0
+								"St skill": 1,
+								"Tk skill": 1,
+								"Ps skill": 60,
+								"Sh skill": 1,  
+								"St experience": 0,
+								"Ps experience": 0,
+								"Tk experience": 0,
+								"Sh experience": 0
 							}
 						}
 					},
@@ -149,14 +149,14 @@ void TTeam::TestExceptions() const
 							"Age": 26,
 							"Nationality": "GBR",
 							"Player skills": {
-								"GK skill": 1,
-								"DF skill": 1,
-								"MF skill": 80,
-								"FW skill": 1,
-								"GK experience": 0,
-								"MF experience": 0,
-								"DF experience": 0,
-								"FW experience": 0
+								"St skill": 1,
+								"Tk skill": 1,
+								"Ps skill": 80,
+								"Sh skill": 1,
+								"St experience": 0,
+								"Ps experience": 0,
+								"Tk experience": 0,
+								"Sh experience": 0
 							}
 						}
 					}
@@ -174,8 +174,8 @@ std::vector<std::string> TTeam::ObtainedResults() const noexcept
 	for( const auto& team : {
 		CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 2000 },
 		CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
-			CPlayer{ "Lionel", "Messi", {}, 35, futsim::E_NATIONALITY::ARG, CPlayerSkills{ 1, 1, 1, 99, 0, 0, 0, 0 } },
-			CPlayer{ "Ansu", "Fati", "Ansu Fati", 20, futsim::E_NATIONALITY::ESP, CPlayerSkills{ 1, 1, 1, 80, 0, 0, 0, 0 } } },
+			CPlayer{ "Lionel", "Messi", {}, 35, futsim::E_NATIONALITY::ARG, CPlayerSkills{ { 1, 1, 1, 99 }, { 0, 0, 0, 0 } } },
+			CPlayer{ "Ansu", "Fati", "Ansu Fati", 20, futsim::E_NATIONALITY::ESP, CPlayerSkills{ { 1, 1, 1, 80 }, { 0, 0, 0, 0 } } } },
 			1, 11000, 2000 },
 		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
@@ -200,14 +200,14 @@ std::vector<std::string> TTeam::ObtainedResults() const noexcept
 							"Age": 35,
 							"Nationality": "ARG",
 							"Player skills": {
-								"GK skill": 1,
-								"DF skill": 1,
-								"MF skill": 1,
-								"FW skill": 99,
-								"GK experience": 0,
-								"MF experience": 0,
-								"DF experience": 0,
-								"FW experience": 0
+								"St skill": 1,
+								"Tk skill": 1,
+								"Ps skill": 1,
+								"Sh skill": 99,
+								"St experience": 0,
+								"Ps experience": 0,
+								"Tk experience": 0,
+								"Sh experience": 0
 							}
 						}
 					},
@@ -219,14 +219,14 @@ std::vector<std::string> TTeam::ObtainedResults() const noexcept
 							"Age": 20,
 							"Nationality": "ESP",
 							"Player skills": {
-								"GK skill": 1,
-								"DF skill": 1,
-								"MF skill": 1,
-								"FW skill": 80,
-								"GK experience": 0,
-								"MF experience": 0,
-								"DF experience": 0,
-								"FW experience": 0
+								"St skill": 1,
+								"Tk skill": 1,
+								"Ps skill": 1,
+								"Sh skill": 80,
+								"St experience": 0,
+								"Ps experience": 0,
+								"Tk experience": 0,
+								"Sh experience": 0
 							}
 						}
 					}
@@ -293,14 +293,14 @@ std::vector<std::string> TTeam::ExpectedResults() const noexcept
 		"					\"Age\": 35,\n"
 		"					\"Nationality\": \"ARG\",\n"
 		"					\"Player skills\": {\n"
-		"						\"GK skill\": 1,\n"
-		"						\"DF skill\": 1,\n"
-		"						\"MF skill\": 1,\n"
-		"						\"FW skill\": 99,\n"
-		"						\"GK experience\": 0,\n"
-		"						\"DF experience\": 0,\n"
-		"						\"MF experience\": 0,\n"
-		"						\"FW experience\": 0\n"
+		"						\"St skill\": 1,\n"
+		"						\"Tk skill\": 1,\n"
+		"						\"Ps skill\": 1,\n"
+		"						\"Sh skill\": 99,\n"
+		"						\"St experience\": 0,\n"
+		"						\"Tk experience\": 0,\n"
+		"						\"Ps experience\": 0,\n"
+		"						\"Sh experience\": 0\n"
 		"					}\n"
 		"				}\n"
 		"			},\n"
@@ -312,14 +312,14 @@ std::vector<std::string> TTeam::ExpectedResults() const noexcept
 		"					\"Age\": 20,\n"
 		"					\"Nationality\": \"ESP\",\n"
 		"					\"Player skills\": {\n"
-		"						\"GK skill\": 1,\n"
-		"						\"DF skill\": 1,\n"
-		"						\"MF skill\": 1,\n"
-		"						\"FW skill\": 80,\n"
-		"						\"GK experience\": 0,\n"
-		"						\"DF experience\": 0,\n"
-		"						\"MF experience\": 0,\n"
-		"						\"FW experience\": 0\n"
+		"						\"St skill\": 1,\n"
+		"						\"Tk skill\": 1,\n"
+		"						\"Ps skill\": 1,\n"
+		"						\"Sh skill\": 80,\n"
+		"						\"St experience\": 0,\n"
+		"						\"Tk experience\": 0,\n"
+		"						\"Ps experience\": 0,\n"
+		"						\"Sh experience\": 0\n"
 		"					}\n"
 		"				}\n"
 		"			}\n"

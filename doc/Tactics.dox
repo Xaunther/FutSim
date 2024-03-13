@@ -37,7 +37,7 @@ There are a total of 3 team abilities:
 
 The team abilities \f$t_i,i=Tk,Ps,Sh\f$ are therefore constituted by the sum of the abilities of each field player \f$ P_j \f$ (goalkeeper does not factor in) \f$p_{ij},i=1,...,10;j=Tk,Ps,Sh\f$:
 \f[
-	t_i \equiv \sum_{j=1}^{10}p_{ji}(1-b_{k(P_j)i})
+	t_i \equiv \sum_{j=1}^{10}p_{ji}(1+b_{k(P_j)i})
 \f]
 Where \f$k(P_j)\f$ maps each player \f$ P_j \f$ to its position \f$ k,k=DF,DM,MF,AM,FW \f$ and \f$ b_{ij} \f$ is the bonus that is given to the ability \f$ j \f$ when playing in the position \f$ i \f$ for the used tactic.
 Therefore, a positive bonus enhances the ability while a negative bonus reduces it.
