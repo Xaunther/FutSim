@@ -2,6 +2,9 @@
 
 #include "IJsonable.h"
 
+#include "football/CLineup.h"
+#include "football/CTacticConfigurationTypes.h"
+
 namespace futsim::football
 {
 
@@ -10,6 +13,21 @@ namespace futsim::football
 */
 class CMatchStrategy : public IJsonable
 {
+protected:
+	using id = CTacticConfigurationTypes::id;
+
+public:
+	//! Retrieves the \copybrief mTacticID
+	const id& GetTacticID() const noexcept;
+
+	//! Retrieves the \copybrief mLineup
+	const CLineup& GetLineup() const noexcept;
+
+private:
+	//! Used tactic ID.
+	id mTacticID;
+	//! Lineup.
+	CLineup mLineup;
 };
 
 } // futsim::football namespace
