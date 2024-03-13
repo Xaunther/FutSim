@@ -1,7 +1,5 @@
 #pragma once
 
-#include "football/CPlayTimeTypes.h"
-
 namespace futsim::football
 {
 
@@ -12,8 +10,6 @@ class CTieCondition;
 namespace CMatchConfigurationTypes
 {
 
-//! Type for the number of benched players.
-using benched_count = CPlayTimeTypes::subs_count;
 //! Type for the optional tie condition.
 using optional_tie_condition = std::optional<CTieCondition>;
 //! Type for the optional extra time configuration.

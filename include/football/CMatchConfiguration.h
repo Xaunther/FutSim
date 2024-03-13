@@ -18,7 +18,6 @@ namespace futsim::football
 class CMatchConfiguration : public IJsonable
 {
 protected:
-	using benched_count = CMatchConfigurationTypes::benched_count;
 	using optional_tie_condition = CMatchConfigurationTypes::optional_tie_condition;
 	using optional_extra_time = CMatchConfigurationTypes::optional_extra_time;
 	using optional_penalty_shootout_configuration = CMatchConfigurationTypes::optional_penalty_shootout_configuration;
@@ -27,7 +26,6 @@ public:
 	/**
 	 * @brief Member constructor.
 	 * @param aPlayTime \ref mPlayTime
-	 * @param aBenchedPlayersCount \ref mBenchedPlayersCount
 	 * @param aApplyAmbientFactor \ref mApplyAmbientFactor
 	 * @param aTieCondition \ref mTieCondition
 	 * @param aExtraTime \ref mExtraTime
@@ -36,7 +34,6 @@ public:
 	*/
 	explicit CMatchConfiguration(
 		const CPlayTime& aPlayTime = CPlayTime{},
-		const benched_count& aBenchedPlayersCount = DEFAULT_BENCHED_PLAYERS,
 		const bool aApplyAmbientFactor = DEFAULT_APPLY_AMBIENT_FACTOR,
 		const optional_tie_condition& aTieCondition = {},
 		const optional_extra_time& aExtraTime = {},
@@ -59,9 +56,6 @@ public:
 	//! Retrieves the \copybrief mPlayTime
 	const CPlayTime& GetPlayTime() const noexcept;
 
-	//! Retrieves the \copybrief mBenchedPlayersCount
-	const benched_count& GetBenchedPlayersCount() const noexcept;
-
 	//! Retrieves the \copybrief mApplyAmbientFactor
 	bool AppliesAmbientFactor() const noexcept;
 
@@ -79,21 +73,15 @@ public:
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Match configuration";
-	//! JSON key for the \copybrief mBenchedPlayersCount
-	static inline constexpr std::string_view JSON_BENCHED_PLAYERS = "Benched players";
 	//! JSON key for the \copybrief mApplyAmbientFactor
 	static inline constexpr std::string_view JSON_APPLY_AMBIENT_FACTOR = "Apply ambient factor";
 
-	//! Default \copybrief mBenchedPlayersCount
-	static inline constexpr benched_count DEFAULT_BENCHED_PLAYERS = 9;
 	//! Default \copybrief mApplyAmbientFactor
 	static inline constexpr bool DEFAULT_APPLY_AMBIENT_FACTOR = true;
 
 private:
 	//! Play time configuration.
 	CPlayTime mPlayTime;
-	//! Number of players on the bench. Empty for unlimited number.
-	benched_count mBenchedPlayersCount;
 	//! Whether the ambient factor applies to the home team. Useful to play on neutral grounds.
 	bool mApplyAmbientFactor;
 	//! Tie condition.
