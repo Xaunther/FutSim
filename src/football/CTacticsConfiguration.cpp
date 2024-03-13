@@ -44,6 +44,14 @@ CTacticsConfiguration::CTacticsConfiguration( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tactics configuration from JSON." )
 
+void CTacticsConfiguration::JSON( json& aJSON ) const noexcept
+{
+	for( auto& JSONTacticConfigurations = aJSON[ JSON_TACTIC_CONFIGURATIONS ];
+		const auto & tacticConfiguration : mTacticConfigurations )
+		AddToJSONKey( JSONTacticConfigurations, tacticConfiguration.second, tacticConfiguration.first );
+	AddToJSONKey( aJSON, mFavourableTacticSkillBonus, JSON_FAVOURABLE_TACTIC_SKILL_BONUS );
+}
+
 const CTacticsConfiguration::tactic_configurations& CTacticsConfiguration::GetTacticConfigurations() const noexcept
 {
 	return mTacticConfigurations;

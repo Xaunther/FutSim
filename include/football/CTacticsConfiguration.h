@@ -34,6 +34,13 @@ public:
 	*/
 	explicit CTacticsConfiguration( const json& aJSON );
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mTacticConfigurations
 	const tactic_configurations& GetTacticConfigurations() const noexcept;
 
