@@ -27,11 +27,22 @@ public:
 		const CLineup& aLineup
 	);
 
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CMatchStrategy( const json& aJSON );
+
 	//! Retrieves the \copybrief mTacticID
 	const id& GetTacticID() const noexcept;
 
 	//! Retrieves the \copybrief mLineup
 	const CLineup& GetLineup() const noexcept;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Match strategy";
+	//! JSON key for the \copybrief mTacticID
+	static inline constexpr std::string_view JSON_TACTIC = "Tactic";
 
 private:
 	//! Used tactic ID.
