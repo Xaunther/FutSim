@@ -67,9 +67,11 @@ std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 	std::vector<std::string> result;
 	for( const auto& lineupConfiguration : std::initializer_list<CLineupConfiguration>{
 		CLineupConfiguration{},
-		CLineupConfiguration{ { 1, {} }, { 2, 5 }, { 0, 3 } },
+		CLineupConfiguration{ { 1, {} }, { 2, 5 }, { 0, 3 }, {} },
 		futsim::ValueFromJSONKeyString<CLineupConfiguration>( R"( {
-			"Lineup configuration": {}
+			"Lineup configuration": {
+				"Benched players": 9
+			}
 		} )" ),
 		futsim::ValueFromJSONKeyString<CLineupConfiguration>( R"( {
 			"Lineup configuration": {
@@ -90,6 +92,8 @@ std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 		result.push_back( std::string{ CLineupConfiguration::JSON_MIN_FWS } + ": " + std::to_string( lineupConfiguration.GetFWRange().first ) );
 		if( lineupConfiguration.GetFWRange().second )
 			result.push_back( std::string{ CLineupConfiguration::JSON_MAX_FWS } + ": " + std::to_string( *lineupConfiguration.GetFWRange().second ) );
+		if( lineupConfiguration.GetBenchedPlayersCount() )
+			result.push_back( std::string{ CLineupConfiguration::JSON_BENCHED_PLAYERS } + ": " + std::to_string( *lineupConfiguration.GetBenchedPlayersCount() ) );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, lineupConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
@@ -106,6 +110,7 @@ std::vector<std::string> TLineupConfiguration::ExpectedResults() const noexcept
 		"Max MFs: 6",
 		"Min FWs: 0",
 		"Max FWs: 4",
+		"Benched players: 9",
 		"{\n"
 		"	\"Lineup configuration\": {\n"
 		"		\"Min DFs\": 3,\n"
@@ -113,7 +118,8 @@ std::vector<std::string> TLineupConfiguration::ExpectedResults() const noexcept
 		"		\"Min MFs\": 2,\n"
 		"		\"Max MFs\": 6,\n"
 		"		\"Min FWs\": 0,\n"
-		"		\"Max FWs\": 4\n"
+		"		\"Max FWs\": 4,\n"
+		"		\"Benched players\": 9\n"
 		"	}\n"
 		"}",
 		"Min DFs: 1",
