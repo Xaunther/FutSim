@@ -17,6 +17,16 @@ protected:
 	using id = CTacticConfigurationTypes::id;
 
 public:
+	/**
+	 * @brief Member constructor.
+	 * @param aTacticID \ref mTacticID
+	 * @param aLineup \ref mLineup
+	*/
+	explicit CMatchStrategy(
+		const id& aTacticID,
+		const CLineup& aLineup
+	);
+
 	//! Retrieves the \copybrief mTacticID
 	const id& GetTacticID() const noexcept;
 
