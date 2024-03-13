@@ -48,7 +48,6 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 					"Period time": 45,
 					"Available subs": 5
 				},
-				"Benched players": 9,
 				"Apply ambient factor": true
 			}
 		} )" ),
@@ -95,7 +94,6 @@ std::vector<std::string> TMatchConfiguration::ExpectedResults() const noexcept
 {
 	std::vector<std::string> result{
 		"Play time",
-		"Benched players: 9",
 		"Apply ambient factor: 1",
 		"{\n"
 		"	\"Match configuration\": {\n"
@@ -104,7 +102,6 @@ std::vector<std::string> TMatchConfiguration::ExpectedResults() const noexcept
 		"			\"Period time\": 45,\n"
 		"			\"Available subs\": 5\n"
 		"		},\n"
-		"		\"Benched players\": 9,\n"
 		"		\"Apply ambient factor\": true,\n"
 		"		\"Draw configuration\": {\n"
 		"			\"Possession draw configuration\": {\n"
