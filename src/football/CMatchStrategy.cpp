@@ -23,6 +23,12 @@ CMatchStrategy::CMatchStrategy( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the match strategy from JSON." )
 
+void CMatchStrategy::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mTacticID, JSON_TACTIC );
+	AddToJSONKey( aJSON, mLineup );
+}
+
 const CMatchStrategy::id& CMatchStrategy::GetTacticID() const noexcept
 {
 	return mTacticID;
