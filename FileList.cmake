@@ -27,6 +27,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CMatch.h
 	include/football/CMatchConfiguration.h
 	include/football/CMatchConfigurationTypes.h
+	include/football/CMatchStrategy.h
 	include/football/CPenaltyShootoutConfiguration.h
 	include/football/CPenaltyShootoutConfigurationTypes.h
 	include/football/CPlayer.h
@@ -69,6 +70,7 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CLineup.cpp
 	src/football/CMatch.cpp
 	src/football/CMatchConfiguration.cpp
+	src/football/CMatchStrategy.cpp
 	src/football/CPenaltyShootoutConfiguration.cpp
 	src/football/CPlayerSkills.cpp
 	src/football/CPlayer.cpp
