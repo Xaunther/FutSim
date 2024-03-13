@@ -24,6 +24,12 @@ public:
 	explicit CLineup( const position_names& aPlayersLineup );
 
 	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CLineup( const json& aJSON );
+
+	/**
 	 * @brief Retrieves the players at a certain position.
 	 * @param aPlayerPosition Position.
 	*/
@@ -31,6 +37,23 @@ public:
 
 	//! Retrieves the substitute players.
 	const names& GetSubs() const noexcept;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Lineup";
+	//! JSON key for the GK.
+	static inline constexpr std::string_view JSON_GK = "GK";
+	//! JSON key for the DFs.
+	static inline constexpr std::string_view JSON_DFS = "DFs";
+	//! JSON key for the DMs.
+	static inline constexpr std::string_view JSON_DMS = "DMs";
+	//! JSON key for the MFs.
+	static inline constexpr std::string_view JSON_MFS = "MFs";
+	//! JSON key for the AMs.
+	static inline constexpr std::string_view JSON_AMS = "AMs";
+	//! JSON key for the FWs.
+	static inline constexpr std::string_view JSON_FWS = "FWs";
+	//! JSON key for the substitutes.
+	static inline constexpr std::string_view JSON_SUBS = "Subs";
 
 private:
 	/**
