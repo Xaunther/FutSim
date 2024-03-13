@@ -14,7 +14,7 @@ INITIALIZE_TEST( TMatchConfiguration )
 void TMatchConfiguration::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CMatchConfiguration{ CPlayTime{}, {}, true, CTieCondition{}, {}, {} }; },
+	CheckException( []() { CMatchConfiguration{ CPlayTime{}, true, CTieCondition{}, {}, {} }; },
 		"There cannot be a tie condition without a penalty shootout configuration" );
 
 	// Test JSON constructor
@@ -40,7 +40,7 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 
 	for( const auto& matchConfiguration : {
 		CMatchConfiguration{},
-		CMatchConfiguration{ CPlayTime{}, {}, false, CTieCondition{}, CExtraTime{}, CPenaltyShootoutConfiguration{} },
+		CMatchConfiguration{ CPlayTime{}, false, CTieCondition{}, CExtraTime{}, CPenaltyShootoutConfiguration{} },
 		futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
 			"Match configuration": {
 				"Play time": {
@@ -48,7 +48,6 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 					"Period time": 45,
 					"Available subs": 5
 				},
-				"Benched players": 9,
 				"Apply ambient factor": true
 			}
 		} )" ),
@@ -76,8 +75,6 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 		} )" ) } )
 	{
 		result.push_back( matchConfiguration.GetPlayTime().JSON_KEY.data() );
-		if( matchConfiguration.GetBenchedPlayersCount() )
-			result.push_back( std::string{ CMatchConfiguration::JSON_BENCHED_PLAYERS } + ": " + std::to_string( *matchConfiguration.GetBenchedPlayersCount() ) );
 		result.push_back( std::string{ CMatchConfiguration::JSON_APPLY_AMBIENT_FACTOR } + ": " + std::to_string( matchConfiguration.AppliesAmbientFactor() ) );
 		if( matchConfiguration.GetTieCondition() )
 			result.push_back( ( *matchConfiguration.GetTieCondition() ).JSON_KEY.data() );
@@ -97,7 +94,6 @@ std::vector<std::string> TMatchConfiguration::ExpectedResults() const noexcept
 {
 	std::vector<std::string> result{
 		"Play time",
-		"Benched players: 9",
 		"Apply ambient factor: 1",
 		"{\n"
 		"	\"Match configuration\": {\n"
@@ -106,7 +102,6 @@ std::vector<std::string> TMatchConfiguration::ExpectedResults() const noexcept
 		"			\"Period time\": 45,\n"
 		"			\"Available subs\": 5\n"
 		"		},\n"
-		"		\"Benched players\": 9,\n"
 		"		\"Apply ambient factor\": true,\n"
 		"		\"Draw configuration\": {\n"
 		"			\"Possession draw configuration\": {\n"
