@@ -15,6 +15,16 @@ void TLineup::TestExceptions() const
 {
 	// Test member constructor
 	CheckException( []() { CLineup{ CLineupTypes::position_names{} }; }, "There has to be exactly 1 GK." );
+
+	// Test JSON constructor
+	CheckException( []() { futsim::ValueFromJSONKeyString<CLineup>( R"( {
+			"Lineup": {}
+		} )" ); }, "key 'GK' not found" );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CLineup>( R"( {
+			"Lineup": {
+				"GK": []
+			}
+		} )" ); }, "There has to be exactly 1 GK." );
 }
 
 std::vector<std::string> TLineup::ObtainedResults() const noexcept
