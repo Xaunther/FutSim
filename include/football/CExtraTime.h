@@ -18,10 +18,10 @@ public:
 	 * @param aGoalRule \ref mGoalRule
 	*/
 	explicit CExtraTime(
-		const period_count& aPeriodCount = 2,
-		const period_time& aPeriodTime = 15,
-		const subs_count& aAvailableSubs = 1,
-		const E_GOAL_RULE& aGoalRule = E_GOAL_RULE::NO );
+		const period_count& aPeriodCount = DEFAULT_PERIOD_COUNT,
+		const period_time& aPeriodTime = DEFAULT_PERIOD_TIME,
+		const subs_count& aAvailableSubs = DEFAULT_AVAILABLE_SUBS,
+		const E_GOAL_RULE& aGoalRule = DEFAULT_GOAL_RULE );
 
 	/**
 	 * @brief JSON constructor.
@@ -43,6 +43,13 @@ public:
 	static inline constexpr std::string_view JSON_KEY = "Extra time";
 	//! JSON key for the \copybrief mGoalRule
 	static inline constexpr std::string_view JSON_GOAL_RULE = "Goal rule";
+
+	//! Default \copybrief mPeriodTime
+	static inline constexpr period_count DEFAULT_PERIOD_TIME = 15;
+	//! Default \copybrief mAvailableSubs
+	static inline constexpr subs_count DEFAULT_AVAILABLE_SUBS = 1;
+	//! Default \copybrief mGoalRule
+	static inline constexpr E_GOAL_RULE DEFAULT_GOAL_RULE = E_GOAL_RULE::NO;
 
 private:
 	//! Goal rule.

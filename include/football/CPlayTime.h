@@ -21,9 +21,9 @@ public:
 	 * @param aAvailableSubs \ref mAvailableSubs
 	*/
 	explicit CPlayTime(
-		const period_count& aPeriodCount = 2,
-		const period_time& aPeriodTime = 45,
-		const subs_count& aAvailableSubs = 5 );
+		const period_count& aPeriodCount = DEFAULT_PERIOD_COUNT,
+		const period_time& aPeriodTime = DEFAULT_PERIOD_TIME,
+		const subs_count& aAvailableSubs = DEFAULT_AVAILABLE_SUBS );
 
 	/**
 	 * @brief JSON constructor.
@@ -43,6 +43,13 @@ public:
 
 	//! JSON key for the \copybrief mAvailableSubs
 	static inline constexpr std::string_view JSON_AVAILABLE_SUBS = "Available subs";
+
+	//! Default \copybrief mPeriodCount
+	static inline constexpr period_count DEFAULT_PERIOD_COUNT = 2;
+	//! Default \copybrief mPeriodTime
+	static inline constexpr period_count DEFAULT_PERIOD_TIME = 45;
+	//! Default \copybrief mAvailableSubs
+	static inline constexpr subs_count DEFAULT_AVAILABLE_SUBS = 5;
 
 private:
 	//! Number of available subs.
