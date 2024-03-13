@@ -16,8 +16,8 @@ CPenaltyShootoutConfiguration::CPenaltyShootoutConfiguration(
 }
 
 CPenaltyShootoutConfiguration::CPenaltyShootoutConfiguration( const json& aJSON ) try :
-	mPenaltySequence( ValueFromRequiredJSONKey<E_PENALTY_SEQUENCE>( aJSON, JSON_SEQUENCE ) ),
-	mMinPenaltyCount( ValueFromRequiredJSONKey<penalty_count>( aJSON, JSON_MIN_PENALTY_COUNT ) )
+	mPenaltySequence( ValueFromOptionalJSONKey<E_PENALTY_SEQUENCE>( aJSON, JSON_SEQUENCE, DEFAULT_PENALTY_SEQUENCE ) ),
+	mMinPenaltyCount( ValueFromOptionalJSONKey<penalty_count>( aJSON, JSON_MIN_PENALTY_COUNT, DEFAULT_PENALTY_COUNT ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the penalty shootout configuration from JSON." )

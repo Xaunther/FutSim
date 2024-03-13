@@ -24,15 +24,6 @@ void TMatchConfiguration::TestExceptions() const
 					"Period count": 2,
 					"Period time": 45,
 					"Available subs": 5
-				}
-			}
-		} )" ); }, "key 'Apply ambient factor' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
-			"Match configuration": {
-				"Play time": {
-					"Period count": 2,
-					"Period time": 45,
-					"Available subs": 5
 				},
 				"Apply ambient factor": true,
 				"Tie condition": {

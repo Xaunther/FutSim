@@ -23,8 +23,8 @@ public:
 	 * @param aMinPenaltyCount \ref mMinPenaltyCount
 	*/
 	explicit CPenaltyShootoutConfiguration(
-		const E_PENALTY_SEQUENCE& aPenaltySequence = E_PENALTY_SEQUENCE::AB,
-		const penalty_count& aMinPenaltyCount = 5 ) noexcept;
+		const E_PENALTY_SEQUENCE& aPenaltySequence = DEFAULT_PENALTY_SEQUENCE,
+		const penalty_count& aMinPenaltyCount = DEFAULT_PENALTY_COUNT ) noexcept;
 
 	/**
 	 * @brief JSON constructor.
@@ -51,6 +51,12 @@ public:
 	static inline constexpr std::string_view JSON_SEQUENCE = "Sequence";
 	//! JSON key for the \copybrief mMinPenaltyCount
 	static inline constexpr std::string_view JSON_MIN_PENALTY_COUNT = "Min penalty count";
+
+	//! Default \copybrief mPenaltySequence
+	static inline constexpr E_PENALTY_SEQUENCE DEFAULT_PENALTY_SEQUENCE = E_PENALTY_SEQUENCE::AB;
+
+	//! Default \copybrief mMinPenaltyCount
+	static inline constexpr penalty_count DEFAULT_PENALTY_COUNT = 5;
 
 private:
 	//! Penalty sequence.

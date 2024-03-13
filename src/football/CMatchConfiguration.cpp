@@ -42,8 +42,8 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the m
 
 CMatchConfiguration::CMatchConfiguration( const json& aJSON ) try :
 	mPlayTime( ValueFromRequiredJSONKey<CPlayTime>( aJSON ) ),
-	mBenchedPlayersCount( ValueFromOptionalJSONKey<benched_count>( aJSON, JSON_BENCHED_PLAYERS, {} ) ),
-	mApplyAmbientFactor( ValueFromRequiredJSONKey<bool>( aJSON, JSON_APPLY_AMBIENT_FACTOR ) ),
+	mBenchedPlayersCount( ValueFromOptionalJSONKey<benched_count>( aJSON, JSON_BENCHED_PLAYERS ) ),
+	mApplyAmbientFactor( ValueFromOptionalJSONKey<bool>( aJSON, JSON_APPLY_AMBIENT_FACTOR, DEFAULT_APPLY_AMBIENT_FACTOR ) ),
 	mTieCondition( ValueFromOptionalJSONKey<optional_tie_condition>( aJSON, CTieCondition::JSON_KEY, {} ) ),
 	mExtraTime( ValueFromOptionalJSONKey<optional_extra_time>( aJSON, CExtraTime::JSON_KEY, {} ) ),
 	mPenaltyShootoutConfiguration( ValueFromOptionalJSONKey<optional_penalty_shootout_configuration>( aJSON, CPenaltyShootoutConfiguration::JSON_KEY, {} ) ),

@@ -43,7 +43,7 @@ CTieCondition::CTieCondition(
 }
 
 CTieCondition::CTieCondition( const json& aJSON ) try :
-	mHomeTeamLead( ValueFromRequiredJSONKey<goal_difference>( aJSON, JSON_HOME_TEAM_LEAD ) ),
+	mHomeTeamLead( ValueFromOptionalJSONKey<goal_difference>( aJSON, JSON_HOME_TEAM_LEAD ) ),
 	mHomeTeamGoals( CheckHomeTeamGoals( ValueFromOptionalJSONKey<optional_goal_count>( aJSON, JSON_HOME_TEAM_GOALS ), mHomeTeamLead ) )
 {
 }

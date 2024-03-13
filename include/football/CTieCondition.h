@@ -27,7 +27,7 @@ public:
 	 * @param aHomeTeamGoals \ref mHomeTeamGoals
 	*/
 	explicit CTieCondition(
-		const goal_difference aHomeTeamLead = 0,
+		const goal_difference aHomeTeamLead = goal_difference{},
 		const optional_goal_count& aHomeTeamGoals = {} );
 
 	/**
