@@ -20,12 +20,6 @@ void TMatchConfiguration::TestExceptions() const
 	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
 			"Match configuration": {
-				"Play time": {
-					"Period count": 2,
-					"Period time": 45,
-					"Available subs": 5
-				},
-				"Apply ambient factor": true,
 				"Tie condition": {
 					"Home team lead": 1,
 					"Home team goals": 3
@@ -42,14 +36,7 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 		CMatchConfiguration{},
 		CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, false, CTieCondition{}, CExtraTime{}, CPenaltyShootoutConfiguration{} },
 		futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
-			"Match configuration": {
-				"Play time": {
-					"Period count": 2,
-					"Period time": 45,
-					"Available subs": 5
-				},
-				"Apply ambient factor": true
-			}
+			"Match configuration": {}
 		} )" ),
 		futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
 			"Match configuration": {
