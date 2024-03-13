@@ -4,6 +4,8 @@
 
 #include "ENationality.h"
 
+#include "CPersonTypes.h"
+
 namespace futsim
 {
 
@@ -12,6 +14,9 @@ namespace futsim
 */
 class CPerson : public IJsonable
 {
+protected:
+	using name_type = CPersonTypes::name_type;
+
 public:
 	/**
 	 * @brief Member constructor.
@@ -74,11 +79,11 @@ public:
 
 private:
 	//! First name.
-	std::string mFirstName;
+	name_type mFirstName;
 	//! Surnames.
-	std::string mSurnames;
+	name_type mSurnames;
 	//! Name by which the player is known.
-	std::string mKnownName;
+	name_type mKnownName;
 	//! Age.
 	unsigned short mAge;
 	//! Nationality.

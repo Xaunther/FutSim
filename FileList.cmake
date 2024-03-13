@@ -2,6 +2,7 @@
 SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/Config.h
 	include/CPerson.h
+	include/CPersonTypes.h
 	include/CPlayTime.h
 	include/CPlayTimeTypes.h
 	include/ENationality.h
@@ -21,6 +22,8 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CExtraTime.h
 	include/football/CFoulDrawConfiguration.h
 	include/football/CGoalDrawConfiguration.h
+	include/football/CLineup.h
+	include/football/CLineupTypes.h
 	include/football/CMatch.h
 	include/football/CMatchConfiguration.h
 	include/football/CMatchConfigurationTypes.h
@@ -63,6 +66,7 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CExtraTime.cpp
 	src/football/CFoulDrawConfiguration.cpp
 	src/football/CGoalDrawConfiguration.cpp
+	src/football/CLineup.cpp
 	src/football/CMatch.cpp
 	src/football/CMatchConfiguration.cpp
 	src/football/CPenaltyShootoutConfiguration.cpp
