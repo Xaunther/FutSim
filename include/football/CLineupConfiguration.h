@@ -16,6 +16,18 @@ protected:
 	using player_count_range = CLineupConfigurationTypes::player_count_range;
 
 public:
+	/**
+	 * @brief Member constructor.
+	 * @param aDFRange \ref mDFRange
+	 * @param aMFRange \ref mMFRange
+	 * @param aFWRange \ref mFWRange
+	*/
+	explicit CLineupConfiguration(
+		const player_count_range& aDFRange = DEFAULT_DF_RANGE,
+		const player_count_range& aMFRange = DEFAULT_MF_RANGE,
+		const player_count_range& aFWRange = DEFAULT_FW_RANGE
+	);
+
 	//! Retrieves the \copybrief mDFRange
 	const player_count_range& GetDFRange() const noexcept;
 
@@ -24,6 +36,13 @@ public:
 
 	//! Retrieves the \copybrief mFWRange
 	const player_count_range& GetFWRange() const noexcept;
+
+	//! Default \copybrief mDFRange
+	static inline constexpr player_count_range DEFAULT_DF_RANGE = { 3, 6 };
+	//! Default \copybrief mMFRange
+	static inline constexpr player_count_range DEFAULT_MF_RANGE = { 2, 6 };
+	//! Default \copybrief mFWRange
+	static inline constexpr player_count_range DEFAULT_FW_RANGE = { 0, 4 };
 
 private:
 	//! Allowed DFs count range.
