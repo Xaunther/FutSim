@@ -36,8 +36,8 @@ public:
 	*/
 	explicit CMatchConfiguration(
 		const CPlayTime& aPlayTime = CPlayTime{},
-		const benched_count& aBenchedPlayersCount = 9,
-		const bool aApplyAmbientFactor = true,
+		const benched_count& aBenchedPlayersCount = DEFAULT_BENCHED_PLAYERS,
+		const bool aApplyAmbientFactor = DEFAULT_APPLY_AMBIENT_FACTOR,
 		const optional_tie_condition& aTieCondition = {},
 		const optional_extra_time& aExtraTime = {},
 		const optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration = {},
@@ -83,6 +83,11 @@ public:
 	static inline constexpr std::string_view JSON_BENCHED_PLAYERS = "Benched players";
 	//! JSON key for the \copybrief mApplyAmbientFactor
 	static inline constexpr std::string_view JSON_APPLY_AMBIENT_FACTOR = "Apply ambient factor";
+
+	//! Default \copybrief mBenchedPlayersCount
+	static inline constexpr benched_count DEFAULT_BENCHED_PLAYERS = 9;
+	//! Default \copybrief mApplyAmbientFactor
+	static inline constexpr bool DEFAULT_APPLY_AMBIENT_FACTOR = true;
 
 private:
 	//! Play time configuration.
