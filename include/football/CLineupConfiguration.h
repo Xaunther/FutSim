@@ -16,6 +16,7 @@ class CLineupConfiguration : public IJsonable
 {
 protected:
 	using optional_player_count = CLineupConfigurationTypes::optional_player_count;
+	using player_count = CLineupConfigurationTypes::player_count;
 	using player_count_range = CLineupConfigurationTypes::player_count_range;
 
 public:
@@ -24,12 +25,14 @@ public:
 	 * @param aDFRange \ref mDFRange
 	 * @param aMFRange \ref mMFRange
 	 * @param aFWRange \ref mFWRange
+	 * @param aMinPlayerCount \ref mMinPlayerCount
 	 * @param aBenchedPlayersCount \ref mBenchedPlayersCount
 	*/
 	explicit CLineupConfiguration(
 		const player_count_range& aDFRange = DEFAULT_DF_RANGE,
 		const player_count_range& aMFRange = DEFAULT_MF_RANGE,
 		const player_count_range& aFWRange = DEFAULT_FW_RANGE,
+		const player_count& aMinPlayerCount = DEFAULT_MIN_PLAYERS,
 		const optional_player_count& aBenchedPlayersCount = DEFAULT_BENCHED_PLAYERS
 	);
 
@@ -55,6 +58,9 @@ public:
 	//! Retrieves the \copybrief mFWRange
 	const player_count_range& GetFWRange() const noexcept;
 
+	//! Retrieves the \copybrief mMinPlayerCount
+	const player_count& GetMinPlayerCount() const noexcept;
+
 	//! Retrieves the \copybrief mBenchedPlayersCount
 	const optional_player_count& GetBenchedPlayersCount() const noexcept;
 
@@ -78,6 +84,8 @@ public:
 	static inline constexpr std::string_view JSON_MAX_MFS = "Max MFs";
 	//! JSON key for the maximum number of FWs.
 	static inline constexpr std::string_view JSON_MAX_FWS = "Max FWs";
+	//! JSON key for the \copybrief mMinPlayerCount
+	static inline constexpr std::string_view JSON_MIN_PLAYERS = "Min players";
 	//! JSON key for the \copybrief mBenchedPlayersCount
 	static inline constexpr std::string_view JSON_BENCHED_PLAYERS = "Benched players";
 
@@ -87,6 +95,10 @@ public:
 	static inline constexpr player_count_range DEFAULT_MF_RANGE = { 2, 6 };
 	//! Default \copybrief mFWRange
 	static inline constexpr player_count_range DEFAULT_FW_RANGE = { 0, 4 };
+	//! Default \copybrief mMinPlayerCount
+	static inline constexpr player_count DEFAULT_MIN_PLAYERS = 7;
+	//! Maximum number of players
+	static inline constexpr player_count MAX_PLAYERS = 11;
 	//! Default \copybrief mBenchedPlayersCount
 	static inline constexpr optional_player_count DEFAULT_BENCHED_PLAYERS = 9;
 
@@ -97,6 +109,8 @@ private:
 	player_count_range mMFRange;
 	//! Allowed FWs count range.
 	player_count_range mFWRange;
+	//! Minimum number of players.
+	player_count mMinPlayerCount;
 	//! Number of players on the bench. Empty for unlimited number.
 	optional_player_count mBenchedPlayersCount;
 };

@@ -18,15 +18,16 @@ void TLineupConfiguration::TestExceptions() const
 	// Test member constructor
 	CheckException( []() { CLineupConfiguration{ CLineupConfigurationTypes::player_count_range{ 1, 0 } }; },
 		"The maximum number of DFs cannot be smaller than the minimum number." );
-	// Test member constructor
 	CheckException( []() { CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
 		CLineupConfigurationTypes::player_count_range{ 1, 0 } }; },
 		"The maximum number of MFs cannot be smaller than the minimum number." );
-	// Test member constructor
 	CheckException( []() { CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
 		CLineupConfiguration::DEFAULT_MF_RANGE,
 		CLineupConfigurationTypes::player_count_range{ 1, 0 } }; },
 		"The maximum number of FWs cannot be smaller than the minimum number." );
+	CheckException( []() { CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
+		CLineupConfiguration::DEFAULT_MF_RANGE, CLineupConfiguration::DEFAULT_FW_RANGE, 12 }; },
+		"The maximum number of players cannot be smaller than the minimum number." );
 
 	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CLineupConfiguration>( R"( {
@@ -62,6 +63,11 @@ void TLineupConfiguration::TestExceptions() const
 				"Max FWs": 0
 			}
 		} )" ); }, "The maximum number of FWs cannot be smaller than the minimum number." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CLineupConfiguration>( R"( {
+			"Lineup configuration": {
+				"Min players": 12
+			}
+		} )" ); }, "The maximum number of players cannot be smaller than the minimum number." );
 
 	// Test CheckLineup
 	{
@@ -95,6 +101,17 @@ void TLineupConfiguration::TestExceptions() const
 			CLineupTypes::names{ "Elliot", "Darwin Núñez", "Luis Díaz" },
 			CLineupTypes::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas", "Trent", "Konate", "Allison" } } } ); },
 			"The lineup has more subs (12) than the maximum allowed (9)." );
+		CheckException( [ &lineupConfiguration ]() { lineupConfiguration.CheckLineup( CLineup{
+			CLineupTypes::position_names{ CLineupTypes::names{ "Kelleher" },
+			CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk" },
+			CLineupTypes::names{ "Endo" }, CLineupTypes::names{ "Mac Allister" }, CLineupTypes::names{} } } ); },
+			"The lineup has less players (6) than the minimum allowed (7)." );
+		CheckException( [ &lineupConfiguration ]() { lineupConfiguration.CheckLineup( CLineup{
+			CLineupTypes::position_names{ CLineupTypes::names{ "Kelleher" },
+			CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez", "Robertson" },
+			CLineupTypes::names{ "Endo" }, CLineupTypes::names{ "Mac Allister", "Szoboszlai" }, CLineupTypes::names{},
+			CLineupTypes::names{ "Elliot", "Darwin Núñez", "Luis Díaz" } } } ); },
+			"The lineup has more players (12) than the maximum allowed (11)." );
 	}
 }
 
@@ -103,7 +120,7 @@ std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 	std::vector<std::string> result;
 	for( const auto& lineupConfiguration : std::initializer_list<CLineupConfiguration>{
 		CLineupConfiguration{},
-		CLineupConfiguration{ { 1, {} }, { 2, 5 }, { 0, 3 }, {} },
+		CLineupConfiguration{ { 1, {} }, { 2, 5 }, { 0, 3 }, 8, {} },
 		futsim::ValueFromJSONKeyString<CLineupConfiguration>( R"( {
 			"Lineup configuration": {
 				"Benched players": 9
@@ -115,7 +132,8 @@ std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 				"Min MFs": 2,
 				"Max MFs": 5,
 				"Min FWs": 0,
-				"Max FWs": 3
+				"Max FWs": 3,
+				"Min players": 8
 			}
 		} )" ) } )
 	{
@@ -128,6 +146,7 @@ std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 		result.push_back( std::string{ CLineupConfiguration::JSON_MIN_FWS } + ": " + std::to_string( lineupConfiguration.GetFWRange().first ) );
 		if( lineupConfiguration.GetFWRange().second )
 			result.push_back( std::string{ CLineupConfiguration::JSON_MAX_FWS } + ": " + std::to_string( *lineupConfiguration.GetFWRange().second ) );
+		result.push_back( std::string{ CLineupConfiguration::JSON_MIN_PLAYERS } + ": " + std::to_string( lineupConfiguration.GetMinPlayerCount() ) );
 		if( lineupConfiguration.GetBenchedPlayersCount() )
 			result.push_back( std::string{ CLineupConfiguration::JSON_BENCHED_PLAYERS } + ": " + std::to_string( *lineupConfiguration.GetBenchedPlayersCount() ) );
 		futsim::IJsonableTypes::json outputJSON;
@@ -146,6 +165,7 @@ std::vector<std::string> TLineupConfiguration::ExpectedResults() const noexcept
 		"Max MFs: 6",
 		"Min FWs: 0",
 		"Max FWs: 4",
+		"Min players: 7",
 		"Benched players: 9",
 		"{\n"
 		"	\"Lineup configuration\": {\n"
@@ -155,6 +175,7 @@ std::vector<std::string> TLineupConfiguration::ExpectedResults() const noexcept
 		"		\"Max MFs\": 6,\n"
 		"		\"Min FWs\": 0,\n"
 		"		\"Max FWs\": 4,\n"
+		"		\"Min players\": 7,\n"
 		"		\"Benched players\": 9\n"
 		"	}\n"
 		"}",
@@ -163,13 +184,15 @@ std::vector<std::string> TLineupConfiguration::ExpectedResults() const noexcept
 		"Max MFs: 5",
 		"Min FWs: 0",
 		"Max FWs: 3",
+		"Min players: 8",
 		"{\n"
 		"	\"Lineup configuration\": {\n"
 		"		\"Min DFs\": 1,\n"
 		"		\"Min MFs\": 2,\n"
 		"		\"Max MFs\": 5,\n"
 		"		\"Min FWs\": 0,\n"
-		"		\"Max FWs\": 3\n"
+		"		\"Max FWs\": 3,\n"
+		"		\"Min players\": 8\n"
 		"	}\n"
 		"}"
 	};
