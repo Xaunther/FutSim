@@ -7,6 +7,8 @@
 namespace futsim::football
 {
 
+class CLineup;
+
 /**
  * @brief Class that configures the lineup rules.
 */
@@ -55,6 +57,12 @@ public:
 
 	//! Retrieves the \copybrief mBenchedPlayersCount
 	const optional_player_count& GetBenchedPlayersCount() const noexcept;
+
+	/**
+	 * @brief Checks the validity of a lineup according to this configuration.
+	 * @param aLineup Lineup to check.
+	*/
+	const CLineup& CheckLineup( const CLineup& aLineup ) const;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Lineup configuration";

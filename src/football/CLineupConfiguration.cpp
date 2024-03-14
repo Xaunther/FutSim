@@ -1,5 +1,7 @@
 #include "football/CLineupConfiguration.h"
 
+#include "football/CLineup.h"
+
 #include "ExceptionUtils.h"
 #include "JsonUtils.h"
 
@@ -16,6 +18,24 @@ namespace
 */
 const CLineupConfigurationTypes::player_count_range& CheckRange( const CLineupConfigurationTypes::player_count_range& aRange,
 	const std::string_view aRangeDescription );
+
+/**
+ * @brief Checks the validity of the number of players in a position.
+ * @param aPositionCount Number of players in a position.
+ * @param aRange Range.
+ * @param aRangeDescription Range description to add to the error message.
+*/
+void CheckLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
+	const CLineupConfigurationTypes::player_count_range& aRange, const std::string_view aRangeDescription );
+
+/**
+ * @brief Checks that the number of players in a position does not exceed the maximum allowed.
+ * @param aPositionCount Number of players in a position.
+ * @param aMaxCount Maximum allowed.
+ * @param aRangeDescription Range description to add to the error message.
+*/
+void CheckMaxLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
+	const CLineupConfigurationTypes::player_count_range::second_type& aMaxCount, const std::string_view aRangeDescription );
 
 } // anonymous namespace
 
@@ -83,6 +103,18 @@ const CLineupConfiguration::optional_player_count& CLineupConfiguration::GetBenc
 	return mBenchedPlayersCount;
 }
 
+const CLineup& CLineupConfiguration::CheckLineup( const CLineup& aLineup ) const try
+{
+	CheckLineupPosition( aLineup.GetPlayers( E_PLAYER_POSITION::DF ).size(), mDFRange, "DF" );
+	CheckLineupPosition( aLineup.GetPlayers( E_PLAYER_POSITION::DM ).size()
+		+ aLineup.GetPlayers( E_PLAYER_POSITION::MF ).size()
+		+ aLineup.GetPlayers( E_PLAYER_POSITION::AM ).size(), mDFRange, "DM+MF+AM" );
+	CheckLineupPosition( aLineup.GetPlayers( E_PLAYER_POSITION::FW ).size(), mDFRange, "FW" );
+	CheckMaxLineupPosition( aLineup.GetSubs().size(), mBenchedPlayersCount, "subs" );
+	return aLineup;
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the lineup against the configuration." )
+
 namespace
 {
 
@@ -94,6 +126,23 @@ const CLineupConfigurationTypes::player_count_range& CheckRange( const CLineupCo
 	return aRange;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the " << aRangeDescription << " range." )
+
+void CheckLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
+	const CLineupConfigurationTypes::player_count_range& aRange, const std::string_view aRangeDescription )
+{
+	if( aPositionCount < aRange.first )
+		throw std::invalid_argument{ "The lineup has less " + std::string{ aRangeDescription } + " (" + std::to_string( aPositionCount ) + ") "
+			"than the minimum allowed (" + std::to_string( aRange.first ) + ")." };
+	CheckMaxLineupPosition( aPositionCount, aRange.second, aRangeDescription );
+}
+
+void CheckMaxLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
+	const CLineupConfigurationTypes::player_count_range::second_type& aMaxCount, const std::string_view aRangeDescription )
+{
+	if( aMaxCount && aPositionCount > *aMaxCount )
+		throw std::invalid_argument{ "The lineup has more " + std::string{ aRangeDescription } + " (" + std::to_string( aPositionCount ) + ") "
+			"than the maximum allowed (" + std::to_string( *aMaxCount ) + ")." };
+}
 
 } // anonymous namespace
 
