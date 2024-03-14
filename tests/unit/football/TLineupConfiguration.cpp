@@ -101,6 +101,17 @@ void TLineupConfiguration::TestExceptions() const
 			CLineupTypes::names{ "Elliot", "Darwin Núñez", "Luis Díaz" },
 			CLineupTypes::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas", "Trent", "Konate", "Allison" } } } ); },
 			"The lineup has more subs (12) than the maximum allowed (9)." );
+		CheckException( [ &lineupConfiguration ]() { lineupConfiguration.CheckLineup( CLineup{
+			CLineupTypes::position_names{ CLineupTypes::names{ "Kelleher" },
+			CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk" },
+			CLineupTypes::names{ "Endo" }, CLineupTypes::names{ "Mac Allister" }, CLineupTypes::names{} } } ); },
+			"The lineup has less players (6) than the minimum allowed (7)." );
+		CheckException( [ &lineupConfiguration ]() { lineupConfiguration.CheckLineup( CLineup{
+			CLineupTypes::position_names{ CLineupTypes::names{ "Kelleher" },
+			CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez", "Robertson" },
+			CLineupTypes::names{ "Endo" }, CLineupTypes::names{ "Mac Allister", "Szoboszlai" }, CLineupTypes::names{},
+			CLineupTypes::names{ "Elliot", "Darwin Núñez", "Luis Díaz" } } } ); },
+			"The lineup has more players (12) than the maximum allowed (11)." );
 	}
 }
 
