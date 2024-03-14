@@ -40,6 +40,8 @@ jobs:
         submodules: recursive
     - uses: ts-graphviz/setup-graphviz@v2
     - uses: ssciwr/doxygen-install@v1
+    - uses: ilammy/msvc-dev-cmd@v1
+    - uses: seanmiddleditch/gha-setup-ninja@v4
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
@@ -56,6 +58,7 @@ jobs:
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         -S ${{ github.workspace }}
+        -G Ninja
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
