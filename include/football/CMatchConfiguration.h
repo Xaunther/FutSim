@@ -14,6 +14,8 @@
 namespace futsim::football
 {
 
+class CMatchStrategy;
+
 /**
  * @brief Class that configures a football match.
 */
@@ -82,6 +84,12 @@ public:
 
 	//! Retrieves the \copybrief mDrawConfiguration
 	const CDrawConfiguration& GetDrawConfiguration() const noexcept;
+
+	/**
+	 * @brief Checks the validity of a match strategy according to this configuration.
+	 * @param aMatchStrategy Match strategy to check.
+	*/
+	const CMatchStrategy& CheckMatchStrategy( const CMatchStrategy& aMatchStrategy ) const;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Match configuration";
