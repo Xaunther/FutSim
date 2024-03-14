@@ -120,7 +120,7 @@ std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 	std::vector<std::string> result;
 	for( const auto& lineupConfiguration : std::initializer_list<CLineupConfiguration>{
 		CLineupConfiguration{},
-		CLineupConfiguration{ { 1, {} }, { 2, 5 }, { 0, 3 }, {} },
+		CLineupConfiguration{ { 1, {} }, { 2, 5 }, { 0, 3 }, 8, {} },
 		futsim::ValueFromJSONKeyString<CLineupConfiguration>( R"( {
 			"Lineup configuration": {
 				"Benched players": 9
@@ -132,7 +132,8 @@ std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 				"Min MFs": 2,
 				"Max MFs": 5,
 				"Min FWs": 0,
-				"Max FWs": 3
+				"Max FWs": 3,
+				"Min players": 8
 			}
 		} )" ) } )
 	{
@@ -145,6 +146,7 @@ std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 		result.push_back( std::string{ CLineupConfiguration::JSON_MIN_FWS } + ": " + std::to_string( lineupConfiguration.GetFWRange().first ) );
 		if( lineupConfiguration.GetFWRange().second )
 			result.push_back( std::string{ CLineupConfiguration::JSON_MAX_FWS } + ": " + std::to_string( *lineupConfiguration.GetFWRange().second ) );
+		result.push_back( std::string{ CLineupConfiguration::JSON_MIN_PLAYERS } + ": " + std::to_string( lineupConfiguration.GetMinPlayerCount() ) );
 		if( lineupConfiguration.GetBenchedPlayersCount() )
 			result.push_back( std::string{ CLineupConfiguration::JSON_BENCHED_PLAYERS } + ": " + std::to_string( *lineupConfiguration.GetBenchedPlayersCount() ) );
 		futsim::IJsonableTypes::json outputJSON;
@@ -163,6 +165,7 @@ std::vector<std::string> TLineupConfiguration::ExpectedResults() const noexcept
 		"Max MFs: 6",
 		"Min FWs: 0",
 		"Max FWs: 4",
+		"Min players: 7",
 		"Benched players: 9",
 		"{\n"
 		"	\"Lineup configuration\": {\n"
@@ -172,6 +175,7 @@ std::vector<std::string> TLineupConfiguration::ExpectedResults() const noexcept
 		"		\"Max MFs\": 6,\n"
 		"		\"Min FWs\": 0,\n"
 		"		\"Max FWs\": 4,\n"
+		"		\"Min players\": 7,\n"
 		"		\"Benched players\": 9\n"
 		"	}\n"
 		"}",
@@ -180,13 +184,15 @@ std::vector<std::string> TLineupConfiguration::ExpectedResults() const noexcept
 		"Max MFs: 5",
 		"Min FWs: 0",
 		"Max FWs: 3",
+		"Min players: 8",
 		"{\n"
 		"	\"Lineup configuration\": {\n"
 		"		\"Min DFs\": 1,\n"
 		"		\"Min MFs\": 2,\n"
 		"		\"Max MFs\": 5,\n"
 		"		\"Min FWs\": 0,\n"
-		"		\"Max FWs\": 3\n"
+		"		\"Max FWs\": 3,\n"
+		"		\"Min players\": 8\n"
 		"	}\n"
 		"}"
 	};
