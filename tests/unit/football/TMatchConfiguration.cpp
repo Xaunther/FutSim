@@ -14,7 +14,7 @@ INITIALIZE_TEST( TMatchConfiguration )
 void TMatchConfiguration::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTieCondition{}, {}, {} }; },
+	CheckException( []() { CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, CTieCondition{}, {}, {} }; },
 		"There cannot be a tie condition without a penalty shootout configuration" );
 
 	// Test JSON constructor
@@ -34,7 +34,7 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 
 	for( const auto& matchConfiguration : {
 		CMatchConfiguration{},
-		CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, false, CTieCondition{}, CExtraTime{}, CPenaltyShootoutConfiguration{} },
+		CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, false, CTacticsConfiguration{}, CTieCondition{}, CExtraTime{}, CPenaltyShootoutConfiguration{} },
 		futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
 			"Match configuration": {}
 		} )" ),

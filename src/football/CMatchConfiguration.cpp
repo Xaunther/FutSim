@@ -24,6 +24,7 @@ CMatchConfiguration::CMatchConfiguration(
 	const CPlayTime& aPlayTime,
 	const CLineupConfiguration& aLineupConfiguration,
 	const bool aApplyAmbientFactor,
+	const CTacticsConfiguration& aTacticsConfiguration,
 	const optional_tie_condition& aTieCondition,
 	const optional_extra_time& aExtraTime,
 	const optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration,
@@ -32,6 +33,7 @@ CMatchConfiguration::CMatchConfiguration(
 	mPlayTime( aPlayTime ),
 	mLineupConfiguration( aLineupConfiguration ),
 	mApplyAmbientFactor( aApplyAmbientFactor ),
+	mTacticsConfiguration( aTacticsConfiguration ),
 	mTieCondition( CheckTieCondition( aTieCondition, aPenaltyShootoutConfiguration ) ),
 	mExtraTime( aExtraTime ),
 	mPenaltyShootoutConfiguration( aPenaltyShootoutConfiguration ),
@@ -44,6 +46,7 @@ CMatchConfiguration::CMatchConfiguration( const json& aJSON ) try :
 	mPlayTime( ValueFromOptionalJSONKey<CPlayTime>( aJSON ) ),
 	mLineupConfiguration( ValueFromOptionalJSONKey<CLineupConfiguration>( aJSON ) ),
 	mApplyAmbientFactor( ValueFromOptionalJSONKey<bool>( aJSON, JSON_APPLY_AMBIENT_FACTOR, DEFAULT_APPLY_AMBIENT_FACTOR ) ),
+	mTacticsConfiguration( ValueFromOptionalJSONKey<CTacticsConfiguration>( aJSON ) ),
 	mTieCondition( ValueFromOptionalJSONKey<optional_tie_condition>( aJSON, CTieCondition::JSON_KEY, {} ) ),
 	mExtraTime( ValueFromOptionalJSONKey<optional_extra_time>( aJSON, CExtraTime::JSON_KEY, {} ) ),
 	mPenaltyShootoutConfiguration( ValueFromOptionalJSONKey<optional_penalty_shootout_configuration>( aJSON, CPenaltyShootoutConfiguration::JSON_KEY, {} ) ),
@@ -58,6 +61,7 @@ void CMatchConfiguration::JSON( json& aJSON ) const noexcept
 	AddToJSONKey( aJSON, mPlayTime );
 	AddToJSONKey( aJSON, mLineupConfiguration );
 	AddToJSONKey( aJSON, mApplyAmbientFactor, JSON_APPLY_AMBIENT_FACTOR );
+	AddToJSONKey( aJSON, mTacticsConfiguration );
 	if( mTieCondition )
 		AddToJSONKey( aJSON, *mTieCondition );
 	if( mExtraTime )
@@ -80,6 +84,11 @@ const CLineupConfiguration& CMatchConfiguration::GetLineupConfiguration() const 
 bool CMatchConfiguration::AppliesAmbientFactor() const noexcept
 {
 	return mApplyAmbientFactor;
+}
+
+const CTacticsConfiguration& CMatchConfiguration::GetTacticsConfiguration() const noexcept
+{
+	return mTacticsConfiguration;
 }
 
 const CMatchConfiguration::optional_tie_condition& CMatchConfiguration::GetTieCondition() const noexcept

@@ -8,6 +8,7 @@
 #include "football/CMatchConfigurationTypes.h"
 #include "football/CPenaltyShootoutConfiguration.h"
 #include "football/CPlayTime.h"
+#include "football/CTacticsConfiguration.h"
 #include "football/CTieCondition.h"
 
 namespace futsim::football
@@ -29,6 +30,7 @@ public:
 	 * @param aPlayTime \ref mPlayTime
 	 * @param aLineupConfiguration \ref mLineupConfiguration
 	 * @param aApplyAmbientFactor \ref mApplyAmbientFactor
+	 * @param aTacticsConfiguration \ref mTacticsConfiguration
 	 * @param aTieCondition \ref mTieCondition
 	 * @param aExtraTime \ref mExtraTime
 	 * @param aPenaltyShootoutConfiguration \ref mPenaltyShootoutConfiguration
@@ -38,6 +40,7 @@ public:
 		const CPlayTime& aPlayTime = CPlayTime{},
 		const CLineupConfiguration& aLineupConfiguration = CLineupConfiguration{},
 		const bool aApplyAmbientFactor = DEFAULT_APPLY_AMBIENT_FACTOR,
+		const CTacticsConfiguration& aTacticsConfiguration = CTacticsConfiguration{},
 		const optional_tie_condition& aTieCondition = {},
 		const optional_extra_time& aExtraTime = {},
 		const optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration = {},
@@ -64,6 +67,9 @@ public:
 
 	//! Retrieves the \copybrief mApplyAmbientFactor
 	bool AppliesAmbientFactor() const noexcept;
+
+	//! Retrieves the \copybrief mTacticsConfiguration
+	const CTacticsConfiguration& GetTacticsConfiguration() const noexcept;
 
 	//! Retrieves the \copybrief mTieCondition
 	const optional_tie_condition& GetTieCondition() const noexcept;
@@ -92,6 +98,8 @@ private:
 	CLineupConfiguration mLineupConfiguration;
 	//! Whether the ambient factor applies to the home team. Useful to play on neutral grounds.
 	bool mApplyAmbientFactor;
+	//! Tactics configuration.
+	CTacticsConfiguration mTacticsConfiguration;
 	//! Tie condition.
 	optional_tie_condition mTieCondition;
 	//! Extra time configuration.
