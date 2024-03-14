@@ -18,15 +18,16 @@ void TLineupConfiguration::TestExceptions() const
 	// Test member constructor
 	CheckException( []() { CLineupConfiguration{ CLineupConfigurationTypes::player_count_range{ 1, 0 } }; },
 		"The maximum number of DFs cannot be smaller than the minimum number." );
-	// Test member constructor
 	CheckException( []() { CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
 		CLineupConfigurationTypes::player_count_range{ 1, 0 } }; },
 		"The maximum number of MFs cannot be smaller than the minimum number." );
-	// Test member constructor
 	CheckException( []() { CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
 		CLineupConfiguration::DEFAULT_MF_RANGE,
 		CLineupConfigurationTypes::player_count_range{ 1, 0 } }; },
 		"The maximum number of FWs cannot be smaller than the minimum number." );
+	CheckException( []() { CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
+		CLineupConfiguration::DEFAULT_MF_RANGE, CLineupConfiguration::DEFAULT_FW_RANGE, 12 }; },
+		"The maximum number of players cannot be smaller than the minimum number." );
 
 	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CLineupConfiguration>( R"( {
@@ -62,6 +63,11 @@ void TLineupConfiguration::TestExceptions() const
 				"Max FWs": 0
 			}
 		} )" ); }, "The maximum number of FWs cannot be smaller than the minimum number." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CLineupConfiguration>( R"( {
+			"Lineup configuration": {
+				"Min players": 12
+			}
+		} )" ); }, "The maximum number of players cannot be smaller than the minimum number." );
 
 	// Test CheckLineup
 	{
