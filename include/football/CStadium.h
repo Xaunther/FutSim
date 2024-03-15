@@ -44,7 +44,7 @@ protected:
 
 public:
 	//! Retrieves the \copybrief mName
-	const std::string_view GetName() const noexcept;
+	std::string_view GetName() const noexcept;
 
 	//! Retrieves the \copybrief mCapacity
 	const capacity& GetCapacity() const noexcept;

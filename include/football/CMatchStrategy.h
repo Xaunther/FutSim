@@ -23,7 +23,7 @@ public:
 	 * @param aLineup \ref mLineup
 	*/
 	explicit CMatchStrategy(
-		const id& aTacticID,
+		const std::string_view aTacticID,
 		const CLineup& aLineup
 	);
 
@@ -41,7 +41,7 @@ protected:
 
 public:
 	//! Retrieves the \copybrief mTacticID
-	const id& GetTacticID() const noexcept;
+	std::string_view GetTacticID() const noexcept;
 
 	//! Retrieves the \copybrief mLineup
 	const CLineup& GetLineup() const noexcept;

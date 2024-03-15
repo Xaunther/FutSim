@@ -54,7 +54,7 @@ public:
 	const CStadium& GetStadium() const noexcept;
 
 	//! Retrieves the \copybrief mReferee
-	const std::string_view GetReferee() const noexcept;
+	std::string_view GetReferee() const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Match";

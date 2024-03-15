@@ -115,8 +115,8 @@ const CDrawConfiguration& CMatchConfiguration::GetDrawConfiguration() const noex
 
 const CMatchStrategy& CMatchConfiguration::CheckMatchStrategy( const CMatchStrategy& aMatchStrategy ) const try
 {
-	if( !mTacticsConfiguration.GetTacticConfigurations().contains( aMatchStrategy.GetTacticID() ) )
-		throw std::invalid_argument( "The tactic '" + aMatchStrategy.GetTacticID() + "' has not been configured." );
+	if( !mTacticsConfiguration.GetTacticConfigurations().contains( aMatchStrategy.GetTacticID().data() ) )
+		throw std::invalid_argument( "The tactic '" + std::string{ aMatchStrategy.GetTacticID() } + "' has not been configured." );
 	mLineupConfiguration.CheckLineup( aMatchStrategy.GetLineup() );
 	return aMatchStrategy;
 }

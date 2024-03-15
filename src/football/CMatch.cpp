@@ -53,7 +53,7 @@ const CStadium& CMatch::GetStadium() const noexcept
 	return mStadium;
 }
 
-const std::string_view CMatch::GetReferee() const noexcept
+std::string_view CMatch::GetReferee() const noexcept
 {
 	return mReferee;
 }

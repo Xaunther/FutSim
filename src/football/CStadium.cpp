@@ -45,7 +45,7 @@ void CStadium::JSON( json& aJSON ) const noexcept
 	AddToJSONKey( aJSON, mAmbientFactor, JSON_AMBIENT_FACTOR );
 }
 
-const std::string_view CStadium::GetName() const noexcept
+std::string_view CStadium::GetName() const noexcept
 {
 	return mName;
 }

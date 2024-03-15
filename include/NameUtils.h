@@ -10,6 +10,6 @@ namespace futsim
  * @param aName Name.
  * @param aNameString String with the name label to add to the error message.
 */
-const std::string_view CheckName( const std::string_view aName, const std::string_view aNameString );
+std::string_view CheckName( const std::string_view aName, const std::string_view aNameString );
 
 } // futsim namespace
