@@ -7,7 +7,7 @@ namespace futsim::football
 {
 
 CMatchStrategy::CMatchStrategy(
-	const id& aTacticID,
+	const std::string_view aTacticID,
 	const CLineup& aLineup
 ) try :
 	mTacticID( aTacticID ),

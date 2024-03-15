@@ -23,7 +23,7 @@ public:
 	 * @param aLineup \ref mLineup
 	*/
 	explicit CMatchStrategy(
-		const id& aTacticID,
+		const std::string_view aTacticID,
 		const CLineup& aLineup
 	);
 
