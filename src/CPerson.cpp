@@ -43,17 +43,17 @@ void CPerson::JSON( json& aJSON ) const noexcept
 	AddToJSONKey( aJSON, mNationality, JSON_NATIONALITY );
 }
 
-const std::string_view CPerson::GetFirstName() const noexcept
+std::string_view CPerson::GetFirstName() const noexcept
 {
 	return mFirstName;
 }
 
-const std::string_view CPerson::GetSurnames() const noexcept
+std::string_view CPerson::GetSurnames() const noexcept
 {
 	return mSurnames;
 }
 
-const std::string_view CPerson::GetKnownName() const noexcept
+std::string_view CPerson::GetKnownName() const noexcept
 {
 	return mKnownName;
 }

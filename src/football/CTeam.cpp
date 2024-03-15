@@ -18,7 +18,7 @@ namespace
  * @brief Checks correctness of the abbreviation.
  * @param aAbbreviation Abbreviation.
 */
-const std::string_view CheckAbbreviation( const std::string_view aAbbreviation );
+std::string_view CheckAbbreviation( const std::string_view aAbbreviation );
 
 /**
  * @brief Checks positiveness of a number.
@@ -91,17 +91,17 @@ void CTeam::JSON( json& aJSON ) const noexcept
 	AddToJSONKey( aJSON, mAttendanceDistributionParameters.stddev(), JSON_STD_DEV_ATTENDANCE );
 }
 
-const std::string_view CTeam::GetName() const noexcept
+std::string_view CTeam::GetName() const noexcept
 {
 	return mName;
 }
 
-const std::string_view CTeam::GetAbbreviation() const noexcept
+std::string_view CTeam::GetAbbreviation() const noexcept
 {
 	return mAbbreviation;
 }
 
-const std::string_view CTeam::GetManager() const noexcept
+std::string_view CTeam::GetManager() const noexcept
 {
 	return mManager;
 }
@@ -130,7 +130,7 @@ CTeam::attendance CTeam::GenerateAttendance( std::uniform_random_bit_generator a
 namespace
 {
 
-const std::string_view CheckAbbreviation( const std::string_view aAbbreviation ) try
+std::string_view CheckAbbreviation( const std::string_view aAbbreviation ) try
 {
 	if( aAbbreviation.size() != 3 )
 		throw std::invalid_argument{ "The abbreviation must contain 3 characters, not " + std::to_string( aAbbreviation.size() ) + "." };

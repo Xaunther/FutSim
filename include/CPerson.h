@@ -50,13 +50,13 @@ protected:
 
 public:
 	//! Retrieves the \copybrief mFirstName
-	const std::string_view GetFirstName() const noexcept;
+	std::string_view GetFirstName() const noexcept;
 
 	//! Retrieves the \copybrief mSurnames
-	const std::string_view GetSurnames() const noexcept;
+	std::string_view GetSurnames() const noexcept;
 
 	//! Retrieves the \copybrief mKnownName
-	const std::string_view GetKnownName() const noexcept;
+	std::string_view GetKnownName() const noexcept;
 
 	//! Retrieves the \copybrief mAge
 	const unsigned short& GetAge() const noexcept;

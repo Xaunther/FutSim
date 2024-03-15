@@ -62,13 +62,13 @@ protected:
 
 public:
 	//! Retrieves the \copybrief mName
-	const std::string_view GetName() const noexcept;
+	std::string_view GetName() const noexcept;
 
 	//! Retrieves the \copybrief mAbbreviation
-	const std::string_view GetAbbreviation() const noexcept;
+	std::string_view GetAbbreviation() const noexcept;
 
 	//! Retrieves the \copybrief mManager
-	const std::string_view GetManager() const noexcept;
+	std::string_view GetManager() const noexcept;
 
 	//! Retrieves the \copybrief mPlayers
 	const players& GetPlayers() const noexcept;
