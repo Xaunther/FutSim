@@ -4,6 +4,8 @@
 
 #include "football/CLineupTypes.h"
 
+#include <span>
+
 namespace futsim::football
 {
 
@@ -40,10 +42,10 @@ public:
 	 * @brief Retrieves the players at a certain position.
 	 * @param aPlayerPosition Position.
 	*/
-	const names& GetPlayers( const E_PLAYER_POSITION& aPlayerPosition ) const noexcept;
+	std::span<const names::value_type> GetPlayers( const E_PLAYER_POSITION& aPlayerPosition ) const noexcept;
 
 	//! Retrieves the substitute players.
-	const names& GetSubs() const noexcept;
+	std::span<const names::value_type> GetSubs() const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Lineup";
