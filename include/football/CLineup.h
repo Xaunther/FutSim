@@ -4,6 +4,8 @@
 
 #include "football/CLineupTypes.h"
 
+#include <span>
+
 namespace futsim::football
 {
 

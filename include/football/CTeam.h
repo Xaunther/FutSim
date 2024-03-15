@@ -6,6 +6,7 @@
 #include "football/CTeamTypes.h"
 
 #include <random>
+#include <span>
 
 namespace futsim::football
 {
