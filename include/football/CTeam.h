@@ -71,7 +71,7 @@ public:
 	std::string_view GetManager() const noexcept;
 
 	//! Retrieves the \copybrief mPlayers
-	const players& GetPlayers() const noexcept;
+	std::span<const CPlayer> GetPlayers() const noexcept;
 
 	//! Retrieves the \copybrief mSupportFactor
 	const support_factor& GetSupportFactor() const noexcept;

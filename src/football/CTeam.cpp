@@ -106,7 +106,7 @@ std::string_view CTeam::GetManager() const noexcept
 	return mManager;
 }
 
-const CTeam::players& CTeam::GetPlayers() const noexcept
+std::span<const CPlayer> CTeam::GetPlayers() const noexcept
 {
 	return mPlayers;
 }
