@@ -82,8 +82,7 @@ const CTacticsConfigurationTypes::tactic_configurations& CheckTacticConfiguratio
 
 	for( const auto& tacticConfiguration : aTacticConfigurations )
 		for( const auto& favourableTacticID : tacticConfiguration.second.GetFavourableTactics() )
-			if( const auto& favourableTactic = aTacticConfigurations.at( favourableTacticID );
-				favourableTactic.GetFavourableTactics().contains( tacticConfiguration.first ) )
+			if( aTacticConfigurations.at( favourableTacticID ).GetFavourableTactics().contains( tacticConfiguration.first ) )
 				throw std::invalid_argument{ "The tactics '" + tacticConfiguration.first + "' and '" + favourableTacticID + "' "
 						"are favourable against each other, which is forbidden." };
 
