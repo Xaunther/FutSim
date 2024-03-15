@@ -29,7 +29,7 @@ void CMatchStrategy::JSON( json& aJSON ) const noexcept
 	AddToJSONKey( aJSON, mLineup );
 }
 
-const CMatchStrategy::id& CMatchStrategy::GetTacticID() const noexcept
+std::string_view CMatchStrategy::GetTacticID() const noexcept
 {
 	return mTacticID;
 }

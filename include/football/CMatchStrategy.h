@@ -41,7 +41,7 @@ protected:
 
 public:
 	//! Retrieves the \copybrief mTacticID
-	const id& GetTacticID() const noexcept;
+	std::string_view GetTacticID() const noexcept;
 
 	//! Retrieves the \copybrief mLineup
 	const CLineup& GetLineup() const noexcept;
