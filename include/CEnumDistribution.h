@@ -41,6 +41,29 @@ public:
 	explicit CEnumDistribution( const param_type& aParams ) :
 		std::discrete_distribution<tIntType>( aParams ) {}
 	//@}
+
+	/**
+	 * @name Generates random numbers that are distributed according to the associated probability function.
+	 * @details See <a href="https://en.cppreference.com/w/cpp/numeric/random/discrete_distribution/operator()">std::discrete_distribution operator()</a>
+	*/
+	//@{
+	result_type operator()( std::uniform_random_bit_generator auto& aGenerator );
+	result_type operator()( std::uniform_random_bit_generator auto& aGenerator, const param_type& aParams );
+	//@}
 };
+
+template <typename tEnumType, typename tIntType>
+CEnumDistribution<tEnumType, tIntType>::result_type CEnumDistribution<tEnumType, tIntType>::operator()
+( std::uniform_random_bit_generator auto& aGenerator )
+{
+	return static_cast< result_type >( std::discrete_distribution<tIntType>( aGenerator ) );
+}
+
+template <typename tEnumType, typename tIntType>
+CEnumDistribution<tEnumType, tIntType>::result_type CEnumDistribution<tEnumType, tIntType>::operator()
+( std::uniform_random_bit_generator auto& aGenerator, const param_type& aParams )
+{
+	return static_cast< result_type >( std::discrete_distribution<tIntType>( aGenerator, aParams ) );
+}
 
 } // futsim namespace
