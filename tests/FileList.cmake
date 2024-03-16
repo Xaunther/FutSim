@@ -2,6 +2,7 @@ SET(FUTSIM_TESTS_ENGINE_SOURCE
 	ITest.cpp)
 
 SET(FUTSIM_TESTS_UNIT_CORE_SOURCE
+	unit/TEnumDistribution.cpp
 	unit/TPerson.cpp
 	unit/TPlayTime.cpp
 )
