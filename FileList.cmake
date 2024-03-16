@@ -1,5 +1,6 @@
 # Core external headers
 SET(FUTSIM_CORE_EXTERNAL_HEADERS
+	include/CEnumDistribution.h
 	include/Config.h
 	include/CPerson.h
 	include/CPersonTypes.h
