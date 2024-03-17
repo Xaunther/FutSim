@@ -19,6 +19,7 @@ protected:
 	using discrete_distribution = CDrawConfigurationTypes::discrete_distribution;
 	using effective_skill = CDrawConfigurationTypes::effective_skill;
 	using probability = CDrawConfigurationTypes::probability;
+	using possession_draw_distribution = CPossessionDrawConfigurationTypes::possession_draw_distribution;
 
 public:
 	/**
@@ -62,12 +63,11 @@ public:
 
 	/**
 	 * @brief Creates the possession draw distribution.
-	 * @details The list of outcomes is {keep possession, foul, counter attack}.
 	 * @param aEffectiveDFSkill Effective DF skill of the defending team.
 	 * @param aEffectiveMFSkill Effective MF skill of the attacking team.
 	 * @pre All effective skills must be positive.
 	*/
-	discrete_distribution CreatePossessionDistribution(
+	possession_draw_distribution CreatePossessionDistribution(
 		const effective_skill& aEffectiveDFSkill,
 		const effective_skill& aEffectiveMFSkill ) const noexcept;
 

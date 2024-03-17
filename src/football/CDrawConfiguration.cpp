@@ -252,7 +252,7 @@ const CGoalDrawConfiguration& CDrawConfiguration::GetGoalDrawConfiguration() con
 	return mGoalDrawConfiguration;
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreatePossessionDistribution(
+CPossessionDrawConfigurationTypes::possession_draw_distribution CDrawConfiguration::CreatePossessionDistribution(
 	const effective_skill& aEffectiveDFSkill,
 	const effective_skill& aEffectiveMFSkill ) const noexcept
 {
@@ -260,7 +260,7 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreatePossessionDi
 		1 - mFoulDrawConfiguration.GetFoulProbability(),
 		mPossessionDrawConfiguration.GetKeepPossessionProbability(),
 		aEffectiveDFSkill, aEffectiveMFSkill );
-	return discrete_distribution{
+	return possession_draw_distribution{
 		modifiedKeepPossessionProbability,
 		mFoulDrawConfiguration.GetFoulProbability(),
 		1 - modifiedKeepPossessionProbability - mFoulDrawConfiguration.GetFoulProbability()
