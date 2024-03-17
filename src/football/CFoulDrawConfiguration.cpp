@@ -75,9 +75,9 @@ const CFoulDrawConfiguration::probability& CFoulDrawConfiguration::GetFoulProbab
 	return mFoulProbability;
 }
 
-CFoulDrawConfiguration::discrete_distribution CFoulDrawConfiguration::CreateFoulDistribution() const noexcept
+CFoulDrawConfiguration::foul_draw_distribution CFoulDrawConfiguration::CreateFoulDistribution() const noexcept
 {
-	return discrete_distribution{ mFoulDistributionParameters };
+	return foul_draw_distribution{ mFoulDistributionParameters };
 }
 
 namespace

@@ -72,7 +72,7 @@ public:
 		const effective_skill& aEffectiveMFSkill ) const noexcept;
 
 	//! \copydoc CFoulDrawConfiguration::CreateFoulDistribution
-	discrete_distribution CreateFoulDistribution() const noexcept;
+	CFoulDrawConfigurationTypes::foul_draw_distribution CreateFoulDistribution() const noexcept;
 
 	/**
 	 * @brief Creates the set piece draw distribution.
