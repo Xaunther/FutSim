@@ -3,6 +3,7 @@
 #include "IJsonable.h"
 
 #include "football/CDrawConfigurationTypes.h"
+#include "football/CPossessionDrawConfigurationTypes.h"
 
 namespace futsim::football
 {
