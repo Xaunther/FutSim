@@ -19,7 +19,7 @@ public:
 	//! Type for the result.
 	using result_type = tEnumType;
 	//! Type for the distribution parameters.
-	using param_type = std::discrete_distribution<tIntType>::param_type;
+	using param_type = typename std::discrete_distribution<tIntType>::param_type;
 
 	/**
 	 * @name Constructs a new distribution object
@@ -60,27 +60,27 @@ public:
 };
 
 template <typename tEnumType, typename tIntType>
-CEnumDistribution<tEnumType, tIntType>::result_type CEnumDistribution<tEnumType, tIntType>::operator()
+typename CEnumDistribution<tEnumType, tIntType>::result_type CEnumDistribution<tEnumType, tIntType>::operator()
 ( std::uniform_random_bit_generator auto& aGenerator )
 {
 	return static_cast< result_type >( std::discrete_distribution<tIntType>( aGenerator ) );
 }
 
 template <typename tEnumType, typename tIntType>
-CEnumDistribution<tEnumType, tIntType>::result_type CEnumDistribution<tEnumType, tIntType>::operator()
+typename CEnumDistribution<tEnumType, tIntType>::result_type CEnumDistribution<tEnumType, tIntType>::operator()
 ( std::uniform_random_bit_generator auto& aGenerator, const param_type& aParams )
 {
 	return static_cast< result_type >( std::discrete_distribution<tIntType>( aGenerator, aParams ) );
 }
 
 template <typename tEnumType, typename tIntType>
-CEnumDistribution<tEnumType, tIntType>::result_type CEnumDistribution<tEnumType, tIntType>::min() const
+typename CEnumDistribution<tEnumType, tIntType>::result_type CEnumDistribution<tEnumType, tIntType>::min() const
 {
 	return static_cast< result_type >( std::discrete_distribution<tIntType>::min() );
 }
 
 template <typename tEnumType, typename tIntType>
-CEnumDistribution<tEnumType, tIntType>::result_type CEnumDistribution<tEnumType, tIntType>::max() const
+typename CEnumDistribution<tEnumType, tIntType>::result_type CEnumDistribution<tEnumType, tIntType>::max() const
 {
 	return static_cast< result_type >( std::discrete_distribution<tIntType>::max() );
 }
