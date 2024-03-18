@@ -3,6 +3,7 @@
 #include "IJsonable.h"
 
 #include "football/CDrawConfigurationTypes.h"
+#include "football/CGoalDrawConfigurationTypes.h"
 
 namespace futsim::football
 {
@@ -16,7 +17,7 @@ protected:
 	using probability = CDrawConfigurationTypes::probability;
 	using stat = CDrawConfigurationTypes::stat;
 	using effective_skill = CDrawConfigurationTypes::effective_skill;
-	using discrete_distribution = CDrawConfigurationTypes::discrete_distribution;
+	using goal_draw_distribution = CGoalDrawConfigurationTypes::goal_draw_distribution;
 
 public:
 	/**
@@ -85,27 +86,25 @@ public:
 
 	/**
 	 * @brief Creates the 1 on 1 vs GK chance outcome draw distribution.
-	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
 	 * @param aEffectiveGKSkill Effective GK skill of the goalkeeper.
 	 * @param aEffectiveMFSkill Effective MF skill of the assister.
 	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @pre All effective skills must be positive.
 	*/
-	discrete_distribution Create1vs1GKOutcomeDistribution(
+	goal_draw_distribution Create1vs1GKOutcomeDistribution(
 		const effective_skill& aEffectiveGKSkill,
 		const effective_skill& aEffectiveMFSkill,
 		const effective_skill& aEffectiveFWSkill ) const noexcept;
 
 	/**
 	 * @brief Creates the 1 on 1 vs DF chance outcome draw distribution.
-	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
 	 * @param aEffectiveGKSkill Effective GK skill of the goalkeeper.
 	 * @param aEffectiveDFSkill Effective DF skill of the defender.
 	 * @param aEffectiveMFSkill Effective MF skill of the assister.
 	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @pre All effective skills must be positive.
 	*/
-	discrete_distribution Create1vs1DFOutcomeDistribution(
+	goal_draw_distribution Create1vs1DFOutcomeDistribution(
 		const effective_skill& aEffectiveGKSkill,
 		const effective_skill& aEffectiveDFSkill,
 		const effective_skill& aEffectiveMFSkill,
@@ -113,14 +112,13 @@ public:
 
 	/**
 	 * @brief Creates a generic chance outcome draw distribution.
-	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
 	 * @param aDefaultGoalProbability Goal probability when defender and attacker skills are equal.
 	 * @param aEffectiveDefenceSkill Effective defence skill.
 	 * @param aEffectiveAttackSkill Effective attacking skill.
 	 * @pre All effective skills must be positive.
 	 * @pre The default goal probability must be smaller than the \copybrief mExtraCornerProbability
 	*/
-	discrete_distribution CreateChanceOutcomeDistribution(
+	goal_draw_distribution CreateChanceOutcomeDistribution(
 		const probability& aDefaultGoalProbability,
 		const effective_skill& aEffectiveDefenceSkill,
 		const effective_skill& aEffectiveAttackSkill ) const noexcept;

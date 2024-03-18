@@ -21,6 +21,7 @@ protected:
 	using probability = CDrawConfigurationTypes::probability;
 	using possession_draw_distribution = CPossessionDrawConfigurationTypes::possession_draw_distribution;
 	using chance_type_draw_distribution = CChancesDrawConfigurationTypes::chance_type_draw_distribution;
+	using goal_draw_distribution = CGoalDrawConfigurationTypes::goal_draw_distribution;
 
 public:
 	/**
@@ -100,34 +101,31 @@ public:
 
 	/**
 	 * @brief Creates the penalty chance outcome distribution.
-	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
 	 * @param aEffectiveGKSkill Effective GK skill of the goalkeeper.
 	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @pre All effective skills must be positive.
 	*/
-	discrete_distribution CreatePenaltyOutcomeDistribution(
+	goal_draw_distribution CreatePenaltyOutcomeDistribution(
 		const effective_skill& aEffectiveGKSkill, const effective_skill& aEffectiveFWSkill ) const noexcept;
 
 	/**
 	 * @brief Creates the direct free kick chance outcome distribution.
-	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
 	 * @param aEffectiveGKSkill Effective GK skill of the goalkeeper.
 	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @pre All effective skills must be positive.
 	*/
-	discrete_distribution CreateDirectFreeKickOutcomeDistribution(
+	goal_draw_distribution CreateDirectFreeKickOutcomeDistribution(
 		const effective_skill& aEffectiveGKSkill, const effective_skill& aEffectiveFWSkill ) const noexcept;
 
 	/**
 	 * @brief Creates the indirect free kick chance outcome distribution.
-	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
 	 * @param aEffectiveGKSkill Effective GK skill of the goalkeeper.
 	 * @param aEffectiveDFSkill Effective DF skill of the defender.
 	 * @param aEffectiveMFSkill Effective MF skill of the foul kicker.
 	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @pre All effective skills must be positive.
 	*/
-	discrete_distribution CreateIndirectFreeKickOutcomeDistribution(
+	goal_draw_distribution CreateIndirectFreeKickOutcomeDistribution(
 		const effective_skill& aEffectiveGKSkill,
 		const effective_skill& aEffectiveDFSkill,
 		const effective_skill& aEffectiveMFSkill,
@@ -135,14 +133,13 @@ public:
 
 	/**
 	 * @brief Creates the corner chance outcome distribution.
-	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
 	 * @param aEffectiveGKSkill Effective GK skill of the goalkeeper.
 	 * @param aEffectiveDFSkill Effective DF skill of the defender.
 	 * @param aEffectiveMFSkill Effective MF skill of the corner kicker.
 	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @pre All effective skills must be positive.
 	*/
-	discrete_distribution CreateCornerOutcomeDistribution(
+	goal_draw_distribution CreateCornerOutcomeDistribution(
 		const effective_skill& aEffectiveGKSkill,
 		const effective_skill& aEffectiveDFSkill,
 		const effective_skill& aEffectiveMFSkill,
@@ -150,23 +147,22 @@ public:
 
 	/**
 	 * @brief Creates the far shot chance outcome distribution.
-	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
 	 * @param aEffectiveGKSkill Effective GK skill of the goalkeeper.
 	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @pre All effective skills must be positive.
 	*/
-	discrete_distribution CreateFarShotOutcomeDistribution(
+	goal_draw_distribution CreateFarShotOutcomeDistribution(
 		const effective_skill& aEffectiveGKSkill,
 		const effective_skill& aEffectiveFWSkill ) const noexcept;
 
 	//! \copybrief CGoalDrawConfiguration::Create1vs1GKOutcomeDistribution
-	discrete_distribution Create1vs1GKOutcomeDistribution(
+	goal_draw_distribution Create1vs1GKOutcomeDistribution(
 		const effective_skill& aEffectiveGKSkill,
 		const effective_skill& aEffectiveMFSkill,
 		const effective_skill& aEffectiveFWSkill ) const noexcept;
 
 	//! \copybrief CGoalDrawConfiguration::Create1vs1DFOutcomeDistribution
-	discrete_distribution Create1vs1DFOutcomeDistribution(
+	goal_draw_distribution Create1vs1DFOutcomeDistribution(
 		const effective_skill& aEffectiveGKSkill,
 		const effective_skill& aEffectiveDFSkill,
 		const effective_skill& aEffectiveMFSkill,
@@ -174,12 +170,11 @@ public:
 
 	/**
 	 * @brief Creates the near shot chance outcome distribution.
-	 * @details The list of outcomes is {goal, extra corner, keep possession, lose possession}.
 	 * @param aEffectiveGKSkill Effective GK skill of the goalkeeper.
 	 * @param aEffectiveFWSkill Effective FW skill of the shot taker.
 	 * @pre All effective skills must be positive.
 	*/
-	discrete_distribution CreateNearShotOutcomeDistribution(
+	goal_draw_distribution CreateNearShotOutcomeDistribution(
 		const effective_skill& aEffectiveGKSkill,
 		const effective_skill& aEffectiveFWSkill ) const noexcept;
 

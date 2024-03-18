@@ -295,19 +295,19 @@ CDrawConfiguration::chance_type_draw_distribution CDrawConfiguration::CreateChan
 	return chance_type_draw_distribution{ mChanceTypeDistributionParameters };
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreatePenaltyOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreatePenaltyOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill, const effective_skill& aEffectiveFWSkill ) const noexcept
 {
 	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultPenaltyGoalProbability, aEffectiveGKSkill, aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateDirectFreeKickOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateDirectFreeKickOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill, const effective_skill& aEffectiveFWSkill ) const noexcept
 {
 	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultDirectFreeKickGoalProbability, aEffectiveGKSkill, aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateIndirectFreeKickOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateIndirectFreeKickOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveDFSkill,
 	const effective_skill& aEffectiveMFSkill,
@@ -317,7 +317,7 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateIndirectFree
 		aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateCornerOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateCornerOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveDFSkill,
 	const effective_skill& aEffectiveMFSkill,
@@ -327,7 +327,7 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateCornerOutcom
 		aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateFarShotOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateFarShotOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
@@ -335,7 +335,7 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateFarShotOutco
 		aEffectiveGKSkill, aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::Create1vs1GKOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::Create1vs1GKOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveMFSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
@@ -343,7 +343,7 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::Create1vs1GKOutcom
 	return mGoalDrawConfiguration.Create1vs1GKOutcomeDistribution( aEffectiveGKSkill, aEffectiveMFSkill, aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::Create1vs1DFOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::Create1vs1DFOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveDFSkill,
 	const effective_skill& aEffectiveMFSkill,
@@ -352,7 +352,7 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::Create1vs1DFOutcom
 	return mGoalDrawConfiguration.Create1vs1DFOutcomeDistribution( aEffectiveGKSkill, aEffectiveDFSkill, aEffectiveMFSkill, aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateNearShotOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateNearShotOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
