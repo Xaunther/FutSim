@@ -16,7 +16,6 @@ namespace futsim::football
 class CDrawConfiguration : public IJsonable
 {
 protected:
-	using discrete_distribution = CDrawConfigurationTypes::discrete_distribution;
 	using effective_skill = CDrawConfigurationTypes::effective_skill;
 	using probability = CDrawConfigurationTypes::probability;
 	using possession_draw_distribution = CPossessionDrawConfigurationTypes::possession_draw_distribution;
