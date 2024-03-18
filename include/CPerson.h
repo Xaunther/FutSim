@@ -42,6 +42,9 @@ public:
 	*/
 	explicit CPerson( const json& aJSON );
 
+	//! Virtual destructor for base class.
+	virtual ~CPerson() = default;
+
 protected:
 	/**
 	 * @copydoc IJsonable::ToJSON
