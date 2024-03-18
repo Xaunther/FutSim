@@ -39,7 +39,7 @@ std::bernoulli_distribution::param_type CalculateDefaultChanceDistributionParame
  * @param aSetPieceProbability Set piece probability.
  * @param aDefaultChanceProbability Default chance probability after keeping possession or launching a counter attack.
 */
-CDrawConfigurationTypes::discrete_distribution::param_type CalculateChanceTypeDistributionParameters(
+CChancesDrawConfigurationTypes::chance_type_draw_distribution::param_type CalculateChanceTypeDistributionParameters(
 	const CChancesDrawConfiguration& aChancesDrawConfiguration,
 	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
 	const CDrawConfigurationTypes::probability& aFoulProbability,
@@ -252,7 +252,7 @@ const CGoalDrawConfiguration& CDrawConfiguration::GetGoalDrawConfiguration() con
 	return mGoalDrawConfiguration;
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreatePossessionDistribution(
+CPossessionDrawConfigurationTypes::possession_draw_distribution CDrawConfiguration::CreatePossessionDistribution(
 	const effective_skill& aEffectiveDFSkill,
 	const effective_skill& aEffectiveMFSkill ) const noexcept
 {
@@ -260,14 +260,14 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreatePossessionDi
 		1 - mFoulDrawConfiguration.GetFoulProbability(),
 		mPossessionDrawConfiguration.GetKeepPossessionProbability(),
 		aEffectiveDFSkill, aEffectiveMFSkill );
-	return discrete_distribution{
+	return possession_draw_distribution{
 		modifiedKeepPossessionProbability,
 		mFoulDrawConfiguration.GetFoulProbability(),
 		1 - modifiedKeepPossessionProbability - mFoulDrawConfiguration.GetFoulProbability()
 	};
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateFoulDistribution() const noexcept
+CFoulDrawConfigurationTypes::foul_draw_distribution CDrawConfiguration::CreateFoulDistribution() const noexcept
 {
 	return mFoulDrawConfiguration.CreateFoulDistribution();
 }
@@ -285,29 +285,29 @@ std::bernoulli_distribution CDrawConfiguration::CreateChanceDistribution(
 		1., mDefaultChanceDistributionParameters.p(), aEffectiveDFSkill, aEffectiveFWSkill ) };
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateSetPieceTypeDistribution() const noexcept
+CChancesDrawConfigurationTypes::set_piece_type_draw_distribution CDrawConfiguration::CreateSetPieceTypeDistribution() const noexcept
 {
 	return mChancesDrawConfiguration.CreateSetPieceTypeDistribution();
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateChanceTypeDistribution() const noexcept
+CDrawConfiguration::chance_type_draw_distribution CDrawConfiguration::CreateChanceTypeDistribution() const noexcept
 {
-	return discrete_distribution{ mChanceTypeDistributionParameters };
+	return chance_type_draw_distribution{ mChanceTypeDistributionParameters };
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreatePenaltyOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreatePenaltyOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill, const effective_skill& aEffectiveFWSkill ) const noexcept
 {
 	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultPenaltyGoalProbability, aEffectiveGKSkill, aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateDirectFreeKickOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateDirectFreeKickOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill, const effective_skill& aEffectiveFWSkill ) const noexcept
 {
 	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultDirectFreeKickGoalProbability, aEffectiveGKSkill, aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateIndirectFreeKickOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateIndirectFreeKickOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveDFSkill,
 	const effective_skill& aEffectiveMFSkill,
@@ -317,7 +317,7 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateIndirectFree
 		aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateCornerOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateCornerOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveDFSkill,
 	const effective_skill& aEffectiveMFSkill,
@@ -327,7 +327,7 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateCornerOutcom
 		aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateFarShotOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateFarShotOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
@@ -335,7 +335,7 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateFarShotOutco
 		aEffectiveGKSkill, aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::Create1vs1GKOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::Create1vs1GKOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveMFSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
@@ -343,7 +343,7 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::Create1vs1GKOutcom
 	return mGoalDrawConfiguration.Create1vs1GKOutcomeDistribution( aEffectiveGKSkill, aEffectiveMFSkill, aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::Create1vs1DFOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::Create1vs1DFOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveDFSkill,
 	const effective_skill& aEffectiveMFSkill,
@@ -352,7 +352,7 @@ CDrawConfiguration::discrete_distribution CDrawConfiguration::Create1vs1DFOutcom
 	return mGoalDrawConfiguration.Create1vs1DFOutcomeDistribution( aEffectiveGKSkill, aEffectiveDFSkill, aEffectiveMFSkill, aEffectiveFWSkill );
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateNearShotOutcomeDistribution(
+CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateNearShotOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
@@ -381,7 +381,7 @@ std::bernoulli_distribution::param_type CalculateDefaultChanceDistributionParame
 		/ ( 1 - aFoulProbability ), "probability to get a chance after keeping possession or launching a counter attack" ) };
 }
 
-CDrawConfigurationTypes::discrete_distribution::param_type CalculateChanceTypeDistributionParameters(
+CChancesDrawConfigurationTypes::chance_type_draw_distribution::param_type CalculateChanceTypeDistributionParameters(
 	const CChancesDrawConfiguration& aChancesDrawConfiguration,
 	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
 	const CDrawConfigurationTypes::probability& aFoulProbability,
@@ -399,7 +399,7 @@ CDrawConfigurationTypes::discrete_distribution::param_type CalculateChanceTypeDi
 		CheckProbability( aChancesDrawConfiguration.GetAverageNearShots() / averageOpenPlayChances, "near shot probability" )
 	};
 	result.back() = CheckProbability( 1 - std::accumulate( result.cbegin(), result.cend(), 0. ), "far shot probability" );
-	return CDrawConfigurationTypes::discrete_distribution::param_type{ result.cbegin(), result.cend() };
+	return CChancesDrawConfigurationTypes::chance_type_draw_distribution::param_type{ result.cbegin(), result.cend() };
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error calculating the chance type draw distribution." )
 

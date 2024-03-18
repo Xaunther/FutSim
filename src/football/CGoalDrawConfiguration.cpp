@@ -1,5 +1,7 @@
 #include "football/CGoalDrawConfiguration.h"
 
+#include "CEnumDistribution.h"
+
 #include "ExceptionUtils.h"
 #include "JsonUtils.h"
 #include "NumberUtils.h"
@@ -121,7 +123,7 @@ const CGoalDrawConfiguration::probability& CGoalDrawConfiguration::GetExtraCorne
 	return mExtraCornerProbability;
 }
 
-CGoalDrawConfiguration::discrete_distribution CGoalDrawConfiguration::Create1vs1GKOutcomeDistribution(
+CGoalDrawConfiguration::goal_draw_distribution CGoalDrawConfiguration::Create1vs1GKOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveMFSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
@@ -129,7 +131,7 @@ CGoalDrawConfiguration::discrete_distribution CGoalDrawConfiguration::Create1vs1
 	return CreateChanceOutcomeDistribution( m1vs1GKGoalProbability, 2 * aEffectiveGKSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
-CGoalDrawConfiguration::discrete_distribution CGoalDrawConfiguration::Create1vs1DFOutcomeDistribution(
+CGoalDrawConfiguration::goal_draw_distribution CGoalDrawConfiguration::Create1vs1DFOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveDFSkill,
 	const effective_skill& aEffectiveMFSkill,
@@ -138,14 +140,14 @@ CGoalDrawConfiguration::discrete_distribution CGoalDrawConfiguration::Create1vs1
 	return CreateChanceOutcomeDistribution( m1vs1DFGoalProbability, aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
-CGoalDrawConfiguration::discrete_distribution CGoalDrawConfiguration::CreateChanceOutcomeDistribution(
+CGoalDrawConfiguration::goal_draw_distribution CGoalDrawConfiguration::CreateChanceOutcomeDistribution(
 	const probability& aDefaultGoalProbability,
 	const effective_skill& aEffectiveDefenceSkill,
 	const effective_skill& aEffectiveAttackSkill ) const noexcept
 {
 	const auto& modifiedGoalProbability = ModifiedProbability( 1 - mExtraCornerProbability, aDefaultGoalProbability,
 		aEffectiveDefenceSkill, aEffectiveAttackSkill );
-	return discrete_distribution{ {
+	return goal_draw_distribution{ {
 		modifiedGoalProbability,
 		mExtraCornerProbability,
 		( 1 - modifiedGoalProbability - mExtraCornerProbability ) / 2,

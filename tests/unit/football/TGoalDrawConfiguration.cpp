@@ -2,6 +2,8 @@
 
 #include "football/CGoalDrawConfiguration.h"
 
+#include "CEnumDistribution.h"
+
 #include "JsonUtils.h"
 
 #include <iostream>

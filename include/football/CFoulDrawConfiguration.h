@@ -3,6 +3,8 @@
 #include "IJsonable.h"
 
 #include "football/CDrawConfigurationTypes.h"
+#include "football/CFoulDrawConfigurationTypes.h"
+#include "CEnumDistribution.h"
 
 namespace futsim::football
 {
@@ -15,7 +17,7 @@ class CFoulDrawConfiguration : public IJsonable
 protected:
 	using stat = CDrawConfigurationTypes::stat;
 	using probability = CDrawConfigurationTypes::probability;
-	using discrete_distribution = CDrawConfigurationTypes::discrete_distribution;
+	using foul_draw_distribution = CFoulDrawConfigurationTypes::foul_draw_distribution;
 
 public:
 	/**
@@ -55,11 +57,8 @@ public:
 	//! Retrieves the \copybrief mFoulProbability
 	const probability& GetFoulProbability() const noexcept;
 
-	/**
-	 * @brief Creates the foul draw distribution.
-	 * @details The list of outcomes is {yellow card, red card, no card}.
-	*/
-	discrete_distribution CreateFoulDistribution() const noexcept;
+	//! @brief Creates the foul draw distribution.
+	foul_draw_distribution CreateFoulDistribution() const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Foul draw configuration";
@@ -92,7 +91,7 @@ private:
 	probability mFoulProbability;
 
 	//! Foul distribution parameters.
-	discrete_distribution::param_type mFoulDistributionParameters;
+	foul_draw_distribution::param_type mFoulDistributionParameters;
 };
 
 } // futsim namespace
