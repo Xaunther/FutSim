@@ -42,7 +42,7 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ObtainedResults() const 
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CPenaltyShootoutConfiguration::JSON_SEQUENCE } + ": " + std::to_string( static_cast< int >( penaltyShootoutConfiguration.GetPenaltySequence() ) ) );
+		result.push_back( std::string{ CPenaltyShootoutConfiguration::JSON_SEQUENCE } + ": " + std::string{ ToString( penaltyShootoutConfiguration.GetPenaltySequence() ) } );
 		result.push_back( std::string{ CPenaltyShootoutConfiguration::JSON_MIN_PENALTY_COUNT } + ": " + std::to_string( penaltyShootoutConfiguration.GetMinPenaltyCount() ) );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, penaltyShootoutConfiguration );
@@ -55,7 +55,7 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ObtainedResults() const 
 std::vector<std::string> TPenaltyShootoutConfiguration::ExpectedResults() const noexcept
 {
 	std::vector<std::string> result{
-		"Sequence: 0",
+		"Sequence: AB",
 		"Min penalty count: 5",
 		"{\n"
 		"	\"Penalty shootout configuration\": {\n"
@@ -63,7 +63,7 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ExpectedResults() const 
 		"		\"Min penalty count\": 5\n"
 		"	}\n"
 		"}",
-		"Sequence: 1",
+		"Sequence: ABBA",
 		"Min penalty count: 5",
 		"{\n"
 		"	\"Penalty shootout configuration\": {\n"
@@ -71,7 +71,7 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ExpectedResults() const 
 		"		\"Min penalty count\": 5\n"
 		"	}\n"
 		"}",
-		"Sequence: 0",
+		"Sequence: AB",
 		"Min penalty count: 3",
 		"{\n"
 		"	\"Penalty shootout configuration\": {\n"
