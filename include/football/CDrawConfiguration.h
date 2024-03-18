@@ -20,6 +20,7 @@ protected:
 	using effective_skill = CDrawConfigurationTypes::effective_skill;
 	using probability = CDrawConfigurationTypes::probability;
 	using possession_draw_distribution = CPossessionDrawConfigurationTypes::possession_draw_distribution;
+	using chance_type_draw_distribution = CChancesDrawConfigurationTypes::chance_type_draw_distribution;
 
 public:
 	/**
@@ -92,13 +93,10 @@ public:
 		const effective_skill& aEffectiveFWSkill ) const noexcept;
 
 	//! \copydoc CChancesDrawConfiguration::CreateSetPieceTypeDistribution
-	discrete_distribution CreateSetPieceTypeDistribution() const noexcept;
+	CChancesDrawConfigurationTypes::set_piece_type_draw_distribution CreateSetPieceTypeDistribution() const noexcept;
 
-	/**
-	 * @brief Creates the chance type draw distribution.
-	 * @details The list of outcomes is {corner, 1 on 1 vs GK, 1 on 1 vs DF, near shot, far shot}.
-	*/
-	discrete_distribution CreateChanceTypeDistribution() const noexcept;
+	//! Creates the chance type draw distribution.
+	chance_type_draw_distribution CreateChanceTypeDistribution() const noexcept;
 
 	/**
 	 * @brief Creates the penalty chance outcome distribution.
@@ -205,7 +203,7 @@ private:
 	std::bernoulli_distribution::param_type mDefaultChanceDistributionParameters;
 
 	//! Chance type distribution parameters.
-	discrete_distribution::param_type mChanceTypeDistributionParameters;
+	chance_type_draw_distribution::param_type mChanceTypeDistributionParameters;
 
 	//! Default goal probability from penalty.
 	probability mDefaultPenaltyGoalProbability;

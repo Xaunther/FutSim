@@ -3,6 +3,7 @@
 #include "IJsonable.h"
 
 #include "football/CDrawConfigurationTypes.h"
+#include "football/CChancesDrawConfigurationTypes.h"
 
 namespace futsim::football
 {
@@ -14,7 +15,7 @@ class CChancesDrawConfiguration : public IJsonable
 {
 protected:
 	using stat = CDrawConfigurationTypes::stat;
-	using discrete_distribution = CDrawConfigurationTypes::discrete_distribution;
+	using set_piece_type_draw_distribution = CChancesDrawConfigurationTypes::set_piece_type_draw_distribution;
 
 public:
 	/**
@@ -76,11 +77,9 @@ public:
 	//! Retrieves the \copybrief mAverageDirectFreeKicks
 	const stat& GetAverageDirectFreeKicks() const noexcept;
 
-	/**
-	 * @brief Creates the set piece type draw distribution.
-	 * @details The list of outcomes is {penalty, indirect free kick, direct free kick}.
-	*/
-	discrete_distribution CreateSetPieceTypeDistribution() const noexcept;
+
+	//! Creates the set piece type draw distribution.
+	set_piece_type_draw_distribution CreateSetPieceTypeDistribution() const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Chances draw configuration";
@@ -139,7 +138,7 @@ private:
 	stat mAverageDirectFreeKicks;
 
 	//! Set piece type distribution parameters.
-	discrete_distribution::param_type mSetPieceTypeDistributionParameters;
+	set_piece_type_draw_distribution::param_type mSetPieceTypeDistributionParameters;
 };
 
 } // futsim namespace

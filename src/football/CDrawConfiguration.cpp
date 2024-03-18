@@ -39,7 +39,7 @@ std::bernoulli_distribution::param_type CalculateDefaultChanceDistributionParame
  * @param aSetPieceProbability Set piece probability.
  * @param aDefaultChanceProbability Default chance probability after keeping possession or launching a counter attack.
 */
-CDrawConfigurationTypes::discrete_distribution::param_type CalculateChanceTypeDistributionParameters(
+CChancesDrawConfigurationTypes::chance_type_draw_distribution::param_type CalculateChanceTypeDistributionParameters(
 	const CChancesDrawConfiguration& aChancesDrawConfiguration,
 	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
 	const CDrawConfigurationTypes::probability& aFoulProbability,
@@ -285,14 +285,14 @@ std::bernoulli_distribution CDrawConfiguration::CreateChanceDistribution(
 		1., mDefaultChanceDistributionParameters.p(), aEffectiveDFSkill, aEffectiveFWSkill ) };
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateSetPieceTypeDistribution() const noexcept
+CChancesDrawConfigurationTypes::set_piece_type_draw_distribution CDrawConfiguration::CreateSetPieceTypeDistribution() const noexcept
 {
 	return mChancesDrawConfiguration.CreateSetPieceTypeDistribution();
 }
 
-CDrawConfiguration::discrete_distribution CDrawConfiguration::CreateChanceTypeDistribution() const noexcept
+CDrawConfiguration::chance_type_draw_distribution CDrawConfiguration::CreateChanceTypeDistribution() const noexcept
 {
-	return discrete_distribution{ mChanceTypeDistributionParameters };
+	return chance_type_draw_distribution{ mChanceTypeDistributionParameters };
 }
 
 CDrawConfiguration::discrete_distribution CDrawConfiguration::CreatePenaltyOutcomeDistribution(
@@ -381,7 +381,7 @@ std::bernoulli_distribution::param_type CalculateDefaultChanceDistributionParame
 		/ ( 1 - aFoulProbability ), "probability to get a chance after keeping possession or launching a counter attack" ) };
 }
 
-CDrawConfigurationTypes::discrete_distribution::param_type CalculateChanceTypeDistributionParameters(
+CChancesDrawConfigurationTypes::chance_type_draw_distribution::param_type CalculateChanceTypeDistributionParameters(
 	const CChancesDrawConfiguration& aChancesDrawConfiguration,
 	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
 	const CDrawConfigurationTypes::probability& aFoulProbability,
@@ -399,7 +399,7 @@ CDrawConfigurationTypes::discrete_distribution::param_type CalculateChanceTypeDi
 		CheckProbability( aChancesDrawConfiguration.GetAverageNearShots() / averageOpenPlayChances, "near shot probability" )
 	};
 	result.back() = CheckProbability( 1 - std::accumulate( result.cbegin(), result.cend(), 0. ), "far shot probability" );
-	return CDrawConfigurationTypes::discrete_distribution::param_type{ result.cbegin(), result.cend() };
+	return CChancesDrawConfigurationTypes::chance_type_draw_distribution::param_type{ result.cbegin(), result.cend() };
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error calculating the chance type draw distribution." )
 
