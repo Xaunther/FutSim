@@ -4,6 +4,7 @@
 
 #include "football/CDrawConfigurationTypes.h"
 #include "football/CFoulDrawConfigurationTypes.h"
+#include "CEnumDistribution.h"
 
 namespace futsim::football
 {

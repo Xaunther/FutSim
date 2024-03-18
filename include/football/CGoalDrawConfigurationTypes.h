@@ -1,9 +1,13 @@
 #pragma once
 
 #include <nlohmann/json.hpp>
-#include "CEnumDistribution.h"
 
-namespace futsim::football::CGoalDrawConfigurationTypes
+namespace futsim
+{
+
+template<typename tEnum, typename tIntType> class CEnumDistribution;
+
+namespace football::CGoalDrawConfigurationTypes
 {
 
 //! Enumeration for the different chance outcomes.
@@ -15,7 +19,7 @@ enum class E_CHANCE_OUTCOME {
 };
 
 //! Type for the goal draw.
-using goal_draw_distribution = CEnumDistribution<E_CHANCE_OUTCOME>;
+using goal_draw_distribution = CEnumDistribution<E_CHANCE_OUTCOME, int>;
 
 NLOHMANN_JSON_SERIALIZE_ENUM( E_CHANCE_OUTCOME, {
 	{E_CHANCE_OUTCOME::GOAL, "Goal"},
@@ -24,4 +28,6 @@ NLOHMANN_JSON_SERIALIZE_ENUM( E_CHANCE_OUTCOME, {
 	{E_CHANCE_OUTCOME::LOSE_POSSESSION, "Lose possession"},
 	} );
 
-} // futsim::football::CGoalDrawConfigurationTypes namespace
+} // football::CGoalDrawConfigurationTypes namespace
+
+} // futsim: namespace

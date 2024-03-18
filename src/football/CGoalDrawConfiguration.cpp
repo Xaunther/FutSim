@@ -1,5 +1,7 @@
 #include "football/CGoalDrawConfiguration.h"
 
+#include "CEnumDistribution.h"
+
 #include "ExceptionUtils.h"
 #include "JsonUtils.h"
 #include "NumberUtils.h"

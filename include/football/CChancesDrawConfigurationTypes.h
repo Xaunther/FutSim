@@ -1,9 +1,13 @@
 #pragma once
 
 #include <nlohmann/json.hpp>
-#include "CEnumDistribution.h"
 
-namespace futsim::football::CChancesDrawConfigurationTypes
+namespace futsim
+{
+
+template<typename tEnum, typename tIntType> class CEnumDistribution;
+
+namespace football::CChancesDrawConfigurationTypes
 {
 
 //! Enumeration for the different set piece types.
@@ -23,9 +27,9 @@ enum class E_CHANCE_TYPE {
 };
 
 //! Type for the set piece type draw.
-using set_piece_type_draw_distribution = CEnumDistribution<E_SET_PIECE_TYPE>;
+using set_piece_type_draw_distribution = CEnumDistribution<E_SET_PIECE_TYPE, int>;
 //! Type for the chance type draw.
-using chance_type_draw_distribution = CEnumDistribution<E_CHANCE_TYPE>;
+using chance_type_draw_distribution = CEnumDistribution<E_CHANCE_TYPE, int>;
 
 NLOHMANN_JSON_SERIALIZE_ENUM( E_SET_PIECE_TYPE, {
 	{E_SET_PIECE_TYPE::PENALTY, "Penalty"},
@@ -41,4 +45,6 @@ NLOHMANN_JSON_SERIALIZE_ENUM( E_CHANCE_TYPE, {
 	{E_CHANCE_TYPE::FAR_SHOT, "Far shot"},
 	} );
 
-} // futsim::football::CChancesDrawConfigurationTypes namespace
+} // football::CChancesDrawConfigurationTypes namespace
+
+} // futsim namespace
