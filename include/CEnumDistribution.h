@@ -13,6 +13,8 @@ namespace futsim
 template <typename tEnumType, typename tIntType = int>
 class CEnumDistribution : public std::discrete_distribution<tIntType>
 {
+	static_assert( std::is_enum_v<tEnumType>, "The enum type must be an enum." );
+
 public:
 	//! Type for the result.
 	using result_type = tEnumType;
