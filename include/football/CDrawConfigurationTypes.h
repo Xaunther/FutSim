@@ -1,7 +1,5 @@
 #pragma once
 
-#include <random>
-
 namespace futsim::football::CDrawConfigurationTypes
 {
 
