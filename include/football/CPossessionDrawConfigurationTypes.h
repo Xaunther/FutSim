@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "EnumUtils.h"
 
 namespace futsim
 {
@@ -20,7 +20,7 @@ enum class E_POSSESSION_DRAW_OUTCOME {
 //! Type for the possession draw.
 using possession_draw_distribution = CEnumDistribution<E_POSSESSION_DRAW_OUTCOME, int>;
 
-NLOHMANN_JSON_SERIALIZE_ENUM( E_POSSESSION_DRAW_OUTCOME, {
+FUTSIM_SERIALIZE_ENUM( E_POSSESSION_DRAW_OUTCOME, {
 	{E_POSSESSION_DRAW_OUTCOME::KEEP_POSSESSION, "Keep possession"},
 	{E_POSSESSION_DRAW_OUTCOME::FOUL, "Foul"},
 	{E_POSSESSION_DRAW_OUTCOME::COUNTER_ATTACK, "Counter attack"},

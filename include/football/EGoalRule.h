@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "EnumUtils.h"
 
 namespace futsim::football
 {
@@ -12,7 +12,7 @@ enum class E_GOAL_RULE {
 	GOLDEN_GOAL
 };
 
-NLOHMANN_JSON_SERIALIZE_ENUM( E_GOAL_RULE, {
+FUTSIM_SERIALIZE_ENUM( E_GOAL_RULE, {
 	{E_GOAL_RULE::NO, "No"},
 	{E_GOAL_RULE::SILVER_GOAL, "Silver goal"},
 	{E_GOAL_RULE::GOLDEN_GOAL, "Golden goal"},
