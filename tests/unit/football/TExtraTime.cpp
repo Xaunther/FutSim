@@ -38,7 +38,7 @@ std::vector<std::string> TExtraTime::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CExtraTime::JSON_GOAL_RULE } + ": " + std::to_string( static_cast< int >( extraTime.GetGoalRule() ) ) );
+		result.push_back( std::string{ CExtraTime::JSON_GOAL_RULE } + ": " + std::string{ ToString( extraTime.GetGoalRule() ) } );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, extraTime );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
@@ -50,7 +50,7 @@ std::vector<std::string> TExtraTime::ObtainedResults() const noexcept
 std::vector<std::string> TExtraTime::ExpectedResults() const noexcept
 {
 	std::vector<std::string> result{
-		"Goal rule: 0",
+		"Goal rule: No",
 		"{\n"
 		"	\"Extra time\": {\n"
 		"		\"Period count\": 2,\n"
@@ -58,7 +58,7 @@ std::vector<std::string> TExtraTime::ExpectedResults() const noexcept
 		"		\"Available subs\": 1\n"
 		"	}\n"
 		"}",
-		"Goal rule: 2",
+		"Goal rule: Golden goal",
 		"{\n"
 		"	\"Extra time\": {\n"
 		"		\"Period count\": 1,\n"

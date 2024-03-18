@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "EnumUtils.h"
 
 namespace futsim::football
 {
@@ -11,7 +11,7 @@ enum class E_PENALTY_SEQUENCE {
 	ABBA
 };
 
-NLOHMANN_JSON_SERIALIZE_ENUM( E_PENALTY_SEQUENCE, {
+FUTSIM_SERIALIZE_ENUM( E_PENALTY_SEQUENCE, {
 	{E_PENALTY_SEQUENCE::AB, "AB"},
 	{E_PENALTY_SEQUENCE::ABBA, "ABBA"},
 	} )

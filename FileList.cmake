@@ -7,6 +7,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/CPlayTime.h
 	include/CPlayTimeTypes.h
 	include/ENationality.h
+	include/EnumUtils.h
 	include/ExceptionUtils.h
 	include/IJsonable.h
 	include/IJsonableTypes.h

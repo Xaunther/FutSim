@@ -83,7 +83,7 @@ std::vector<std::string> TPerson::ObtainedResults() const noexcept
 		result.push_back( std::string{ CPerson::JSON_SURNAMES } + ": " + std::string{ person.GetSurnames() } );
 		result.push_back( std::string{ CPerson::JSON_KNOWN_NAME } + ": " + std::string{ person.GetKnownName() } );
 		result.push_back( std::string{ CPerson::JSON_AGE } + ": " + std::to_string( person.GetAge() ) );
-		result.push_back( std::string{ CPerson::JSON_NATIONALITY } + ": " + std::to_string( static_cast< int >( person.GetNationality() ) ) );
+		result.push_back( std::string{ CPerson::JSON_NATIONALITY } + ": " + std::string{ ToString( person.GetNationality() ) } );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, person );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
@@ -99,7 +99,7 @@ std::vector<std::string> TPerson::ExpectedResults() const noexcept
 		"Surnames: Blanco",
 		"Known name: Blanco",
 		"Age: 35",
-		"Nationality: 8",
+		"Nationality: ARG",
 		"{\n"
 		"	\"Person\": {\n"
 		"		\"First name\": \"Lorenzo\",\n"
@@ -112,7 +112,7 @@ std::vector<std::string> TPerson::ExpectedResults() const noexcept
 		"Surnames: Pérez Martínez",
 		"Known name: Perico",
 		"Age: 20",
-		"Nationality: 69",
+		"Nationality: ESP",
 		"{\n"
 		"	\"Person\": {\n"
 		"		\"First name\": \"Pedro\",\n"

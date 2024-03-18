@@ -7,6 +7,8 @@
 #include <iostream>
 #include <string>
 
+#include "EnumUtils.h"
+
 using namespace futsim;
 
 INITIALIZE_TEST( TEnumDistribution )
@@ -18,15 +20,11 @@ enum class myEnum
 	C
 };
 
-std::string ToString( const myEnum& aEnum ) noexcept
-{
-	switch( aEnum )
-	{
-	case myEnum::A: return "A";
-	case myEnum::B: return "B";
-	default: return "C";
-	}
-}
+FUTSIM_STRING_ENUM( myEnum, {
+	{myEnum::A,"A"},
+	{myEnum::B,"B"},
+	{myEnum::C,"C"},
+	} );
 
 void TEnumDistribution::TestExceptions() const
 {
@@ -46,8 +44,8 @@ std::vector<std::string> TEnumDistribution::ObtainedResults() const noexcept
 		CEnumDistribution<myEnum>{ CEnumDistribution<myEnum>::param_type{} }
 		} )
 	{
-		result.push_back( "min: " + ToString( enumDistribution.min() ) );
-		result.push_back( "max: " + ToString( enumDistribution.max() ) );
+		result.push_back( "min: " + std::string{ ToString( enumDistribution.min() ) } );
+		result.push_back( "max: " + std::string{ ToString( enumDistribution.max() ) } );
 		result.push_back( "Probabilities:" );
 		for( const auto& probability : enumDistribution.probabilities() )
 			result.push_back( std::to_string( probability ) );

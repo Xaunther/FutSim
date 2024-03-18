@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "EnumUtils.h"
 
 namespace futsim::football
 {
@@ -13,7 +13,7 @@ enum class E_PLAYER_SKILL {
 	Sh,
 };
 
-NLOHMANN_JSON_SERIALIZE_ENUM( E_PLAYER_SKILL, {
+FUTSIM_SERIALIZE_ENUM( E_PLAYER_SKILL, {
 	{E_PLAYER_SKILL::St, "St"},
 	{E_PLAYER_SKILL::Tk, "Tk"},
 	{E_PLAYER_SKILL::Ps, "Ps"},

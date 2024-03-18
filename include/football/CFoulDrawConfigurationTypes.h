@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "EnumUtils.h"
 
 namespace futsim
 {
@@ -20,7 +20,7 @@ enum class E_FOUL_DRAW_OUTCOME {
 //! Type for the foul draw.
 using foul_draw_distribution = CEnumDistribution<E_FOUL_DRAW_OUTCOME, int>;
 
-NLOHMANN_JSON_SERIALIZE_ENUM( E_FOUL_DRAW_OUTCOME, {
+FUTSIM_SERIALIZE_ENUM( E_FOUL_DRAW_OUTCOME, {
 	{E_FOUL_DRAW_OUTCOME::YELLOW_CARD, "Yellow card"},
 	{E_FOUL_DRAW_OUTCOME::RED_CARD, "Red card"},
 	{E_FOUL_DRAW_OUTCOME::NO_CARD, "No card"},

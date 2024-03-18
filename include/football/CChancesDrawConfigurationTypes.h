@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "EnumUtils.h"
 
 namespace futsim
 {
@@ -31,13 +31,13 @@ using set_piece_type_draw_distribution = CEnumDistribution<E_SET_PIECE_TYPE, int
 //! Type for the chance type draw.
 using chance_type_draw_distribution = CEnumDistribution<E_CHANCE_TYPE, int>;
 
-NLOHMANN_JSON_SERIALIZE_ENUM( E_SET_PIECE_TYPE, {
+FUTSIM_SERIALIZE_ENUM( E_SET_PIECE_TYPE, {
 	{E_SET_PIECE_TYPE::PENALTY, "Penalty"},
 	{E_SET_PIECE_TYPE::DIRECT_FREE_KICK, "Direct free kick"},
 	{E_SET_PIECE_TYPE::INDIRECT_FREE_KICK, "Indirect free kick"},
 	} );
 
-NLOHMANN_JSON_SERIALIZE_ENUM( E_CHANCE_TYPE, {
+FUTSIM_SERIALIZE_ENUM( E_CHANCE_TYPE, {
 	{E_CHANCE_TYPE::CORNER, "Corner"},
 	{E_CHANCE_TYPE::ONE_ON_ONE_VS_GK, "1 on 1 vs GK"},
 	{E_CHANCE_TYPE::ONE_ON_ONE_VS_DF, "1 on 1 vs DF"},
