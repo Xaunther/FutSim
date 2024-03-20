@@ -1,6 +1,7 @@
 #include "ITest.h"
 
 #include "football/CMatch.h"
+#include "football/CTeamStrategy.h"
 
 #include "JsonUtils.h"
 
@@ -106,6 +107,18 @@ void TMatch::TestExceptions() const
 				"Referee": ""
 			}
 		} )" ); }, "The referee name cannot be empty." );
+
+	// Test CheckTeamStrategy
+	{
+		const CTeamStrategy teamStrategy{ "A", CLineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Ter Stegen" } } } };
+		const CMatch match{ CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 2000 },
+				CTeam{ "Manchester City FC", "mci", "Pep Guardiola", {}, 1, 50000, 6000 },
+				CStadium{ "Camp Nou", 98000, 1 }, "Michael Oliver" };
+		CheckException( [ &teamStrategy, &match ]() { match.CheckTeamStrategy<true>( teamStrategy ); },
+			"Error checking the team strategy against the match definition." );
+		CheckException( [ &teamStrategy, &match ]() { match.CheckTeamStrategy<false>( teamStrategy ); },
+			"Error checking the team strategy against the match definition." );
+	}
 }
 
 std::vector<std::string> TMatch::ObtainedResults() const noexcept
