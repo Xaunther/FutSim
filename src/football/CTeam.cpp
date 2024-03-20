@@ -1,5 +1,7 @@
 #include "football/CTeam.h"
 
+#include "football/CLineup.h"
+
 #include "ExceptionUtils.h"
 #include "JsonUtils.h"
 #include "NameUtils.h"
@@ -111,6 +113,15 @@ std::span<const CPlayer> CTeam::GetPlayers() const noexcept
 	return mPlayers;
 }
 
+const CPlayer& CTeam::GetPlayer( const std::string_view aKnownName ) const
+{
+	const auto& found = std::ranges::find_if( mPlayers,
+		[ &aKnownName ]( const auto& aPlayer ) {return aPlayer.GetKnownName() == aKnownName;} );
+	if( found == mPlayers.cend() )
+		throw std::invalid_argument{ std::string{ aKnownName } + " is not in " + mName + "'s list of players." };
+	return *found;
+}
+
 const CTeam::support_factor& CTeam::GetSupportFactor() const noexcept
 {
 	return mSupportFactor;
@@ -126,6 +137,20 @@ CTeam::attendance CTeam::GenerateAttendance( std::uniform_random_bit_generator a
 	auto result = attendance_distribution( mAttendanceDistributionParameters )( aGenerator );
 	return result < 0 ? 0 : std::lround( result );
 }
+
+const CLineup& CTeam::CheckLineup( const CLineup& aLineup ) const try
+{
+	const auto getPlayer = [ this ]( const auto& aPlayer ) { GetPlayer( aPlayer ); };
+	std::ranges::for_each( aLineup.GetPlayers( E_PLAYER_POSITION::GK ), getPlayer );
+	std::ranges::for_each( aLineup.GetPlayers( E_PLAYER_POSITION::DF ), getPlayer );
+	std::ranges::for_each( aLineup.GetPlayers( E_PLAYER_POSITION::DM ), getPlayer );
+	std::ranges::for_each( aLineup.GetPlayers( E_PLAYER_POSITION::MF ), getPlayer );
+	std::ranges::for_each( aLineup.GetPlayers( E_PLAYER_POSITION::AM ), getPlayer );
+	std::ranges::for_each( aLineup.GetPlayers( E_PLAYER_POSITION::FW ), getPlayer );
+	std::ranges::for_each( aLineup.GetSubs(), getPlayer );
+	return aLineup;
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the lineup against the team." )
 
 namespace
 {

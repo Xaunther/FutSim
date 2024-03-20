@@ -11,6 +11,8 @@
 namespace futsim::football
 {
 
+class CLineup;
+
 /**
  * @brief Class that defines a football team.
 */
@@ -74,6 +76,14 @@ public:
 	//! Retrieves the \copybrief mPlayers
 	std::span<const CPlayer> GetPlayers() const noexcept;
 
+	/**
+	 * @brief Retrieves a player by its known name.
+	 * @details Throws an exception if no player is found.
+	 * @param aKnownName Known name.
+	*/
+	//! Retrieves a player by its known name.
+	const CPlayer& GetPlayer( const std::string_view aKnownName ) const;
+
 	//! Retrieves the \copybrief mSupportFactor
 	const support_factor& GetSupportFactor() const noexcept;
 
@@ -82,6 +92,12 @@ public:
 
 	//! Generates a random attendance.
 	attendance GenerateAttendance( std::uniform_random_bit_generator auto& aGenerator ) const noexcept;
+
+	/**
+	 * @brief Checks the validity of a lineup according to this team definition.
+	 * @param aLineup Lineup to check.
+	*/
+	const CLineup& CheckLineup( const CLineup& aLineup ) const;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Team";

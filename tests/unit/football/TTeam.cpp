@@ -166,6 +166,11 @@ void TTeam::TestExceptions() const
 				"StdDev attendance": 1000
 			}
 		} )" ); }, "There are two players with the same known name 'Longstaff'." );
+
+	// GetPlayer exception
+	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
+		CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 60, 1 }, { 0, 0, 0, 0 } } },
+	}, 1, 11000, 1000 }.GetPlayer( "Messi" ); }, "Messi is not in Luton Town FC's list of players." );
 }
 
 std::vector<std::string> TTeam::ObtainedResults() const noexcept
@@ -241,7 +246,7 @@ std::vector<std::string> TTeam::ObtainedResults() const noexcept
 		result.push_back( std::string{ CTeam::JSON_ABBREVIATION } + ": " + std::string{ team.GetAbbreviation() } );
 		result.push_back( std::string{ CTeam::JSON_MANAGER } + ": " + std::string{ team.GetManager() } );
 		for( const auto& player : team.GetPlayers() )
-			result.push_back( std::string{ CPlayer::JSON_KEY } + ": " + std::string{ player.GetKnownName() } );
+			result.push_back( std::string{ CPlayer::JSON_KEY } + ": " + std::string{ team.GetPlayer( player.GetKnownName() ).GetKnownName() } );
 		result.push_back( std::string{ CTeam::JSON_SUPPORT_FACTOR } + ": " + std::to_string( team.GetSupportFactor() ) );
 		result.push_back( std::string{ CTeam::JSON_MEAN_ATTENDANCE } + ": " + std::to_string( team.GetAttendanceDistributionParameters().mean() ) );
 		result.push_back( std::string{ CTeam::JSON_STD_DEV_ATTENDANCE } + ": " + std::to_string( team.GetAttendanceDistributionParameters().stddev() ) );
