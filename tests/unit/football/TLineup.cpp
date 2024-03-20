@@ -25,11 +25,26 @@ void TLineup::TestExceptions() const
 				"GK": []
 			}
 		} )" ); }, "There has to be exactly 1 GK." );
+
+	// Test DrawPlayer method
+	{
+		std::mt19937 rng{ 1234 };
+		const CLineup lineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Kelleher" },
+			CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
+			CLineupTypes::names{ "Endo" }, CLineupTypes::names{ "Mac Allister", "Szoboszlai" }, CLineupTypes::names{},
+			CLineupTypes::names{ "Elliot", "Darwin Núñez", "Luis Díaz" },
+			CLineupTypes::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas" } } };
+		if( auto drawnPlayer = lineup.DrawPlayer( rng, { 1 } ); drawnPlayer != "Kelleher" )
+			throw std::invalid_argument{ "Kelleher should have been drawn instead of " + std::string{ drawnPlayer } + "." };
+		if( auto drawnPlayer = lineup.DrawPlayer( rng, { 0, 0, 1 } ); drawnPlayer != "Endo" )
+			throw std::invalid_argument{ "Endo should have been drawn instead of " + std::string{ drawnPlayer } + "." };
+	}
 }
 
 std::vector<std::string> TLineup::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
+
 	for( const auto& lineup : std::initializer_list<CLineup>{
 		CLineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Kelleher" },
 			CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
