@@ -63,14 +63,14 @@ template <typename tEnumType, typename tIntType>
 typename CEnumDistribution<tEnumType, tIntType>::result_type CEnumDistribution<tEnumType, tIntType>::operator()
 ( std::uniform_random_bit_generator auto& aGenerator )
 {
-	return static_cast< result_type >( std::discrete_distribution<tIntType>( aGenerator ) );
+	return static_cast< result_type >( std::discrete_distribution<tIntType>::operator()( aGenerator ) );
 }
 
 template <typename tEnumType, typename tIntType>
 typename CEnumDistribution<tEnumType, tIntType>::result_type CEnumDistribution<tEnumType, tIntType>::operator()
 ( std::uniform_random_bit_generator auto& aGenerator, const param_type& aParams )
 {
-	return static_cast< result_type >( std::discrete_distribution<tIntType>( aGenerator, aParams ) );
+	return static_cast< result_type >( std::discrete_distribution<tIntType>::operator()( aGenerator, aParams ) );
 }
 
 template <typename tEnumType, typename tIntType>
