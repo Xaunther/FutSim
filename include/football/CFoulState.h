@@ -5,6 +5,9 @@
 #include "CPersonTypes.h"
 #include "CFoulDrawConfigurationTypes.h"
 
+#include "football/CMatchConfiguration.h"
+#include "football/CTeamStrategy.h"
+
 namespace futsim::football
 {
 
@@ -18,6 +21,19 @@ protected:
 	using E_FOUL_DRAW_OUTCOME = CFoulDrawConfigurationTypes::E_FOUL_DRAW_OUTCOME;
 
 public:
+	/**
+	 * @brief Constructor from the match definition, configuration and current strategies.
+	 * @param aMatchConfiguration Match configuration.
+	 * @param aTeamStrategy Current match strategy for the team committing the foul.
+	 * @param aGenerator RNG to use.
+	 * @pre The team strategy must pass \ref CMatchConfiguration::CheckTeamStrategy.
+	*/
+	explicit CFoulState(
+		const CMatchConfiguration& aMatchConfiguration,
+		const CTeamStrategy& aTeamStrategy,
+		std::uniform_random_bit_generator auto& aGenerator
+	) noexcept;
+
 	//! Retrieves the \copybrief mCommitter
 	std::string_view GetCommitter() const noexcept;
 
@@ -30,5 +46,15 @@ private:
 	//! Foul draw outcome.
 	E_FOUL_DRAW_OUTCOME mOutcome;
 };
+
+CFoulState::CFoulState(
+	const CMatchConfiguration& aMatchConfiguration,
+	const CTeamStrategy& aTeamStrategy,
+	std::uniform_random_bit_generator auto& aGenerator
+) noexcept :
+	mCommitter( aTeamStrategy.GetLineup().DrawPlayer( aGenerator, { 1, 1, 1, 1, 1, 1 } ) ),
+	mOutcome( aMatchConfiguration.GetDrawConfiguration().CreateFoulDistribution()( aGenerator ) )
+{
+}
 
 } // futsim::football namespace

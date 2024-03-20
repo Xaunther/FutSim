@@ -1,5 +1,7 @@
 #include "football/CFoulState.h"
 
+#include "ExceptionUtils.h"
+
 namespace futsim::football
 {
 
