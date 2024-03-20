@@ -11,7 +11,7 @@ namespace futsim::football
 /**
  * @brief Class that defines a match strategy
 */
-class CMatchStrategy : public IJsonable
+class CTeamStrategy : public IJsonable
 {
 protected:
 	using id = CTacticConfigurationTypes::id;
@@ -22,7 +22,7 @@ public:
 	 * @param aTacticID \ref mTacticID
 	 * @param aLineup \ref mLineup
 	*/
-	explicit CMatchStrategy(
+	explicit CTeamStrategy(
 		const std::string_view aTacticID,
 		const CLineup& aLineup
 	);
@@ -31,7 +31,7 @@ public:
 	 * @brief JSON constructor.
 	 * @param aJSON JSON object.
 	*/
-	explicit CMatchStrategy( const json& aJSON );
+	explicit CTeamStrategy( const json& aJSON );
 
 protected:
 	/**

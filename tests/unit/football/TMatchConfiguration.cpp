@@ -1,7 +1,7 @@
 #include "ITest.h"
 
 #include "football/CMatchConfiguration.h"
-#include "football/CMatchStrategy.h"
+#include "football/CTeamStrategy.h"
 
 #include "JsonUtils.h"
 
@@ -33,9 +33,9 @@ void TMatchConfiguration::TestExceptions() const
 		const CMatchConfiguration matchConfiguration;
 		const CLineup lineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Kelleher" },
 			CLineupTypes::names{ "Bradley" } } };
-		CheckException( [ &matchConfiguration, &lineup ]() { matchConfiguration.CheckMatchStrategy( CMatchStrategy{ "FF", lineup } ); },
+		CheckException( [ &matchConfiguration, &lineup ]() { matchConfiguration.CheckMatchStrategy( CTeamStrategy{ "FF", lineup } ); },
 			"The tactic 'FF' has not been configured." );
-		CheckException( [ &matchConfiguration, &lineup ]() { matchConfiguration.CheckMatchStrategy( CMatchStrategy{ "A", lineup } ); },
+		CheckException( [ &matchConfiguration, &lineup ]() { matchConfiguration.CheckMatchStrategy( CTeamStrategy{ "A", lineup } ); },
 			"Error checking the lineup against the configuration." );
 	}
 }

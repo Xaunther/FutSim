@@ -1,6 +1,6 @@
 #include "ITest.h"
 
-#include "football/CMatchStrategy.h"
+#include "football/CTeamStrategy.h"
 
 #include "JsonUtils.h"
 
@@ -9,27 +9,27 @@
 using namespace futsim::football;
 using namespace nlohmann;
 
-INITIALIZE_TEST( TMatchStrategy )
+INITIALIZE_TEST( TTeamStrategy )
 
-void TMatchStrategy::TestExceptions() const
+void TTeamStrategy::TestExceptions() const
 {
 	// Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchStrategy>( R"( {
+	CheckException( []() { futsim::ValueFromJSONKeyString<CTeamStrategy>( R"( {
 			"Match strategy": {}
 		} )" ); }, "key 'Tactic' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchStrategy>( R"( {
+	CheckException( []() { futsim::ValueFromJSONKeyString<CTeamStrategy>( R"( {
 			"Match strategy": {
 				"Tactic": "A"
 			}
 		} )" ); }, "key 'Lineup' not found" );
 }
 
-std::vector<std::string> TMatchStrategy::ObtainedResults() const noexcept
+std::vector<std::string> TTeamStrategy::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
-	for( const auto& matchStrategy : std::initializer_list<CMatchStrategy>{
-		CMatchStrategy{ "A", CLineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Ter Stegen" } } } },
-		futsim::ValueFromJSONKeyString<CMatchStrategy>( R"( {
+	for( const auto& matchStrategy : std::initializer_list<CTeamStrategy>{
+		CTeamStrategy{ "A", CLineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Ter Stegen" } } } },
+		futsim::ValueFromJSONKeyString<CTeamStrategy>( R"( {
 			"Match strategy": {
 				"Tactic": "A",
 				"Lineup": {
@@ -38,7 +38,7 @@ std::vector<std::string> TMatchStrategy::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CMatchStrategy::JSON_TACTIC } + ": " + std::string{ matchStrategy.GetTacticID() } );
+		result.push_back( std::string{ CTeamStrategy::JSON_TACTIC } + ": " + std::string{ matchStrategy.GetTacticID() } );
 		result.push_back( std::string{ CLineup::JSON_KEY } + ": " + matchStrategy.GetLineup().GetPlayers( E_PLAYER_POSITION::GK ).front() );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, matchStrategy );
@@ -47,7 +47,7 @@ std::vector<std::string> TMatchStrategy::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TMatchStrategy::ExpectedResults() const noexcept
+std::vector<std::string> TTeamStrategy::ExpectedResults() const noexcept
 {
 	std::vector<std::string> result{
 		"Tactic: A",

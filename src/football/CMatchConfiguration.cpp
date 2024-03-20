@@ -1,6 +1,6 @@
 #include "football/CMatchConfiguration.h"
 
-#include "football/CMatchStrategy.h"
+#include "football/CTeamStrategy.h"
 
 #include "ExceptionUtils.h"
 #include "JsonUtils.h"
@@ -113,7 +113,7 @@ const CDrawConfiguration& CMatchConfiguration::GetDrawConfiguration() const noex
 	return mDrawConfiguration;
 }
 
-const CMatchStrategy& CMatchConfiguration::CheckMatchStrategy( const CMatchStrategy& aMatchStrategy ) const try
+const CTeamStrategy& CMatchConfiguration::CheckMatchStrategy( const CTeamStrategy& aMatchStrategy ) const try
 {
 	if( !mTacticsConfiguration.GetTacticConfigurations().contains( aMatchStrategy.GetTacticID().data() ) )
 		throw std::invalid_argument( "The tactic '" + std::string{ aMatchStrategy.GetTacticID() } + "' has not been configured." );

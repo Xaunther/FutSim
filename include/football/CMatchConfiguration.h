@@ -14,7 +14,7 @@
 namespace futsim::football
 {
 
-class CMatchStrategy;
+class CTeamStrategy;
 
 /**
  * @brief Class that configures a football match.
@@ -89,7 +89,7 @@ public:
 	 * @brief Checks the validity of a match strategy according to this configuration.
 	 * @param aMatchStrategy Match strategy to check.
 	*/
-	const CMatchStrategy& CheckMatchStrategy( const CMatchStrategy& aMatchStrategy ) const;
+	const CTeamStrategy& CheckMatchStrategy( const CTeamStrategy& aMatchStrategy ) const;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Match configuration";
