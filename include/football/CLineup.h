@@ -90,14 +90,12 @@ private:
 std::string_view CLineup::DrawPlayer( std::uniform_random_bit_generator auto& aGenerator,
 	const position_weights& aPositionWeights ) const noexcept
 {
-	std::vector<double> playerWeights;
+	std::vector<position_weights::value_type> playerWeights;
 	for( auto positionWeightIt = aPositionWeights.cbegin(); const auto & positionPlayers : mPlayersLineup )
 		std::fill_n( std::back_inserter( playerWeights ), positionPlayers.size(), *( positionWeightIt++ ) );
-	const auto& drawn = std::discrete_distribution<position_names::size_type>{ playerWeights.cbegin(), playerWeights.cend() }( aGenerator );
 
-	return *( mPlayersLineup | std::ranges::views::join
-		| std::ranges::views::take( drawn + 1 )
-		| std::ranges::views::drop( drawn ) ).begin();
+	return *( mPlayersLineup | std::ranges::views::join | std::ranges::views::drop(
+		std::discrete_distribution<position_names::size_type>{ playerWeights.cbegin(), playerWeights.cend() }( aGenerator ) ) ).begin();
 }
 
 } // futsim namespace
