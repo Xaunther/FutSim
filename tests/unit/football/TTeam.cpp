@@ -166,6 +166,11 @@ void TTeam::TestExceptions() const
 				"StdDev attendance": 1000
 			}
 		} )" ); }, "There are two players with the same known name 'Longstaff'." );
+
+	// GetPlayer exception
+	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
+		CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 60, 1 }, { 0, 0, 0, 0 } } },
+	}, 1, 11000, 1000 }.GetPlayer( "Messi" ); }, "Messi is not in Luton Town FC's list of players." );
 }
 
 std::vector<std::string> TTeam::ObtainedResults() const noexcept
