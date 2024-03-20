@@ -4,6 +4,7 @@
 
 #include "football/CLineupTypes.h"
 
+#include <random>
 #include <span>
 
 namespace futsim::football
@@ -17,6 +18,7 @@ class CLineup : public IJsonable
 protected:
 	using names = CLineupTypes::names;
 	using position_names = CLineupTypes::position_names;
+	using position_weights = CLineupTypes::position_weights;
 
 public:
 	/**
@@ -47,6 +49,16 @@ public:
 	//! Retrieves the substitute players.
 	std::span<const names::value_type> GetSubs() const noexcept;
 
+	/**
+	 * @brief Draws a random player using the given weights for each position.
+	 * @details The players in the same position have equal probabilities.
+	 * @param aGenerator RNG to use.
+	 * @param aPositionWeights Weight given to each position.
+	 * @return A view to the drawn player's name.
+	*/
+	std::string_view DrawPlayer( std::uniform_random_bit_generator auto& aGenerator,
+		const position_weights& aPositionWeights ) const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Lineup";
 	//! JSON key for the GK.
@@ -71,5 +83,18 @@ private:
 	//! Lined up players by position.
 	position_names mPlayersLineup;
 };
+
+std::string_view CLineup::DrawPlayer( std::uniform_random_bit_generator auto& aGenerator,
+	const position_weights& aPositionWeights ) const noexcept
+{
+	std::vector<double> playerWeights;
+	for( auto positionWeightIt = aPositionWeights.cbegin(); const auto & positionPlayers : mPlayersLineup )
+		std::fill_n( std::back_inserter( playerWeights ), positionPlayers.size(), *( positionWeightIt++ ) );
+	const auto& drawn = std::discrete_distribution<position_names::size_type>{ playerWeights.cbegin(), playerWeights.cend() }( aGenerator );
+
+	return *( mPlayersLineup | std::ranges::views::join
+		| std::ranges::views::take( drawn + 1 )
+		| std::ranges::views::drop( drawn ) ).begin();
+}
 
 } // futsim namespace
