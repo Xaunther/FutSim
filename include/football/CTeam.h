@@ -74,6 +74,14 @@ public:
 	//! Retrieves the \copybrief mPlayers
 	std::span<const CPlayer> GetPlayers() const noexcept;
 
+	/**
+	 * @brief Retrieves a player by its known name.
+	 * @details Throws an exception if no player is found.
+	 * @param aKnownName Known name.
+	*/
+	//! Retrieves a player by its known name.
+	const CPlayer& GetPlayer( const std::string_view aKnownName ) const;
+
 	//! Retrieves the \copybrief mSupportFactor
 	const support_factor& GetSupportFactor() const noexcept;
 

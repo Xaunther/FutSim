@@ -111,6 +111,15 @@ std::span<const CPlayer> CTeam::GetPlayers() const noexcept
 	return mPlayers;
 }
 
+const CPlayer& CTeam::GetPlayer( const std::string_view aKnownName ) const
+{
+	const auto& found = std::ranges::find_if( mPlayers,
+		[ &aKnownName ]( const auto& aPlayer ) {return aPlayer.GetKnownName() == aKnownName;} );
+	if( found == mPlayers.cend() )
+		throw std::invalid_argument{ std::string{ aKnownName } + " is not in " + mName + "'s list of players." };
+	return *found;
+}
+
 const CTeam::support_factor& CTeam::GetSupportFactor() const noexcept
 {
 	return mSupportFactor;
