@@ -39,7 +39,7 @@ std::vector<std::string> TTeamStrategy::ObtainedResults() const noexcept
 		} )" ) } )
 	{
 		result.push_back( std::string{ CTeamStrategy::JSON_TACTIC } + ": " + std::string{ teamStrategy.GetTacticID() } );
-		result.push_back( std::string{ CLineup::JSON_KEY } + ": " + teamStrategy.GetLineup().GetPlayers( E_PLAYER_POSITION::GK ).front() );
+		result.push_back( std::string{ CLineup::JSON_KEY } + ": " + teamStrategy.GetLineup().GetPlayers< E_PLAYER_POSITION::GK >().front() );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, teamStrategy );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

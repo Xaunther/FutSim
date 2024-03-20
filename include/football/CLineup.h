@@ -45,9 +45,10 @@ public:
 
 	/**
 	 * @brief Retrieves the players at a certain position.
-	 * @param aPlayerPosition Position.
+	 * @tparam tPlayerPosition Position.
 	*/
-	std::span<const names::value_type> GetPlayers( const E_PLAYER_POSITION& aPlayerPosition ) const noexcept;
+	template <E_PLAYER_POSITION tPlayerPosition>
+	std::span<const names::value_type> GetPlayers() const noexcept;
 
 	//! Retrieves the substitute players.
 	std::span<const names::value_type> GetSubs() const noexcept;

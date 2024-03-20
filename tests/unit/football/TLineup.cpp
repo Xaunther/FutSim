@@ -62,21 +62,21 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CLineup::JSON_GK } + ": " + lineup.GetPlayers( E_PLAYER_POSITION::GK ).front() );
+		result.push_back( std::string{ CLineup::JSON_GK } + ": " + lineup.GetPlayers< E_PLAYER_POSITION::GK >().front() );
 		result.push_back( std::string{ CLineup::JSON_DFS } + ":" );
-		for( const auto& player : lineup.GetPlayers( E_PLAYER_POSITION::DF ) )
+		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::DF >() )
 			result.push_back( player );
 		result.push_back( std::string{ CLineup::JSON_DMS } + ":" );
-		for( const auto& player : lineup.GetPlayers( E_PLAYER_POSITION::DM ) )
+		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::DM >() )
 			result.push_back( player );
 		result.push_back( std::string{ CLineup::JSON_MFS } + ":" );
-		for( const auto& player : lineup.GetPlayers( E_PLAYER_POSITION::MF ) )
+		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::MF >() )
 			result.push_back( player );
 		result.push_back( std::string{ CLineup::JSON_AMS } + ":" );
-		for( const auto& player : lineup.GetPlayers( E_PLAYER_POSITION::AM ) )
+		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::AM >() )
 			result.push_back( player );
 		result.push_back( std::string{ CLineup::JSON_FWS } + ":" );
-		for( const auto& player : lineup.GetPlayers( E_PLAYER_POSITION::FW ) )
+		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::FW >() )
 			result.push_back( player );
 		result.push_back( std::string{ CLineup::JSON_SUBS } + ":" );
 		for( const auto& player : lineup.GetSubs() )

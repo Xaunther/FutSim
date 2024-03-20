@@ -114,18 +114,18 @@ const CLineupConfiguration::optional_player_count& CLineupConfiguration::GetBenc
 
 const CLineup& CLineupConfiguration::CheckLineup( const CLineup& aLineup ) const try
 {
-	CheckLineupPosition( aLineup.GetPlayers( E_PLAYER_POSITION::DF ).size(), mDFRange, "DF" );
-	CheckLineupPosition( aLineup.GetPlayers( E_PLAYER_POSITION::DM ).size()
-		+ aLineup.GetPlayers( E_PLAYER_POSITION::MF ).size()
-		+ aLineup.GetPlayers( E_PLAYER_POSITION::AM ).size(), mMFRange, "DM+MF+AM" );
-	CheckLineupPosition( aLineup.GetPlayers( E_PLAYER_POSITION::FW ).size(), mFWRange, "FW" );
+	CheckLineupPosition( aLineup.GetPlayers< E_PLAYER_POSITION::DF >().size(), mDFRange, "DF" );
+	CheckLineupPosition( aLineup.GetPlayers< E_PLAYER_POSITION::DM >().size()
+		+ aLineup.GetPlayers< E_PLAYER_POSITION::MF >().size()
+		+ aLineup.GetPlayers< E_PLAYER_POSITION::AM >().size(), mMFRange, "DM+MF+AM" );
+	CheckLineupPosition( aLineup.GetPlayers< E_PLAYER_POSITION::FW >().size(), mFWRange, "FW" );
 	CheckMaxLineupPosition( aLineup.GetSubs().size(), mBenchedPlayersCount, "subs" );
-	CheckLineupPosition( aLineup.GetPlayers( E_PLAYER_POSITION::GK ).size()
-		+ aLineup.GetPlayers( E_PLAYER_POSITION::DF ).size()
-		+ aLineup.GetPlayers( E_PLAYER_POSITION::DM ).size()
-		+ aLineup.GetPlayers( E_PLAYER_POSITION::MF ).size()
-		+ aLineup.GetPlayers( E_PLAYER_POSITION::AM ).size()
-		+ aLineup.GetPlayers( E_PLAYER_POSITION::FW ).size(), { mMinPlayerCount, MAX_PLAYERS }, "players" );
+	CheckLineupPosition( aLineup.GetPlayers< E_PLAYER_POSITION::GK >().size()
+		+ aLineup.GetPlayers< E_PLAYER_POSITION::DF >().size()
+		+ aLineup.GetPlayers< E_PLAYER_POSITION::DM >().size()
+		+ aLineup.GetPlayers< E_PLAYER_POSITION::MF >().size()
+		+ aLineup.GetPlayers< E_PLAYER_POSITION::AM >().size()
+		+ aLineup.GetPlayers< E_PLAYER_POSITION::FW >().size(), { mMinPlayerCount, MAX_PLAYERS }, "players" );
 	return aLineup;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the lineup against the configuration." )
