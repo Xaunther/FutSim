@@ -45,6 +45,11 @@ void CLineup::JSON( json& aJSON ) const noexcept
 		AddToJSONKey( aJSON, players, JSON_SUBS );
 }
 
+const CLineup::position_names& CLineup::GetPlayers() const noexcept
+{
+	return mPlayersLineup;
+}
+
 std::span<const CLineup::names::value_type> CLineup::GetPlayers( const E_PLAYER_POSITION& aPlayerPosition ) const noexcept
 {
 	return mPlayersLineup[ static_cast< position_names::size_type >( aPlayerPosition ) ];
