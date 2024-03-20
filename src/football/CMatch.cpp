@@ -70,4 +70,7 @@ template <bool tHomeTeam> const CTeamStrategy& CMatch::CheckTeamStrategy( const 
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the team strategy against the match definition." )
 
+template const CTeamStrategy& CMatch::CheckTeamStrategy<true>( const CTeamStrategy& aTeamStrategy ) const;
+template const CTeamStrategy& CMatch::CheckTeamStrategy<false>( const CTeamStrategy& aTeamStrategy ) const;
+
 } // futsim::football namespace
