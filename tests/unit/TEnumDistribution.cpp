@@ -35,8 +35,9 @@ std::vector<std::string> TEnumDistribution::ObtainedResults() const noexcept
 	std::vector<std::string> result;
 
 	const std::array<double, 3> weightArray{ 1, 1, 1 };
+	std::mt19937 rng{ 1234 };
 
-	for( const auto& enumDistribution : {
+	for( auto enumDistribution : {
 		CEnumDistribution<myEnum>{},
 		CEnumDistribution<myEnum>{ weightArray.cbegin(), weightArray.cend() },
 		CEnumDistribution<myEnum>{ { 1, 2, 3 } },
@@ -49,7 +50,8 @@ std::vector<std::string> TEnumDistribution::ObtainedResults() const noexcept
 		result.push_back( "Probabilities:" );
 		for( const auto& probability : enumDistribution.probabilities() )
 			result.push_back( std::to_string( probability ) );
-
+		enumDistribution( rng );
+		enumDistribution( rng, enumDistribution.param() );
 	}
 	return result;
 }
