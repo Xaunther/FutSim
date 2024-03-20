@@ -22,13 +22,32 @@ void TFoulState::TestExceptions() const
 std::vector<std::string> TFoulState::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
+
+	std::mt19937 rng{ 1234 };
+
+	for( const auto& foulState : std::initializer_list{
+		CFoulState{ CMatchConfiguration{}, CTeamStrategy{ "A", CLineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Ter Stegen" } } } }, rng } } )
+	{
+		result.push_back( std::string{ CFoulState::JSON_COMMIITER } + ": " + std::string{ foulState.GetCommitter() } );
+		result.push_back( std::string{ CFoulState::JSON_OUTCOME } + ": " + std::string{ ToString( foulState.GetOutcome() ) } );
+		futsim::IJsonableTypes::json outputJSON;
+		AddToJSONKey( outputJSON, foulState );
+		result.push_back( outputJSON.dump( 1, '\t' ) );
+	}
+
 	return result;
 }
 
 std::vector<std::string> TFoulState::ExpectedResults() const noexcept
 {
-	std::vector<std::string> result;
-	result.reserve( 2 * result.size() );
-	result.insert( result.cend(), result.cbegin(), result.cend() );
-	return result;
+	return std::vector<std::string>{
+		"Committer: Ter Stegen",
+			"Outcome: No card",
+			"{\n"
+			"	\"Foul state\": {\n"
+			"		\"Committer\": \"Ter Stegen\",\n"
+			"		\"Outcome\": \"No card\"\n"
+			"	}\n"
+			"}"
+	};
 }
