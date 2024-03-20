@@ -40,6 +40,9 @@ protected:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
+	//! Retrieves the \copybrief mPlayersLineup
+	const position_names& GetPlayers() const noexcept;
+
 	/**
 	 * @brief Retrieves the players at a certain position.
 	 * @param aPlayerPosition Position.
