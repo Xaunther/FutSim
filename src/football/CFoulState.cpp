@@ -1,9 +1,16 @@
 #include "football/CFoulState.h"
 
 #include "ExceptionUtils.h"
+#include "JsonUtils.h"
 
 namespace futsim::football
 {
+
+void CFoulState::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mCommitter, JSON_COMMIITER );
+	AddToJSONKey( aJSON, mOutcome, JSON_OUTCOME );
+}
 
 std::string_view CFoulState::GetCommitter() const noexcept
 {

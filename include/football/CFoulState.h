@@ -34,11 +34,25 @@ public:
 		std::uniform_random_bit_generator auto& aGenerator
 	) noexcept;
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mCommitter
 	std::string_view GetCommitter() const noexcept;
 
 	//! Retrieves the \copybrief mOutcome
 	const E_FOUL_DRAW_OUTCOME& GetOutcome() const noexcept;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Foul state";
+	//! JSON key for the \copybrief mCommitter
+	static inline constexpr std::string_view JSON_COMMIITER = "Committer";
+	//! JSON key for the \copybrief mOutcome
+	static inline constexpr std::string_view JSON_OUTCOME = "Outcome";
 
 private:
 	//! Player that committed the foul.
