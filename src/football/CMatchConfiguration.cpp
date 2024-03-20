@@ -113,14 +113,14 @@ const CDrawConfiguration& CMatchConfiguration::GetDrawConfiguration() const noex
 	return mDrawConfiguration;
 }
 
-const CTeamStrategy& CMatchConfiguration::CheckMatchStrategy( const CTeamStrategy& aMatchStrategy ) const try
+const CTeamStrategy& CMatchConfiguration::CheckTeamStrategy( const CTeamStrategy& aTeamStrategy ) const try
 {
-	if( !mTacticsConfiguration.GetTacticConfigurations().contains( aMatchStrategy.GetTacticID().data() ) )
-		throw std::invalid_argument( "The tactic '" + std::string{ aMatchStrategy.GetTacticID() } + "' has not been configured." );
-	mLineupConfiguration.CheckLineup( aMatchStrategy.GetLineup() );
-	return aMatchStrategy;
+	if( !mTacticsConfiguration.GetTacticConfigurations().contains( aTeamStrategy.GetTacticID().data() ) )
+		throw std::invalid_argument( "The tactic '" + std::string{ aTeamStrategy.GetTacticID() } + "' has not been configured." );
+	mLineupConfiguration.CheckLineup( aTeamStrategy.GetLineup() );
+	return aTeamStrategy;
 }
-FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the match strategy against the configuration." )
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the team strategy against the configuration." )
 
 namespace
 {

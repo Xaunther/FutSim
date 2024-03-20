@@ -9,7 +9,7 @@ namespace futsim::football
 {
 
 /**
- * @brief Class that defines a match strategy
+ * @brief Class that defines a team strategy.
 */
 class CTeamStrategy : public IJsonable
 {
@@ -47,7 +47,7 @@ public:
 	const CLineup& GetLineup() const noexcept;
 
 	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Match strategy";
+	static inline constexpr std::string_view JSON_KEY = "Team strategy";
 	//! JSON key for the \copybrief mTacticID
 	static inline constexpr std::string_view JSON_TACTIC = "Tactic";
 

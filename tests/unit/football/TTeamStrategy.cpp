@@ -15,10 +15,10 @@ void TTeamStrategy::TestExceptions() const
 {
 	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CTeamStrategy>( R"( {
-			"Match strategy": {}
+			"Team strategy": {}
 		} )" ); }, "key 'Tactic' not found" );
 	CheckException( []() { futsim::ValueFromJSONKeyString<CTeamStrategy>( R"( {
-			"Match strategy": {
+			"Team strategy": {
 				"Tactic": "A"
 			}
 		} )" ); }, "key 'Lineup' not found" );
@@ -27,10 +27,10 @@ void TTeamStrategy::TestExceptions() const
 std::vector<std::string> TTeamStrategy::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
-	for( const auto& matchStrategy : std::initializer_list<CTeamStrategy>{
+	for( const auto& teamStrategy : std::initializer_list<CTeamStrategy>{
 		CTeamStrategy{ "A", CLineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Ter Stegen" } } } },
 		futsim::ValueFromJSONKeyString<CTeamStrategy>( R"( {
-			"Match strategy": {
+			"Team strategy": {
 				"Tactic": "A",
 				"Lineup": {
 					"GK": [ "Ter Stegen" ]
@@ -38,10 +38,10 @@ std::vector<std::string> TTeamStrategy::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CTeamStrategy::JSON_TACTIC } + ": " + std::string{ matchStrategy.GetTacticID() } );
-		result.push_back( std::string{ CLineup::JSON_KEY } + ": " + matchStrategy.GetLineup().GetPlayers( E_PLAYER_POSITION::GK ).front() );
+		result.push_back( std::string{ CTeamStrategy::JSON_TACTIC } + ": " + std::string{ teamStrategy.GetTacticID() } );
+		result.push_back( std::string{ CLineup::JSON_KEY } + ": " + teamStrategy.GetLineup().GetPlayers( E_PLAYER_POSITION::GK ).front() );
 		futsim::IJsonableTypes::json outputJSON;
-		AddToJSONKey( outputJSON, matchStrategy );
+		AddToJSONKey( outputJSON, teamStrategy );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}
 	return result;
@@ -53,7 +53,7 @@ std::vector<std::string> TTeamStrategy::ExpectedResults() const noexcept
 		"Tactic: A",
 		"Lineup: Ter Stegen",
 		"{\n"
-		"	\"Match strategy\": {\n"
+		"	\"Team strategy\": {\n"
 		"		\"Tactic\": \"A\",\n"
 		"		\"Lineup\": {\n"
 		"			\"GK\": [\n"
