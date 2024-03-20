@@ -1,5 +1,7 @@
 #include "football/CMatch.h"
 
+#include "football/CMatchStrategy.h"
+
 #include "ExceptionUtils.h"
 #include "JsonUtils.h"
 #include "NameUtils.h"
@@ -57,5 +59,15 @@ std::string_view CMatch::GetReferee() const noexcept
 {
 	return mReferee;
 }
+
+template <bool tHomeTeam> const CMatchStrategy& CMatch::CheckMatchStrategy( const CMatchStrategy& aMatchStrategy ) const try
+{
+	if constexpr( tHomeTeam )
+		mHomeTeam.CheckLineup( aMatchStrategy.GetLineup() );
+	else
+		mAwayTeam.CheckLineup( aMatchStrategy.GetLineup() );
+	return aMatchStrategy;
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the match strategy against the match definition." )
 
 } // futsim::football namespace

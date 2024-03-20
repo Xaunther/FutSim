@@ -8,6 +8,8 @@
 namespace futsim::football
 {
 
+class CMatchStrategy;
+
 /**
  * @brief Class that defines a football match.
 */
@@ -55,6 +57,12 @@ public:
 
 	//! Retrieves the \copybrief mReferee
 	std::string_view GetReferee() const noexcept;
+
+	/**
+	 * @brief Checks the validity of a match strategy according to this match definition.
+	 * @param aMatchStrategy Match strategy to check.
+	*/
+	template <bool tHomeTeam> const CMatchStrategy& CheckMatchStrategy( const CMatchStrategy& aMatchStrategy ) const;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Match";
