@@ -15,7 +15,7 @@ void TFoulState::TestExceptions() const
 {
 	std::mt19937 rng{ 1234 };
 	// Test constructor
-	if( CFoulState{ CMatchConfiguration{}, CTeamStrategy{ "A", CLineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Ter Stegen" } } } }, rng }.GetCommitter() != "Ter Stegen" )
+	if( CFoulState{ CMatchConfiguration{}, CTeamStrategy{ "A", CLineup{ "Ter Stegen", {}, {}, {}, {}, {}, {} } }, rng }.GetCommitter() != "Ter Stegen" )
 		throw std::invalid_argument{ "The foul committer must be Ter Stegen." };
 }
 
@@ -26,7 +26,7 @@ std::vector<std::string> TFoulState::ObtainedResults() const noexcept
 	std::mt19937 rng{ 1234 };
 
 	for( const auto& foulState : std::initializer_list{
-		CFoulState{ CMatchConfiguration{}, CTeamStrategy{ "A", CLineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Ter Stegen" } } } }, rng } } )
+		CFoulState{ CMatchConfiguration{}, CTeamStrategy{ "A", CLineup{ "Ter Stegen", {}, {}, {}, {}, {}, {} } }, rng } } )
 	{
 		result.push_back( std::string{ CFoulState::JSON_COMMIITER } + ": " + std::string{ foulState.GetCommitter() } );
 		result.push_back( std::string{ CFoulState::JSON_OUTCOME } + ": " + std::string{ ToString( foulState.GetOutcome() ) } );

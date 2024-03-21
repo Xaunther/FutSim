@@ -176,7 +176,7 @@ void TTeam::TestExceptions() const
 
 	// Test CheckLineup
 	{
-		const CLineup lineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Ter Stegen" } } };
+		const CLineup lineup{ "Ter Stegen", {}, {}, {}, {}, {}, {} };
 		CheckException( [ &lineup ]() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
 			CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 60, 1 }, { 0, 0, 0, 0 } } },
 			}, 1, 11000, 1000 }.CheckLineup( lineup ); }, "Error checking the lineup against the team." );

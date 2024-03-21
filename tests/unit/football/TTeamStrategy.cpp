@@ -28,7 +28,7 @@ std::vector<std::string> TTeamStrategy::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& teamStrategy : std::initializer_list<CTeamStrategy>{
-		CTeamStrategy{ "A", CLineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Ter Stegen" } } } },
+		CTeamStrategy{ "A", CLineup{  "Ter Stegen", {}, {}, {}, {}, {}, {} } },
 		futsim::ValueFromJSONKeyString<CTeamStrategy>( R"( {
 			"Team strategy": {
 				"Tactic": "A",

@@ -110,7 +110,7 @@ void TMatch::TestExceptions() const
 
 	// Test CheckTeamStrategy
 	{
-		const CTeamStrategy teamStrategy{ "A", CLineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Ter Stegen" } } } };
+		const CTeamStrategy teamStrategy{ "A", CLineup{ "Ter Stegen", {}, {}, {}, {}, {}, {} } };
 		const CMatch match{ CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 2000 },
 				CTeam{ "Manchester City FC", "mci", "Pep Guardiola", {}, 1, 50000, 6000 },
 				CStadium{ "Camp Nou", 98000, 1 }, "Michael Oliver" };

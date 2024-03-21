@@ -16,16 +16,31 @@ namespace futsim::football
 class CLineup : public IJsonable
 {
 protected:
+	using name = CLineupTypes::name;
 	using names = CLineupTypes::names;
-	using position_names = CLineupTypes::position_names;
 	using position_weights = CLineupTypes::position_weights;
+	using position_names = std::array<names, std::tuple_size_v<position_weights>>;
 
 public:
 	/**
-	 * @brief Member constructor.
-	 * @param aPlayersLineup \ref mPlayersLineup
+	 * @brief Constructor from the players in each position.
+	 * @param aGK Goalkeeper.
+	 * @param aDFs Defenders.
+	 * @param aDMs Defensive midfielders.
+	 * @param aMFs Midfielders.
+	 * @param aAMs Attacking midfielders.
+	 * @param aFWs Forwards.
+	 * @param aSubs Substitutes.
 	*/
-	explicit CLineup( const position_names& aPlayersLineup );
+	explicit CLineup(
+		const std::string_view aGK,
+		const std::span<const name> aDFs,
+		const std::span<const name> aDMs,
+		const std::span<const name> aMFs,
+		const std::span<const name> aAMs,
+		const std::span<const name> aFWs,
+		const std::span<const name> aSubs
+	);
 
 	/**
 	 * @brief JSON constructor.
@@ -40,9 +55,6 @@ protected:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
-	//! Retrieves the \copybrief mPlayersLineup
-	const position_names& GetPlayers() const noexcept;
-
 	/**
 	 * @brief Retrieves the players at a certain position.
 	 * @tparam tPlayerPosition Position.
@@ -81,9 +93,6 @@ public:
 	static inline constexpr std::string_view JSON_SUBS = "Subs";
 
 private:
-	//! Checks the validity of the players lineup.
-	void CheckPlayersLineup() const;
-
 	//! Lined up players by position.
 	position_names mPlayersLineup;
 };

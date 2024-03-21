@@ -6,16 +6,31 @@
 namespace futsim::football
 {
 
-CLineup::CLineup( const position_names& aPlayersLineup ) try :
-	mPlayersLineup( aPlayersLineup )
+CLineup::CLineup(
+	const std::string_view aGK,
+	const std::span<const name> aDFs,
+	const std::span<const name> aDMs,
+	const std::span<const name> aMFs,
+	const std::span<const name> aAMs,
+	const std::span<const name> aFWs,
+	const std::span<const name> aSubs
+) try :
+	mPlayersLineup{
+		names{ aGK.data() },
+		{ aDFs.begin(), aDFs.end() },
+		{ aDMs.begin(), aDMs.end() },
+		{ aMFs.begin(), aMFs.end() },
+		{ aAMs.begin(), aAMs.end() },
+		{ aFWs.begin(), aFWs.end() },
+		{ aSubs.begin(), aSubs.end() },
+}
 {
-	CheckPlayersLineup();
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the lineup." )
 
 CLineup::CLineup( const json& aJSON ) try :
 	mPlayersLineup( {
-		ValueFromRequiredJSONKey<names>( aJSON, CLineup::JSON_GK ),
+		names{ ValueFromRequiredJSONKey<name>( aJSON, CLineup::JSON_GK ) },
 		ValueFromOptionalJSONKey<names>( aJSON, CLineup::JSON_DFS ),
 		ValueFromOptionalJSONKey<names>( aJSON, CLineup::JSON_DMS ),
 		ValueFromOptionalJSONKey<names>( aJSON, CLineup::JSON_MFS ),
@@ -24,7 +39,6 @@ CLineup::CLineup( const json& aJSON ) try :
 		ValueFromOptionalJSONKey<names>( aJSON, CLineup::JSON_SUBS ),
 		} )
 {
-	CheckPlayersLineup();
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the lineup from JSON." )
 
@@ -45,11 +59,6 @@ void CLineup::JSON( json& aJSON ) const noexcept
 		AddToJSONKey( aJSON, players, JSON_SUBS );
 }
 
-const CLineup::position_names& CLineup::GetPlayers() const noexcept
-{
-	return mPlayersLineup;
-}
-
 template <E_PLAYER_POSITION tPlayerPosition>
 std::span<const CLineup::names::value_type> CLineup::GetPlayers() const noexcept
 {
@@ -67,12 +76,5 @@ std::span<const CLineup::names::value_type> CLineup::GetSubs() const noexcept
 {
 	return mPlayersLineup.back();
 }
-
-void CLineup::CheckPlayersLineup() const try
-{
-	if( GetPlayers< E_PLAYER_POSITION::GK >().size() != 1 )
-		throw std::invalid_argument{ "There has to be exactly 1 GK." };
-}
-FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the players lineup." )
 
 } // futsim::football namespace
