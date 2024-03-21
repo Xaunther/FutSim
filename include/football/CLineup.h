@@ -73,8 +73,11 @@ public:
 	*/
 	std::string_view GetPlayer( const names::size_type& aIndex ) const;
 
-	//! Gets the number of players currently playing.
-	names::size_type GetPlayersInPlayCount() const noexcept;
+	/**
+	 * @brief Gets the number of players.
+	 * @tparam tUseSubs Whether the subs must be counted too.
+	*/
+	template <bool tUseSubs> names::size_type GetPlayersCount() const noexcept;
 
 	/**
 	 * @brief Applies the given predicate to every player currently playing.

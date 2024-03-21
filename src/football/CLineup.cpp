@@ -102,10 +102,13 @@ std::string_view CLineup::GetPlayer( const names::size_type& aIndex ) const
 		throw std::out_of_range{ "Player index " + std::to_string( aIndex ) + " out of range." };
 }
 
-CLineup::names::size_type CLineup::GetPlayersInPlayCount() const noexcept
+template <bool tUseSubs> CLineup::names::size_type CLineup::GetPlayersCount() const noexcept
 {
-	return std::ranges::distance( CreatePlayersView<false>( mPlayersLineup ) );
+	return std::ranges::distance( CreatePlayersView<tUseSubs>( mPlayersLineup ) );
 }
+
+template CLineup::names::size_type CLineup::GetPlayersCount<true>() const noexcept;
+template CLineup::names::size_type CLineup::GetPlayersCount<false>() const noexcept;
 
 template <bool tUseSubs> void CLineup::ForEachPlayer( const player_predicate& aPredicate ) const
 {
