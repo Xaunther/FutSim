@@ -20,6 +20,7 @@ protected:
 	using position_weights = CLineupTypes::position_weights;
 	using position_names = std::array<names, std::tuple_size_v<position_weights>>;
 	template<E_PLAYER_POSITION tPlayerPosition> using players = CLineupTypes::players<tPlayerPosition>;
+	using player_predicate = CLineupTypes::player_predicate;
 
 public:
 	/**
@@ -67,6 +68,13 @@ public:
 
 	//! Gets the number of players currently playing.
 	names::size_type GetPlayersInPlayCount() const noexcept;
+
+	/**
+	 * @brief Applies the given predicate to every player currently playing.
+	 * @param aPredicate Player predicate.
+	 * @tparam tUseSubs Whether the predicate must be applied to the subs too.
+	*/
+	template <bool tUseSubs> void ForEachPlayer( const player_predicate& aPredicate ) const;
 
 	/**
 	 * @brief Draws a random player using the given weights for each position.

@@ -6,6 +6,20 @@
 namespace futsim::football
 {
 
+namespace
+{
+
+template <bool tUseSubs> auto CreatePlayersView( const auto& aPlayersLineup ) noexcept
+{
+	if constexpr( tUseSubs )
+		return aPlayersLineup | std::ranges::views::join;
+	else
+		return aPlayersLineup | std::ranges::views::take( static_cast< CLineupTypes::names::size_type >( E_PLAYER_POSITION::FW ) + 1 )
+		| std::ranges::views::join;
+}
+
+} // anonymous namespace
+
 CLineup::CLineup(
 	const std::string_view aGK,
 	const std::span<const name> aDFs,
@@ -82,8 +96,15 @@ std::span<const CLineup::name> CLineup::GetSubs() const noexcept
 
 CLineup::names::size_type CLineup::GetPlayersInPlayCount() const noexcept
 {
-	return std::ranges::distance( mPlayersLineup | std::ranges::views::take( static_cast< names::size_type >( E_PLAYER_POSITION::FW ) + 1 )
-		| std::ranges::views::join );
+	return std::ranges::distance( CreatePlayersView<false>( mPlayersLineup ) );
 }
+
+template <bool tUseSubs> void CLineup::ForEachPlayer( const player_predicate& aPredicate ) const
+{
+	std::ranges::for_each( CreatePlayersView<tUseSubs>( mPlayersLineup ), aPredicate );
+}
+
+template void CLineup::ForEachPlayer<true>( const player_predicate& aPredicate ) const;
+template void CLineup::ForEachPlayer<false>( const player_predicate& aPredicate ) const;
 
 } // futsim::football namespace

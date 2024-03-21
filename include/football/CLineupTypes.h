@@ -5,6 +5,7 @@
 #include "football/EPlayerPosition.h"
 
 #include <array>
+#include <functional>
 #include <span>
 #include <vector>
 
@@ -23,5 +24,8 @@ using position_weights = std::array<double, static_cast< std::size_t >( E_PLAYER
 //! Type for the list of players by position.
 template<E_PLAYER_POSITION tPlayerPosition> using players =
 std::conditional_t<tPlayerPosition == E_PLAYER_POSITION::GK, std::string_view, std::span<const name>>;
+
+//! Type for an indexed predicate.
+using player_predicate = std::function<void( const name& )>;
 
 } // futsim::football::CLineupTypes namespace
