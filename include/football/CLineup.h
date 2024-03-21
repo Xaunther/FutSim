@@ -67,24 +67,10 @@ public:
 	std::span<const name> GetSubs() const noexcept;
 
 	/**
-	 * @brief Retrieves the player with the given index.
-	 * @details The players are ordered in GK - DFs - DMs - MFs - AMs - FWs - Subs.
-	 * @param aIndex Player index.
-	*/
-	std::string_view GetPlayer( const names::size_type& aIndex ) const;
-
-	/**
-	 * @brief Gets the number of players.
+	 * @brief Creates a view of the players
 	 * @tparam tUseSubs Whether the subs must be counted too.
 	*/
-	template <bool tUseSubs> names::size_type GetPlayersCount() const noexcept;
-
-	/**
-	 * @brief Applies the given predicate to every player currently playing.
-	 * @param aPredicate Player predicate.
-	 * @tparam tUseSubs Whether the predicate must be applied to the subs too.
-	*/
-	template <bool tUseSubs> void ForEachPlayer( const player_predicate& aPredicate ) const;
+	template <bool tUseSubs> auto CreatePlayersView() const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Lineup";
@@ -107,5 +93,14 @@ private:
 	//! Lined up players by position.
 	position_names mPlayersLineup;
 };
+
+template <bool tUseSubs> auto CLineup::CreatePlayersView() const noexcept
+{
+	if constexpr( tUseSubs )
+		return mPlayersLineup | std::ranges::views::join;
+	else
+		return mPlayersLineup | std::ranges::views::take( static_cast< names::size_type >( E_PLAYER_POSITION::FW ) + 1 )
+		| std::ranges::views::join;
+}
 
 } // futsim namespace

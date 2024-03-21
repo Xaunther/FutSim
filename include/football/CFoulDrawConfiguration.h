@@ -108,8 +108,9 @@ private:
 std::string_view CFoulDrawConfiguration::DrawFoulCommitter( const CLineup& aLineup,
 	std::uniform_random_bit_generator auto& aGenerator ) const noexcept
 {
-	return aLineup.GetPlayer( std::uniform_int_distribution<CLineupTypes::names::size_type>{
-		0, aLineup.GetPlayersCount<false>() - 1 }( aGenerator ) );
+	const auto& players = aLineup.CreatePlayersView<false>();
+	return *( players | std::ranges::views::drop( std::uniform_int_distribution<CLineupTypes::names::size_type>{
+		0, static_cast< CLineupTypes::names::size_type >( std::ranges::distance( players ) - 1 ) }( aGenerator ) ) ).begin();
 }
 
 } // futsim namespace

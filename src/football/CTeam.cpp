@@ -140,7 +140,7 @@ CTeam::attendance CTeam::GenerateAttendance( std::uniform_random_bit_generator a
 
 const CLineup& CTeam::CheckLineup( const CLineup& aLineup ) const try
 {
-	aLineup.ForEachPlayer<true>( [ this ]( const auto& aPlayer ) { GetPlayer( aPlayer ); } );
+	std::ranges::for_each( aLineup.CreatePlayersView<true>(), [ this ]( const auto& aPlayer ) { GetPlayer( aPlayer ); } );
 	return aLineup;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the lineup against the team." )
