@@ -120,7 +120,7 @@ const CLineup& CLineupConfiguration::CheckLineup( const CLineup& aLineup ) const
 		+ aLineup.GetPlayers< E_PLAYER_POSITION::AM >().size(), mMFRange, "DM+MF+AM" );
 	CheckLineupPosition( aLineup.GetPlayers< E_PLAYER_POSITION::FW >().size(), mFWRange, "FW" );
 	CheckMaxLineupPosition( aLineup.GetSubs().size(), mBenchedPlayersCount, "subs" );
-	CheckLineupPosition( aLineup.GetPlayers< E_PLAYER_POSITION::GK >().size()
+	CheckLineupPosition( 1 // GK
 		+ aLineup.GetPlayers< E_PLAYER_POSITION::DF >().size()
 		+ aLineup.GetPlayers< E_PLAYER_POSITION::DM >().size()
 		+ aLineup.GetPlayers< E_PLAYER_POSITION::MF >().size()
