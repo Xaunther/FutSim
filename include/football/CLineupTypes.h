@@ -5,6 +5,7 @@
 #include "football/EPlayerPosition.h"
 
 #include <array>
+#include <span>
 #include <vector>
 
 namespace futsim::football::CLineupTypes

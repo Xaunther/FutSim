@@ -5,7 +5,6 @@
 #include "football/CLineupTypes.h"
 
 #include <random>
-#include <span>
 
 namespace futsim::football
 {
