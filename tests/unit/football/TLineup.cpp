@@ -17,11 +17,6 @@ void TLineup::TestExceptions() const
 	CheckException( []() { futsim::ValueFromJSONKeyString<CLineup>( R"( {
 			"Lineup": {}
 		} )" ); }, "key 'GK' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CLineup>( R"( {
-			"Lineup": {
-				"GK": []
-			}
-		} )" ); }, "There has to be exactly 1 GK." );
 
 	// Test DrawPlayer method
 	{
@@ -50,7 +45,7 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 			CLineupTypes::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas" } },
 		futsim::ValueFromJSONKeyString<CLineup>( R"( {
 			"Lineup": {
-				"GK": [ "Kelleher" ],
+				"GK": "Kelleher",
 				"DFs": [ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" ],
 				"DMs": [ "Endo" ],
 				"MFs": [ "Mac Allister", "Szoboszlai" ],
@@ -59,7 +54,7 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CLineup::JSON_GK } + ": " + lineup.GetPlayers< E_PLAYER_POSITION::GK >().front() );
+		result.push_back( std::string{ CLineup::JSON_GK } + ": " + std::string{ lineup.GetPlayers< E_PLAYER_POSITION::GK >() } );
 		result.push_back( std::string{ CLineup::JSON_DFS } + ":" );
 		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::DF >() )
 			result.push_back( player );
@@ -116,9 +111,7 @@ std::vector<std::string> TLineup::ExpectedResults() const noexcept
 		"Koumas",
 		"{\n"
 		"	\"Lineup\": {\n"
-		"		\"GK\": [\n"
-		"			\"Kelleher\"\n"
-		"		],\n"
+		"		\"GK\": \"Kelleher\",\n"
 		"		\"DFs\": [\n"
 		"			\"Bradley\",\n"
 		"			\"Quansah\",\n"
