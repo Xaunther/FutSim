@@ -80,4 +80,10 @@ std::span<const CLineup::name> CLineup::GetSubs() const noexcept
 	return mPlayersLineup.back();
 }
 
+CLineup::names::size_type CLineup::GetPlayersInPlayCount() const noexcept
+{
+	return std::ranges::distance( mPlayersLineup | std::ranges::views::take( static_cast< names::size_type >( E_PLAYER_POSITION::FW ) + 1 )
+		| std::ranges::views::join );
+}
+
 } // futsim::football namespace

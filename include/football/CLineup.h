@@ -65,6 +65,9 @@ public:
 	//! Retrieves the substitute players.
 	std::span<const name> GetSubs() const noexcept;
 
+	//! Gets the number of players currently playing.
+	names::size_type GetPlayersInPlayCount() const noexcept;
+
 	/**
 	 * @brief Draws a random player using the given weights for each position.
 	 * @details The players in the same position have equal probabilities.
