@@ -64,7 +64,7 @@ public:
 	players<tPlayerPosition> GetPlayers() const noexcept;
 
 	//! Retrieves the substitute players.
-	std::span<const names::value_type> GetSubs() const noexcept;
+	std::span<const name> GetSubs() const noexcept;
 
 	/**
 	 * @brief Draws a random player using the given weights for each position.

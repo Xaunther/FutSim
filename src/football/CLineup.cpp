@@ -75,7 +75,7 @@ template CLineup::players<E_PLAYER_POSITION::MF> CLineup::GetPlayers<E_PLAYER_PO
 template CLineup::players<E_PLAYER_POSITION::AM> CLineup::GetPlayers<E_PLAYER_POSITION::AM>() const noexcept;
 template CLineup::players<E_PLAYER_POSITION::FW> CLineup::GetPlayers<E_PLAYER_POSITION::FW>() const noexcept;
 
-std::span<const CLineup::names::value_type> CLineup::GetSubs() const noexcept
+std::span<const CLineup::name> CLineup::GetSubs() const noexcept
 {
 	return mPlayersLineup.back();
 }
