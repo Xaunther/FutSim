@@ -20,6 +20,7 @@ protected:
 	using names = CLineupTypes::names;
 	using position_weights = CLineupTypes::position_weights;
 	using position_names = std::array<names, std::tuple_size_v<position_weights>>;
+	template<E_PLAYER_POSITION tPlayerPosition> using players = CLineupTypes::players<tPlayerPosition>;
 
 public:
 	/**
@@ -60,7 +61,7 @@ public:
 	 * @tparam tPlayerPosition Position.
 	*/
 	template <E_PLAYER_POSITION tPlayerPosition>
-	std::span<const names::value_type> GetPlayers() const noexcept;
+	players<tPlayerPosition> GetPlayers() const noexcept;
 
 	//! Retrieves the substitute players.
 	std::span<const names::value_type> GetSubs() const noexcept;

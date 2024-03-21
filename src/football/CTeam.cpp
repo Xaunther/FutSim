@@ -141,7 +141,7 @@ CTeam::attendance CTeam::GenerateAttendance( std::uniform_random_bit_generator a
 const CLineup& CTeam::CheckLineup( const CLineup& aLineup ) const try
 {
 	const auto getPlayer = [ this ]( const auto& aPlayer ) { GetPlayer( aPlayer ); };
-	std::ranges::for_each( aLineup.GetPlayers< E_PLAYER_POSITION::GK >(), getPlayer );
+	GetPlayer( aLineup.GetPlayers< E_PLAYER_POSITION::GK >() );
 	std::ranges::for_each( aLineup.GetPlayers< E_PLAYER_POSITION::DF >(), getPlayer );
 	std::ranges::for_each( aLineup.GetPlayers< E_PLAYER_POSITION::DM >(), getPlayer );
 	std::ranges::for_each( aLineup.GetPlayers< E_PLAYER_POSITION::MF >(), getPlayer );

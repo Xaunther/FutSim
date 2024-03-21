@@ -60,17 +60,20 @@ void CLineup::JSON( json& aJSON ) const noexcept
 }
 
 template <E_PLAYER_POSITION tPlayerPosition>
-std::span<const CLineup::names::value_type> CLineup::GetPlayers() const noexcept
+CLineup::players<tPlayerPosition> CLineup::GetPlayers() const noexcept
 {
-	return mPlayersLineup[ static_cast< position_names::size_type >( tPlayerPosition ) ];
+	if constexpr( tPlayerPosition == E_PLAYER_POSITION::GK )
+		return mPlayersLineup.front().front();
+	else
+		return mPlayersLineup[ static_cast< position_names::size_type >( tPlayerPosition ) ];
 }
 
-template std::span<const CLineup::names::value_type> CLineup::GetPlayers<E_PLAYER_POSITION::GK>() const noexcept;
-template std::span<const CLineup::names::value_type> CLineup::GetPlayers<E_PLAYER_POSITION::DF>() const noexcept;
-template std::span<const CLineup::names::value_type> CLineup::GetPlayers<E_PLAYER_POSITION::DM>() const noexcept;
-template std::span<const CLineup::names::value_type> CLineup::GetPlayers<E_PLAYER_POSITION::MF>() const noexcept;
-template std::span<const CLineup::names::value_type> CLineup::GetPlayers<E_PLAYER_POSITION::AM>() const noexcept;
-template std::span<const CLineup::names::value_type> CLineup::GetPlayers<E_PLAYER_POSITION::FW>() const noexcept;
+template CLineup::players<E_PLAYER_POSITION::GK> CLineup::GetPlayers<E_PLAYER_POSITION::GK>() const noexcept;
+template CLineup::players<E_PLAYER_POSITION::DF> CLineup::GetPlayers<E_PLAYER_POSITION::DF>() const noexcept;
+template CLineup::players<E_PLAYER_POSITION::DM> CLineup::GetPlayers<E_PLAYER_POSITION::DM>() const noexcept;
+template CLineup::players<E_PLAYER_POSITION::MF> CLineup::GetPlayers<E_PLAYER_POSITION::MF>() const noexcept;
+template CLineup::players<E_PLAYER_POSITION::AM> CLineup::GetPlayers<E_PLAYER_POSITION::AM>() const noexcept;
+template CLineup::players<E_PLAYER_POSITION::FW> CLineup::GetPlayers<E_PLAYER_POSITION::FW>() const noexcept;
 
 std::span<const CLineup::names::value_type> CLineup::GetSubs() const noexcept
 {
