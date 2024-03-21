@@ -66,6 +66,13 @@ public:
 	//! Retrieves the substitute players.
 	std::span<const name> GetSubs() const noexcept;
 
+	/**
+	 * @brief Retrieves the player with the given index.
+	 * @details The players are ordered in GK - DFs - DMs - MFs - AMs - FWs - Subs.
+	 * @param aIndex Player index.
+	*/
+	std::string_view GetPlayer( const names::size_type& aIndex ) const;
+
 	//! Gets the number of players currently playing.
 	names::size_type GetPlayersInPlayCount() const noexcept;
 

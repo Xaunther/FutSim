@@ -94,6 +94,14 @@ std::span<const CLineup::name> CLineup::GetSubs() const noexcept
 	return mPlayersLineup.back();
 }
 
+std::string_view CLineup::GetPlayer( const names::size_type& aIndex ) const
+{
+	if( auto player = CreatePlayersView<true>( mPlayersLineup ) | std::ranges::views::drop( aIndex ) )
+		return *player.begin();
+	else
+		throw std::out_of_range{ "Player index " + std::to_string( aIndex ) + " out of range." };
+}
+
 CLineup::names::size_type CLineup::GetPlayersInPlayCount() const noexcept
 {
 	return std::ranges::distance( CreatePlayersView<false>( mPlayersLineup ) );
