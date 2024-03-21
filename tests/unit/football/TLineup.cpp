@@ -17,6 +17,10 @@ void TLineup::TestExceptions() const
 	CheckException( []() { futsim::ValueFromJSONKeyString<CLineup>( R"( {
 			"Lineup": {}
 		} )" ); }, "key 'GK' not found" );
+
+	// Test GetPlayer method
+	CheckException( []() { CLineup{ "Ter Stegen", {}, {}, {}, {}, {}, {} }.GetPlayer( 2 ); },
+		"Player index 2 out of range." );
 }
 
 std::vector<std::string> TLineup::ObtainedResults() const noexcept
@@ -59,6 +63,13 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 		result.push_back( std::string{ CLineup::JSON_SUBS } + ":" );
 		for( const auto& player : lineup.GetSubs() )
 			result.push_back( player );
+		result.push_back( "Player count: " + std::to_string( lineup.GetPlayersCount<true>() ) );
+		result.push_back( "Player count without subs: " + std::to_string( lineup.GetPlayersCount<false>() ) );
+		result.push_back( "GK: " + std::string{ lineup.GetPlayer( 0 ) } );
+		result.push_back( "Playing players:" );
+		lineup.ForEachPlayer<false>( [ &result ]( const auto& aPlayer ) { result.push_back( aPlayer ); } );
+		result.push_back( "All players:" );
+		lineup.ForEachPlayer<true>( [ &result ]( const auto& aPlayer ) { result.push_back( aPlayer ); } );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, lineup );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
@@ -86,6 +97,42 @@ std::vector<std::string> TLineup::ExpectedResults() const noexcept
 		"Darwin Núñez",
 		"Luis Díaz",
 		"Subs:",
+		"Salah",
+		"Gakpo",
+		"Robertson",
+		"Adrián",
+		"Tsimikas",
+		"Bobby Clark",
+		"McConnell",
+		"Nallo",
+		"Koumas",
+		"Player count: 20",
+		"Player count without subs: 11",
+		"GK: Kelleher",
+		"Playing players:",
+		"Kelleher",
+		"Bradley",
+		"Quansah",
+		"Van Dijk",
+		"Joe Gomez",
+		"Endo",
+		"Mac Allister",
+		"Szoboszlai",
+		"Elliot",
+		"Darwin Núñez",
+		"Luis Díaz",
+		"All players:",
+		"Kelleher",
+		"Bradley",
+		"Quansah",
+		"Van Dijk",
+		"Joe Gomez",
+		"Endo",
+		"Mac Allister",
+		"Szoboszlai",
+		"Elliot",
+		"Darwin Núñez",
+		"Luis Díaz",
 		"Salah",
 		"Gakpo",
 		"Robertson",
