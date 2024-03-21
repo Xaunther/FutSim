@@ -120,12 +120,7 @@ const CLineup& CLineupConfiguration::CheckLineup( const CLineup& aLineup ) const
 		+ aLineup.GetPlayers< E_PLAYER_POSITION::AM >().size(), mMFRange, "DM+MF+AM" );
 	CheckLineupPosition( aLineup.GetPlayers< E_PLAYER_POSITION::FW >().size(), mFWRange, "FW" );
 	CheckMaxLineupPosition( aLineup.GetSubs().size(), mBenchedPlayersCount, "subs" );
-	CheckLineupPosition( 1 // GK
-		+ aLineup.GetPlayers< E_PLAYER_POSITION::DF >().size()
-		+ aLineup.GetPlayers< E_PLAYER_POSITION::DM >().size()
-		+ aLineup.GetPlayers< E_PLAYER_POSITION::MF >().size()
-		+ aLineup.GetPlayers< E_PLAYER_POSITION::AM >().size()
-		+ aLineup.GetPlayers< E_PLAYER_POSITION::FW >().size(), { mMinPlayerCount, MAX_PLAYERS }, "players" );
+	CheckLineupPosition( std::ranges::distance( aLineup.CreatePlayersView<false>() ), { mMinPlayerCount, MAX_PLAYERS }, "players" );
 	return aLineup;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the lineup against the configuration." )

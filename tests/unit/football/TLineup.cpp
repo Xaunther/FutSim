@@ -17,20 +17,6 @@ void TLineup::TestExceptions() const
 	CheckException( []() { futsim::ValueFromJSONKeyString<CLineup>( R"( {
 			"Lineup": {}
 		} )" ); }, "key 'GK' not found" );
-
-	// Test DrawPlayer method
-	{
-		std::mt19937 rng{ 1234 };
-		const CLineup lineup{ "Kelleher",
-			CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
-			CLineupTypes::names{ "Endo" }, CLineupTypes::names{ "Mac Allister", "Szoboszlai" }, CLineupTypes::names{},
-			CLineupTypes::names{ "Elliot", "Darwin Núñez", "Luis Díaz" },
-			CLineupTypes::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas" } };
-		if( auto drawnPlayer = lineup.DrawPlayer( rng, { 1 } ); drawnPlayer != "Kelleher" )
-			throw std::invalid_argument{ "Kelleher should have been drawn instead of " + std::string{ drawnPlayer } + "." };
-		if( auto drawnPlayer = lineup.DrawPlayer( rng, { 0, 0, 1 } ); drawnPlayer != "Endo" )
-			throw std::invalid_argument{ "Endo should have been drawn instead of " + std::string{ drawnPlayer } + "." };
-	}
 }
 
 std::vector<std::string> TLineup::ObtainedResults() const noexcept
@@ -73,6 +59,12 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 		result.push_back( std::string{ CLineup::JSON_SUBS } + ":" );
 		for( const auto& player : lineup.GetSubs() )
 			result.push_back( player );
+		result.push_back( "Playing players:" );
+		for( const auto& player : lineup.CreatePlayersView<false>() )
+			result.push_back( player );
+		result.push_back( "All players:" );
+		for( const auto& player : lineup.CreatePlayersView<true>() )
+			result.push_back( player );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, lineup );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
@@ -100,6 +92,39 @@ std::vector<std::string> TLineup::ExpectedResults() const noexcept
 		"Darwin Núñez",
 		"Luis Díaz",
 		"Subs:",
+		"Salah",
+		"Gakpo",
+		"Robertson",
+		"Adrián",
+		"Tsimikas",
+		"Bobby Clark",
+		"McConnell",
+		"Nallo",
+		"Koumas",
+		"Playing players:",
+		"Kelleher",
+		"Bradley",
+		"Quansah",
+		"Van Dijk",
+		"Joe Gomez",
+		"Endo",
+		"Mac Allister",
+		"Szoboszlai",
+		"Elliot",
+		"Darwin Núñez",
+		"Luis Díaz",
+		"All players:",
+		"Kelleher",
+		"Bradley",
+		"Quansah",
+		"Van Dijk",
+		"Joe Gomez",
+		"Endo",
+		"Mac Allister",
+		"Szoboszlai",
+		"Elliot",
+		"Darwin Núñez",
+		"Luis Díaz",
 		"Salah",
 		"Gakpo",
 		"Robertson",
