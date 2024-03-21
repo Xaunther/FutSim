@@ -86,16 +86,6 @@ public:
 	*/
 	template <bool tUseSubs> void ForEachPlayer( const player_predicate& aPredicate ) const;
 
-	/**
-	 * @brief Draws a random player using the given weights for each position.
-	 * @details The players in the same position have equal probabilities.
-	 * @param aGenerator RNG to use.
-	 * @param aPositionWeights Weight given to each position.
-	 * @return A view to the drawn player's name.
-	*/
-	std::string_view DrawPlayer( std::uniform_random_bit_generator auto& aGenerator,
-		const position_weights& aPositionWeights ) const noexcept;
-
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Lineup";
 	//! JSON key for the GK.
@@ -117,16 +107,5 @@ private:
 	//! Lined up players by position.
 	position_names mPlayersLineup;
 };
-
-std::string_view CLineup::DrawPlayer( std::uniform_random_bit_generator auto& aGenerator,
-	const position_weights& aPositionWeights ) const noexcept
-{
-	std::vector<position_weights::value_type> playerWeights;
-	for( auto positionWeightIt = aPositionWeights.cbegin(); const auto & positionPlayers : mPlayersLineup )
-		std::fill_n( std::back_inserter( playerWeights ), positionPlayers.size(), *( positionWeightIt++ ) );
-
-	return *( mPlayersLineup | std::ranges::views::join | std::ranges::views::drop(
-		std::discrete_distribution<position_names::size_type>{ playerWeights.cbegin(), playerWeights.cend() }( aGenerator ) ) ).begin();
-}
 
 } // futsim namespace

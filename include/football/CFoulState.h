@@ -66,7 +66,7 @@ CFoulState::CFoulState(
 	const CTeamStrategy& aTeamStrategy,
 	std::uniform_random_bit_generator auto& aGenerator
 ) noexcept :
-	mCommitter( aTeamStrategy.GetLineup().DrawPlayer( aGenerator, { 1, 1, 1, 1, 1, 1 } ) ),
+	mCommitter( aMatchConfiguration.GetDrawConfiguration().GetFoulDrawConfiguration().DrawFoulCommitter( aTeamStrategy.GetLineup(), aGenerator ) ),
 	mOutcome( aMatchConfiguration.GetDrawConfiguration().CreateFoulDistribution()( aGenerator ) )
 {
 }

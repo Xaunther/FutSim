@@ -43,6 +43,14 @@ void TFoulDrawConfiguration::TestExceptions() const
 				"Average fouls": 0
 			}
 		} )" ); }, "The average number of fouls minus the average number of yellow and red cards cannot be negative." );
+
+	// Test DrawFoulCommitter method
+	{
+		std::mt19937 rng{ 1234 };
+		const CLineup lineup{ "Kelleher", {}, {}, {}, {}, {}, {} };
+		if( auto drawnPlayer = CFoulDrawConfiguration{}.DrawFoulCommitter( lineup, rng ); drawnPlayer != "Kelleher" )
+			throw std::invalid_argument{ "Kelleher should have been drawn instead of " + std::string{ drawnPlayer } + "." };
+	}
 }
 
 std::vector<std::string> TFoulDrawConfiguration::ObtainedResults() const noexcept

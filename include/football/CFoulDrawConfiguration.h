@@ -4,6 +4,7 @@
 
 #include "football/CDrawConfigurationTypes.h"
 #include "football/CFoulDrawConfigurationTypes.h"
+#include "football/CLineup.h"
 #include "CEnumDistribution.h"
 
 namespace futsim::football
@@ -60,6 +61,16 @@ public:
 	//! @brief Creates the foul draw distribution.
 	foul_draw_distribution CreateFoulDistribution() const noexcept;
 
+	/**
+	 * @brief Draws the foul committer from a team lineup.
+	 * @details The players in the same position have equal probabilities.
+	 * @param aLineup Current team lineup
+	 * @param aGenerator RNG to use.
+	 * @return A view to the drawn player's name.
+	*/
+	std::string_view DrawFoulCommitter( const CLineup& aLineup,
+		std::uniform_random_bit_generator auto& aGenerator ) const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Foul draw configuration";
 	//! JSON key for the \copybrief mAverageFouls
@@ -93,5 +104,12 @@ private:
 	//! Foul distribution parameters.
 	foul_draw_distribution::param_type mFoulDistributionParameters;
 };
+
+std::string_view CFoulDrawConfiguration::DrawFoulCommitter( const CLineup& aLineup,
+	std::uniform_random_bit_generator auto& aGenerator ) const noexcept
+{
+	return aLineup.GetPlayer( std::uniform_int_distribution<CLineupTypes::names::size_type>{
+		0, aLineup.GetPlayersCount<false>() - 1 }( aGenerator ) );
+}
 
 } // futsim namespace
