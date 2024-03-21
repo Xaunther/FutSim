@@ -5,7 +5,6 @@
 #include "football/CLineupTypes.h"
 
 #include <random>
-#include <span>
 
 namespace futsim::football
 {
@@ -16,16 +15,32 @@ namespace futsim::football
 class CLineup : public IJsonable
 {
 protected:
+	using name = CLineupTypes::name;
 	using names = CLineupTypes::names;
-	using position_names = CLineupTypes::position_names;
 	using position_weights = CLineupTypes::position_weights;
+	using position_names = std::array<names, std::tuple_size_v<position_weights>>;
+	template<E_PLAYER_POSITION tPlayerPosition> using players = CLineupTypes::players<tPlayerPosition>;
 
 public:
 	/**
-	 * @brief Member constructor.
-	 * @param aPlayersLineup \ref mPlayersLineup
+	 * @brief Constructor from the players in each position.
+	 * @param aGK Goalkeeper.
+	 * @param aDFs Defenders.
+	 * @param aDMs Defensive midfielders.
+	 * @param aMFs Midfielders.
+	 * @param aAMs Attacking midfielders.
+	 * @param aFWs Forwards.
+	 * @param aSubs Substitutes.
 	*/
-	explicit CLineup( const position_names& aPlayersLineup );
+	explicit CLineup(
+		const std::string_view aGK,
+		const std::span<const name> aDFs,
+		const std::span<const name> aDMs,
+		const std::span<const name> aMFs,
+		const std::span<const name> aAMs,
+		const std::span<const name> aFWs,
+		const std::span<const name> aSubs
+	);
 
 	/**
 	 * @brief JSON constructor.
@@ -40,17 +55,15 @@ protected:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
-	//! Retrieves the \copybrief mPlayersLineup
-	const position_names& GetPlayers() const noexcept;
-
 	/**
 	 * @brief Retrieves the players at a certain position.
-	 * @param aPlayerPosition Position.
+	 * @tparam tPlayerPosition Position.
 	*/
-	std::span<const names::value_type> GetPlayers( const E_PLAYER_POSITION& aPlayerPosition ) const noexcept;
+	template <E_PLAYER_POSITION tPlayerPosition>
+	players<tPlayerPosition> GetPlayers() const noexcept;
 
 	//! Retrieves the substitute players.
-	std::span<const names::value_type> GetSubs() const noexcept;
+	std::span<const name> GetSubs() const noexcept;
 
 	/**
 	 * @brief Draws a random player using the given weights for each position.
@@ -80,9 +93,6 @@ public:
 	static inline constexpr std::string_view JSON_SUBS = "Subs";
 
 private:
-	//! Checks the validity of the players lineup.
-	void CheckPlayersLineup() const;
-
 	//! Lined up players by position.
 	position_names mPlayersLineup;
 };

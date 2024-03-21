@@ -5,18 +5,23 @@
 #include "football/EPlayerPosition.h"
 
 #include <array>
+#include <span>
 #include <vector>
 
 namespace futsim::football::CLineupTypes
 {
 
+//! Type for a name.
+using name = CPersonTypes::name_type;
+
 //! Type for a vector of names.
-using names = std::vector<CPersonTypes::name_type>;
+using names = std::vector<name>;
 
-//! Type for the names in every position or bench.
-using position_names = std::array<names, static_cast< std::size_t >( E_PLAYER_POSITION::FW ) + 2>;
+//! Type for the position weights.
+using position_weights = std::array<double, static_cast< std::size_t >( E_PLAYER_POSITION::FW ) + 2>;
 
-//! Type for the position weights
-using position_weights = std::array<double, std::tuple_size_v<position_names>>;
+//! Type for the list of players by position.
+template<E_PLAYER_POSITION tPlayerPosition> using players =
+std::conditional_t<tPlayerPosition == E_PLAYER_POSITION::GK, std::string_view, std::span<const name>>;
 
 } // futsim::football::CLineupTypes namespace

@@ -13,27 +13,19 @@ INITIALIZE_TEST( TLineup )
 
 void TLineup::TestExceptions() const
 {
-	// Test member constructor
-	CheckException( []() { CLineup{ CLineupTypes::position_names{} }; }, "There has to be exactly 1 GK." );
-
 	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CLineup>( R"( {
 			"Lineup": {}
 		} )" ); }, "key 'GK' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CLineup>( R"( {
-			"Lineup": {
-				"GK": []
-			}
-		} )" ); }, "There has to be exactly 1 GK." );
 
 	// Test DrawPlayer method
 	{
 		std::mt19937 rng{ 1234 };
-		const CLineup lineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Kelleher" },
+		const CLineup lineup{ "Kelleher",
 			CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
 			CLineupTypes::names{ "Endo" }, CLineupTypes::names{ "Mac Allister", "Szoboszlai" }, CLineupTypes::names{},
 			CLineupTypes::names{ "Elliot", "Darwin Núñez", "Luis Díaz" },
-			CLineupTypes::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas" } } };
+			CLineupTypes::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas" } };
 		if( auto drawnPlayer = lineup.DrawPlayer( rng, { 1 } ); drawnPlayer != "Kelleher" )
 			throw std::invalid_argument{ "Kelleher should have been drawn instead of " + std::string{ drawnPlayer } + "." };
 		if( auto drawnPlayer = lineup.DrawPlayer( rng, { 0, 0, 1 } ); drawnPlayer != "Endo" )
@@ -46,14 +38,14 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 	std::vector<std::string> result;
 
 	for( const auto& lineup : std::initializer_list<CLineup>{
-		CLineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Kelleher" },
+		CLineup{ "Kelleher",
 			CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
 			CLineupTypes::names{ "Endo" }, CLineupTypes::names{ "Mac Allister", "Szoboszlai" }, CLineupTypes::names{},
 			CLineupTypes::names{ "Elliot", "Darwin Núñez", "Luis Díaz" },
-			CLineupTypes::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas" } } },
+			CLineupTypes::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas" } },
 		futsim::ValueFromJSONKeyString<CLineup>( R"( {
 			"Lineup": {
-				"GK": [ "Kelleher" ],
+				"GK": "Kelleher",
 				"DFs": [ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" ],
 				"DMs": [ "Endo" ],
 				"MFs": [ "Mac Allister", "Szoboszlai" ],
@@ -62,21 +54,21 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CLineup::JSON_GK } + ": " + lineup.GetPlayers( E_PLAYER_POSITION::GK ).front() );
+		result.push_back( std::string{ CLineup::JSON_GK } + ": " + std::string{ lineup.GetPlayers< E_PLAYER_POSITION::GK >() } );
 		result.push_back( std::string{ CLineup::JSON_DFS } + ":" );
-		for( const auto& player : lineup.GetPlayers( E_PLAYER_POSITION::DF ) )
+		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::DF >() )
 			result.push_back( player );
 		result.push_back( std::string{ CLineup::JSON_DMS } + ":" );
-		for( const auto& player : lineup.GetPlayers( E_PLAYER_POSITION::DM ) )
+		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::DM >() )
 			result.push_back( player );
 		result.push_back( std::string{ CLineup::JSON_MFS } + ":" );
-		for( const auto& player : lineup.GetPlayers( E_PLAYER_POSITION::MF ) )
+		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::MF >() )
 			result.push_back( player );
 		result.push_back( std::string{ CLineup::JSON_AMS } + ":" );
-		for( const auto& player : lineup.GetPlayers( E_PLAYER_POSITION::AM ) )
+		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::AM >() )
 			result.push_back( player );
 		result.push_back( std::string{ CLineup::JSON_FWS } + ":" );
-		for( const auto& player : lineup.GetPlayers( E_PLAYER_POSITION::FW ) )
+		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::FW >() )
 			result.push_back( player );
 		result.push_back( std::string{ CLineup::JSON_SUBS } + ":" );
 		for( const auto& player : lineup.GetSubs() )
@@ -119,9 +111,7 @@ std::vector<std::string> TLineup::ExpectedResults() const noexcept
 		"Koumas",
 		"{\n"
 		"	\"Lineup\": {\n"
-		"		\"GK\": [\n"
-		"			\"Kelleher\"\n"
-		"		],\n"
+		"		\"GK\": \"Kelleher\",\n"
 		"		\"DFs\": [\n"
 		"			\"Bradley\",\n"
 		"			\"Quansah\",\n"

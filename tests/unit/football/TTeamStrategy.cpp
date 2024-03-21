@@ -28,18 +28,18 @@ std::vector<std::string> TTeamStrategy::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& teamStrategy : std::initializer_list<CTeamStrategy>{
-		CTeamStrategy{ "A", CLineup{ CLineupTypes::position_names{ CLineupTypes::names{ "Ter Stegen" } } } },
+		CTeamStrategy{ "A", CLineup{  "Ter Stegen", {}, {}, {}, {}, {}, {} } },
 		futsim::ValueFromJSONKeyString<CTeamStrategy>( R"( {
 			"Team strategy": {
 				"Tactic": "A",
 				"Lineup": {
-					"GK": [ "Ter Stegen" ]
+					"GK": "Ter Stegen"
 				}
 			}
 		} )" ) } )
 	{
 		result.push_back( std::string{ CTeamStrategy::JSON_TACTIC } + ": " + std::string{ teamStrategy.GetTacticID() } );
-		result.push_back( std::string{ CLineup::JSON_KEY } + ": " + teamStrategy.GetLineup().GetPlayers( E_PLAYER_POSITION::GK ).front() );
+		result.push_back( std::string{ CLineup::JSON_KEY } + ": " + std::string{ teamStrategy.GetLineup().GetPlayers< E_PLAYER_POSITION::GK >() } );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, teamStrategy );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
@@ -56,9 +56,7 @@ std::vector<std::string> TTeamStrategy::ExpectedResults() const noexcept
 		"	\"Team strategy\": {\n"
 		"		\"Tactic\": \"A\",\n"
 		"		\"Lineup\": {\n"
-		"			\"GK\": [\n"
-		"				\"Ter Stegen\"\n"
-		"			]\n"
+		"			\"GK\": \"Ter Stegen\"\n"
 		"		}\n"
 		"	}\n"
 		"}"
