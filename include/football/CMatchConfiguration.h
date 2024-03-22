@@ -5,7 +5,7 @@
 #include "football/CDrawConfiguration.h"
 #include "football/CExtraTime.h"
 #include "football/CLineupConfiguration.h"
-#include "football/CMatchConfigurationTypes.h"
+#include "football/types/CMatchConfiguration.h"
 #include "football/CPenaltyShootoutConfiguration.h"
 #include "football/CPlayTime.h"
 #include "football/CTacticsConfiguration.h"
@@ -22,9 +22,9 @@ class CTeamStrategy;
 class CMatchConfiguration : public IJsonable
 {
 protected:
-	using optional_tie_condition = CMatchConfigurationTypes::optional_tie_condition;
-	using optional_extra_time = CMatchConfigurationTypes::optional_extra_time;
-	using optional_penalty_shootout_configuration = CMatchConfigurationTypes::optional_penalty_shootout_configuration;
+	using optional_tie_condition = types::CMatchConfiguration::optional_tie_condition;
+	using optional_extra_time = types::CMatchConfiguration::optional_extra_time;
+	using optional_penalty_shootout_configuration = types::CMatchConfiguration::optional_penalty_shootout_configuration;
 
 public:
 	/**

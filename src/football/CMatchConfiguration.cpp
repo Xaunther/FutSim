@@ -16,9 +16,9 @@ namespace
  * @param aTieCondition Tie condition.
  * @param aPenaltyShootoutConfiguration Penalty shootout configuration.
 */
-const CMatchConfigurationTypes::optional_tie_condition& CheckTieCondition(
-	const CMatchConfigurationTypes::optional_tie_condition& aTieCondition,
-	const CMatchConfigurationTypes::optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration );
+const types::CMatchConfiguration::optional_tie_condition& CheckTieCondition(
+	const types::CMatchConfiguration::optional_tie_condition& aTieCondition,
+	const types::CMatchConfiguration::optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration );
 
 } // anonymous namespace
 
@@ -125,9 +125,9 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the t
 namespace
 {
 
-const CMatchConfigurationTypes::optional_tie_condition& CheckTieCondition(
-	const CMatchConfigurationTypes::optional_tie_condition& aTieCondition,
-	const CMatchConfigurationTypes::optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration ) try
+const types::CMatchConfiguration::optional_tie_condition& CheckTieCondition(
+	const types::CMatchConfiguration::optional_tie_condition& aTieCondition,
+	const types::CMatchConfiguration::optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration ) try
 {
 	if( aTieCondition && !aPenaltyShootoutConfiguration )
 		throw std::invalid_argument( "There cannot be a tie condition without a penalty shootout configuration." );

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <optional>
+
 namespace futsim::football
 {
 
@@ -7,7 +9,7 @@ class CExtraTime;
 class CPenaltyShootoutConfiguration;
 class CTieCondition;
 
-namespace CMatchConfigurationTypes
+namespace types::CMatchConfiguration
 {
 
 //! Type for the optional tie condition.
@@ -17,6 +19,6 @@ using optional_extra_time = std::optional<CExtraTime>;
 //! Type for the optional penalty shootout configuration.
 using optional_penalty_shootout_configuration = std::optional<CPenaltyShootoutConfiguration>;
 
-} // CPenaltyShootoutConfigurationTypes namespace
+} // types::CMatchConfiguration namespace
 
 } // futsim::football namespace
