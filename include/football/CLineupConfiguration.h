@@ -2,7 +2,7 @@
 
 #include "IJsonable.h"
 
-#include "football/CLineupConfigurationTypes.h"
+#include "football/types/CLineupConfiguration.h"
 
 namespace futsim::football
 {
@@ -15,9 +15,9 @@ class CLineup;
 class CLineupConfiguration : public IJsonable
 {
 protected:
-	using optional_player_count = CLineupConfigurationTypes::optional_player_count;
-	using player_count = CLineupConfigurationTypes::player_count;
-	using player_count_range = CLineupConfigurationTypes::player_count_range;
+	using optional_player_count = types::CLineupConfiguration::optional_player_count;
+	using player_count = types::CLineupConfiguration::player_count;
+	using player_count_range = types::CLineupConfiguration::player_count_range;
 
 public:
 	/**

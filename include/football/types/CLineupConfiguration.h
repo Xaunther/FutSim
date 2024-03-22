@@ -2,7 +2,7 @@
 
 #include "football/CPlayTimeTypes.h"
 
-namespace futsim::football::CLineupConfigurationTypes
+namespace futsim::football::types::CLineupConfiguration
 {
 
 //! Type for an optional player count.
@@ -15,4 +15,4 @@ using player_count = optional_player_count::value_type;
 using player_count_range = std::pair<player_count, optional_player_count>;
 
 
-} // futsim::football::CLineupConfigurationTypes namespace
+} // futsim::football::types::CLineupConfiguration namespace

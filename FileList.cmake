@@ -27,7 +27,6 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CGoalDrawConfiguration.h
 	include/football/CLineup.h
 	include/football/CLineupConfiguration.h
-	include/football/CLineupConfigurationTypes.h
 	include/football/CLineupTypes.h
 	include/football/CMatch.h
 	include/football/CMatchConfiguration.h
@@ -62,6 +61,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/types/CDrawConfiguration.h
 	include/football/types/CFoulDrawConfiguration.h
 	include/football/types/CGoalDrawConfiguration.h
+	include/football/types/CLineupConfiguration.h
 )
 
 # Core source files

@@ -16,14 +16,14 @@ INITIALIZE_TEST( TLineupConfiguration )
 void TLineupConfiguration::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CLineupConfiguration{ CLineupConfigurationTypes::player_count_range{ 1, 0 } }; },
+	CheckException( []() { CLineupConfiguration{ types::CLineupConfiguration::player_count_range{ 1, 0 } }; },
 		"The maximum number of DFs cannot be smaller than the minimum number." );
 	CheckException( []() { CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
-		CLineupConfigurationTypes::player_count_range{ 1, 0 } }; },
+		types::CLineupConfiguration::player_count_range{ 1, 0 } }; },
 		"The maximum number of MFs cannot be smaller than the minimum number." );
 	CheckException( []() { CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
 		CLineupConfiguration::DEFAULT_MF_RANGE,
-		CLineupConfigurationTypes::player_count_range{ 1, 0 } }; },
+		types::CLineupConfiguration::player_count_range{ 1, 0 } }; },
 		"The maximum number of FWs cannot be smaller than the minimum number." );
 	CheckException( []() { CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
 		CLineupConfiguration::DEFAULT_MF_RANGE, CLineupConfiguration::DEFAULT_FW_RANGE, 12 }; },
