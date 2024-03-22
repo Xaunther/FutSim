@@ -2,7 +2,7 @@
 
 #include "IJsonable.h"
 
-#include "football/CPossessionStateTypes.h"
+#include "football/types/CPossessionState.h"
 
 #include "football/CMatch.h"
 #include "football/CMatchConfiguration.h"

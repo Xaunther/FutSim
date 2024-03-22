@@ -4,7 +4,7 @@
 
 #include "CPersonTypes.h"
 
-namespace futsim::football::CPossessionStateTypes
+namespace futsim::football::types::CPossessionState
 {
 
 //! Type for an optional name.

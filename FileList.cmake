@@ -56,7 +56,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/types/CPlayerSkills.h
 	include/football/types/CPlayTime.h
 	include/football/types/CPossessionDrawConfiguration.h
-	include/football/CPossessionStateTypes.h
+	include/football/types/CPossessionState.h
 	include/football/CStadiumTypes.h
 	include/football/CTacticConfigurationTypes.h
 	include/football/CTacticsConfigurationTypes.h
