@@ -33,7 +33,7 @@ const E_PENALTY_SEQUENCE& CPenaltyShootoutConfiguration::GetPenaltySequence() co
 	return mPenaltySequence;
 }
 
-const CPenaltyShootoutConfigurationTypes::penalty_count& CPenaltyShootoutConfiguration::GetMinPenaltyCount() const noexcept
+const types::CPenaltyShootoutConfiguration::penalty_count& CPenaltyShootoutConfiguration::GetMinPenaltyCount() const noexcept
 {
 	return mMinPenaltyCount;
 }

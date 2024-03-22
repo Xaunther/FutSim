@@ -32,26 +32,16 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CMatchConfiguration.h
 	include/football/CTeamStrategy.h
 	include/football/CPenaltyShootoutConfiguration.h
-	include/football/CPenaltyShootoutConfigurationTypes.h
 	include/football/CPlayer.h
 	include/football/CPlayerSkills.h
-	include/football/CPlayerSkillsTypes.h
 	include/football/CPlayTime.h
-	include/football/CPlayTimeTypes.h
 	include/football/CPossessionDrawConfiguration.h
-	include/football/CPossessionDrawConfigurationTypes.h
 	include/football/CPossessionState.h
-	include/football/CPossessionStateTypes.h
 	include/football/CStadium.h
-	include/football/CStadiumTypes.h
 	include/football/CTacticConfiguration.h
-	include/football/CTacticConfigurationTypes.h
 	include/football/CTacticsConfiguration.h
-	include/football/CTacticsConfigurationTypes.h
 	include/football/CTeam.h
-	include/football/CTeamTypes.h
 	include/football/CTieCondition.h
-	include/football/CTieConditionTypes.h
 	include/football/EGoalRule.h
 	include/football/EPenaltySequence.h
 	include/football/EPlayerPosition.h
@@ -62,6 +52,16 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/types/CGoalDrawConfiguration.h
 	include/football/types/CLineupConfiguration.h
 	include/football/types/CMatchConfiguration.h
+	include/football/types/CPenaltyShootoutConfiguration.h
+	include/football/CPlayerSkillsTypes.h
+	include/football/CPlayTimeTypes.h
+	include/football/CPossessionDrawConfigurationTypes.h
+	include/football/CPossessionStateTypes.h
+	include/football/CStadiumTypes.h
+	include/football/CTacticConfigurationTypes.h
+	include/football/CTacticsConfigurationTypes.h
+	include/football/CTeamTypes.h
+	include/football/CTieConditionTypes.h
 )
 
 # Core source files
