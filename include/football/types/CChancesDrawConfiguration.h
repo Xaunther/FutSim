@@ -7,7 +7,7 @@ namespace futsim
 
 template<typename tEnum, typename tIntType> class CEnumDistribution;
 
-namespace football::CChancesDrawConfigurationTypes
+namespace football::types::CChancesDrawConfiguration
 {
 
 //! Enumeration for the different set piece types.
@@ -45,6 +45,6 @@ FUTSIM_SERIALIZE_ENUM( E_CHANCE_TYPE, {
 	{E_CHANCE_TYPE::FAR_SHOT, "Far shot"},
 	} );
 
-} // football::CChancesDrawConfigurationTypes namespace
+} // football::types::CChancesDrawConfiguration namespace
 
 } // futsim namespace
