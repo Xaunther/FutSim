@@ -25,10 +25,10 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 
 	for( const auto& lineup : std::initializer_list<CLineup>{
 		CLineup{ "Kelleher",
-			CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
-			CLineupTypes::names{ "Endo" }, CLineupTypes::names{ "Mac Allister", "Szoboszlai" }, CLineupTypes::names{},
-			CLineupTypes::names{ "Elliot", "Darwin Núñez", "Luis Díaz" },
-			CLineupTypes::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas" } },
+			types::CLineup::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
+			types::CLineup::names{ "Endo" }, types::CLineup::names{ "Mac Allister", "Szoboszlai" }, types::CLineup::names{},
+			types::CLineup::names{ "Elliot", "Darwin Núñez", "Luis Díaz" },
+			types::CLineup::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas" } },
 		futsim::ValueFromJSONKeyString<CLineup>( R"( {
 			"Lineup": {
 				"GK": "Kelleher",

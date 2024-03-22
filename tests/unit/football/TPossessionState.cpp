@@ -35,9 +35,9 @@ std::vector<std::string> TPossessionState::ObtainedResults() const noexcept
 			},
 			1.2, 11000, 2000 };
 	const CTeamStrategy homeTeamStrategy{ "A", CLineup{ "Kaminski",
-			CLineupTypes::names{ "Potts", "Lockyer", "Kaboré", "Bell" },
-			{}, CLineupTypes::names{ "Barkley", "Nakamba", "Mpanzu", "Clark" }, {},
-			CLineupTypes::names{ "Morris", "Adebayo" }, {} } };
+			types::CLineup::names{ "Potts", "Lockyer", "Kaboré", "Bell" },
+			{}, types::CLineup::names{ "Barkley", "Nakamba", "Mpanzu", "Clark" }, {},
+			types::CLineup::names{ "Morris", "Adebayo" }, {} } };
 	const CTeamStrategy awayTeamStrategy{ "N", homeTeamStrategy.GetLineup() };
 
 	for( const auto& possessionState : std::initializer_list{

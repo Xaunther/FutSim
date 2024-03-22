@@ -109,7 +109,7 @@ CPossessionState::CPossessionState(
 	// Draw acting player
 	const auto DrawPlayer = [ &aGenerator ]( const auto& aLineup, const auto& aSkills ) {
 		return *( aLineup.template CreatePlayersView<false>()
-			| std::ranges::views::drop( std::discrete_distribution<CLineupTypes::names::size_type>{
+			| std::ranges::views::drop( std::discrete_distribution<types::CLineup::names::size_type>{
 			aSkills.cbegin(), aSkills.cend() }( aGenerator ) ) ).begin(); };
 
 	if( mOutcome == E_POSSESSION_DRAW_OUTCOME::KEEP_POSSESSION )

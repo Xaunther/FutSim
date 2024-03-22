@@ -27,7 +27,6 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CGoalDrawConfiguration.h
 	include/football/CLineup.h
 	include/football/CLineupConfiguration.h
-	include/football/CLineupTypes.h
 	include/football/CMatch.h
 	include/football/CMatchConfiguration.h
 	include/football/CTeamStrategy.h
@@ -50,6 +49,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/types/CDrawConfiguration.h
 	include/football/types/CFoulDrawConfiguration.h
 	include/football/types/CGoalDrawConfiguration.h
+	include/football/types/CLineup.h
 	include/football/types/CLineupConfiguration.h
 	include/football/types/CMatchConfiguration.h
 	include/football/types/CPenaltyShootoutConfiguration.h

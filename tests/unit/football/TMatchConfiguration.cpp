@@ -31,7 +31,7 @@ void TMatchConfiguration::TestExceptions() const
 	// Test CheckTeamStrategy
 	{
 		const CMatchConfiguration matchConfiguration;
-		const CLineup lineup{ "Kelleher", CLineupTypes::names{ "Bradley" }, {}, {}, {}, {}, {} };
+		const CLineup lineup{ "Kelleher", types::CLineup::names{ "Bradley" }, {}, {}, {}, {}, {} };
 		CheckException( [ &matchConfiguration, &lineup ]() { matchConfiguration.CheckTeamStrategy( CTeamStrategy{ "FF", lineup } ); },
 			"The tactic 'FF' has not been configured." );
 		CheckException( [ &matchConfiguration, &lineup ]() { matchConfiguration.CheckTeamStrategy( CTeamStrategy{ "A", lineup } ); },

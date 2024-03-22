@@ -9,7 +9,7 @@
 #include <span>
 #include <vector>
 
-namespace futsim::football::CLineupTypes
+namespace futsim::football::types::CLineup
 {
 
 //! Type for a name.
@@ -28,4 +28,4 @@ std::conditional_t<tPlayerPosition == E_PLAYER_POSITION::GK, std::string_view, s
 //! Type for an indexed predicate.
 using player_predicate = std::function<void( const name& )>;
 
-} // futsim::football::CLineupTypes namespace
+} // futsim::football::types::CLineup namespace

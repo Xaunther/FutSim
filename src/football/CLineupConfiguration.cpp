@@ -25,7 +25,7 @@ const types::CLineupConfiguration::player_count_range& CheckRange( const types::
  * @param aRange Range.
  * @param aRangeDescription Range description to add to the error message.
 */
-void CheckLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
+void CheckLineupPosition( const types::CLineup::names::size_type& aPositionCount,
 	const types::CLineupConfiguration::player_count_range& aRange, const std::string_view aRangeDescription );
 
 /**
@@ -34,7 +34,7 @@ void CheckLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
  * @param aMaxCount Maximum allowed.
  * @param aRangeDescription Range description to add to the error message.
 */
-void CheckMaxLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
+void CheckMaxLineupPosition( const types::CLineup::names::size_type& aPositionCount,
 	const types::CLineupConfiguration::player_count_range::second_type& aMaxCount, const std::string_view aRangeDescription );
 
 } // anonymous namespace
@@ -137,7 +137,7 @@ const types::CLineupConfiguration::player_count_range& CheckRange( const types::
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the " << aRangeDescription << " range." )
 
-void CheckLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
+void CheckLineupPosition( const types::CLineup::names::size_type& aPositionCount,
 	const types::CLineupConfiguration::player_count_range& aRange, const std::string_view aRangeDescription )
 {
 	if( aPositionCount < aRange.first )
@@ -146,7 +146,7 @@ void CheckLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
 	CheckMaxLineupPosition( aPositionCount, aRange.second, aRangeDescription );
 }
 
-void CheckMaxLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
+void CheckMaxLineupPosition( const types::CLineup::names::size_type& aPositionCount,
 	const types::CLineupConfiguration::player_count_range::second_type& aMaxCount, const std::string_view aRangeDescription )
 {
 	if( aMaxCount && aPositionCount > *aMaxCount )

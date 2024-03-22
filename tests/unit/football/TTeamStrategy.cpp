@@ -66,9 +66,9 @@ std::vector<std::string> TTeamStrategy::ObtainedResults() const noexcept
 		const CStadium stadium{ "The New Lawn", 5147, 1.1 };
 		const CMatch match{ team, team, stadium, "Michael Oliver" };
 		const CTeamStrategy homeTeamStrategy{ "A", CLineup{ "Kaminski",
-			CLineupTypes::names{ "Potts", "Lockyer", "Kaboré", "Bell" },
-			{}, CLineupTypes::names{ "Barkley", "Nakamba", "Mpanzu", "Clark" }, {},
-			CLineupTypes::names{ "Morris", "Adebayo" }, {} } };
+			types::CLineup::names{ "Potts", "Lockyer", "Kaboré", "Bell" },
+			{}, types::CLineup::names{ "Barkley", "Nakamba", "Mpanzu", "Clark" }, {},
+			types::CLineup::names{ "Morris", "Adebayo" }, {} } };
 		const CTeamStrategy awayTeamStrategy{ "N", homeTeamStrategy.GetLineup() };
 
 		homeTeamStrategy.ForEachPlayerSkill( E_PLAYER_SKILL::St, match, CMatchConfiguration{}, true, awayTeamStrategy,
