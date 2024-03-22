@@ -2,7 +2,7 @@
 
 #include "IJsonable.h"
 
-#include "CTacticConfigurationTypes.h"
+#include "types/CTacticConfiguration.h"
 
 namespace futsim::football
 {
@@ -13,11 +13,11 @@ namespace futsim::football
 class CTacticConfiguration : public IJsonable
 {
 protected:
-	using skill_bonus = CTacticConfigurationTypes::skill_bonus;
-	using position_penalties = CTacticConfigurationTypes::position_penalties;
-	using id = CTacticConfigurationTypes::id;
-	using ids = CTacticConfigurationTypes::ids;
-	using bonuses_table = CTacticConfigurationTypes::bonuses_table;
+	using skill_bonus = types::CTacticConfiguration::skill_bonus;
+	using position_penalties = types::CTacticConfiguration::position_penalties;
+	using id = types::CTacticConfiguration::id;
+	using ids = types::CTacticConfiguration::ids;
+	using bonuses_table = types::CTacticConfiguration::bonuses_table;
 
 public:
 	/**

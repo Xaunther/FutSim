@@ -6,7 +6,7 @@
 #include "EPlayerPosition.h"
 #include "EPlayerSkill.h"
 
-namespace futsim::football::CTacticConfigurationTypes
+namespace futsim::football::types::CTacticConfiguration
 {
 
 //! Type for a skill bonus.
@@ -24,4 +24,4 @@ using id = std::string;
 //! Type for a set of tactic IDs.
 using ids = std::set<id>;
 
-} // futsim::football::CTacticConfigurationTypes namespace
+} // futsim::football::types::CTacticConfiguration namespace

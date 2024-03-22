@@ -15,7 +15,7 @@ class CTacticsConfiguration : public IJsonable
 {
 protected:
 	using tactic_configurations = CTacticsConfigurationTypes::tactic_configurations;
-	using skill_bonus = CTacticConfigurationTypes::skill_bonus;
+	using skill_bonus = types::CTacticConfiguration::skill_bonus;
 
 public:
 	/**

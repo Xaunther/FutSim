@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CTacticConfigurationTypes.h"
+#include "types/CTacticConfiguration.h"
 
 #include <map>
 
@@ -13,7 +13,7 @@ namespace CTacticsConfigurationTypes
 {
 
 //! Type for the tactic configurations.
-using tactic_configurations = std::map<CTacticConfigurationTypes::id, CTacticConfiguration>;
+using tactic_configurations = std::map<types::CTacticConfiguration::id, CTacticConfiguration>;
 
 } // CTacticsConfigurationTypes namespace
 

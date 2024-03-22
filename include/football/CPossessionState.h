@@ -87,7 +87,7 @@ CPossessionState::CPossessionState(
 	std::uniform_random_bit_generator auto& aGenerator
 ) try
 {
-	using skill_bonus = CTacticConfigurationTypes::skill_bonus;
+	using skill_bonus = types::CTacticConfiguration::skill_bonus;
 
 	// Calculate each player's effective skill
 	std::vector<skill_bonus> attackSkills, defenseSkills;

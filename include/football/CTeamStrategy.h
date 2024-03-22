@@ -3,7 +3,7 @@
 #include "IJsonable.h"
 
 #include "football/CLineup.h"
-#include "football/CTacticConfigurationTypes.h"
+#include "football/types/CTacticConfiguration.h"
 
 namespace futsim::football
 {
@@ -17,8 +17,8 @@ class CMatchConfiguration;
 class CTeamStrategy : public IJsonable
 {
 protected:
-	using id = CTacticConfigurationTypes::id;
-	using skill_bonus = CTacticConfigurationTypes::skill_bonus;
+	using id = types::CTacticConfiguration::id;
+	using skill_bonus = types::CTacticConfiguration::skill_bonus;
 
 public:
 	/**
