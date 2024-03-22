@@ -53,7 +53,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/types/CLineupConfiguration.h
 	include/football/types/CMatchConfiguration.h
 	include/football/types/CPenaltyShootoutConfiguration.h
-	include/football/CPlayerSkillsTypes.h
+	include/football/types/CPlayerSkills.h
 	include/football/CPlayTimeTypes.h
 	include/football/CPossessionDrawConfigurationTypes.h
 	include/football/CPossessionStateTypes.h
