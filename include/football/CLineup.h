@@ -2,7 +2,7 @@
 
 #include "IJsonable.h"
 
-#include "football/CLineupTypes.h"
+#include "football/types/CLineup.h"
 
 #include <random>
 
@@ -15,12 +15,12 @@ namespace futsim::football
 class CLineup : public IJsonable
 {
 protected:
-	using name = CLineupTypes::name;
-	using names = CLineupTypes::names;
-	using position_weights = CLineupTypes::position_weights;
+	using name = types::CLineup::name;
+	using names = types::CLineup::names;
+	using position_weights = types::CLineup::position_weights;
 	using position_names = std::array<names, std::tuple_size_v<position_weights>>;
-	template<E_PLAYER_POSITION tPlayerPosition> using players = CLineupTypes::players<tPlayerPosition>;
-	using player_predicate = CLineupTypes::player_predicate;
+	template<E_PLAYER_POSITION tPlayerPosition> using players = types::CLineup::players<tPlayerPosition>;
+	using player_predicate = types::CLineup::player_predicate;
 
 public:
 	/**

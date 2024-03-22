@@ -23,8 +23,8 @@ namespace
 */
 template <E_PLAYER_POSITION tPlayerPosition>
 void ForEachPlayerSkill( const E_PLAYER_SKILL& aPlayerSkill, const CTeam& aTeam, const CLineup& aLineup,
-	const CTacticConfiguration& aTacticConfiguration, const CTacticConfigurationTypes::skill_bonus& aGlobalSkillBonus,
-	const std::function<void( const CTacticConfigurationTypes::skill_bonus& )>& aPredicate );
+	const CTacticConfiguration& aTacticConfiguration, const types::CTacticConfiguration::skill_bonus& aGlobalSkillBonus,
+	const std::function<void( const types::CTacticConfiguration::skill_bonus& )>& aPredicate );
 
 template <E_PLAYER_POSITION tPlayerPosition> auto CreatePlayersView( const CLineup& aLineup )
 {
@@ -93,8 +93,8 @@ namespace
 
 template <E_PLAYER_POSITION tPlayerPosition>
 void ForEachPlayerSkill( const E_PLAYER_SKILL& aPlayerSkill, const CTeam& aTeam, const CLineup& aLineup,
-	const CTacticConfiguration& aTacticConfiguration, const CTacticConfigurationTypes::skill_bonus& aGlobalSkillBonus,
-	const std::function<void( const CTacticConfigurationTypes::skill_bonus& )>& aPredicate )
+	const CTacticConfiguration& aTacticConfiguration, const types::CTacticConfiguration::skill_bonus& aGlobalSkillBonus,
+	const std::function<void( const types::CTacticConfiguration::skill_bonus& )>& aPredicate )
 {
 	const auto& skillBonus = aTacticConfiguration.GetSkillBonus( tPlayerPosition, aPlayerSkill );
 	for( const auto& player : CreatePlayersView<tPlayerPosition>( aLineup ) )

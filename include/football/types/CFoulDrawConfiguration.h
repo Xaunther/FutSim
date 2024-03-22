@@ -7,7 +7,7 @@ namespace futsim
 
 template<typename tEnum, typename tIntType> class CEnumDistribution;
 
-namespace football::CFoulDrawConfigurationTypes
+namespace football::types::CFoulDrawConfiguration
 {
 
 //! Enumeration for the different foul draw outcomes.
@@ -26,6 +26,6 @@ FUTSIM_SERIALIZE_ENUM( E_FOUL_DRAW_OUTCOME, {
 	{E_FOUL_DRAW_OUTCOME::NO_CARD, "No card"},
 	} );
 
-} // football::CFoulDrawConfigurationTypes namespace
+} // football::types::CFoulDrawConfiguration namespace
 
 } // futsim

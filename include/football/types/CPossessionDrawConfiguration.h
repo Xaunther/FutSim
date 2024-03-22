@@ -7,7 +7,7 @@ namespace futsim
 
 template<typename tEnum, typename tIntType> class CEnumDistribution;
 
-namespace football::CPossessionDrawConfigurationTypes
+namespace football::types::CPossessionDrawConfiguration
 {
 
 //! Enumeration for the different possession draw outcomes.
@@ -26,6 +26,6 @@ FUTSIM_SERIALIZE_ENUM( E_POSSESSION_DRAW_OUTCOME, {
 	{E_POSSESSION_DRAW_OUTCOME::COUNTER_ATTACK, "Counter attack"},
 	} );
 
-} // football::CPossessionDrawConfigurationTypes namespace
+} // football::types::CPossessionDrawConfiguration namespace
 
 } // futsim namespace

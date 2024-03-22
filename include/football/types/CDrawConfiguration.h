@@ -1,6 +1,6 @@
 #pragma once
 
-namespace futsim::football::CDrawConfigurationTypes
+namespace futsim::football::types::CDrawConfiguration
 {
 
 //! Type for a probability.
@@ -10,4 +10,4 @@ using stat = probability;
 //! Type for the effective skill value.
 using effective_skill = double;
 
-} // futsim::football::CDrawConfigurationTypes namespace
+} // futsim::football::types::CDrawConfiguration namespace

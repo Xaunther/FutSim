@@ -2,7 +2,7 @@
 
 #include "IJsonable.h"
 
-#include "football/CPlayerSkillsTypes.h"
+#include "football/types/CPlayerSkills.h"
 
 namespace futsim::football
 {
@@ -13,10 +13,10 @@ namespace futsim::football
 class CPlayerSkills : public IJsonable
 {
 protected:
-	using skill_type = CPlayerSkillsTypes::skill_type;
-	using xp_type = CPlayerSkillsTypes::xp_type;
-	using skills = CPlayerSkillsTypes::skills;
-	using experiences = CPlayerSkillsTypes::experiences;
+	using skill_type = types::CPlayerSkills::skill_type;
+	using xp_type = types::CPlayerSkills::xp_type;
+	using skills = types::CPlayerSkills::skills;
+	using experiences = types::CPlayerSkills::experiences;
 
 public:
 	/**

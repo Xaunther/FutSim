@@ -5,10 +5,10 @@
 /**
  * @brief Types defined for \ref IJsonable.
 */
-namespace futsim::IJsonableTypes
+namespace futsim::types::IJsonable
 {
 
 //! Type for the json object.
 using json = nlohmann::ordered_json;
 
-} // futsim::football::CPlayerSkillsTypes namespace
+} // futsim::football::types::CPlayerSkills namespace

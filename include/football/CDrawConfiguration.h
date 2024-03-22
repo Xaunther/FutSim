@@ -16,11 +16,11 @@ namespace futsim::football
 class CDrawConfiguration : public IJsonable
 {
 protected:
-	using effective_skill = CDrawConfigurationTypes::effective_skill;
-	using probability = CDrawConfigurationTypes::probability;
-	using possession_draw_distribution = CPossessionDrawConfigurationTypes::possession_draw_distribution;
-	using chance_type_draw_distribution = CChancesDrawConfigurationTypes::chance_type_draw_distribution;
-	using goal_draw_distribution = CGoalDrawConfigurationTypes::goal_draw_distribution;
+	using effective_skill = types::CDrawConfiguration::effective_skill;
+	using probability = types::CDrawConfiguration::probability;
+	using possession_draw_distribution = types::CPossessionDrawConfiguration::possession_draw_distribution;
+	using chance_type_draw_distribution = types::CChancesDrawConfiguration::chance_type_draw_distribution;
+	using goal_draw_distribution = types::CGoalDrawConfiguration::goal_draw_distribution;
 
 public:
 	/**
@@ -73,7 +73,7 @@ public:
 		const effective_skill& aEffectiveMFSkill ) const noexcept;
 
 	//! \copydoc CFoulDrawConfiguration::CreateFoulDistribution
-	CFoulDrawConfigurationTypes::foul_draw_distribution CreateFoulDistribution() const noexcept;
+	types::CFoulDrawConfiguration::foul_draw_distribution CreateFoulDistribution() const noexcept;
 
 	/**
 	 * @brief Creates the set piece draw distribution.
@@ -93,7 +93,7 @@ public:
 		const effective_skill& aEffectiveFWSkill ) const noexcept;
 
 	//! \copydoc CChancesDrawConfiguration::CreateSetPieceTypeDistribution
-	CChancesDrawConfigurationTypes::set_piece_type_draw_distribution CreateSetPieceTypeDistribution() const noexcept;
+	types::CChancesDrawConfiguration::set_piece_type_draw_distribution CreateSetPieceTypeDistribution() const noexcept;
 
 	//! Creates the chance type draw distribution.
 	chance_type_draw_distribution CreateChanceTypeDistribution() const noexcept;

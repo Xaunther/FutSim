@@ -14,7 +14,7 @@ INITIALIZE_TEST( TTacticsConfiguration )
 void TTacticsConfiguration::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CTacticsConfiguration{ CTacticsConfigurationTypes::tactic_configurations{} }; },
+	CheckException( []() { CTacticsConfiguration{ types::CTacticsConfiguration::tactic_configurations{} }; },
 		"The tactic configurations cannot be empty" );
 	CheckException( []() { CTacticsConfiguration{ { { "A", CTacticConfiguration{ 0, 0, { "A" } } } } }; },
 		"The tactics 'A' and 'A' are favourable against each other, which is forbidden." );
@@ -96,7 +96,7 @@ std::vector<std::string> TTacticsConfiguration::ObtainedResults() const noexcept
 		for( const auto& tacticConfiguration : tacticsConfiguration.GetTacticConfigurations() )
 			result.push_back( tacticConfiguration.first );
 		result.push_back( std::string{ CTacticsConfiguration::JSON_FAVOURABLE_TACTIC_SKILL_BONUS } + ": " + std::to_string( tacticsConfiguration.GetFavourableTacticSkillBonus() ) );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, tacticsConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

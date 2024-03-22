@@ -16,14 +16,14 @@ INITIALIZE_TEST( TLineupConfiguration )
 void TLineupConfiguration::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CLineupConfiguration{ CLineupConfigurationTypes::player_count_range{ 1, 0 } }; },
+	CheckException( []() { CLineupConfiguration{ types::CLineupConfiguration::player_count_range{ 1, 0 } }; },
 		"The maximum number of DFs cannot be smaller than the minimum number." );
 	CheckException( []() { CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
-		CLineupConfigurationTypes::player_count_range{ 1, 0 } }; },
+		types::CLineupConfiguration::player_count_range{ 1, 0 } }; },
 		"The maximum number of MFs cannot be smaller than the minimum number." );
 	CheckException( []() { CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
 		CLineupConfiguration::DEFAULT_MF_RANGE,
-		CLineupConfigurationTypes::player_count_range{ 1, 0 } }; },
+		types::CLineupConfiguration::player_count_range{ 1, 0 } }; },
 		"The maximum number of FWs cannot be smaller than the minimum number." );
 	CheckException( []() { CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
 		CLineupConfiguration::DEFAULT_MF_RANGE, CLineupConfiguration::DEFAULT_FW_RANGE, 12 }; },
@@ -76,34 +76,34 @@ void TLineupConfiguration::TestExceptions() const
 			"Kelleher", {}, {}, {}, {}, {}, {} } ); },
 			"The lineup has less DF (0) than the minimum allowed (3)." );
 		CheckException( [ &lineupConfiguration ]() { lineupConfiguration.CheckLineup( CLineup{
-			"Kelleher", CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez", "A.A.", "Robertson", "Konate" }, {}, {}, {}, {}, {} } ); },
+			"Kelleher", types::CLineup::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez", "A.A.", "Robertson", "Konate" }, {}, {}, {}, {}, {} } ); },
 			"The lineup has more DF (7) than the maximum allowed (6)." );
 		CheckException( [ &lineupConfiguration ]() { lineupConfiguration.CheckLineup( CLineup{
-			"Kelleher", CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" }, {}, {}, {}, {}, {} } ); },
+			"Kelleher", types::CLineup::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" }, {}, {}, {}, {}, {} } ); },
 			"The lineup has less DM+MF+AM (0) than the minimum allowed (2)." );
 		CheckException( [ &lineupConfiguration ]() { lineupConfiguration.CheckLineup( CLineup{
-			"Kelleher", CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
-			CLineupTypes::names{ "Endo", "Mac Allister", "Szoboszlai", "Elliot", "Darwin Núñez", "Luis Díaz", "Salah" }, {}, {}, {}, {} } ); },
+			"Kelleher", types::CLineup::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
+			types::CLineup::names{ "Endo", "Mac Allister", "Szoboszlai", "Elliot", "Darwin Núñez", "Luis Díaz", "Salah" }, {}, {}, {}, {} } ); },
 			"The lineup has more DM+MF+AM (7) than the maximum allowed (6)." );
 		CheckException( [ &lineupConfiguration ]() { lineupConfiguration.CheckLineup( CLineup{
-			"Kelleher", CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
-			CLineupTypes::names{ "Endo" }, CLineupTypes::names{ "Mac Allister", "Szoboszlai" }, CLineupTypes::names{},
-			CLineupTypes::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas" }, {} } ); },
+			"Kelleher", types::CLineup::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
+			types::CLineup::names{ "Endo" }, types::CLineup::names{ "Mac Allister", "Szoboszlai" }, types::CLineup::names{},
+			types::CLineup::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas" }, {} } ); },
 			"The lineup has more FW (9) than the maximum allowed (4)." );
 		CheckException( [ &lineupConfiguration ]() { lineupConfiguration.CheckLineup( CLineup{
-			"Kelleher", CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
-			CLineupTypes::names{ "Endo" }, CLineupTypes::names{ "Mac Allister", "Szoboszlai" }, CLineupTypes::names{},
-			CLineupTypes::names{ "Elliot", "Darwin Núñez", "Luis Díaz" },
-			CLineupTypes::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas", "Trent", "Konate", "Allison" } } ); },
+			"Kelleher", types::CLineup::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
+			types::CLineup::names{ "Endo" }, types::CLineup::names{ "Mac Allister", "Szoboszlai" }, types::CLineup::names{},
+			types::CLineup::names{ "Elliot", "Darwin Núñez", "Luis Díaz" },
+			types::CLineup::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas", "Trent", "Konate", "Allison" } } ); },
 			"The lineup has more subs (12) than the maximum allowed (9)." );
 		CheckException( [ &lineupConfiguration ]() { lineupConfiguration.CheckLineup( CLineup{
-			"Kelleher", CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk" },
-			CLineupTypes::names{ "Endo" }, CLineupTypes::names{ "Mac Allister" }, CLineupTypes::names{}, {}, {} } ); },
+			"Kelleher", types::CLineup::names{ "Bradley", "Quansah", "Van Dijk" },
+			types::CLineup::names{ "Endo" }, types::CLineup::names{ "Mac Allister" }, types::CLineup::names{}, {}, {} } ); },
 			"The lineup has less players (6) than the minimum allowed (7)." );
 		CheckException( [ &lineupConfiguration ]() { lineupConfiguration.CheckLineup( CLineup{
-			"Kelleher", CLineupTypes::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez", "Robertson" },
-			CLineupTypes::names{ "Endo" }, CLineupTypes::names{ "Mac Allister", "Szoboszlai" }, CLineupTypes::names{},
-			CLineupTypes::names{ "Elliot", "Darwin Núñez", "Luis Díaz" }, {} } ); },
+			"Kelleher", types::CLineup::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez", "Robertson" },
+			types::CLineup::names{ "Endo" }, types::CLineup::names{ "Mac Allister", "Szoboszlai" }, types::CLineup::names{},
+			types::CLineup::names{ "Elliot", "Darwin Núñez", "Luis Díaz" }, {} } ); },
 			"The lineup has more players (12) than the maximum allowed (11)." );
 	}
 }
@@ -142,7 +142,7 @@ std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 		result.push_back( std::string{ CLineupConfiguration::JSON_MIN_PLAYERS } + ": " + std::to_string( lineupConfiguration.GetMinPlayerCount() ) );
 		if( lineupConfiguration.GetBenchedPlayersCount() )
 			result.push_back( std::string{ CLineupConfiguration::JSON_BENCHED_PLAYERS } + ": " + std::to_string( *lineupConfiguration.GetBenchedPlayersCount() ) );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, lineupConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

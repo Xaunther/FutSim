@@ -159,7 +159,7 @@ std::vector<std::string> TMatch::ObtainedResults() const noexcept
 		result.push_back( std::string{ CMatch::JSON_AWAY_TEAM } + ": " + std::string{ match.GetAwayTeam().GetName() } );
 		result.push_back( std::string{ CStadium::JSON_KEY } + ": " + std::string{ match.GetStadium().GetName() } );
 		result.push_back( std::string{ CMatch::JSON_REFEREE } + ": " + std::string{ match.GetReferee() } );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, match );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

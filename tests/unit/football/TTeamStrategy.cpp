@@ -43,7 +43,7 @@ std::vector<std::string> TTeamStrategy::ObtainedResults() const noexcept
 	{
 		result.push_back( std::string{ CTeamStrategy::JSON_TACTIC } + ": " + std::string{ teamStrategy.GetTacticID() } );
 		result.push_back( std::string{ CLineup::JSON_KEY } + ": " + std::string{ teamStrategy.GetLineup().GetPlayers< E_PLAYER_POSITION::GK >() } );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, teamStrategy );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}
@@ -66,9 +66,9 @@ std::vector<std::string> TTeamStrategy::ObtainedResults() const noexcept
 		const CStadium stadium{ "The New Lawn", 5147, 1.1 };
 		const CMatch match{ team, team, stadium, "Michael Oliver" };
 		const CTeamStrategy homeTeamStrategy{ "A", CLineup{ "Kaminski",
-			CLineupTypes::names{ "Potts", "Lockyer", "Kaboré", "Bell" },
-			{}, CLineupTypes::names{ "Barkley", "Nakamba", "Mpanzu", "Clark" }, {},
-			CLineupTypes::names{ "Morris", "Adebayo" }, {} } };
+			types::CLineup::names{ "Potts", "Lockyer", "Kaboré", "Bell" },
+			{}, types::CLineup::names{ "Barkley", "Nakamba", "Mpanzu", "Clark" }, {},
+			types::CLineup::names{ "Morris", "Adebayo" }, {} } };
 		const CTeamStrategy awayTeamStrategy{ "N", homeTeamStrategy.GetLineup() };
 
 		homeTeamStrategy.ForEachPlayerSkill( E_PLAYER_SKILL::St, match, CMatchConfiguration{}, true, awayTeamStrategy,

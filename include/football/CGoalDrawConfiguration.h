@@ -2,8 +2,8 @@
 
 #include "IJsonable.h"
 
-#include "football/CDrawConfigurationTypes.h"
-#include "football/CGoalDrawConfigurationTypes.h"
+#include "football/types/CDrawConfiguration.h"
+#include "football/types/CGoalDrawConfiguration.h"
 
 namespace futsim::football
 {
@@ -14,10 +14,10 @@ namespace futsim::football
 class CGoalDrawConfiguration : public IJsonable
 {
 protected:
-	using probability = CDrawConfigurationTypes::probability;
-	using stat = CDrawConfigurationTypes::stat;
-	using effective_skill = CDrawConfigurationTypes::effective_skill;
-	using goal_draw_distribution = CGoalDrawConfigurationTypes::goal_draw_distribution;
+	using probability = types::CDrawConfiguration::probability;
+	using stat = types::CDrawConfiguration::stat;
+	using effective_skill = types::CDrawConfiguration::effective_skill;
+	using goal_draw_distribution = types::CGoalDrawConfiguration::goal_draw_distribution;
 
 public:
 	/**

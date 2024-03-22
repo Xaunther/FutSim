@@ -5,7 +5,7 @@
 /**
  * @brief Types defined for \ref CTieCondition.
 */
-namespace futsim::football::CTieConditionTypes
+namespace futsim::football::types::CTieCondition
 {
 
 //! Type for a goal difference.
@@ -15,4 +15,4 @@ using goal_count = unsigned int;
 //! Type for an optional goal count.
 using optional_goal_count = std::optional<goal_count>;
 
-} // namespace futsim::football::CTieConditionTypes
+} // namespace futsim::football::types::CTieCondition

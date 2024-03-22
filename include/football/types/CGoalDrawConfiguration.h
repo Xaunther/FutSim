@@ -7,7 +7,7 @@ namespace futsim
 
 template<typename tEnum, typename tIntType> class CEnumDistribution;
 
-namespace football::CGoalDrawConfigurationTypes
+namespace football::types::CGoalDrawConfiguration
 {
 
 //! Enumeration for the different chance outcomes.
@@ -28,6 +28,6 @@ FUTSIM_SERIALIZE_ENUM( E_CHANCE_OUTCOME, {
 	{E_CHANCE_OUTCOME::LOSE_POSSESSION, "Lose possession"},
 	} );
 
-} // football::CGoalDrawConfigurationTypes namespace
+} // football::types::CGoalDrawConfiguration namespace
 
 } // futsim: namespace

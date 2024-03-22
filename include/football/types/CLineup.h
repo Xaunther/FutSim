@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CPersonTypes.h"
+#include "types/CPerson.h"
 
 #include "football/EPlayerPosition.h"
 
@@ -9,11 +9,11 @@
 #include <span>
 #include <vector>
 
-namespace futsim::football::CLineupTypes
+namespace futsim::football::types::CLineup
 {
 
 //! Type for a name.
-using name = CPersonTypes::name_type;
+using name = futsim::types::CPerson::name_type;
 
 //! Type for a vector of names.
 using names = std::vector<name>;
@@ -28,4 +28,4 @@ std::conditional_t<tPlayerPosition == E_PLAYER_POSITION::GK, std::string_view, s
 //! Type for an indexed predicate.
 using player_predicate = std::function<void( const name& )>;
 
-} // futsim::football::CLineupTypes namespace
+} // futsim::football::types::CLineup namespace

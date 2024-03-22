@@ -3,64 +3,65 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/CEnumDistribution.h
 	include/Config.h
 	include/CPerson.h
-	include/CPersonTypes.h
 	include/CPlayTime.h
-	include/CPlayTimeTypes.h
 	include/ENationality.h
 	include/EnumUtils.h
 	include/ExceptionUtils.h
 	include/IJsonable.h
-	include/IJsonableTypes.h
 	include/JsonUtils.h
 	include/NameUtils.h
 	include/NumberUtils.h
 	include/ProbabilityUtils.h
+	include/types/CPerson.h
+	include/types/CPlayTime.h
+	include/types/IJsonable.h
 )
 
 # Football external headers
 SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CChancesDrawConfiguration.h
-	include/football/CChancesDrawConfigurationTypes.h
 	include/football/CDrawConfiguration.h
 	include/football/CExtraTime.h
 	include/football/CFoulDrawConfiguration.h
-	include/football/CFoulDrawConfigurationTypes.h
 	include/football/CFoulState.h
 	include/football/CGoalDrawConfiguration.h
-	include/football/CGoalDrawConfigurationTypes.h
 	include/football/CLineup.h
 	include/football/CLineupConfiguration.h
-	include/football/CLineupConfigurationTypes.h
-	include/football/CLineupTypes.h
 	include/football/CMatch.h
 	include/football/CMatchConfiguration.h
-	include/football/CMatchConfigurationTypes.h
 	include/football/CTeamStrategy.h
 	include/football/CPenaltyShootoutConfiguration.h
-	include/football/CPenaltyShootoutConfigurationTypes.h
 	include/football/CPlayer.h
 	include/football/CPlayerSkills.h
-	include/football/CPlayerSkillsTypes.h
 	include/football/CPlayTime.h
-	include/football/CPlayTimeTypes.h
 	include/football/CPossessionDrawConfiguration.h
-	include/football/CPossessionDrawConfigurationTypes.h
 	include/football/CPossessionState.h
-	include/football/CPossessionStateTypes.h
 	include/football/CStadium.h
-	include/football/CStadiumTypes.h
 	include/football/CTacticConfiguration.h
-	include/football/CTacticConfigurationTypes.h
 	include/football/CTacticsConfiguration.h
-	include/football/CTacticsConfigurationTypes.h
 	include/football/CTeam.h
-	include/football/CTeamTypes.h
 	include/football/CTieCondition.h
-	include/football/CTieConditionTypes.h
 	include/football/EGoalRule.h
 	include/football/EPenaltySequence.h
 	include/football/EPlayerPosition.h
 	include/football/EPlayerSkill.h
+	include/football/types/CChancesDrawConfiguration.h
+	include/football/types/CDrawConfiguration.h
+	include/football/types/CFoulDrawConfiguration.h
+	include/football/types/CGoalDrawConfiguration.h
+	include/football/types/CLineup.h
+	include/football/types/CLineupConfiguration.h
+	include/football/types/CMatchConfiguration.h
+	include/football/types/CPenaltyShootoutConfiguration.h
+	include/football/types/CPlayerSkills.h
+	include/football/types/CPlayTime.h
+	include/football/types/CPossessionDrawConfiguration.h
+	include/football/types/CPossessionState.h
+	include/football/types/CStadium.h
+	include/football/types/CTacticConfiguration.h
+	include/football/types/CTacticsConfiguration.h
+	include/football/types/CTeam.h
+	include/football/types/CTieCondition.h
 )
 
 # Core source files

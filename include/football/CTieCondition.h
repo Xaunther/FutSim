@@ -2,7 +2,7 @@
 
 #include "IJsonable.h"
 
-#include "CTieConditionTypes.h"
+#include "types/CTieCondition.h"
 
 #include <optional>
 
@@ -16,9 +16,9 @@ namespace futsim::football
 class CTieCondition : public IJsonable
 {
 protected:
-	using goal_difference = CTieConditionTypes::goal_difference;
-	using goal_count = CTieConditionTypes::goal_count;
-	using optional_goal_count = CTieConditionTypes::optional_goal_count;
+	using goal_difference = types::CTieCondition::goal_difference;
+	using goal_count = types::CTieCondition::goal_count;
+	using optional_goal_count = types::CTieCondition::optional_goal_count;
 
 public:
 	/**

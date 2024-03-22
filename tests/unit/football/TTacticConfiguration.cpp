@@ -85,7 +85,7 @@ std::vector<std::string> TTacticConfiguration::ObtainedResults() const noexcept
 		result.push_back( "Tk bonus for FW: " + std::to_string( tacticConfiguration.GetSkillBonus( E_PLAYER_POSITION::FW, E_PLAYER_SKILL::Tk ) ) );
 		result.push_back( "Ps bonus for FW: " + std::to_string( tacticConfiguration.GetSkillBonus( E_PLAYER_POSITION::FW, E_PLAYER_SKILL::Ps ) ) );
 		result.push_back( "Sh bonus for FW: " + std::to_string( tacticConfiguration.GetSkillBonus( E_PLAYER_POSITION::FW, E_PLAYER_SKILL::Sh ) ) );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, tacticConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

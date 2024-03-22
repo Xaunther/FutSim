@@ -2,8 +2,8 @@
 
 #include "IJsonable.h"
 
-#include "football/CDrawConfigurationTypes.h"
-#include "football/CChancesDrawConfigurationTypes.h"
+#include "football/types/CDrawConfiguration.h"
+#include "football/types/CChancesDrawConfiguration.h"
 #include "CEnumDistribution.h"
 
 namespace futsim::football
@@ -15,8 +15,8 @@ namespace futsim::football
 class CChancesDrawConfiguration : public IJsonable
 {
 protected:
-	using stat = CDrawConfigurationTypes::stat;
-	using set_piece_type_draw_distribution = CChancesDrawConfigurationTypes::set_piece_type_draw_distribution;
+	using stat = types::CDrawConfiguration::stat;
+	using set_piece_type_draw_distribution = types::CChancesDrawConfiguration::set_piece_type_draw_distribution;
 
 public:
 	/**

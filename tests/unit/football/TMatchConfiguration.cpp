@@ -31,7 +31,7 @@ void TMatchConfiguration::TestExceptions() const
 	// Test CheckTeamStrategy
 	{
 		const CMatchConfiguration matchConfiguration;
-		const CLineup lineup{ "Kelleher", CLineupTypes::names{ "Bradley" }, {}, {}, {}, {}, {} };
+		const CLineup lineup{ "Kelleher", types::CLineup::names{ "Bradley" }, {}, {}, {}, {}, {} };
 		CheckException( [ &matchConfiguration, &lineup ]() { matchConfiguration.CheckTeamStrategy( CTeamStrategy{ "FF", lineup } ); },
 			"The tactic 'FF' has not been configured." );
 		CheckException( [ &matchConfiguration, &lineup ]() { matchConfiguration.CheckTeamStrategy( CTeamStrategy{ "A", lineup } ); },
@@ -82,7 +82,7 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 			result.push_back( ( *matchConfiguration.GetExtraTime() ).JSON_KEY.data() );
 		if( matchConfiguration.GetPenaltyShootoutConfiguration() )
 			result.push_back( ( *matchConfiguration.GetPenaltyShootoutConfiguration() ).JSON_KEY.data() );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, matchConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

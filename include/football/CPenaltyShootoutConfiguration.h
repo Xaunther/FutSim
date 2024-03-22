@@ -2,7 +2,7 @@
 
 #include "IJsonable.h"
 
-#include "football/CPenaltyShootoutConfigurationTypes.h"
+#include "football/types/CPenaltyShootoutConfiguration.h"
 #include "football/EPenaltySequence.h"
 
 namespace futsim::football
@@ -14,7 +14,7 @@ namespace futsim::football
 class CPenaltyShootoutConfiguration : public IJsonable
 {
 protected:
-	using penalty_count = CPenaltyShootoutConfigurationTypes::penalty_count;
+	using penalty_count = types::CPenaltyShootoutConfiguration::penalty_count;
 
 public:
 	/**

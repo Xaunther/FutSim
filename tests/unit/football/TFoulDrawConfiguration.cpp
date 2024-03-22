@@ -76,7 +76,7 @@ std::vector<std::string> TFoulDrawConfiguration::ObtainedResults() const noexcep
 		result.push_back( "Foul probability: " + std::to_string( foulDrawConfiguration.GetFoulProbability() ) );
 		for( const auto& probability : foulDrawConfiguration.CreateFoulDistribution().probabilities() )
 			result.push_back( std::to_string( probability ) );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, foulDrawConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

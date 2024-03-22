@@ -2,13 +2,13 @@
 
 #include "IJsonable.h"
 
-#include "football/CPossessionStateTypes.h"
+#include "football/types/CPossessionState.h"
 
 #include "football/CMatch.h"
 #include "football/CMatchConfiguration.h"
 #include "football/CTeamStrategy.h"
-#include "football/CPossessionDrawConfigurationTypes.h"
-#include "CPersonTypes.h"
+#include "football/types/CPossessionDrawConfiguration.h"
+#include "types/CPerson.h"
 
 #include "ExceptionUtils.h"
 
@@ -21,8 +21,8 @@ namespace futsim::football
 class CPossessionState : public IJsonable
 {
 protected:
-	using optional_name = std::optional<CPersonTypes::name_type>;
-	using E_POSSESSION_DRAW_OUTCOME = CPossessionDrawConfigurationTypes::E_POSSESSION_DRAW_OUTCOME;
+	using optional_name = std::optional<futsim::types::CPerson::name_type>;
+	using E_POSSESSION_DRAW_OUTCOME = types::CPossessionDrawConfiguration::E_POSSESSION_DRAW_OUTCOME;
 
 public:
 	/**
@@ -87,7 +87,7 @@ CPossessionState::CPossessionState(
 	std::uniform_random_bit_generator auto& aGenerator
 ) try
 {
-	using skill_bonus = CTacticConfigurationTypes::skill_bonus;
+	using skill_bonus = types::CTacticConfiguration::skill_bonus;
 
 	// Calculate each player's effective skill
 	std::vector<skill_bonus> attackSkills, defenseSkills;
@@ -109,7 +109,7 @@ CPossessionState::CPossessionState(
 	// Draw acting player
 	const auto DrawPlayer = [ &aGenerator ]( const auto& aLineup, const auto& aSkills ) {
 		return *( aLineup.template CreatePlayersView<false>()
-			| std::ranges::views::drop( std::discrete_distribution<CLineupTypes::names::size_type>{
+			| std::ranges::views::drop( std::discrete_distribution<types::CLineup::names::size_type>{
 			aSkills.cbegin(), aSkills.cend() }( aGenerator ) ) ).begin(); };
 
 	if( mOutcome == E_POSSESSION_DRAW_OUTCOME::KEEP_POSSESSION )

@@ -16,7 +16,7 @@ namespace
  * @param aRange Range.
  * @param aRangeDescription Range description to add to the error message.
 */
-const CLineupConfigurationTypes::player_count_range& CheckRange( const CLineupConfigurationTypes::player_count_range& aRange,
+const types::CLineupConfiguration::player_count_range& CheckRange( const types::CLineupConfiguration::player_count_range& aRange,
 	const std::string_view aRangeDescription );
 
 /**
@@ -25,8 +25,8 @@ const CLineupConfigurationTypes::player_count_range& CheckRange( const CLineupCo
  * @param aRange Range.
  * @param aRangeDescription Range description to add to the error message.
 */
-void CheckLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
-	const CLineupConfigurationTypes::player_count_range& aRange, const std::string_view aRangeDescription );
+void CheckLineupPosition( const types::CLineup::names::size_type& aPositionCount,
+	const types::CLineupConfiguration::player_count_range& aRange, const std::string_view aRangeDescription );
 
 /**
  * @brief Checks that the number of players in a position does not exceed the maximum allowed.
@@ -34,8 +34,8 @@ void CheckLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
  * @param aMaxCount Maximum allowed.
  * @param aRangeDescription Range description to add to the error message.
 */
-void CheckMaxLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
-	const CLineupConfigurationTypes::player_count_range::second_type& aMaxCount, const std::string_view aRangeDescription );
+void CheckMaxLineupPosition( const types::CLineup::names::size_type& aPositionCount,
+	const types::CLineupConfiguration::player_count_range::second_type& aMaxCount, const std::string_view aRangeDescription );
 
 } // anonymous namespace
 
@@ -128,7 +128,7 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the l
 namespace
 {
 
-const CLineupConfigurationTypes::player_count_range& CheckRange( const CLineupConfigurationTypes::player_count_range& aRange,
+const types::CLineupConfiguration::player_count_range& CheckRange( const types::CLineupConfiguration::player_count_range& aRange,
 	const std::string_view aRangeDescription ) try
 {
 	if( aRange.second && ( *aRange.second ) < aRange.first )
@@ -137,8 +137,8 @@ const CLineupConfigurationTypes::player_count_range& CheckRange( const CLineupCo
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the " << aRangeDescription << " range." )
 
-void CheckLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
-	const CLineupConfigurationTypes::player_count_range& aRange, const std::string_view aRangeDescription )
+void CheckLineupPosition( const types::CLineup::names::size_type& aPositionCount,
+	const types::CLineupConfiguration::player_count_range& aRange, const std::string_view aRangeDescription )
 {
 	if( aPositionCount < aRange.first )
 		throw std::invalid_argument{ "The lineup has less " + std::string{ aRangeDescription } + " (" + std::to_string( aPositionCount ) + ") "
@@ -146,8 +146,8 @@ void CheckLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
 	CheckMaxLineupPosition( aPositionCount, aRange.second, aRangeDescription );
 }
 
-void CheckMaxLineupPosition( const CLineupTypes::names::size_type& aPositionCount,
-	const CLineupConfigurationTypes::player_count_range::second_type& aMaxCount, const std::string_view aRangeDescription )
+void CheckMaxLineupPosition( const types::CLineup::names::size_type& aPositionCount,
+	const types::CLineupConfiguration::player_count_range::second_type& aMaxCount, const std::string_view aRangeDescription )
 {
 	if( aMaxCount && aPositionCount > *aMaxCount )
 		throw std::invalid_argument{ "The lineup has more " + std::string{ aRangeDescription } + " (" + std::to_string( aPositionCount ) + ") "

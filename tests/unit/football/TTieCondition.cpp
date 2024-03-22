@@ -53,7 +53,7 @@ std::vector<std::string> TTieCondition::ObtainedResults() const noexcept
 		result.push_back( std::string{ CTieCondition::JSON_HOME_TEAM_LEAD } + ": " + std::to_string( tieCondition.GetHomeTeamLead() ) );
 		if( tieCondition.GetHomeTeamGoals() )
 			result.push_back( std::string{ CTieCondition::JSON_HOME_TEAM_GOALS } + ": " + std::to_string( *tieCondition.GetHomeTeamGoals() ) );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, tieCondition );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

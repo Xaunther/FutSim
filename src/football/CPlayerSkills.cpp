@@ -8,7 +8,7 @@
 namespace futsim::football
 {
 
-using namespace CPlayerSkillsTypes;
+using namespace types::CPlayerSkills;
 
 namespace
 {

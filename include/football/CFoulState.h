@@ -2,8 +2,8 @@
 
 #include "IJsonable.h"
 
-#include "CPersonTypes.h"
-#include "CFoulDrawConfigurationTypes.h"
+#include "types/CPerson.h"
+#include "types/CFoulDrawConfiguration.h"
 
 #include "football/CMatchConfiguration.h"
 #include "football/CTeamStrategy.h"
@@ -17,8 +17,8 @@ namespace futsim::football
 class CFoulState : public IJsonable
 {
 protected:
-	using name_type = CPersonTypes::name_type;
-	using E_FOUL_DRAW_OUTCOME = CFoulDrawConfigurationTypes::E_FOUL_DRAW_OUTCOME;
+	using name_type = futsim::types::CPerson::name_type;
+	using E_FOUL_DRAW_OUTCOME = types::CFoulDrawConfiguration::E_FOUL_DRAW_OUTCOME;
 
 public:
 	/**
