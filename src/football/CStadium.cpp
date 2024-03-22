@@ -14,7 +14,7 @@ namespace
  * @brief Checks correctness of the ambient factor.
  * @param aAmbientFactor Ambient factor.
 */
-const CStadiumTypes::ambient_factor& CheckAmbientFactor( const CStadiumTypes::ambient_factor& aAmbientFactor );
+const types::CStadium::ambient_factor& CheckAmbientFactor( const types::CStadium::ambient_factor& aAmbientFactor );
 
 } // anonymous namespace
 
@@ -63,7 +63,7 @@ const CStadium::ambient_factor& CStadium::GetAmbientFactor() const noexcept
 namespace
 {
 
-const CStadiumTypes::ambient_factor& CheckAmbientFactor( const CStadiumTypes::ambient_factor& aAmbientFactor ) try
+const types::CStadium::ambient_factor& CheckAmbientFactor( const types::CStadium::ambient_factor& aAmbientFactor ) try
 {
 	if( aAmbientFactor < 0 )
 		throw std::invalid_argument( "The ambient factor cannot be negative." );
