@@ -96,7 +96,6 @@ std::vector<std::string> TTacticsConfiguration::ObtainedResults() const noexcept
 		for( const auto& tacticConfiguration : tacticsConfiguration.GetTacticConfigurations() )
 			result.push_back( tacticConfiguration.first );
 		result.push_back( std::string{ CTacticsConfiguration::JSON_FAVOURABLE_TACTIC_SKILL_BONUS } + ": " + std::to_string( tacticsConfiguration.GetFavourableTacticSkillBonus() ) );
-		result.push_back( "Sh bonus for FW playing A vs E: " + std::to_string( tacticsConfiguration.CalculateSkillBonus( E_PLAYER_POSITION::FW, E_PLAYER_SKILL::Sh, "A", "E" ) ) );
 		futsim::IJsonableTypes::json outputJSON;
 		AddToJSONKey( outputJSON, tacticsConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
@@ -116,7 +115,6 @@ std::vector<std::string> TTacticsConfiguration::ExpectedResults() const noexcept
 		"N",
 		"P",
 		"Favourable tactic skill bonus: 1.100000",
-		"Sh bonus for FW playing A vs E: 2.016667",
 		"{\n"
 		"	\"Tactics configuration\": {\n"
 		"		\"Tactic configurations\": {\n"
@@ -219,7 +217,6 @@ std::vector<std::string> TTacticsConfiguration::ExpectedResults() const noexcept
 		"A",
 		"E",
 		"Favourable tactic skill bonus: 1.300000",
-		"Sh bonus for FW playing A vs E: 2.080000",
 		"{\n"
 		"	\"Tactics configuration\": {\n"
 		"		\"Tactic configurations\": {\n"

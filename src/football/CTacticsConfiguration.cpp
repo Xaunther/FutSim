@@ -62,15 +62,6 @@ const CTacticsConfiguration::skill_bonus& CTacticsConfiguration::GetFavourableTa
 	return mFavourableTacticSkillBonus;
 }
 
-CTacticsConfiguration::skill_bonus CTacticsConfiguration::CalculateSkillBonus( const E_PLAYER_POSITION& aPlayerPosition, const E_PLAYER_SKILL& aPlayerSkill,
-	const std::string_view aPlayerTeamTactic, const std::string_view aRivalTeamTactic ) const try
-{
-	const auto& playerTeamTacticConfiguration = mTacticConfigurations.at( aPlayerTeamTactic.data() );
-	return ( playerTeamTacticConfiguration.GetFavourableTactics().contains( aRivalTeamTactic.data() ) ? mFavourableTacticSkillBonus : 1 )
-		* playerTeamTacticConfiguration.GetSkillBonus( aPlayerPosition, aPlayerSkill );
-}
-FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "The player's team tactic '" << aPlayerTeamTactic << "' does not exist." )
-
 namespace
 {
 
