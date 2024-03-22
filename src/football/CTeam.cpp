@@ -87,7 +87,7 @@ void CTeam::JSON( json& aJSON ) const noexcept
 	AddToJSONKey( aJSON, mAbbreviation, JSON_ABBREVIATION );
 	AddToJSONKey( aJSON, mManager, JSON_MANAGER );
 	if( !mPlayers.empty() )
-		AddKeyArrayToJSONKey( aJSON, mPlayers, JSON_PLAYERS );
+		AddArrayToJSONKey( aJSON, mPlayers, JSON_PLAYERS );
 	AddToJSONKey( aJSON, mSupportFactor, JSON_SUPPORT_FACTOR );
 	AddToJSONKey( aJSON, mAttendanceDistributionParameters.mean(), JSON_MEAN_ATTENDANCE );
 	AddToJSONKey( aJSON, mAttendanceDistributionParameters.stddev(), JSON_STD_DEV_ATTENDANCE );
@@ -162,7 +162,7 @@ CTeamTypes::players CreatePlayersFromJSON( const IJsonableTypes::json& aJSON ) t
 {
 	CTeamTypes::players result;
 	for( const auto& JSONPlayer : ValueFromOptionalJSONKey<IJsonableTypes::json>( aJSON, CTeam::JSON_PLAYERS ) )
-		result.emplace_back( ValueFromRequiredJSONKey<CPlayer>( JSONPlayer ) );
+		result.emplace_back( ValueFromJSON<CTeamTypes::players::value_type>( JSONPlayer ) );
 	return result;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the players from JSON." )

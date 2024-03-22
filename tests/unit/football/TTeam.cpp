@@ -127,39 +127,35 @@ void TTeam::TestExceptions() const
 				"Manager": "Rob Edwards",
 				"Players": [
 					{
-						"Player": {
-							"Surnames": "Longstaff",
-							"First name": "Matty",
-							"Age": 23,
-							"Nationality": "GBR",
-							"Player skills": {
-								"St skill": 1,
-								"Tk skill": 1,
-								"Ps skill": 60,
-								"Sh skill": 1,  
-								"St experience": 0,
-								"Ps experience": 0,
-								"Tk experience": 0,
-								"Sh experience": 0
-							}
+						"Surnames": "Longstaff",
+						"First name": "Matty",
+						"Age": 23,
+						"Nationality": "GBR",
+						"Player skills": {
+							"St skill": 1,
+							"Tk skill": 1,
+							"Ps skill": 60,
+							"Sh skill": 1,  
+							"St experience": 0,
+							"Ps experience": 0,
+							"Tk experience": 0,
+							"Sh experience": 0
 						}
 					},
 					{
-						"Player": {
-							"First name": "Sean",
-							"Surnames": "Longstaff",
-							"Age": 26,
-							"Nationality": "GBR",
-							"Player skills": {
-								"St skill": 1,
-								"Tk skill": 1,
-								"Ps skill": 80,
-								"Sh skill": 1,
-								"St experience": 0,
-								"Ps experience": 0,
-								"Tk experience": 0,
-								"Sh experience": 0
-							}
+						"First name": "Sean",
+						"Surnames": "Longstaff",
+						"Age": 26,
+						"Nationality": "GBR",
+						"Player skills": {
+							"St skill": 1,
+							"Tk skill": 1,
+							"Ps skill": 80,
+							"Sh skill": 1,
+							"St experience": 0,
+							"Ps experience": 0,
+							"Tk experience": 0,
+							"Sh experience": 0
 						}
 					}
 				],
@@ -209,40 +205,36 @@ std::vector<std::string> TTeam::ObtainedResults() const noexcept
 				"Manager": "Rob Edwards",
 				"Players": [
 					{
-						"Player": {
-							"Surnames": "Messi",
-							"First name": "Lionel",
-							"Age": 35,
-							"Nationality": "ARG",
-							"Player skills": {
-								"St skill": 1,
-								"Tk skill": 1,
-								"Ps skill": 1,
-								"Sh skill": 99,
-								"St experience": 0,
-								"Ps experience": 0,
-								"Tk experience": 0,
-								"Sh experience": 0
-							}
+						"Surnames": "Messi",
+						"First name": "Lionel",
+						"Age": 35,
+						"Nationality": "ARG",
+						"Player skills": {
+							"St skill": 1,
+							"Tk skill": 1,
+							"Ps skill": 1,
+							"Sh skill": 99,
+							"St experience": 0,
+							"Ps experience": 0,
+							"Tk experience": 0,
+							"Sh experience": 0
 						}
 					},
 					{
-						"Player": {
-							"First name": "Ansu",
-							"Surnames": "Fati",
-							"Known name": "Ansu Fati",
-							"Age": 20,
-							"Nationality": "ESP",
-							"Player skills": {
-								"St skill": 1,
-								"Tk skill": 1,
-								"Ps skill": 1,
-								"Sh skill": 80,
-								"St experience": 0,
-								"Ps experience": 0,
-								"Tk experience": 0,
-								"Sh experience": 0
-							}
+						"First name": "Ansu",
+						"Surnames": "Fati",
+						"Known name": "Ansu Fati",
+						"Age": 20,
+						"Nationality": "ESP",
+						"Player skills": {
+							"St skill": 1,
+							"Tk skill": 1,
+							"Ps skill": 1,
+							"Sh skill": 80,
+							"St experience": 0,
+							"Ps experience": 0,
+							"Tk experience": 0,
+							"Sh experience": 0
 						}
 					}
 				],
@@ -302,40 +294,36 @@ std::vector<std::string> TTeam::ExpectedResults() const noexcept
 		"		\"Manager\": \"Rob Edwards\",\n"
 		"		\"Players\": [\n"
 		"			{\n"
-		"				\"Player\": {\n"
-		"					\"First name\": \"Lionel\",\n"
-		"					\"Surnames\": \"Messi\",\n"
-		"					\"Age\": 35,\n"
-		"					\"Nationality\": \"ARG\",\n"
-		"					\"Player skills\": {\n"
-		"						\"St skill\": 1,\n"
-		"						\"Tk skill\": 1,\n"
-		"						\"Ps skill\": 1,\n"
-		"						\"Sh skill\": 99,\n"
-		"						\"St experience\": 0,\n"
-		"						\"Tk experience\": 0,\n"
-		"						\"Ps experience\": 0,\n"
-		"						\"Sh experience\": 0\n"
-		"					}\n"
+		"				\"First name\": \"Lionel\",\n"
+		"				\"Surnames\": \"Messi\",\n"
+		"				\"Age\": 35,\n"
+		"				\"Nationality\": \"ARG\",\n"
+		"				\"Player skills\": {\n"
+		"					\"St skill\": 1,\n"
+		"					\"Tk skill\": 1,\n"
+		"					\"Ps skill\": 1,\n"
+		"					\"Sh skill\": 99,\n"
+		"					\"St experience\": 0,\n"
+		"					\"Tk experience\": 0,\n"
+		"					\"Ps experience\": 0,\n"
+		"					\"Sh experience\": 0\n"
 		"				}\n"
 		"			},\n"
 		"			{\n"
-		"				\"Player\": {\n"
-		"					\"First name\": \"Ansu\",\n"
-		"					\"Surnames\": \"Fati\",\n"
-		"					\"Known name\": \"Ansu Fati\",\n"
-		"					\"Age\": 20,\n"
-		"					\"Nationality\": \"ESP\",\n"
-		"					\"Player skills\": {\n"
-		"						\"St skill\": 1,\n"
-		"						\"Tk skill\": 1,\n"
-		"						\"Ps skill\": 1,\n"
-		"						\"Sh skill\": 80,\n"
-		"						\"St experience\": 0,\n"
-		"						\"Tk experience\": 0,\n"
-		"						\"Ps experience\": 0,\n"
-		"						\"Sh experience\": 0\n"
-		"					}\n"
+		"				\"First name\": \"Ansu\",\n"
+		"				\"Surnames\": \"Fati\",\n"
+		"				\"Known name\": \"Ansu Fati\",\n"
+		"				\"Age\": 20,\n"
+		"				\"Nationality\": \"ESP\",\n"
+		"				\"Player skills\": {\n"
+		"					\"St skill\": 1,\n"
+		"					\"Tk skill\": 1,\n"
+		"					\"Ps skill\": 1,\n"
+		"					\"Sh skill\": 80,\n"
+		"					\"St experience\": 0,\n"
+		"					\"Tk experience\": 0,\n"
+		"					\"Ps experience\": 0,\n"
+		"					\"Sh experience\": 0\n"
 		"				}\n"
 		"			}\n"
 		"		],\n"
