@@ -15,7 +15,7 @@ namespace
  * @brief Calculates the foul probability per minute.
  * @param aAverageFouls Average number of fouls per 90 minutes.
 */
-CDrawConfigurationTypes::probability CalculateFoulProbability( const CDrawConfigurationTypes::stat& aAverageFouls );
+types::CDrawConfiguration::probability CalculateFoulProbability( const types::CDrawConfiguration::stat& aAverageFouls );
 
 } // anonymous namespace
 
@@ -83,7 +83,7 @@ CFoulDrawConfiguration::foul_draw_distribution CFoulDrawConfiguration::CreateFou
 namespace
 {
 
-CDrawConfigurationTypes::probability CalculateFoulProbability( const CDrawConfigurationTypes::stat& aAverageFouls )
+types::CDrawConfiguration::probability CalculateFoulProbability( const types::CDrawConfiguration::stat& aAverageFouls )
 {
 	return CheckProbability( aAverageFouls / CFoulDrawConfiguration::MATCH_MINUTES, "foul probability" );
 }

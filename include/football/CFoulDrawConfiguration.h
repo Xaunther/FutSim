@@ -2,7 +2,7 @@
 
 #include "IJsonable.h"
 
-#include "football/CDrawConfigurationTypes.h"
+#include "football/types/CDrawConfiguration.h"
 #include "football/CFoulDrawConfigurationTypes.h"
 #include "football/CLineup.h"
 #include "CEnumDistribution.h"
@@ -16,8 +16,8 @@ namespace futsim::football
 class CFoulDrawConfiguration : public IJsonable
 {
 protected:
-	using stat = CDrawConfigurationTypes::stat;
-	using probability = CDrawConfigurationTypes::probability;
+	using stat = types::CDrawConfiguration::stat;
+	using probability = types::CDrawConfiguration::probability;
 	using foul_draw_distribution = CFoulDrawConfigurationTypes::foul_draw_distribution;
 
 public:

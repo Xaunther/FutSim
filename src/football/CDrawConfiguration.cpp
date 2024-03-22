@@ -15,8 +15,8 @@ namespace
  * @param aAverageSetPieces Average number of set pieces per 90 minutes.
  * @param aAverageFouls Average number of fouls per 90 minutes.
 */
-std::bernoulli_distribution::param_type CalculateSetPieceDistributionParameters( const CDrawConfigurationTypes::stat& aAverageSetPieces,
-	const CDrawConfigurationTypes::stat& aAverageFouls );
+std::bernoulli_distribution::param_type CalculateSetPieceDistributionParameters( const types::CDrawConfiguration::stat& aAverageSetPieces,
+	const types::CDrawConfiguration::stat& aAverageFouls );
 
 /**
  * @brief Calculates the default chance distribution parameters after keeping possession or launching a counter attack.
@@ -26,10 +26,10 @@ std::bernoulli_distribution::param_type CalculateSetPieceDistributionParameters(
  * @param aSetPieceProbability Set piece probability.
 */
 std::bernoulli_distribution::param_type CalculateDefaultChanceDistributionParameters(
-	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
-	const CDrawConfigurationTypes::stat& aAverageChances,
-	const CDrawConfigurationTypes::probability& aFoulProbability,
-	const CDrawConfigurationTypes::probability& aSetPieceProbability );
+	const types::CDrawConfiguration::probability& aExtraCornerProbability,
+	const types::CDrawConfiguration::stat& aAverageChances,
+	const types::CDrawConfiguration::probability& aFoulProbability,
+	const types::CDrawConfiguration::probability& aSetPieceProbability );
 
 /**
  * @brief Calculates the chance type distribution parameters.
@@ -41,36 +41,36 @@ std::bernoulli_distribution::param_type CalculateDefaultChanceDistributionParame
 */
 types::CChancesDrawConfiguration::chance_type_draw_distribution::param_type CalculateChanceTypeDistributionParameters(
 	const CChancesDrawConfiguration& aChancesDrawConfiguration,
-	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
-	const CDrawConfigurationTypes::probability& aFoulProbability,
-	const CDrawConfigurationTypes::probability& aSetPieceProbability,
-	const CDrawConfigurationTypes::probability& aDefaultChanceProbability );
+	const types::CDrawConfiguration::probability& aExtraCornerProbability,
+	const types::CDrawConfiguration::probability& aFoulProbability,
+	const types::CDrawConfiguration::probability& aSetPieceProbability,
+	const types::CDrawConfiguration::probability& aDefaultChanceProbability );
 
 /**
  * @brief Calculates the default goal probability from a penalty.
  * @param aAveragePenaltyGoals Average number of penalty goals per 90 minutes.
  * @param aAveragePenalties Average number of penalties per 90 minutes.
 */
-CDrawConfigurationTypes::probability CalculateDefaultPenaltyGoalProbability(
-	const CDrawConfigurationTypes::stat& aAveragePenaltyGoals,
-	const CDrawConfigurationTypes::stat& aAveragePenalties );
+types::CDrawConfiguration::probability CalculateDefaultPenaltyGoalProbability(
+	const types::CDrawConfiguration::stat& aAveragePenaltyGoals,
+	const types::CDrawConfiguration::stat& aAveragePenalties );
 
 /**
  * @brief Calculates the default goal probability from a direct free kick.
  * @param aAverageDirectFreeKickGoals Average number of direct free kick goals per 90 minutes.
  * @param aAverageDirectFreeKicks Average number of direct free kick per 90 minutes.
 */
-CDrawConfigurationTypes::probability CalculateDefaultDirectFreeKickGoalProbability(
-	const CDrawConfigurationTypes::stat& aAverageDirectFreeKickGoals,
-	const CDrawConfigurationTypes::stat& aAverageDirectFreeKicks );
+types::CDrawConfiguration::probability CalculateDefaultDirectFreeKickGoalProbability(
+	const types::CDrawConfiguration::stat& aAverageDirectFreeKickGoals,
+	const types::CDrawConfiguration::stat& aAverageDirectFreeKicks );
 
 /**
 * @brief Calculates the default goal probability from an indirect free kick.
 * @param aAverageIndirectFreeKickGoals Average number of direct free kick goals per 90 minutes.
 * @param aChancesDrawConfiguration Configuration of the chances draw.
 */
-CDrawConfigurationTypes::probability CalculateDefaultIndirectFreeKickGoalProbability(
-	const CDrawConfigurationTypes::stat& aAverageIndirectFreeKickGoals,
+types::CDrawConfiguration::probability CalculateDefaultIndirectFreeKickGoalProbability(
+	const types::CDrawConfiguration::stat& aAverageIndirectFreeKickGoals,
 	const CChancesDrawConfiguration& aChancesDrawConfiguration );
 
 /**
@@ -78,9 +78,9 @@ CDrawConfigurationTypes::probability CalculateDefaultIndirectFreeKickGoalProbabi
  * @param aAverageCornerGoals Average number of corner goals per 90 minutes.
  * @param aAverageCorners Average number of corner per 90 minutes.
 */
-CDrawConfigurationTypes::probability CalculateDefaultCornerGoalProbability(
-	const CDrawConfigurationTypes::stat& aAverageCornerGoals,
-	const CDrawConfigurationTypes::stat& aAverageCorners );
+types::CDrawConfiguration::probability CalculateDefaultCornerGoalProbability(
+	const types::CDrawConfiguration::stat& aAverageCornerGoals,
+	const types::CDrawConfiguration::stat& aAverageCorners );
 
 /**
  * @brief Calculates the default goal probability from a far shot.
@@ -89,11 +89,11 @@ CDrawConfigurationTypes::probability CalculateDefaultCornerGoalProbability(
  * @param aFarShotProbability Far shot probability when drawing a chance.
  * @param aFoulProbability Foul probability.
 */
-CDrawConfigurationTypes::probability CalculateDefaultFarShotGoalProbability(
-	const CDrawConfigurationTypes::stat& aAverageFarShotGoals,
-	const CDrawConfigurationTypes::probability& aDefaultChanceProbability,
-	const CDrawConfigurationTypes::probability& aFarShotProbability,
-	const CDrawConfigurationTypes::probability& aFoulProbability );
+types::CDrawConfiguration::probability CalculateDefaultFarShotGoalProbability(
+	const types::CDrawConfiguration::stat& aAverageFarShotGoals,
+	const types::CDrawConfiguration::probability& aDefaultChanceProbability,
+	const types::CDrawConfiguration::probability& aFarShotProbability,
+	const types::CDrawConfiguration::probability& aFoulProbability );
 
 /**
  * @brief Calculates the default goal probability from a near shot.
@@ -104,13 +104,13 @@ CDrawConfigurationTypes::probability CalculateDefaultFarShotGoalProbability(
  * @param aDefaultChanceProbability Default chance probability after keeping possession or launching a counter attack.
  * @param aNearShotProbability Near shot probability when drawing a chance.
 */
-CDrawConfigurationTypes::probability CalculateDefaultNearShotGoalProbability(
+types::CDrawConfiguration::probability CalculateDefaultNearShotGoalProbability(
 	const CChancesDrawConfiguration& aChancesDrawConfiguration,
 	const CGoalDrawConfiguration& aGoalDrawConfiguration,
-	const CDrawConfigurationTypes::probability& aFoulProbability,
-	const CDrawConfigurationTypes::probability& aSetPieceProbability,
-	const CDrawConfigurationTypes::probability& aDefaultChanceProbability,
-	const CDrawConfigurationTypes::probability& aNearShotProbability );
+	const types::CDrawConfiguration::probability& aFoulProbability,
+	const types::CDrawConfiguration::probability& aSetPieceProbability,
+	const types::CDrawConfiguration::probability& aDefaultChanceProbability,
+	const types::CDrawConfiguration::probability& aNearShotProbability );
 
 /**
  * @brief Calculates the chance type distribution parameters.
@@ -120,12 +120,12 @@ CDrawConfigurationTypes::probability CalculateDefaultNearShotGoalProbability(
  * @param aSetPieceProbability Set piece probability.
  * @param aDefaultChanceProbability Default chance probability after keeping possession or launching a counter attack.
 */
-CDrawConfigurationTypes::stat CalculateAverageOpenPlayChances(
+types::CDrawConfiguration::stat CalculateAverageOpenPlayChances(
 	const CChancesDrawConfiguration& aChancesDrawConfiguration,
-	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
-	const CDrawConfigurationTypes::probability& aFoulProbability,
-	const CDrawConfigurationTypes::probability& aSetPieceProbability,
-	const CDrawConfigurationTypes::probability& aDefaultChanceProbability );
+	const types::CDrawConfiguration::probability& aExtraCornerProbability,
+	const types::CDrawConfiguration::probability& aFoulProbability,
+	const types::CDrawConfiguration::probability& aSetPieceProbability,
+	const types::CDrawConfiguration::probability& aDefaultChanceProbability );
 
 } // anonymous namespace
 
@@ -363,18 +363,18 @@ CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateNearShotOut
 namespace
 {
 
-std::bernoulli_distribution::param_type CalculateSetPieceDistributionParameters( const CDrawConfigurationTypes::stat& aAverageSetPieces,
-	const CDrawConfigurationTypes::stat& aAverageFouls )
+std::bernoulli_distribution::param_type CalculateSetPieceDistributionParameters( const types::CDrawConfiguration::stat& aAverageSetPieces,
+	const types::CDrawConfiguration::stat& aAverageFouls )
 {
 	return std::bernoulli_distribution::param_type{ CheckProbability( aAverageSetPieces / aAverageFouls,
 		"probability to get a set piece chance given a foul" ) };
 }
 
 std::bernoulli_distribution::param_type CalculateDefaultChanceDistributionParameters(
-	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
-	const CDrawConfigurationTypes::stat& aAverageChances,
-	const CDrawConfigurationTypes::probability& aFoulProbability,
-	const CDrawConfigurationTypes::probability& aSetPieceProbability )
+	const types::CDrawConfiguration::probability& aExtraCornerProbability,
+	const types::CDrawConfiguration::stat& aAverageChances,
+	const types::CDrawConfiguration::probability& aFoulProbability,
+	const types::CDrawConfiguration::probability& aSetPieceProbability )
 {
 	return std::bernoulli_distribution::param_type{ CheckProbability(
 		( ( 1 - aExtraCornerProbability ) * ( aAverageChances / CFoulDrawConfiguration::MATCH_MINUTES ) - aFoulProbability * aSetPieceProbability )
@@ -383,10 +383,10 @@ std::bernoulli_distribution::param_type CalculateDefaultChanceDistributionParame
 
 types::CChancesDrawConfiguration::chance_type_draw_distribution::param_type CalculateChanceTypeDistributionParameters(
 	const CChancesDrawConfiguration& aChancesDrawConfiguration,
-	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
-	const CDrawConfigurationTypes::probability& aFoulProbability,
-	const CDrawConfigurationTypes::probability& aSetPieceProbability,
-	const CDrawConfigurationTypes::probability& aDefaultChanceProbability ) try
+	const types::CDrawConfiguration::probability& aExtraCornerProbability,
+	const types::CDrawConfiguration::probability& aFoulProbability,
+	const types::CDrawConfiguration::probability& aSetPieceProbability,
+	const types::CDrawConfiguration::probability& aDefaultChanceProbability ) try
 {
 	const auto averageOpenPlayChances = CalculateAverageOpenPlayChances( aChancesDrawConfiguration,
 		aExtraCornerProbability, aFoulProbability, aSetPieceProbability, aDefaultChanceProbability );
@@ -403,22 +403,22 @@ types::CChancesDrawConfiguration::chance_type_draw_distribution::param_type Calc
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error calculating the chance type draw distribution." )
 
-CDrawConfigurationTypes::probability CalculateDefaultPenaltyGoalProbability(
-	const CDrawConfigurationTypes::stat& aAveragePenaltyGoals,
-	const CDrawConfigurationTypes::stat& aAveragePenalties )
+types::CDrawConfiguration::probability CalculateDefaultPenaltyGoalProbability(
+	const types::CDrawConfiguration::stat& aAveragePenaltyGoals,
+	const types::CDrawConfiguration::stat& aAveragePenalties )
 {
 	return CheckProbability( aAveragePenaltyGoals / aAveragePenalties, "penalty goal probability" );
 }
 
-CDrawConfigurationTypes::probability CalculateDefaultDirectFreeKickGoalProbability(
-	const CDrawConfigurationTypes::stat& aAverageDirectFreeKickGoals,
-	const CDrawConfigurationTypes::stat& aAverageDirectFreeKicks )
+types::CDrawConfiguration::probability CalculateDefaultDirectFreeKickGoalProbability(
+	const types::CDrawConfiguration::stat& aAverageDirectFreeKickGoals,
+	const types::CDrawConfiguration::stat& aAverageDirectFreeKicks )
 {
 	return CheckProbability( aAverageDirectFreeKickGoals / aAverageDirectFreeKicks, "direct free kick goal probability" );
 }
 
-CDrawConfigurationTypes::probability CalculateDefaultIndirectFreeKickGoalProbability(
-	const CDrawConfigurationTypes::stat& aAverageIndirectFreeKickGoals,
+types::CDrawConfiguration::probability CalculateDefaultIndirectFreeKickGoalProbability(
+	const types::CDrawConfiguration::stat& aAverageIndirectFreeKickGoals,
 	const CChancesDrawConfiguration& aChancesDrawConfiguration )
 {
 	return CheckProbability( aAverageIndirectFreeKickGoals / ( aChancesDrawConfiguration.GetAverageSetPieces()
@@ -431,31 +431,31 @@ CDrawConfigurationTypes::probability CalculateDefaultIndirectFreeKickGoalProbabi
  * @param aAverageCornerGoals Average number of corner goals per 90 minutes.
  * @param aAverageCorners Average number of corner per 90 minutes.
 */
-CDrawConfigurationTypes::probability CalculateDefaultCornerGoalProbability(
-	const CDrawConfigurationTypes::stat& aAverageCornerGoals,
-	const CDrawConfigurationTypes::stat& aAverageCorners )
+types::CDrawConfiguration::probability CalculateDefaultCornerGoalProbability(
+	const types::CDrawConfiguration::stat& aAverageCornerGoals,
+	const types::CDrawConfiguration::stat& aAverageCorners )
 {
 	return CheckProbability( aAverageCornerGoals / aAverageCorners, "corner goal probability" );
 }
 
-CDrawConfigurationTypes::probability CalculateDefaultFarShotGoalProbability(
-	const CDrawConfigurationTypes::stat& aAverageFarShotGoals,
-	const CDrawConfigurationTypes::probability& aDefaultChanceProbability,
-	const CDrawConfigurationTypes::probability& aFarShotProbability,
-	const CDrawConfigurationTypes::probability& aFoulProbability )
+types::CDrawConfiguration::probability CalculateDefaultFarShotGoalProbability(
+	const types::CDrawConfiguration::stat& aAverageFarShotGoals,
+	const types::CDrawConfiguration::probability& aDefaultChanceProbability,
+	const types::CDrawConfiguration::probability& aFarShotProbability,
+	const types::CDrawConfiguration::probability& aFoulProbability )
 {
 	return CheckProbability( aAverageFarShotGoals /
 		( CFoulDrawConfiguration::MATCH_MINUTES * aDefaultChanceProbability * aFarShotProbability * ( 1 - aFoulProbability ) ),
 		"far shot goal probability" );
 }
 
-CDrawConfigurationTypes::probability CalculateDefaultNearShotGoalProbability(
+types::CDrawConfiguration::probability CalculateDefaultNearShotGoalProbability(
 	const CChancesDrawConfiguration& aChancesDrawConfiguration,
 	const CGoalDrawConfiguration& aGoalDrawConfiguration,
-	const CDrawConfigurationTypes::probability& aFoulProbability,
-	const CDrawConfigurationTypes::probability& aSetPieceProbability,
-	const CDrawConfigurationTypes::probability& aDefaultChanceProbability,
-	const CDrawConfigurationTypes::probability& aNearShotProbability )
+	const types::CDrawConfiguration::probability& aFoulProbability,
+	const types::CDrawConfiguration::probability& aSetPieceProbability,
+	const types::CDrawConfiguration::probability& aDefaultChanceProbability,
+	const types::CDrawConfiguration::probability& aNearShotProbability )
 {
 	const auto averageOpenPlayChances = CalculateAverageOpenPlayChances( aChancesDrawConfiguration, aGoalDrawConfiguration.GetExtraCornerProbability(),
 		aFoulProbability, aSetPieceProbability, aDefaultChanceProbability );
@@ -468,12 +468,12 @@ CDrawConfigurationTypes::probability CalculateDefaultNearShotGoalProbability(
 		"near shot goal probability" );
 }
 
-CDrawConfigurationTypes::stat CalculateAverageOpenPlayChances(
+types::CDrawConfiguration::stat CalculateAverageOpenPlayChances(
 	const CChancesDrawConfiguration& aChancesDrawConfiguration,
-	const CDrawConfigurationTypes::probability& aExtraCornerProbability,
-	const CDrawConfigurationTypes::probability& aFoulProbability,
-	const CDrawConfigurationTypes::probability& aSetPieceProbability,
-	const CDrawConfigurationTypes::probability& aDefaultChanceProbability )
+	const types::CDrawConfiguration::probability& aExtraCornerProbability,
+	const types::CDrawConfiguration::probability& aFoulProbability,
+	const types::CDrawConfiguration::probability& aSetPieceProbability,
+	const types::CDrawConfiguration::probability& aDefaultChanceProbability )
 {
 	const auto averageExtraCorners = CFoulDrawConfiguration::MATCH_MINUTES * ( aExtraCornerProbability / ( 1 - aExtraCornerProbability ) )
 		* ( aDefaultChanceProbability * ( 1 - aFoulProbability ) + aFoulProbability * aSetPieceProbability );

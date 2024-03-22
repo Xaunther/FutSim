@@ -61,6 +61,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/EPlayerPosition.h
 	include/football/EPlayerSkill.h
 	include/football/types/CChancesDrawConfiguration.h
+	include/football/types/CDrawConfiguration.h
 )
 
 # Core source files
