@@ -16,9 +16,9 @@ namespace
  * @param aHomeTeamGoals Home team goals.
  * @param aHomeTeamLead Home team lead.
 */
-const CTieConditionTypes::optional_goal_count& CheckHomeTeamGoals(
-	const CTieConditionTypes::optional_goal_count& aHomeTeamGoals,
-	const CTieConditionTypes::goal_difference aHomeTeamLead );
+const types::CTieCondition::optional_goal_count& CheckHomeTeamGoals(
+	const types::CTieCondition::optional_goal_count& aHomeTeamGoals,
+	const types::CTieCondition::goal_difference aHomeTeamLead );
 
 } // anonymous namespace
 
@@ -75,9 +75,9 @@ bool CTieCondition::operator() ( const goal_count aHomeGoals, const goal_count a
 namespace
 {
 
-const CTieConditionTypes::optional_goal_count& CheckHomeTeamGoals(
-	const CTieConditionTypes::optional_goal_count& aHomeTeamGoals,
-	const CTieConditionTypes::goal_difference aHomeTeamLead ) try
+const types::CTieCondition::optional_goal_count& CheckHomeTeamGoals(
+	const types::CTieCondition::optional_goal_count& aHomeTeamGoals,
+	const types::CTieCondition::goal_difference aHomeTeamLead ) try
 {
 	if( aHomeTeamGoals && std::cmp_less( *aHomeTeamGoals, aHomeTeamLead ) )
 		throw std::invalid_argument( "The home team goals cannot be smaller than the home team lead." );

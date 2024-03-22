@@ -61,7 +61,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/types/CTacticConfiguration.h
 	include/football/types/CTacticsConfiguration.h
 	include/football/types/CTeam.h
-	include/football/CTieConditionTypes.h
+	include/football/types/CTieCondition.h
 )
 
 # Core source files
