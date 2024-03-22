@@ -3,18 +3,18 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/CEnumDistribution.h
 	include/Config.h
 	include/CPerson.h
-	include/CPersonTypes.h
 	include/CPlayTime.h
-	include/CPlayTimeTypes.h
 	include/ENationality.h
 	include/EnumUtils.h
 	include/ExceptionUtils.h
 	include/IJsonable.h
-	include/IJsonableTypes.h
 	include/JsonUtils.h
 	include/NameUtils.h
 	include/NumberUtils.h
 	include/ProbabilityUtils.h
+	include/CPersonTypes.h
+	include/types/CPlayTime.h
+	include/IJsonableTypes.h
 )
 
 # Football external headers
@@ -54,7 +54,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/types/CMatchConfiguration.h
 	include/football/types/CPenaltyShootoutConfiguration.h
 	include/football/types/CPlayerSkills.h
-	include/football/CPlayTimeTypes.h
+	include/football/types/CPlayTime.h
 	include/football/CPossessionDrawConfigurationTypes.h
 	include/football/CPossessionStateTypes.h
 	include/football/CStadiumTypes.h

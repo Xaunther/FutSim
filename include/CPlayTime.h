@@ -2,7 +2,7 @@
 
 #include "IJsonable.h"
 
-#include "CPlayTimeTypes.h"
+#include "types/CPlayTime.h"
 
 namespace futsim
 {
@@ -13,8 +13,8 @@ namespace futsim
 class CPlayTime : public IJsonable
 {
 protected:
-	using period_count = CPlayTimeTypes::period_count;
-	using period_time = CPlayTimeTypes::period_time;
+	using period_count = types::CPlayTime::period_count;
+	using period_time = types::CPlayTime::period_time;
 
 public:
 	/**

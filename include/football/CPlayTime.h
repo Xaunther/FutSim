@@ -2,7 +2,7 @@
 
 #include "../CPlayTime.h"
 
-#include "football/CPlayTimeTypes.h"
+#include "football/types/CPlayTime.h"
 
 namespace futsim::football
 {
@@ -13,7 +13,7 @@ namespace futsim::football
 class CPlayTime : public futsim::CPlayTime
 {
 protected:
-	using subs_count = CPlayTimeTypes::subs_count;
+	using subs_count = types::CPlayTime::subs_count;
 
 public:
 	/**
