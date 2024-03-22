@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EPlayerSkill.h"
+#include "football/EPlayerSkill.h"
 
 /**
  * @brief Types defined for \ref CPlayerSkills.
