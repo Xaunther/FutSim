@@ -17,7 +17,7 @@ std::string_view CFoulState::GetCommitter() const noexcept
 	return mCommitter;
 }
 
-const CFoulDrawConfigurationTypes::E_FOUL_DRAW_OUTCOME& CFoulState::GetOutcome() const noexcept
+const types::CFoulDrawConfiguration::E_FOUL_DRAW_OUTCOME& CFoulState::GetOutcome() const noexcept
 {
 	return mOutcome;
 }

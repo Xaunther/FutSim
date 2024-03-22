@@ -267,7 +267,7 @@ CPossessionDrawConfigurationTypes::possession_draw_distribution CDrawConfigurati
 	};
 }
 
-CFoulDrawConfigurationTypes::foul_draw_distribution CDrawConfiguration::CreateFoulDistribution() const noexcept
+types::CFoulDrawConfiguration::foul_draw_distribution CDrawConfiguration::CreateFoulDistribution() const noexcept
 {
 	return mFoulDrawConfiguration.CreateFoulDistribution();
 }
