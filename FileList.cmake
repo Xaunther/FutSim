@@ -12,7 +12,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/NameUtils.h
 	include/NumberUtils.h
 	include/ProbabilityUtils.h
-	include/CPersonTypes.h
+	include/types/CPerson.h
 	include/types/CPlayTime.h
 	include/IJsonableTypes.h
 )

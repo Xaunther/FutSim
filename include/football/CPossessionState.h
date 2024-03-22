@@ -8,7 +8,7 @@
 #include "football/CMatchConfiguration.h"
 #include "football/CTeamStrategy.h"
 #include "football/types/CPossessionDrawConfiguration.h"
-#include "CPersonTypes.h"
+#include "types/CPerson.h"
 
 #include "ExceptionUtils.h"
 
@@ -21,7 +21,7 @@ namespace futsim::football
 class CPossessionState : public IJsonable
 {
 protected:
-	using optional_name = std::optional<CPersonTypes::name_type>;
+	using optional_name = std::optional<futsim::types::CPerson::name_type>;
 	using E_POSSESSION_DRAW_OUTCOME = types::CPossessionDrawConfiguration::E_POSSESSION_DRAW_OUTCOME;
 
 public:

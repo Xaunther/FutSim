@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CPersonTypes.h"
+#include "types/CPerson.h"
 
 #include "football/EPlayerPosition.h"
 
@@ -13,7 +13,7 @@ namespace futsim::football::types::CLineup
 {
 
 //! Type for a name.
-using name = CPersonTypes::name_type;
+using name = futsim::types::CPerson::name_type;
 
 //! Type for a vector of names.
 using names = std::vector<name>;

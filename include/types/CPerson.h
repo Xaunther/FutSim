@@ -5,10 +5,10 @@
 /**
  * @brief Types defined for \ref CPerson.
 */
-namespace futsim::CPersonTypes
+namespace futsim::types::CPerson
 {
 
 //! Type for a name.
 using name_type = std::string;
 
-} // futsim::CPersonTypes namespace
+} // futsim::types::CPerson namespace

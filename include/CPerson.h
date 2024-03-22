@@ -4,7 +4,7 @@
 
 #include "ENationality.h"
 
-#include "CPersonTypes.h"
+#include "types/CPerson.h"
 
 namespace futsim
 {
@@ -15,7 +15,7 @@ namespace futsim
 class CPerson : public IJsonable
 {
 protected:
-	using name_type = CPersonTypes::name_type;
+	using name_type = types::CPerson::name_type;
 
 public:
 	/**
