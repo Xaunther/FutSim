@@ -14,7 +14,7 @@ namespace futsim::football
 
 class CPlayer;
 
-namespace CTeamTypes
+namespace types::CTeam
 {
 
 //! Type for a name.
@@ -28,6 +28,6 @@ using attendance = unsigned int;
 //! Type for the attendance distribution.
 using attendance_distribution = std::normal_distribution<>;
 
-} // CTeamTypes namespace
+} // types::CTeam namespace
 
 } // futsim::football namespace

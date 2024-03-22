@@ -16,7 +16,7 @@ class CTeamStrategy;
 class CMatch : public IJsonable
 {
 protected:
-	using name_type = CTeamTypes::name_type;
+	using name_type = types::CTeam::name_type;
 
 public:
 	/**
