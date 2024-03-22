@@ -121,7 +121,7 @@ std::vector<std::string> TChancesDrawConfiguration::ObtainedResults() const noex
 		result.push_back( std::string{ CChancesDrawConfiguration::JSON_AVERAGE_DIRECT_FREE_KICKS } + ": " + std::to_string( chancesDrawConfiguration.GetAverageDirectFreeKicks() ) );
 		for( const auto& probability : chancesDrawConfiguration.CreateSetPieceTypeDistribution().probabilities() )
 			result.push_back( std::to_string( probability ) );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, chancesDrawConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

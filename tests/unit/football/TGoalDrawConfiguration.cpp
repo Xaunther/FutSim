@@ -161,7 +161,7 @@ std::vector<std::string> TGoalDrawConfiguration::ObtainedResults() const noexcep
 		result.push_back( "1.1 attacker advantage 1 on 1 vs DF chance outcome distribution" );
 		for( const auto& probability : goalDrawConfiguration.Create1vs1DFOutcomeDistribution( 1, 1, 1.1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, goalDrawConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

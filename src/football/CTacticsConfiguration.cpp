@@ -21,7 +21,7 @@ const types::CTacticsConfiguration::tactic_configurations& CheckTacticConfigurat
  * @brief Creates the tactic configurations from JSON.
  * @param aJSON JSON object.
 */
-types::CTacticsConfiguration::tactic_configurations CreateTacticConfigurationsFromJSON( const IJsonableTypes::json& aJSON );
+types::CTacticsConfiguration::tactic_configurations CreateTacticConfigurationsFromJSON( const futsim::types::IJsonable::json& aJSON );
 
 } // anonymous namespace
 
@@ -81,7 +81,7 @@ const types::CTacticsConfiguration::tactic_configurations& CheckTacticConfigurat
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the tactic configurations." )
 
-types::CTacticsConfiguration::tactic_configurations CreateTacticConfigurationsFromJSON( const IJsonableTypes::json& aJSON ) try
+types::CTacticsConfiguration::tactic_configurations CreateTacticConfigurationsFromJSON( const futsim::types::IJsonable::json& aJSON ) try
 {
 	types::CTacticsConfiguration::tactic_configurations result;
 	for( const auto& JSONTacticConfiguration : aJSON.items() )

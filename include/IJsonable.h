@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IJsonableTypes.h"
+#include "types/IJsonable.h"
 
 namespace futsim
 {
@@ -11,7 +11,7 @@ namespace futsim
 class IJsonable
 {
 protected:
-	using json = IJsonableTypes::json;
+	using json = types::IJsonable::json;
 
 public:
 	/**

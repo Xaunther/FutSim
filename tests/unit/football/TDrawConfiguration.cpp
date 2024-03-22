@@ -329,7 +329,7 @@ std::vector<std::string> TDrawConfiguration::ObtainedResults() const noexcept
 		for( const auto& probability : drawConfiguration.CreateNearShotOutcomeDistribution( 1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
 
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, drawConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

@@ -39,7 +39,7 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the "
  * @brief Create the players from JSON.
  * @param aJSON JSON object.
 */
-types::CTeam::players CreatePlayersFromJSON( const IJsonableTypes::json& aJSON );
+types::CTeam::players CreatePlayersFromJSON( const futsim::types::IJsonable::json& aJSON );
 
 /**
  * @brief Check the players.
@@ -158,10 +158,10 @@ std::string_view CheckAbbreviation( const std::string_view aAbbreviation ) try
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the abbreviation." )
 
-types::CTeam::players CreatePlayersFromJSON( const IJsonableTypes::json& aJSON ) try
+types::CTeam::players CreatePlayersFromJSON( const futsim::types::IJsonable::json& aJSON ) try
 {
 	types::CTeam::players result;
-	for( const auto& JSONPlayer : ValueFromOptionalJSONKey<IJsonableTypes::json>( aJSON, CTeam::JSON_PLAYERS ) )
+	for( const auto& JSONPlayer : ValueFromOptionalJSONKey<futsim::types::IJsonable::json>( aJSON, CTeam::JSON_PLAYERS ) )
 		result.emplace_back( ValueFromJSON<types::CTeam::players::value_type>( JSONPlayer ) );
 	return result;
 }

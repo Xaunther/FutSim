@@ -14,7 +14,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/ProbabilityUtils.h
 	include/types/CPerson.h
 	include/types/CPlayTime.h
-	include/IJsonableTypes.h
+	include/types/IJsonable.h
 )
 
 # Football external headers

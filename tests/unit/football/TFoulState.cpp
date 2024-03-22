@@ -30,7 +30,7 @@ std::vector<std::string> TFoulState::ObtainedResults() const noexcept
 	{
 		result.push_back( std::string{ CFoulState::JSON_COMMIITER } + ": " + std::string{ foulState.GetCommitter() } );
 		result.push_back( std::string{ CFoulState::JSON_OUTCOME } + ": " + std::string{ ToString( foulState.GetOutcome() ) } );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, foulState );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

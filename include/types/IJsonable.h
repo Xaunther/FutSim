@@ -5,7 +5,7 @@
 /**
  * @brief Types defined for \ref IJsonable.
 */
-namespace futsim::IJsonableTypes
+namespace futsim::types::IJsonable
 {
 
 //! Type for the json object.

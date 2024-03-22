@@ -65,7 +65,7 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 		result.push_back( "All players:" );
 		for( const auto& player : lineup.CreatePlayersView<true>() )
 			result.push_back( player );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, lineup );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

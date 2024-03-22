@@ -39,7 +39,7 @@ std::vector<std::string> TExtraTime::ObtainedResults() const noexcept
 		} )" ) } )
 	{
 		result.push_back( std::string{ CExtraTime::JSON_GOAL_RULE } + ": " + std::string{ ToString( extraTime.GetGoalRule() ) } );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, extraTime );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

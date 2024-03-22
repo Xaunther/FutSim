@@ -56,7 +56,7 @@ std::vector<std::string> TPlayTime::ObtainedResults() const noexcept
 	{
 		result.push_back( std::string{ CPlayTime::JSON_PERIOD_COUNT } + ": " + std::to_string( playTime.GetPeriodCount() ) );
 		result.push_back( std::string{ CPlayTime::JSON_PERIOD_TIME } + ": " + std::to_string( playTime.GetPeriodTime() ) );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, playTime );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}

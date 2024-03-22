@@ -52,7 +52,7 @@ std::vector<std::string> TPossessionState::ObtainedResults() const noexcept
 			result.push_back( std::string{ CPossessionState::JSON_TACKLER } + ": " + *possessionState.GetTackler() );
 		if( possessionState.GetPasser() )
 			result.push_back( std::string{ CPossessionState::JSON_PASSER } + ": " + *possessionState.GetPasser() );
-		futsim::IJsonableTypes::json outputJSON;
+		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, possessionState );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
 	}
