@@ -1,7 +1,18 @@
 #include "football/CPossessionState.h"
 
+#include "JsonUtils.h"
+
 namespace futsim::football
 {
+
+void CPossessionState::JSON( json& aJSON ) const noexcept
+{
+	AddToJSONKey( aJSON, mOutcome, JSON_OUTCOME );
+	if( mTackler )
+		AddToJSONKey( aJSON, *mTackler, JSON_TACKLER );
+	if( mPasser )
+		AddToJSONKey( aJSON, *mPasser, JSON_PASSER );
+}
 
 const CPossessionState::optional_name& CPossessionState::GetTackler() const noexcept
 {

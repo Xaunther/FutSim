@@ -44,6 +44,13 @@ public:
 		std::uniform_random_bit_generator auto& aGenerator
 	);
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mOutcome
 	const E_POSSESSION_DRAW_OUTCOME& GetOutcome() const noexcept;
 
@@ -52,6 +59,15 @@ public:
 
 	//! Retrieves the \copybrief mPasser
 	const optional_name& GetPasser() const noexcept;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Possession state";
+	//! JSON key for the \copybrief mOutcome
+	static inline constexpr std::string_view JSON_OUTCOME = "Outcome";
+	//! JSON key for the \copybrief mTackler
+	static inline constexpr std::string_view JSON_TACKLER = "Tackler";
+	//! JSON key for the \copybrief mPasser
+	static inline constexpr std::string_view JSON_PASSER = "Passer";
 
 private:
 	//! Possession draw outcome.
