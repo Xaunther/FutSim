@@ -107,15 +107,15 @@ CPossessionState::CPossessionState(
 		std::accumulate( attackSkills.cbegin(), attackSkills.cend(), skill_bonus{} ) )( aGenerator );
 
 	// Draw acting player
-	const auto DrawPlayer = [ &aGenerator ]( const auto& aTeamStrategy, const auto& aSkills ) {
-		return *( aTeamStrategy.GetLineup().CreatePlayersView<false>()
+	const auto DrawPlayer = [ &aGenerator ]( const auto& aLineup, const auto& aSkills ) {
+		return *( aLineup.template CreatePlayersView<false>()
 			| std::ranges::views::drop( std::discrete_distribution<CLineupTypes::names::size_type>{
 			aSkills.cbegin(), aSkills.cend() }( aGenerator ) ) ).begin(); };
 
 	if( mOutcome == E_POSSESSION_DRAW_OUTCOME::KEEP_POSSESSION )
-		mPasser = DrawPlayer( aAttackingTeamStrategy, attackSkills );
+		mPasser = DrawPlayer( aAttackingTeamStrategy.GetLineup(), attackSkills );
 	else if( mOutcome == E_POSSESSION_DRAW_OUTCOME::COUNTER_ATTACK )
-		mTackler = DrawPlayer( aDefendingTeamStrategy, defenseSkills );
+		mTackler = DrawPlayer( aDefendingTeamStrategy.GetLineup(), defenseSkills );
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the possession state." )
 
