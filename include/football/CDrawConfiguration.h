@@ -20,7 +20,7 @@ protected:
 	using probability = types::CDrawConfiguration::probability;
 	using possession_draw_distribution = CPossessionDrawConfigurationTypes::possession_draw_distribution;
 	using chance_type_draw_distribution = types::CChancesDrawConfiguration::chance_type_draw_distribution;
-	using goal_draw_distribution = CGoalDrawConfigurationTypes::goal_draw_distribution;
+	using goal_draw_distribution = types::CGoalDrawConfiguration::goal_draw_distribution;
 
 public:
 	/**

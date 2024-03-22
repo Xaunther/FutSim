@@ -3,7 +3,7 @@
 #include "IJsonable.h"
 
 #include "football/types/CDrawConfiguration.h"
-#include "football/CGoalDrawConfigurationTypes.h"
+#include "football/types/CGoalDrawConfiguration.h"
 
 namespace futsim::football
 {
@@ -17,7 +17,7 @@ protected:
 	using probability = types::CDrawConfiguration::probability;
 	using stat = types::CDrawConfiguration::stat;
 	using effective_skill = types::CDrawConfiguration::effective_skill;
-	using goal_draw_distribution = CGoalDrawConfigurationTypes::goal_draw_distribution;
+	using goal_draw_distribution = types::CGoalDrawConfiguration::goal_draw_distribution;
 
 public:
 	/**
