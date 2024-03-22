@@ -249,13 +249,12 @@ inline void AddToJSON( is_json_type auto& aJSON, const is_not_jsonable auto& aOb
 	aJSON = aObject;
 }
 
-template<is_json_type JsonType>
 inline void AddArrayToJSON( is_json_type auto& aJSON, const auto& aContainer, auto&&... aArgs ) noexcept
 {
-	JsonType arrayJSON;
+	std::decay_t<decltype( aJSON )> arrayJSON;
 	for( const auto& element : aContainer )
 	{
-		JsonType elementJSON;
+		decltype( arrayJSON ) elementJSON;
 		AddToJSON( elementJSON, element, std::forward<decltype( aArgs )>( aArgs )... );
 		arrayJSON.push_back( elementJSON );
 	}
