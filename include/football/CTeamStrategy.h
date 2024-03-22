@@ -8,6 +8,9 @@
 namespace futsim::football
 {
 
+class CMatch;
+class CMatchConfiguration;
+
 /**
  * @brief Class that defines a team strategy.
 */
@@ -15,6 +18,7 @@ class CTeamStrategy : public IJsonable
 {
 protected:
 	using id = CTacticConfigurationTypes::id;
+	using skill_bonus = CTacticConfigurationTypes::skill_bonus;
 
 public:
 	/**
@@ -46,6 +50,22 @@ public:
 	//! Retrieves the \copybrief mLineup
 	const CLineup& GetLineup() const noexcept;
 
+	/**
+	 * @brief Applies the given predicate to the effective skill of each player.
+	 * @param aPlayerSkill Player skill to consider.
+	 * @param aMatch Match definition.
+	 * @param aMatchConfiguration Match configuration.
+	 * @param aIsHomeTeam Whether the team is the home team.
+	 * @param aOtherStrategy Rival team's strategy.
+	 * @param aPredicate Predicate to evaluate.
+	 * @pre The current team strategy must pass \ref CMatchConfiguration::CheckTeamStrategy.
+	 * @pre The current team strategy must pass \ref CMatch::CheckTeamStrategy.
+	*/
+	void ForEachPlayerSkill( const E_PLAYER_SKILL& aPlayerSkill, const CMatch& aMatch,
+		const CMatchConfiguration& aMatchConfiguration, const bool aIsHomeTeam, const CTeamStrategy& aOtherStrategy,
+		const std::function<void( const skill_bonus& )>& aPredicate ) const;
+
+public:
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Team strategy";
 	//! JSON key for the \copybrief mTacticID
