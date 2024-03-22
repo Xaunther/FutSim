@@ -47,16 +47,6 @@ public:
 	//! Retrieves the \copybrief mFavourableTacticSkillBonus
 	const skill_bonus& GetFavourableTacticSkillBonus() const noexcept;
 
-	/**
-	 * @brief Calculates the skill modifier for a skill in a position when playing against a tactic.
-	 * @param aPlayerPosition Player position.
-	 * @param aPlayerSkill Player skill.
-	 * @param aPlayerTeamTactic Tactic in use by the player's team.
-	 * @param aRivalTeamTactic Tactic in use by the rival's team.
-	*/
-	skill_bonus CalculateSkillBonus( const E_PLAYER_POSITION& aPlayerPosition, const E_PLAYER_SKILL& aPlayerSkill,
-		const std::string_view aPlayerTeamTactic, const std::string_view aRivalTeamTactic ) const;
-
 	//! Default \copybrief mTacticConfigurations
 	static inline tactic_configurations DEFAULT_TACTIC_CONFIGURATIONS = {
 		{ "N", CTacticConfiguration{ 0, 0, {"A", "E"} } },
