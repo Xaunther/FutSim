@@ -7,7 +7,7 @@
 #include "football/CMatch.h"
 #include "football/CMatchConfiguration.h"
 #include "football/CTeamStrategy.h"
-#include "football/CPossessionDrawConfigurationTypes.h"
+#include "football/types/CPossessionDrawConfiguration.h"
 #include "CPersonTypes.h"
 
 #include "ExceptionUtils.h"
@@ -22,7 +22,7 @@ class CPossessionState : public IJsonable
 {
 protected:
 	using optional_name = std::optional<CPersonTypes::name_type>;
-	using E_POSSESSION_DRAW_OUTCOME = CPossessionDrawConfigurationTypes::E_POSSESSION_DRAW_OUTCOME;
+	using E_POSSESSION_DRAW_OUTCOME = types::CPossessionDrawConfiguration::E_POSSESSION_DRAW_OUTCOME;
 
 public:
 	/**

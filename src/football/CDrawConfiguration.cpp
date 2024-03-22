@@ -252,7 +252,7 @@ const CGoalDrawConfiguration& CDrawConfiguration::GetGoalDrawConfiguration() con
 	return mGoalDrawConfiguration;
 }
 
-CPossessionDrawConfigurationTypes::possession_draw_distribution CDrawConfiguration::CreatePossessionDistribution(
+types::CPossessionDrawConfiguration::possession_draw_distribution CDrawConfiguration::CreatePossessionDistribution(
 	const effective_skill& aEffectiveDFSkill,
 	const effective_skill& aEffectiveMFSkill ) const noexcept
 {
