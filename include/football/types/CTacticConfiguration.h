@@ -3,8 +3,8 @@
 #include <array>
 #include <set>
 #include <string>
-#include "EPlayerPosition.h"
-#include "EPlayerSkill.h"
+#include "football/EPlayerPosition.h"
+#include "football/EPlayerSkill.h"
 
 namespace futsim::football::types::CTacticConfiguration
 {

@@ -14,7 +14,7 @@ INITIALIZE_TEST( TTacticsConfiguration )
 void TTacticsConfiguration::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CTacticsConfiguration{ CTacticsConfigurationTypes::tactic_configurations{} }; },
+	CheckException( []() { CTacticsConfiguration{ types::CTacticsConfiguration::tactic_configurations{} }; },
 		"The tactic configurations cannot be empty" );
 	CheckException( []() { CTacticsConfiguration{ { { "A", CTacticConfiguration{ 0, 0, { "A" } } } } }; },
 		"The tactics 'A' and 'A' are favourable against each other, which is forbidden." );

@@ -14,14 +14,14 @@ namespace
  * @brief Checks that the tactic configurations are compatible.
  * @param aTacticConfigurations Tactic configurations.
 */
-const CTacticsConfigurationTypes::tactic_configurations& CheckTacticConfigurations(
-	const CTacticsConfigurationTypes::tactic_configurations& aTacticConfigurations );
+const types::CTacticsConfiguration::tactic_configurations& CheckTacticConfigurations(
+	const types::CTacticsConfiguration::tactic_configurations& aTacticConfigurations );
 
 /**
  * @brief Creates the tactic configurations from JSON.
  * @param aJSON JSON object.
 */
-CTacticsConfigurationTypes::tactic_configurations CreateTacticConfigurationsFromJSON( const IJsonableTypes::json& aJSON );
+types::CTacticsConfiguration::tactic_configurations CreateTacticConfigurationsFromJSON( const IJsonableTypes::json& aJSON );
 
 } // anonymous namespace
 
@@ -65,8 +65,8 @@ const CTacticsConfiguration::skill_bonus& CTacticsConfiguration::GetFavourableTa
 namespace
 {
 
-const CTacticsConfigurationTypes::tactic_configurations& CheckTacticConfigurations(
-	const CTacticsConfigurationTypes::tactic_configurations& aTacticConfigurations ) try
+const types::CTacticsConfiguration::tactic_configurations& CheckTacticConfigurations(
+	const types::CTacticsConfiguration::tactic_configurations& aTacticConfigurations ) try
 {
 	if( aTacticConfigurations.empty() )
 		throw std::invalid_argument{ "The tactic configurations cannot be empty" };
@@ -81,9 +81,9 @@ const CTacticsConfigurationTypes::tactic_configurations& CheckTacticConfiguratio
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the tactic configurations." )
 
-CTacticsConfigurationTypes::tactic_configurations CreateTacticConfigurationsFromJSON( const IJsonableTypes::json& aJSON ) try
+types::CTacticsConfiguration::tactic_configurations CreateTacticConfigurationsFromJSON( const IJsonableTypes::json& aJSON ) try
 {
-	CTacticsConfigurationTypes::tactic_configurations result;
+	types::CTacticsConfiguration::tactic_configurations result;
 	for( const auto& JSONTacticConfiguration : aJSON.items() )
 		result.emplace( JSONTacticConfiguration.key(), ValueFromJSON<CTacticConfiguration>( JSONTacticConfiguration.value() ) );
 
