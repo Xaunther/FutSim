@@ -47,6 +47,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/EPlayerPosition.h
 	include/football/EPlayerSkill.h
 	include/football/types/CChancesDrawConfiguration.h
+	include/football/types/CChanceState.h
 	include/football/types/CDrawConfiguration.h
 	include/football/types/CFoulDrawConfiguration.h
 	include/football/types/CGoalDrawConfiguration.h
