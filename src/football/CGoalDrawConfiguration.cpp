@@ -159,4 +159,22 @@ CGoalDrawConfiguration::goal_draw_distribution CGoalDrawConfiguration::CreateCha
 	} };
 }
 
+template <E_PLAYER_SKILL tPlayerSkill>
+CGoalDrawConfiguration::position_draw_distribution CGoalDrawConfiguration::CreatePositionDrawDistribution() const noexcept
+{
+	if constexpr( tPlayerSkill == E_PLAYER_SKILL::St )
+		return position_draw_distribution{ 1 };
+	else if constexpr( tPlayerSkill == E_PLAYER_SKILL::Tk )
+		return position_draw_distribution{ 0, 24, 8, 4, 3, 1 };
+	else if constexpr( tPlayerSkill == E_PLAYER_SKILL::Ps )
+		return position_draw_distribution{ 0, 1, 3, 8, 5, 3 };
+	else if constexpr( tPlayerSkill == E_PLAYER_SKILL::Sh )
+		return position_draw_distribution{ 0, 1, 3, 4, 8, 24 };
+}
+
+template CGoalDrawConfiguration::position_draw_distribution CGoalDrawConfiguration::CreatePositionDrawDistribution<E_PLAYER_SKILL::St>() const noexcept;
+template CGoalDrawConfiguration::position_draw_distribution CGoalDrawConfiguration::CreatePositionDrawDistribution<E_PLAYER_SKILL::Tk>() const noexcept;
+template CGoalDrawConfiguration::position_draw_distribution CGoalDrawConfiguration::CreatePositionDrawDistribution<E_PLAYER_SKILL::Ps>() const noexcept;
+template CGoalDrawConfiguration::position_draw_distribution CGoalDrawConfiguration::CreatePositionDrawDistribution<E_PLAYER_SKILL::Sh>() const noexcept;
+
 } //futsim::football namespace
