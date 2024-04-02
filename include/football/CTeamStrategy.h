@@ -51,6 +51,23 @@ public:
 	const CLineup& GetLineup() const noexcept;
 
 	/**
+	 * @brief Calculates the effective player skill.
+	 * @param aPlayer Player to consider.
+	 * @param aPlayerSkill Player skill to consider.
+	 * @param aPlayerPosition Player position.
+	 * @param aMatch Match definition.
+	 * @param aMatchConfiguration Match configuration.
+	 * @param aIsHomeTeam Whether the team is the home team.
+	 * @param aTacticID Tactic used.
+	 * @param aOtherStrategy Rival team's strategy.
+	 * @pre The current team strategy must pass \ref CMatchConfiguration::CheckTeamStrategy.
+	 * @pre The current team strategy must pass \ref CMatch::CheckTeamStrategy.
+	*/
+	static skill_bonus CalculateEffectivePlayerSkill( const std::string_view aPlayer, const E_PLAYER_SKILL& aPlayerSkill,
+		const E_PLAYER_POSITION& aPlayerPosition, const CMatch& aMatch, const CMatchConfiguration& aMatchConfiguration,
+		const bool aIsHomeTeam, const std::string_view aTacticID, const CTeamStrategy& aOtherStrategy );
+
+	/**
 	 * @brief Applies the given predicate to the effective skill of each player.
 	 * @param aPlayerSkill Player skill to consider.
 	 * @param aMatch Match definition.
