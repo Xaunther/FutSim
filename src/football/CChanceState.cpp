@@ -1,7 +1,23 @@
 #include "football/CChanceState.h"
 
+#include "JsonUtils.h"
+
 namespace futsim::football
 {
+
+void CChanceState::JSON( json& aJSON ) const noexcept
+{
+	std::visit( [ &aJSON ]( auto&& aChanceType ) { AddToJSONKey( aJSON, aChanceType, JSON_CHANCE_TYPE ); }, mChanceType );
+	AddToJSONKey( aJSON, mOutcome, JSON_OUTCOME );
+	if( mStopper )
+		AddToJSONKey( aJSON, *mStopper, JSON_STOPPER );
+	if( mTackler )
+		AddToJSONKey( aJSON, *mTackler, JSON_TACKLER );
+	if( mPasser )
+		AddToJSONKey( aJSON, *mPasser, JSON_PASSER );
+	if( mShooter )
+		AddToJSONKey( aJSON, *mShooter, JSON_SHOOTER );
+}
 
 const CChanceState::chance_type& CChanceState::GetChanceType() const noexcept
 {

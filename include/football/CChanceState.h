@@ -46,6 +46,13 @@ public:
 		std::uniform_random_bit_generator auto& aGenerator
 	);
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mChanceType
 	const chance_type& GetChanceType() const noexcept;
 
@@ -60,6 +67,21 @@ public:
 
 	//! \copydoc GetActor
 	template <E_PLAYER_SKILL tPlayerSkill> optional_name& Actor() const noexcept;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Chance state";
+	//! JSON key for the \copybrief mChanceType
+	static inline constexpr std::string_view JSON_CHANCE_TYPE = "Chance type";
+	//! JSON key for the \copybrief mChanceType
+	static inline constexpr std::string_view JSON_OUTCOME = "Outcome";
+	//! JSON key for the \copybrief mStopper
+	static inline constexpr std::string_view JSON_STOPPER = "Goalkeeper";
+	//! JSON key for the \copybrief mTackler
+	static inline constexpr std::string_view JSON_TACKLER = "Tackler";
+	//! JSON key for the \copybrief mPasser
+	static inline constexpr std::string_view JSON_PASSER = "Passer";
+	//! JSON key for the \copybrief mShooter
+	static inline constexpr std::string_view JSON_SHOOTER = "Shooter";
 
 private:
 	//! Chance type draw outcome.
