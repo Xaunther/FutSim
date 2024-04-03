@@ -298,13 +298,13 @@ CDrawConfiguration::chance_type_draw_distribution CDrawConfiguration::CreateChan
 CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreatePenaltyOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill, const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultPenaltyGoalProbability, aEffectiveGKSkill, aEffectiveFWSkill );
+	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultPenaltyGoalProbability, 0, aEffectiveGKSkill, aEffectiveFWSkill );
 }
 
 CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateDirectFreeKickOutcomeDistribution(
 	const effective_skill& aEffectiveGKSkill, const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultDirectFreeKickGoalProbability, aEffectiveGKSkill, aEffectiveFWSkill );
+	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultDirectFreeKickGoalProbability, 0, aEffectiveGKSkill, aEffectiveFWSkill );
 }
 
 CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateIndirectFreeKickOutcomeDistribution(
@@ -313,7 +313,7 @@ CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateIndirectFre
 	const effective_skill& aEffectiveMFSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultIndirectFreeKickGoalProbability,
+	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultIndirectFreeKickGoalProbability, aEffectiveDFSkill,
 		aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
@@ -323,7 +323,7 @@ CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateCornerOutco
 	const effective_skill& aEffectiveMFSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultCornerGoalProbability,
+	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultCornerGoalProbability, aEffectiveDFSkill,
 		aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
@@ -331,7 +331,7 @@ CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateFarShotOutc
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultFarShotGoalProbability,
+	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultFarShotGoalProbability, 0,
 		aEffectiveGKSkill, aEffectiveFWSkill );
 }
 
@@ -356,7 +356,7 @@ CDrawConfiguration::goal_draw_distribution CDrawConfiguration::CreateNearShotOut
 	const effective_skill& aEffectiveGKSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultNearShotGoalProbability,
+	return mGoalDrawConfiguration.CreateChanceOutcomeDistribution( mDefaultNearShotGoalProbability, 0,
 		aEffectiveGKSkill, aEffectiveFWSkill );
 }
 

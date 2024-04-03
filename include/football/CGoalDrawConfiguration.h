@@ -120,6 +120,7 @@ public:
 	*/
 	goal_draw_distribution CreateChanceOutcomeDistribution(
 		const probability& aDefaultGoalProbability,
+		const effective_skill& aEffectiveDFSkill,
 		const effective_skill& aEffectiveDefenceSkill,
 		const effective_skill& aEffectiveAttackSkill ) const noexcept;
 
