@@ -65,23 +65,34 @@ public:
 	*/
 	template <E_PLAYER_SKILL tPlayerSkill> const optional_name& GetActor() const noexcept;
 
+private:
 	//! \copydoc GetActor
 	template <E_PLAYER_SKILL tPlayerSkill> optional_name& Actor() const noexcept;
 
+	/**
+	 * @brief Adds an actor to the JSON object.
+	 * @tparam tPlayerSkill Skill used by the actor.
+	 * @param aJSON JSON object.
+	*/
+	template <E_PLAYER_SKILL tPlayerSkill> void JSONActor( json& aJSON ) const noexcept;
+
+public:
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Chance state";
 	//! JSON key for the \copybrief mChanceType
 	static inline constexpr std::string_view JSON_CHANCE_TYPE = "Chance type";
 	//! JSON key for the \copybrief mChanceType
 	static inline constexpr std::string_view JSON_OUTCOME = "Outcome";
+	//! JSON key template for the actor.
+	template<E_PLAYER_SKILL tPlayerSkill> static inline constexpr std::string_view JSON_ACTOR;
 	//! JSON key for the \copybrief mStopper
-	static inline constexpr std::string_view JSON_STOPPER = "Goalkeeper";
+	template <> constexpr std::string_view JSON_ACTOR<E_PLAYER_SKILL::St> = "Goalkeeper";
 	//! JSON key for the \copybrief mTackler
-	static inline constexpr std::string_view JSON_TACKLER = "Tackler";
+	template <> constexpr std::string_view JSON_ACTOR<E_PLAYER_SKILL::Tk> = "Tackler";
 	//! JSON key for the \copybrief mPasser
-	static inline constexpr std::string_view JSON_PASSER = "Passer";
+	template <> constexpr std::string_view JSON_ACTOR<E_PLAYER_SKILL::Ps> = "Passer";
 	//! JSON key for the \copybrief mShooter
-	static inline constexpr std::string_view JSON_SHOOTER = "Shooter";
+	template <> constexpr std::string_view JSON_ACTOR<E_PLAYER_SKILL::Sh> = "Shooter";
 
 private:
 	//! Chance type draw outcome.

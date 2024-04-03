@@ -9,14 +9,10 @@ void CChanceState::JSON( json& aJSON ) const noexcept
 {
 	std::visit( [ &aJSON ]( auto&& aChanceType ) { AddToJSONKey( aJSON, aChanceType, JSON_CHANCE_TYPE ); }, mChanceType );
 	AddToJSONKey( aJSON, mOutcome, JSON_OUTCOME );
-	if( mStopper )
-		AddToJSONKey( aJSON, *mStopper, JSON_STOPPER );
-	if( mTackler )
-		AddToJSONKey( aJSON, *mTackler, JSON_TACKLER );
-	if( mPasser )
-		AddToJSONKey( aJSON, *mPasser, JSON_PASSER );
-	if( mShooter )
-		AddToJSONKey( aJSON, *mShooter, JSON_SHOOTER );
+	JSONActor<E_PLAYER_SKILL::St>( aJSON );
+	JSONActor<E_PLAYER_SKILL::Tk>( aJSON );
+	JSONActor<E_PLAYER_SKILL::Ps>( aJSON );
+	JSONActor<E_PLAYER_SKILL::Sh>( aJSON );
 }
 
 const CChanceState::chance_type& CChanceState::GetChanceType() const noexcept
@@ -46,5 +42,16 @@ template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::St>() 
 template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::Tk>() const noexcept;
 template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::Ps>() const noexcept;
 template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::Sh>() const noexcept;
+
+template <E_PLAYER_SKILL tPlayerSkill> void CChanceState::JSONActor( json& aJSON ) const noexcept
+{
+	if( const auto& actor = GetActor<tPlayerSkill>() )
+		AddToJSONKey( aJSON, *actor, JSON_ACTOR<tPlayerSkill> );
+}
+
+template void CChanceState::JSONActor<E_PLAYER_SKILL::St>( json& aJSON ) const noexcept;
+template void CChanceState::JSONActor<E_PLAYER_SKILL::Tk>( json& aJSON ) const noexcept;
+template void CChanceState::JSONActor<E_PLAYER_SKILL::Ps>( json& aJSON ) const noexcept;
+template void CChanceState::JSONActor<E_PLAYER_SKILL::Sh>( json& aJSON ) const noexcept;
 
 } // futsim::football namespace
