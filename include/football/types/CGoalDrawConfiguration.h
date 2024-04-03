@@ -1,5 +1,7 @@
 #pragma once
 
+#include "football/EPlayerPosition.h"
+
 #include "EnumUtils.h"
 
 namespace futsim
@@ -22,6 +24,8 @@ enum class E_CHANCE_OUTCOME {
 
 //! Type for the goal draw.
 using goal_draw_distribution = CEnumDistribution<E_CHANCE_OUTCOME, int>;
+//! Type for the position draw.
+using position_draw_distribution = CEnumDistribution<E_PLAYER_POSITION, int>;
 
 FUTSIM_SERIALIZE_ENUM( E_CHANCE_OUTCOME, {
 	{E_CHANCE_OUTCOME::GOAL, "Goal"},

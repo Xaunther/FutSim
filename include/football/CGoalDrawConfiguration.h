@@ -5,6 +5,8 @@
 #include "football/types/CDrawConfiguration.h"
 #include "football/types/CGoalDrawConfiguration.h"
 
+#include "football/EPlayerSkill.h"
+
 namespace futsim::football
 {
 
@@ -18,6 +20,7 @@ protected:
 	using stat = types::CDrawConfiguration::stat;
 	using effective_skill = types::CDrawConfiguration::effective_skill;
 	using goal_draw_distribution = types::CGoalDrawConfiguration::goal_draw_distribution;
+	using position_draw_distribution = types::CGoalDrawConfiguration::position_draw_distribution;
 
 public:
 	/**
@@ -124,6 +127,13 @@ public:
 		const effective_skill& aEffectiveDFSkill,
 		const effective_skill& aEffectiveDefenceSkill,
 		const effective_skill& aEffectiveAttackSkill ) const noexcept;
+
+	/**
+	 * @brief Create the position draw distribution for a given player skill.
+	 * @tparam tPlayerSkill Player skill.
+	*/
+	template <E_PLAYER_SKILL tPlayerSkill>
+	position_draw_distribution CreatePositionDrawDistribution() const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Goal draw configuration";
