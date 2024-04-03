@@ -33,15 +33,20 @@ template <E_PLAYER_SKILL tPlayerSkill> const CChanceState::optional_name& CChanc
 		mShooter;
 }
 
-template <E_PLAYER_SKILL tPlayerSkill> CChanceState::optional_name& CChanceState::Actor() const noexcept
+template const CChanceState::optional_name& CChanceState::GetActor<E_PLAYER_SKILL::St>() const noexcept;
+template const CChanceState::optional_name& CChanceState::GetActor<E_PLAYER_SKILL::Tk>() const noexcept;
+template const CChanceState::optional_name& CChanceState::GetActor<E_PLAYER_SKILL::Ps>() const noexcept;
+template const CChanceState::optional_name& CChanceState::GetActor<E_PLAYER_SKILL::Sh>() const noexcept;
+
+template <E_PLAYER_SKILL tPlayerSkill> CChanceState::optional_name& CChanceState::Actor() noexcept
 {
 	return const_cast< optional_name& >( GetActor<tPlayerSkill>() );
 }
 
-template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::St>() const noexcept;
-template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::Tk>() const noexcept;
-template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::Ps>() const noexcept;
-template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::Sh>() const noexcept;
+template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::St>() noexcept;
+template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::Tk>() noexcept;
+template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::Ps>() noexcept;
+template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::Sh>() noexcept;
 
 template <E_PLAYER_SKILL tPlayerSkill> void CChanceState::JSONActor( json& aJSON ) const noexcept
 {

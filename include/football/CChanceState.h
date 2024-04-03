@@ -67,7 +67,7 @@ public:
 
 private:
 	//! \copydoc GetActor
-	template <E_PLAYER_SKILL tPlayerSkill> optional_name& Actor() const noexcept;
+	template <E_PLAYER_SKILL tPlayerSkill> optional_name& Actor() noexcept;
 
 	/**
 	 * @brief Adds an actor to the JSON object.
@@ -83,16 +83,12 @@ public:
 	static inline constexpr std::string_view JSON_CHANCE_TYPE = "Chance type";
 	//! JSON key for the \copybrief mChanceType
 	static inline constexpr std::string_view JSON_OUTCOME = "Outcome";
-	//! JSON key template for the actor.
-	template<E_PLAYER_SKILL tPlayerSkill> static inline constexpr std::string_view JSON_ACTOR;
-	//! JSON key for the \copybrief mStopper
-	template <> constexpr std::string_view JSON_ACTOR<E_PLAYER_SKILL::St> = "Goalkeeper";
-	//! JSON key for the \copybrief mTackler
-	template <> constexpr std::string_view JSON_ACTOR<E_PLAYER_SKILL::Tk> = "Tackler";
-	//! JSON key for the \copybrief mPasser
-	template <> constexpr std::string_view JSON_ACTOR<E_PLAYER_SKILL::Ps> = "Passer";
-	//! JSON key for the \copybrief mShooter
-	template <> constexpr std::string_view JSON_ACTOR<E_PLAYER_SKILL::Sh> = "Shooter";
+	/**
+	 * @brief JSON key template for the actor.
+	 * @tparam tPlayerSkill Skill used by the actor.
+	 * @todo Remove initializer when GCC no longer requires it (bug).
+	*/
+	template<E_PLAYER_SKILL tPlayerSkill> static inline constexpr std::string_view JSON_ACTOR{};
 
 private:
 	//! Chance type draw outcome.
@@ -132,6 +128,15 @@ std::pair<std::string_view, E_PLAYER_POSITION> DrawPlayer( const CGoalDrawConfig
 types::CGoalDrawConfiguration::E_CHANCE_OUTCOME DrawOutcome( const types::CChanceState::chance_type& aChanceType, const auto& aOutcomeDrawer );
 
 } // detail namespace
+
+//! JSON key for the \copybrief mStopper
+template <> inline constexpr std::string_view CChanceState::JSON_ACTOR<E_PLAYER_SKILL::St> = "Goalkeeper";
+//! JSON key for the \copybrief mTackler
+template <> inline constexpr std::string_view CChanceState::JSON_ACTOR<E_PLAYER_SKILL::Tk> = "Tackler";
+//! JSON key for the \copybrief mPasser
+template <> inline constexpr std::string_view CChanceState::JSON_ACTOR<E_PLAYER_SKILL::Ps> = "Passer";
+//! JSON key for the \copybrief mShooter
+template <> inline constexpr std::string_view CChanceState::JSON_ACTOR<E_PLAYER_SKILL::Sh> = "Shooter";
 
 CChanceState::CChanceState(
 	const CMatch& aMatch,
