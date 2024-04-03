@@ -128,7 +128,7 @@ CGoalDrawConfiguration::goal_draw_distribution CGoalDrawConfiguration::Create1vs
 	const effective_skill& aEffectiveMFSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	return CreateChanceOutcomeDistribution( m1vs1GKGoalProbability, 2 * aEffectiveGKSkill, aEffectiveMFSkill + aEffectiveFWSkill );
+	return CreateChanceOutcomeDistribution( m1vs1GKGoalProbability, 0, 2 * aEffectiveGKSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
 CGoalDrawConfiguration::goal_draw_distribution CGoalDrawConfiguration::Create1vs1DFOutcomeDistribution(
@@ -137,20 +137,24 @@ CGoalDrawConfiguration::goal_draw_distribution CGoalDrawConfiguration::Create1vs
 	const effective_skill& aEffectiveMFSkill,
 	const effective_skill& aEffectiveFWSkill ) const noexcept
 {
-	return CreateChanceOutcomeDistribution( m1vs1DFGoalProbability, aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
+	return CreateChanceOutcomeDistribution( m1vs1DFGoalProbability, aEffectiveDFSkill, aEffectiveGKSkill + aEffectiveDFSkill, aEffectiveMFSkill + aEffectiveFWSkill );
 }
 
 CGoalDrawConfiguration::goal_draw_distribution CGoalDrawConfiguration::CreateChanceOutcomeDistribution(
 	const probability& aDefaultGoalProbability,
+	const effective_skill& aEffectiveDFSkill,
 	const effective_skill& aEffectiveDefenceSkill,
 	const effective_skill& aEffectiveAttackSkill ) const noexcept
 {
 	const auto& modifiedGoalProbability = ModifiedProbability( 1 - mExtraCornerProbability, aDefaultGoalProbability,
 		aEffectiveDefenceSkill, aEffectiveAttackSkill );
+	const auto& defenderActionProbability = aEffectiveDFSkill / aEffectiveDefenceSkill;
 	return goal_draw_distribution{ {
 		modifiedGoalProbability,
-		mExtraCornerProbability,
-		( 1 - modifiedGoalProbability - mExtraCornerProbability ) / 2,
+		mExtraCornerProbability * ( 1 - defenderActionProbability ),
+		mExtraCornerProbability * defenderActionProbability,
+		( 1 - modifiedGoalProbability - mExtraCornerProbability ) * ( 1 - defenderActionProbability ) / 2,
+		( 1 - modifiedGoalProbability - mExtraCornerProbability ) * defenderActionProbability / 2,
 		( 1 - modifiedGoalProbability - mExtraCornerProbability ) / 2
 	} };
 }
