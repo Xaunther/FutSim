@@ -113,6 +113,7 @@ public:
 	/**
 	 * @brief Creates a generic chance outcome draw distribution.
 	 * @param aDefaultGoalProbability Goal probability when defender and attacker skills are equal.
+	 * @param aEffectiveDFSkill Effective DF skill of the defender.
 	 * @param aEffectiveDefenceSkill Effective defence skill.
 	 * @param aEffectiveAttackSkill Effective attacking skill.
 	 * @pre All effective skills must be positive.
