@@ -5,23 +5,23 @@
 namespace futsim::football
 {
 
+
+//! Macro to do something for each player position.
+#define FOR_EACH_PLAYER_POSITION(DO, ...) \
+    DO(GK, "GK", __VA_ARGS__) \
+    DO(DF, "DF", __VA_ARGS__) \
+    DO(DM, "DM", __VA_ARGS__) \
+    DO(MF, "MF", __VA_ARGS__) \
+    DO(AM, "AM", __VA_ARGS__) \
+    DO(FW, "FW", __VA_ARGS__) \
+
 //! Enumeration for the different player positions.
 enum class E_PLAYER_POSITION {
-	GK,
-	DF,
-	DM,
-	MF,
-	AM,
-	FW,
+	FOR_EACH_PLAYER_POSITION( FUTSIM_LIST_ENUM )
 };
 
 FUTSIM_SERIALIZE_ENUM( E_PLAYER_POSITION, {
-	{E_PLAYER_POSITION::GK, "GK"},
-	{E_PLAYER_POSITION::DF, "DF"},
-	{E_PLAYER_POSITION::DM, "DM"},
-	{E_PLAYER_POSITION::MF, "MF"},
-	{E_PLAYER_POSITION::AM, "AM"},
-	{E_PLAYER_POSITION::FW, "FW"},
+	FOR_EACH_PLAYER_POSITION( FUTSIM_LIST_ENUM_ID, E_PLAYER_POSITION )
 	} )
 
 } // futsim::football namespace
