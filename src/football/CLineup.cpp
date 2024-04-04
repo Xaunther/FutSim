@@ -6,6 +6,10 @@
 namespace futsim::football
 {
 
+//! Macro to explicitly instantiate GetPlayers method.
+#define EXPLICIT_INSTANTIATE_GET_PLAYERS(name, ... ) \
+	template CLineup::players<E_PLAYER_POSITION::name> CLineup::GetPlayers<E_PLAYER_POSITION::name>() const noexcept; \
+
 CLineup::CLineup(
 	const std::string_view aGK,
 	const std::span<const name> aDFs,
@@ -67,13 +71,7 @@ CLineup::players<tPlayerPosition> CLineup::GetPlayers() const noexcept
 	else
 		return mPlayersLineup[ static_cast< position_names::size_type >( tPlayerPosition ) ];
 }
-
-template CLineup::players<E_PLAYER_POSITION::GK> CLineup::GetPlayers<E_PLAYER_POSITION::GK>() const noexcept;
-template CLineup::players<E_PLAYER_POSITION::DF> CLineup::GetPlayers<E_PLAYER_POSITION::DF>() const noexcept;
-template CLineup::players<E_PLAYER_POSITION::DM> CLineup::GetPlayers<E_PLAYER_POSITION::DM>() const noexcept;
-template CLineup::players<E_PLAYER_POSITION::MF> CLineup::GetPlayers<E_PLAYER_POSITION::MF>() const noexcept;
-template CLineup::players<E_PLAYER_POSITION::AM> CLineup::GetPlayers<E_PLAYER_POSITION::AM>() const noexcept;
-template CLineup::players<E_PLAYER_POSITION::FW> CLineup::GetPlayers<E_PLAYER_POSITION::FW>() const noexcept;
+FOR_EACH_PLAYER_POSITION( EXPLICIT_INSTANTIATE_GET_PLAYERS )
 
 std::span<const CLineup::name> CLineup::GetSubs() const noexcept
 {
