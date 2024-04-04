@@ -20,4 +20,7 @@ namespace futsim
 	FUTSIM_STRING_ENUM( ENUM_TYPE, __VA_ARGS__ ); \
 	NLOHMANN_JSON_SERIALIZE_ENUM( ENUM_TYPE, __VA_ARGS__ ); \
 
+//! Macro to list a value of an enum, comma separated.
+#define FUTSIM_LIST_ENUM(name, ... ) name,
+
 } // futsim namespace
