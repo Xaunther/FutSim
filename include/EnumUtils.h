@@ -23,4 +23,7 @@ namespace futsim
 //! Macro to list a value of an enum, comma separated.
 #define FUTSIM_LIST_ENUM(name, ... ) name,
 
+//! Macro to list a value and id of an enum, comma separated.
+#define FUTSIM_LIST_ENUM_ID(name, id, ENUM_TYPE, ... ) {ENUM_TYPE::name, id},
+
 } // futsim namespace
