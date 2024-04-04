@@ -39,10 +39,19 @@ const CChanceState::E_CHANCE_OUTCOME& CChanceState::GetChanceOutcome() const noe
 
 template <E_PLAYER_SKILL tPlayerSkill> const CChanceState::optional_name& CChanceState::GetActor() const noexcept
 {
-	return tPlayerSkill == E_PLAYER_SKILL::St ? mStopper :
-		tPlayerSkill == E_PLAYER_SKILL::Tk ? mTackler :
-		tPlayerSkill == E_PLAYER_SKILL::Ps ? mPasser :
-		mShooter;
+	if constexpr( tPlayerSkill == E_PLAYER_SKILL::St )
+		return mStopper;
+	else if constexpr( tPlayerSkill == E_PLAYER_SKILL::Tk )
+		return mTackler;
+	else if constexpr( tPlayerSkill == E_PLAYER_SKILL::Ps )
+		return mPasser;
+	else if constexpr( tPlayerSkill == E_PLAYER_SKILL::Sh )
+		return mShooter;
+	else
+	{
+		static optional_name EMPTY;
+		return EMPTY;
+	}
 }
 FOR_EACH_PLAYER_SKILL( EXPLICIT_INSTANTIATE_GET_ACTOR )
 
