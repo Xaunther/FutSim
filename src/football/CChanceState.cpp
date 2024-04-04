@@ -5,6 +5,18 @@
 namespace futsim::football
 {
 
+//! Macro to explicitly instantiate GetActor method.
+#define EXPLICIT_INSTANTIATE_GET_ACTOR(name, ... ) \
+	template const CChanceState::optional_name& CChanceState::GetActor<E_PLAYER_SKILL::name>() const noexcept; \
+
+//! Macro to explicitly instantiate Actor method.
+#define EXPLICIT_INSTANTIATE_ACTOR(name, ... ) \
+	template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::name>() noexcept; \
+
+//! Macro to explicitly instantiate JSONActor method.
+#define EXPLICIT_INSTANTIATE_JSON_ACTOR(name, ... ) \
+	template void CChanceState::JSONActor<E_PLAYER_SKILL::name>( json& ) const noexcept; \
+
 void CChanceState::JSON( json& aJSON ) const noexcept
 {
 	std::visit( [ &aJSON ]( auto&& aChanceType ) { AddToJSONKey( aJSON, aChanceType, JSON_CHANCE_TYPE ); }, mChanceType );
@@ -27,36 +39,33 @@ const CChanceState::E_CHANCE_OUTCOME& CChanceState::GetChanceOutcome() const noe
 
 template <E_PLAYER_SKILL tPlayerSkill> const CChanceState::optional_name& CChanceState::GetActor() const noexcept
 {
-	return tPlayerSkill == E_PLAYER_SKILL::St ? mStopper :
-		tPlayerSkill == E_PLAYER_SKILL::Tk ? mTackler :
-		tPlayerSkill == E_PLAYER_SKILL::Ps ? mPasser :
-		mShooter;
+	if constexpr( tPlayerSkill == E_PLAYER_SKILL::St )
+		return mStopper;
+	else if constexpr( tPlayerSkill == E_PLAYER_SKILL::Tk )
+		return mTackler;
+	else if constexpr( tPlayerSkill == E_PLAYER_SKILL::Ps )
+		return mPasser;
+	else if constexpr( tPlayerSkill == E_PLAYER_SKILL::Sh )
+		return mShooter;
+	else
+	{
+		static optional_name EMPTY;
+		return EMPTY;
+	}
 }
-
-template const CChanceState::optional_name& CChanceState::GetActor<E_PLAYER_SKILL::St>() const noexcept;
-template const CChanceState::optional_name& CChanceState::GetActor<E_PLAYER_SKILL::Tk>() const noexcept;
-template const CChanceState::optional_name& CChanceState::GetActor<E_PLAYER_SKILL::Ps>() const noexcept;
-template const CChanceState::optional_name& CChanceState::GetActor<E_PLAYER_SKILL::Sh>() const noexcept;
+FOR_EACH_PLAYER_SKILL( EXPLICIT_INSTANTIATE_GET_ACTOR )
 
 template <E_PLAYER_SKILL tPlayerSkill> CChanceState::optional_name& CChanceState::Actor() noexcept
 {
 	return const_cast< optional_name& >( GetActor<tPlayerSkill>() );
 }
-
-template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::St>() noexcept;
-template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::Tk>() noexcept;
-template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::Ps>() noexcept;
-template CChanceState::optional_name& CChanceState::Actor<E_PLAYER_SKILL::Sh>() noexcept;
+FOR_EACH_PLAYER_SKILL( EXPLICIT_INSTANTIATE_ACTOR )
 
 template <E_PLAYER_SKILL tPlayerSkill> void CChanceState::JSONActor( json& aJSON ) const noexcept
 {
 	if( const auto& actor = GetActor<tPlayerSkill>() )
 		AddToJSONKey( aJSON, *actor, JSON_ACTOR<tPlayerSkill> );
 }
-
-template void CChanceState::JSONActor<E_PLAYER_SKILL::St>( json& aJSON ) const noexcept;
-template void CChanceState::JSONActor<E_PLAYER_SKILL::Tk>( json& aJSON ) const noexcept;
-template void CChanceState::JSONActor<E_PLAYER_SKILL::Ps>( json& aJSON ) const noexcept;
-template void CChanceState::JSONActor<E_PLAYER_SKILL::Sh>( json& aJSON ) const noexcept;
+FOR_EACH_PLAYER_SKILL( EXPLICIT_INSTANTIATE_JSON_ACTOR )
 
 } // futsim::football namespace
