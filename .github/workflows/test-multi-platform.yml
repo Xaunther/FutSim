@@ -20,7 +20,7 @@ jobs:
       matrix:
         config:
           - { os: ubuntu-latest, build_type: "Release", c_compiler: "gcc", cpp_compiler: "g++" }
-          # - { os: ubuntu-latest, build_type: "Release", c_compiler: "clang", cpp_compiler: "clang++" }
+          - { os: ubuntu-latest, build_type: "Release", c_compiler: "clang-18", cpp_compiler: "clang++-18" }
           - { os: windows-latest, build_type: "Release", c_compiler: "cl", cpp_compiler: "cl" }
 
     steps:
@@ -31,6 +31,13 @@ jobs:
     - uses: ssciwr/doxygen-install@v1
     - uses: ilammy/msvc-dev-cmd@v1
     - uses: seanmiddleditch/gha-setup-ninja@v4
+
+    - name: Install Clang 18
+      if: matrix.config.cpp_compiler == 'clang++-18'
+      run: |
+       wget -O llvm.sh https://apt.llvm.org/llvm.sh
+       chmod +x ./llvm.sh
+       sudo ./llvm.sh 18
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.

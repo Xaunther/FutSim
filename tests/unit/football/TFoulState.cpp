@@ -25,7 +25,7 @@ std::vector<std::string> TFoulState::ObtainedResults() const noexcept
 
 	std::mt19937 rng{ 1234 };
 
-	for( const auto& foulState : std::initializer_list{
+	for( const auto& foulState : {
 		CFoulState{ CMatchConfiguration{}, CTeamStrategy{ "A", CLineup{ "Ter Stegen", {}, {}, {}, {}, {}, {} } }, rng } } )
 	{
 		result.push_back( std::string{ CFoulState::JSON_COMMIITER } + ": " + std::string{ foulState.GetCommitter() } );

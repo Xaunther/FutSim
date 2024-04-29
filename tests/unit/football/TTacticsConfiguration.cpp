@@ -69,7 +69,7 @@ void TTacticsConfiguration::TestExceptions() const
 std::vector<std::string> TTacticsConfiguration::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
-	for( const auto& tacticsConfiguration : std::initializer_list<CTacticsConfiguration>{
+	for( const auto& tacticsConfiguration : {
 	CTacticsConfiguration{},
 	CTacticsConfiguration{ { { "A", CTacticConfiguration{ 0, 0, { "E" } } }, { "E", CTacticConfiguration{ 0, 0 } } }, 1.3 },
 	futsim::ValueFromJSONKeyString<CTacticsConfiguration>( R"( {

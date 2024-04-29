@@ -111,7 +111,7 @@ void TLineupConfiguration::TestExceptions() const
 std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
-	for( const auto& lineupConfiguration : std::initializer_list<CLineupConfiguration>{
+	for( const auto& lineupConfiguration : {
 		CLineupConfiguration{},
 		CLineupConfiguration{ { 1, {} }, { 2, 5 }, { 0, 3 }, 8, {} },
 		futsim::ValueFromJSONKeyString<CLineupConfiguration>( R"( {

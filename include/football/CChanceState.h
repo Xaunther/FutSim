@@ -157,7 +157,8 @@ CChanceState::CChanceState(
 		const auto& drawnPlayer = detail::DrawPlayer<tPlayerSkill>( aMatchConfiguration.GetDrawConfiguration().GetGoalDrawConfiguration(),
 			aOwnTeamStrategy.GetLineup(), aGenerator );
 		// Sets the drawn player to the given role
-		Actor< tPlayerSkill >() = drawnPlayer.first;
+		// @todo Remove redundant this usage when CLANG allows it https://github.com/llvm/llvm-project/issues/81243
+		this->Actor< tPlayerSkill >() = drawnPlayer.first;
 		return CTeamStrategy::CalculateEffectivePlayerSkill( drawnPlayer.first, tPlayerSkill, drawnPlayer.second, aMatch,
 			aMatchConfiguration, aIsHomeTeam, aOwnTeamStrategy.GetTacticID(), aRivalTeamStrategy );
 	};

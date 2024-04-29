@@ -30,7 +30,7 @@ void TTeamStrategy::TestExceptions() const
 std::vector<std::string> TTeamStrategy::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
-	for( const auto& teamStrategy : std::initializer_list<CTeamStrategy>{
+	for( const auto& teamStrategy : {
 		CTeamStrategy{ "A", CLineup{  "Ter Stegen", {}, {}, {}, {}, {}, {} } },
 		futsim::ValueFromJSONKeyString<CTeamStrategy>( R"( {
 			"Team strategy": {

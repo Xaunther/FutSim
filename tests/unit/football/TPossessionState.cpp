@@ -40,7 +40,7 @@ std::vector<std::string> TPossessionState::ObtainedResults() const noexcept
 			types::CLineup::names{ "Morris", "Adebayo" }, {} } };
 	const CTeamStrategy awayTeamStrategy{ "N", homeTeamStrategy.GetLineup() };
 
-	for( const auto& possessionState : std::initializer_list{
+	for( const auto& possessionState : {
 		CPossessionState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 100 }, "Michael Oliver" },
 			CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, true, rng },
 		CPossessionState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 100 }, "Michael Oliver" },
