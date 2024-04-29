@@ -53,7 +53,7 @@ std::vector<std::string> TChanceState::ObtainedResults() const noexcept
 			types::CLineup::names{ "Morris", "Adebayo" }, {} } };
 	const CTeamStrategy awayTeamStrategy{ "N", homeTeamStrategy.GetLineup() };
 
-	for( const auto& chanceState : std::initializer_list{
+	for( const auto& chanceState : {
 		CChanceState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 100 }, "Michael Oliver" },
 			CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, true, true, rng },
 		CChanceState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 100 }, "Michael Oliver" },

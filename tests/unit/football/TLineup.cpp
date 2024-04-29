@@ -23,7 +23,7 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
 
-	for( const auto& lineup : std::initializer_list<CLineup>{
+	for( const auto& lineup : {
 		CLineup{ "Kelleher",
 			types::CLineup::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
 			types::CLineup::names{ "Endo" }, types::CLineup::names{ "Mac Allister", "Szoboszlai" }, types::CLineup::names{},
