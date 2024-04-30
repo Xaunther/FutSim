@@ -41,6 +41,13 @@ public:
 		std::uniform_random_bit_generator auto& aGenerator
 	) noexcept;
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mPossessionState
 	const CPossessionState& GetPossessionState() const noexcept;
 
@@ -49,6 +56,11 @@ public:
 
 	//! Retrieves the \copybrief mChancesStates
 	const chances_states& GetChancesStates() const noexcept;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Play state";
+	//! JSON key for the \copybrief mChancesStates
+	static inline constexpr std::string_view JSON_CHANCES = "Chances";
 
 private:
 	//! Possession state.

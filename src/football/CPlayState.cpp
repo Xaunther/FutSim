@@ -1,7 +1,19 @@
 #include "football/CPlayState.h"
 
+#include "JsonUtils.h"
+
 namespace futsim::football
 {
+
+void CPlayState::JSON( json& aJSON ) const noexcept
+{
+
+	AddToJSON( aJSON, mPossessionState );
+	if( mFoulState )
+		AddToJSON( aJSON, *mFoulState );
+	if( !mChancesStates.empty() )
+		AddArrayToJSONKey( aJSON, mChancesStates, JSON_CHANCES );
+}
 
 const CPossessionState& CPlayState::GetPossessionState() const noexcept
 {
