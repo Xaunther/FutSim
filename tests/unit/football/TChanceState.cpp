@@ -54,10 +54,10 @@ std::vector<std::string> TChanceState::ObtainedResults() const noexcept
 	const CTeamStrategy awayTeamStrategy{ "N", homeTeamStrategy.GetLineup() };
 
 	for( const auto& chanceState : {
-		CChanceState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 100 }, "Michael Oliver" },
-			CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, true, true, rng },
-		CChanceState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 100 }, "Michael Oliver" },
-			CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, false, false, rng },
+		CChanceState{ std::true_type{}, CMatch{ team, team, CStadium{ "The New Lawn", 5147, 100 }, "Michael Oliver" },
+			CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, true, rng },
+		CChanceState{ std::false_type{}, CMatch{ team, team, CStadium{ "The New Lawn", 5147, 100 }, "Michael Oliver" },
+			CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, false, rng },
 		} )
 	{
 		result.push_back( std::string{ CChanceState::JSON_CHANCE_TYPE } + ": "
