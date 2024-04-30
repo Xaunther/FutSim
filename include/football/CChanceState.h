@@ -46,6 +46,27 @@ public:
 		std::uniform_random_bit_generator auto& aGenerator
 	);
 
+	/**
+	 * @brief Constructor for a certain chance type from the match definition, configuration and current strategies.
+	 * @param aMatch Match definition.
+	 * @param aMatchConfiguration Match configuration.
+	 * @param aAttackingTeamStrategy Current match strategy for the attacking team.
+	 * @param aDefendingTeamStrategy Current match strategy for the defending team.
+	 * @param aHomeTeamAttack Whether the home team is attacking.
+	 * @param aChanceType Chance type.
+	 * @param aGenerator RNG to use.
+	 * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
+	*/
+	explicit CChanceState(
+		const CMatch& aMatch,
+		const CMatchConfiguration& aMatchConfiguration,
+		const CTeamStrategy& aAttackingTeamStrategy,
+		const CTeamStrategy& aDefendingTeamStrategy,
+		const bool aHomeTeamAttack,
+		const chance_type& aChanceType,
+		std::uniform_random_bit_generator auto& aGenerator
+	);
+
 protected:
 	/**
 	 * @copydoc IJsonable::ToJSON
@@ -146,9 +167,23 @@ CChanceState::CChanceState(
 	const bool aHomeTeamAttack,
 	const bool aIsSetPiece,
 	std::uniform_random_bit_generator auto& aGenerator
-) try :
-	mChanceType( aIsSetPiece ? chance_type{ aMatchConfiguration.GetDrawConfiguration().CreateSetPieceTypeDistribution()( aGenerator ) } :
-		chance_type{ aMatchConfiguration.GetDrawConfiguration().CreateChanceTypeDistribution()( aGenerator ) } )
+) :
+	CChanceState( aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack,
+		aIsSetPiece ? chance_type{ aMatchConfiguration.GetDrawConfiguration().CreateSetPieceTypeDistribution()( aGenerator ) } :
+		chance_type{ aMatchConfiguration.GetDrawConfiguration().CreateChanceTypeDistribution()( aGenerator ) }, aGenerator )
+{
+}
+
+CChanceState::CChanceState(
+	const CMatch& aMatch,
+	const CMatchConfiguration& aMatchConfiguration,
+	const CTeamStrategy& aAttackingTeamStrategy,
+	const CTeamStrategy& aDefendingTeamStrategy,
+	const bool aHomeTeamAttack,
+	const chance_type& aChanceType,
+	std::uniform_random_bit_generator auto& aGenerator
+)  try :
+	mChanceType( aChanceType )
 {
 	// Draws an actor for a role and returns their effective skill
 	const auto EffectivePlayerSkillDrawer = [ &aMatch, &aMatchConfiguration, &aGenerator, this ]<E_PLAYER_SKILL tPlayerSkill>
