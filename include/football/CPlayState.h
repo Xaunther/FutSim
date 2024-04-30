@@ -7,6 +7,7 @@
 #include "football/CChanceState.h"
 #include "football/CFoulState.h"
 #include "football/CPossessionState.h"
+#include "football/EPlayerSkill.h"
 
 namespace futsim::football
 {
@@ -21,6 +22,25 @@ protected:
 	using chances_states = types::CPlayState::chances_states;
 
 public:
+	/**
+	 * @brief Constructor from the match definition, configuration and current strategies.
+	 * @param aMatch Match definition.
+	 * @param aMatchConfiguration Match configuration.
+	 * @param aAttackingTeamStrategy Current match strategy for the attacking team.
+	 * @param aDefendingTeamStrategy Current match strategy for the defending team.
+	 * @param aHomeTeamAttack Whether the home team is attacking.
+	 * @param aGenerator RNG to use.
+	 * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
+	*/
+	explicit CPlayState(
+		const CMatch& aMatch,
+		const CMatchConfiguration& aMatchConfiguration,
+		const CTeamStrategy& aAttackingTeamStrategy,
+		const CTeamStrategy& aDefendingTeamStrategy,
+		const bool aHomeTeamAttack,
+		std::uniform_random_bit_generator auto& aGenerator
+	) noexcept;
+
 	//! Retrieves the \copybrief mPossessionState
 	const CPossessionState& GetPossessionState() const noexcept;
 
@@ -38,5 +58,120 @@ private:
 	//! Chances states.
 	chances_states mChancesStates;
 };
+
+namespace detail
+{
+
+/**
+ * @brief Draws the chances.
+ * @param aPossessionDrawOutcome Outcome of the possession draw.
+ * @param aMatch Match definition.
+ * @param aMatchConfiguration Match configuration.
+ * @param aAttackingTeamStrategy Current match strategy for the attacking team.
+ * @param aDefendingTeamStrategy Current match strategy for the defending team.
+ * @param aHomeTeamAttack Whether the home team is attacking.
+ * @param aGenerator RNG to use.
+ * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
+*/
+types::CPlayState::chances_states DrawChances(
+	const types::CPossessionDrawConfiguration::E_POSSESSION_DRAW_OUTCOME& aPossessionDrawOutcome,
+	const CMatch& aMatch,
+	const CMatchConfiguration& aMatchConfiguration,
+	const CTeamStrategy& aAttackingTeamStrategy,
+	const CTeamStrategy& aDefendingTeamStrategy,
+	const bool aHomeTeamAttack,
+	std::uniform_random_bit_generator auto& aGenerator
+) noexcept;
+
+/**
+ * @brief Creates the chance sequence.
+ * @param aMatch Match definition.
+ * @param aMatchConfiguration Match configuration.
+ * @param aAttackingTeamStrategy Current match strategy for the attacking team.
+ * @param aDefendingTeamStrategy Current match strategy for the defending team.
+ * @param aHomeTeamAttack Whether the home team is attacking.
+ * @param aIsSetPiece Whether the chance generates from a set piece.
+ * @param aGenerator RNG to use.
+ * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
+ * @post The sequence has at least one chance.
+*/
+types::CPlayState::chances_states CreateChances(
+	const CMatch& aMatch,
+	const CMatchConfiguration& aMatchConfiguration,
+	const CTeamStrategy& aAttackingTeamStrategy,
+	const CTeamStrategy& aDefendingTeamStrategy,
+	const bool aHomeTeamAttack,
+	const bool aIsSetPiece,
+	std::uniform_random_bit_generator auto& aGenerator
+) noexcept;
+
+} // detail namespace
+
+CPlayState::CPlayState(
+	const CMatch& aMatch,
+	const CMatchConfiguration& aMatchConfiguration,
+	const CTeamStrategy& aAttackingTeamStrategy,
+	const CTeamStrategy& aDefendingTeamStrategy,
+	const bool aHomeTeamAttack,
+	std::uniform_random_bit_generator auto& aGenerator
+) noexcept :
+	mPossessionState( aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, aGenerator ),
+	mFoulState( mPossessionState.GetOutcome() == types::CPossessionDrawConfiguration::E_POSSESSION_DRAW_OUTCOME::FOUL ?
+		CFoulState{ aMatchConfiguration, aDefendingTeamStrategy, aGenerator } : optional_foul_state{} ),
+	mChancesStates( mPossessionState.GetOutcome() == types::CPossessionDrawConfiguration::E_POSSESSION_DRAW_OUTCOME::COUNTER_ATTACK ?
+		detail::DrawChances( mPossessionState.GetOutcome(), aMatch, aMatchConfiguration, aDefendingTeamStrategy,
+			aAttackingTeamStrategy, !aHomeTeamAttack, aGenerator ) :
+		detail::DrawChances( mPossessionState.GetOutcome(), aMatch, aMatchConfiguration, aAttackingTeamStrategy,
+			aDefendingTeamStrategy, aHomeTeamAttack, aGenerator ) )
+{
+}
+
+namespace detail
+{
+
+types::CPlayState::chances_states DrawChances(
+	const types::CPossessionDrawConfiguration::E_POSSESSION_DRAW_OUTCOME& aPossessionDrawOutcome,
+	const CMatch& aMatch,
+	const CMatchConfiguration& aMatchConfiguration,
+	const CTeamStrategy& aAttackingTeamStrategy,
+	const CTeamStrategy& aDefendingTeamStrategy,
+	const bool aHomeTeamAttack,
+	std::uniform_random_bit_generator auto& aGenerator
+) noexcept
+{
+	if( aPossessionDrawOutcome != types::CPossessionDrawConfiguration::E_POSSESSION_DRAW_OUTCOME::FOUL )
+	{
+		types::CTacticConfiguration::skill_bonus TkSkill = 0, ShSkill = 0;
+		if( aMatchConfiguration.GetDrawConfiguration().CreateChanceDistribution( ( aDefendingTeamStrategy.ForEachPlayerSkill(
+			E_PLAYER_SKILL::Tk, aMatch, aMatchConfiguration, !aHomeTeamAttack, aAttackingTeamStrategy,
+			[ &TkSkill ]( const auto& aSkill ) { TkSkill += aSkill; } ), TkSkill ),
+			( aAttackingTeamStrategy.ForEachPlayerSkill( E_PLAYER_SKILL::Sh, aMatch, aMatchConfiguration, aHomeTeamAttack, aDefendingTeamStrategy,
+				[ &ShSkill ]( const auto& aSkill ) { ShSkill += aSkill; } ), ShSkill ) )( aGenerator ) )
+			return CreateChances( aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, false, aGenerator );
+	}
+	else if( aMatchConfiguration.GetDrawConfiguration().CreateSetPieceDistribution()( aGenerator ) )
+		return CreateChances( aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, true, aGenerator );
+
+	return {};
+}
+
+types::CPlayState::chances_states CreateChances(
+	const CMatch& aMatch,
+	const CMatchConfiguration& aMatchConfiguration,
+	const CTeamStrategy& aAttackingTeamStrategy,
+	const CTeamStrategy& aDefendingTeamStrategy,
+	const bool aHomeTeamAttack,
+	const bool aIsSetPiece,
+	std::uniform_random_bit_generator auto& aGenerator
+) noexcept
+{
+	using enum types::CGoalDrawConfiguration::E_CHANCE_OUTCOME;
+	types::CPlayState::chances_states result{ CChanceState{ aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, aIsSetPiece, aGenerator } };
+	while( result.back().GetChanceOutcome() == EXTRA_CORNER_FROM_DF || result.back().GetChanceOutcome() == EXTRA_CORNER_FROM_GK )
+		result.emplace_back( aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, types::CChancesDrawConfiguration::E_CHANCE_TYPE::CORNER, aGenerator );
+	return result;
+}
+
+} // detail namespace
 
 } // futsim::football namespace
