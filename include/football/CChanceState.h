@@ -27,22 +27,23 @@ protected:
 public:
 	/**
 	 * @brief Constructor from the match definition, configuration and current strategies.
+	 * @tparam tIsSetPiece Indicates whether the chance is a set piece
 	 * @param aMatch Match definition.
 	 * @param aMatchConfiguration Match configuration.
 	 * @param aAttackingTeamStrategy Current match strategy for the attacking team.
 	 * @param aDefendingTeamStrategy Current match strategy for the defending team.
 	 * @param aHomeTeamAttack Whether the home team is attacking.
-	 * @param aIsSetPiece Whether the chance generates from a set piece.
 	 * @param aGenerator RNG to use.
 	 * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
 	*/
+	template<typename tIsSetPiece> requires std::same_as<tIsSetPiece, std::true_type> || std::same_as<tIsSetPiece, std::false_type>
 	explicit CChanceState(
+		const tIsSetPiece&,
 		const CMatch& aMatch,
 		const CMatchConfiguration& aMatchConfiguration,
 		const CTeamStrategy& aAttackingTeamStrategy,
 		const CTeamStrategy& aDefendingTeamStrategy,
 		const bool aHomeTeamAttack,
-		const bool aIsSetPiece,
 		std::uniform_random_bit_generator auto& aGenerator
 	);
 
@@ -159,17 +160,18 @@ template <> inline constexpr std::string_view CChanceState::JSON_ACTOR<E_PLAYER_
 //! JSON key for the \copybrief mShooter
 template <> inline constexpr std::string_view CChanceState::JSON_ACTOR<E_PLAYER_SKILL::Sh> = "Shooter";
 
+template <typename tIsSetPiece> requires std::same_as<tIsSetPiece, std::true_type> || std::same_as<tIsSetPiece, std::false_type>
 CChanceState::CChanceState(
+	const tIsSetPiece&,
 	const CMatch& aMatch,
 	const CMatchConfiguration& aMatchConfiguration,
 	const CTeamStrategy& aAttackingTeamStrategy,
 	const CTeamStrategy& aDefendingTeamStrategy,
 	const bool aHomeTeamAttack,
-	const bool aIsSetPiece,
 	std::uniform_random_bit_generator auto& aGenerator
 ) :
 	CChanceState( aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack,
-		aIsSetPiece ? chance_type{ aMatchConfiguration.GetDrawConfiguration().CreateSetPieceTypeDistribution()( aGenerator ) } :
+		tIsSetPiece() ? chance_type{ aMatchConfiguration.GetDrawConfiguration().CreateSetPieceTypeDistribution()( aGenerator ) } :
 		chance_type{ aMatchConfiguration.GetDrawConfiguration().CreateChanceTypeDistribution()( aGenerator ) }, aGenerator )
 {
 }

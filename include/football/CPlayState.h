@@ -97,23 +97,23 @@ types::CPlayState::chances_states DrawChances(
 
 /**
  * @brief Creates the chance sequence.
+ * @tparam tIsSetPiece Whether the chance generates from a set piece.
  * @param aMatch Match definition.
  * @param aMatchConfiguration Match configuration.
  * @param aAttackingTeamStrategy Current match strategy for the attacking team.
  * @param aDefendingTeamStrategy Current match strategy for the defending team.
  * @param aHomeTeamAttack Whether the home team is attacking.
- * @param aIsSetPiece Whether the chance generates from a set piece.
  * @param aGenerator RNG to use.
  * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
  * @post The sequence has at least one chance.
 */
+template <typename tIsSetPiece>
 types::CPlayState::chances_states CreateChances(
 	const CMatch& aMatch,
 	const CMatchConfiguration& aMatchConfiguration,
 	const CTeamStrategy& aAttackingTeamStrategy,
 	const CTeamStrategy& aDefendingTeamStrategy,
 	const bool aHomeTeamAttack,
-	const bool aIsSetPiece,
 	std::uniform_random_bit_generator auto& aGenerator
 ) noexcept;
 
@@ -159,26 +159,26 @@ types::CPlayState::chances_states DrawChances(
 			[ &TkSkill ]( const auto& aSkill ) { TkSkill += aSkill; } ), TkSkill ),
 			( aAttackingTeamStrategy.ForEachPlayerSkill( E_PLAYER_SKILL::Sh, aMatch, aMatchConfiguration, aHomeTeamAttack, aDefendingTeamStrategy,
 				[ &ShSkill ]( const auto& aSkill ) { ShSkill += aSkill; } ), ShSkill ) )( aGenerator ) )
-			return CreateChances( aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, false, aGenerator );
+			return CreateChances<std::false_type>( aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, aGenerator );
 	}
 	else if( aMatchConfiguration.GetDrawConfiguration().CreateSetPieceDistribution()( aGenerator ) )
-		return CreateChances( aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, true, aGenerator );
+		return CreateChances<std::true_type>( aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, aGenerator );
 
 	return {};
 }
 
+template <typename tIsSetPiece>
 types::CPlayState::chances_states CreateChances(
 	const CMatch& aMatch,
 	const CMatchConfiguration& aMatchConfiguration,
 	const CTeamStrategy& aAttackingTeamStrategy,
 	const CTeamStrategy& aDefendingTeamStrategy,
 	const bool aHomeTeamAttack,
-	const bool aIsSetPiece,
 	std::uniform_random_bit_generator auto& aGenerator
 ) noexcept
 {
 	using enum types::CGoalDrawConfiguration::E_CHANCE_OUTCOME;
-	types::CPlayState::chances_states result{ CChanceState{ aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, aIsSetPiece, aGenerator } };
+	types::CPlayState::chances_states result{ CChanceState{ tIsSetPiece{}, aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, aGenerator } };
 	while( result.back().GetChanceOutcome() == EXTRA_CORNER_FROM_DF || result.back().GetChanceOutcome() == EXTRA_CORNER_FROM_GK )
 		result.emplace_back( aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, types::CChancesDrawConfiguration::E_CHANCE_TYPE::CORNER, aGenerator );
 	return result;
