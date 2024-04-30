@@ -36,7 +36,7 @@ public:
 	 * @param aGenerator RNG to use.
 	 * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
 	*/
-	template<typename tIsSetPiece>
+	template<typename tIsSetPiece> requires std::same_as<tIsSetPiece, std::true_type> || std::same_as<tIsSetPiece, std::false_type>
 	explicit CChanceState(
 		const tIsSetPiece&,
 		const CMatch& aMatch,
@@ -160,7 +160,7 @@ template <> inline constexpr std::string_view CChanceState::JSON_ACTOR<E_PLAYER_
 //! JSON key for the \copybrief mShooter
 template <> inline constexpr std::string_view CChanceState::JSON_ACTOR<E_PLAYER_SKILL::Sh> = "Shooter";
 
-template <typename tIsSetPiece>
+template <typename tIsSetPiece> requires std::same_as<tIsSetPiece, std::true_type> || std::same_as<tIsSetPiece, std::false_type>
 CChanceState::CChanceState(
 	const tIsSetPiece&,
 	const CMatch& aMatch,
@@ -171,7 +171,7 @@ CChanceState::CChanceState(
 	std::uniform_random_bit_generator auto& aGenerator
 ) :
 	CChanceState( aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack,
-		tIsSetPiece::value ? chance_type{ aMatchConfiguration.GetDrawConfiguration().CreateSetPieceTypeDistribution()( aGenerator ) } :
+		tIsSetPiece() ? chance_type{ aMatchConfiguration.GetDrawConfiguration().CreateSetPieceTypeDistribution()( aGenerator ) } :
 		chance_type{ aMatchConfiguration.GetDrawConfiguration().CreateChanceTypeDistribution()( aGenerator ) }, aGenerator )
 {
 }
