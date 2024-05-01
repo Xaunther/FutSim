@@ -2,6 +2,10 @@
 
 #include "IJsonable.h"
 
+#include "types/CPeriodState.h"
+
+#include "football/CPlayState.h"
+
 namespace futsim::football
 {
 
@@ -10,6 +14,15 @@ namespace futsim::football
 */
 class CPeriodState : public IJsonable
 {
+protected:
+	using plays = types::CPeriodState::plays;
+
+public:
+	const plays& GetPlays() const noexcept;
+
+private:
+	//! Plays of the period.
+	plays mPlays;
 };
 
 } // futsim::football namespace
