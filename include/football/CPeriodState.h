@@ -37,6 +37,13 @@ public:
 		std::uniform_random_bit_generator auto& aGenerator
 	);
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	const plays& GetPlays() const noexcept;
 
 private:
@@ -64,6 +71,15 @@ private:
 	*/
 	bool IsHomeTeamAttackNext() const;
 
+public:
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Period state";
+	//! JSON key for the \copybrief mPlays
+	static inline constexpr std::string_view JSON_PLAYS = "Plays";
+	//! JSON key to indicate if the play corresponds to the home team.
+	static inline constexpr std::string_view JSON_HOME_TEAM_PLAY = "Home team play";
+
+private:
 	//! Plays of the period.
 	plays mPlays;
 };
