@@ -60,6 +60,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/types/CLineup.h
 	include/football/types/CLineupConfiguration.h
 	include/football/types/CMatchConfiguration.h
+	include/football/types/CMatchState.h
 	include/football/types/CPenaltyShootoutConfiguration.h
 	include/football/types/CPenaltyShootoutState.h
 	include/football/types/CPeriodState.h
