@@ -32,6 +32,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CMatchConfiguration.h
 	include/football/CTeamStrategy.h
 	include/football/CPenaltyShootoutConfiguration.h
+	include/football/CPeriodState.h
 	include/football/CPlayer.h
 	include/football/CPlayerSkills.h
 	include/football/CPlayState.h
@@ -91,6 +92,7 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CMatchConfiguration.cpp
 	src/football/CTeamStrategy.cpp
 	src/football/CPenaltyShootoutConfiguration.cpp
+	src/football/CPeriodState.cpp
 	src/football/CPlayerSkills.cpp
 	src/football/CPlayer.cpp
 	src/football/CPlayState.cpp
