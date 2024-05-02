@@ -102,9 +102,7 @@ CTeamStrategy::skill_bonus CTeamStrategy::CalculateEffectivePlayerSkill( const s
 	const auto& tacticConfiguration = aMatchConfiguration.GetTacticsConfiguration().GetTacticConfigurations().at( aTacticID.data() );
 	return football::CalculateEffectivePlayerSkill( team, aPlayer, aPlayerSkill, tacticConfiguration.GetSkillBonus( aPlayerPosition, aPlayerSkill ),
 		CalculateGlobalSkillBonus( aMatch.GetStadium().GetAmbientFactor(), aMatchConfiguration,
-			team.GetSupportFactor(), tacticConfiguration, aIsHomeTeam, aOtherStrategy )
-		* team.GetPlayer( aPlayer ).GetPlayerSkills().GetSkill( aPlayerSkill )
-		* tacticConfiguration.GetSkillBonus( aPlayerPosition, aPlayerSkill ) );
+			team.GetSupportFactor(), tacticConfiguration, aIsHomeTeam, aOtherStrategy ) );
 }
 
 void CTeamStrategy::ForEachPlayerSkill( const E_PLAYER_SKILL& aPlayerSkill, const CMatch& aMatch,
