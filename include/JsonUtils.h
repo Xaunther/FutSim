@@ -256,7 +256,7 @@ inline void AddArrayToJSON( is_json_type auto& aJSON, const auto& aContainer, au
 	{
 		decltype( arrayJSON ) elementJSON;
 		AddToJSON( elementJSON, element, std::forward<decltype( aArgs )>( aArgs )... );
-		arrayJSON.push_back( elementJSON );
+		arrayJSON.push_back( std::move( elementJSON ) );
 	}
 	AddToJSON( aJSON, arrayJSON );
 }
@@ -268,7 +268,7 @@ inline void AddKeyArrayToJSON( is_json_type auto& aJSON, const auto& aContainer,
 	{
 		decltype( arrayJSON ) elementJSON;
 		AddToJSONKey( elementJSON, element, std::forward<decltype( aArgs )>( aArgs )... );
-		arrayJSON.push_back( elementJSON );
+		arrayJSON.push_back( std::move( elementJSON ) );
 	}
 	AddToJSON( aJSON, arrayJSON );
 }
