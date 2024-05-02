@@ -43,9 +43,9 @@ std::vector<std::string> TPeriodState::ObtainedResults() const noexcept
 	const CTeamStrategy awayTeamStrategy{ "N", homeTeamStrategy.GetLineup() };
 
 	for( const auto& periodState : {
-		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 100 }, "Michael Oliver" },
+		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
 			CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, true, rng },
-		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 100 }, "Michael Oliver" },
+		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
 			CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, false, rng },
 		} )
 	{
