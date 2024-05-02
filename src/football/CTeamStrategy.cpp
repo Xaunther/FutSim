@@ -61,6 +61,10 @@ template <E_PLAYER_POSITION tPlayerPosition> auto CreatePlayersView( const CLine
 
 } // anonymous namespace
 
+//! Macro to call football::ForEachPlayerSkill function
+#define CALL_FOR_EACH_PLAYER_SKILL(name, id, ... ) \
+	football::ForEachPlayerSkill<E_PLAYER_POSITION::name>( __VA_ARGS__ ); \
+
 CTeamStrategy::CTeamStrategy(
 	const std::string_view aTacticID,
 	const CLineup& aLineup
@@ -114,12 +118,7 @@ void CTeamStrategy::ForEachPlayerSkill( const E_PLAYER_SKILL& aPlayerSkill, cons
 	const auto& globalSkillBonus = CalculateGlobalSkillBonus( aMatch.GetStadium().GetAmbientFactor(), aMatchConfiguration,
 		team.GetSupportFactor(), tacticConfiguration, aIsHomeTeam, aOtherStrategy );
 
-	football::ForEachPlayerSkill<E_PLAYER_POSITION::GK>( aPlayerSkill, team, mLineup, tacticConfiguration, globalSkillBonus, aPredicate );
-	football::ForEachPlayerSkill<E_PLAYER_POSITION::DF>( aPlayerSkill, team, mLineup, tacticConfiguration, globalSkillBonus, aPredicate );
-	football::ForEachPlayerSkill<E_PLAYER_POSITION::DM>( aPlayerSkill, team, mLineup, tacticConfiguration, globalSkillBonus, aPredicate );
-	football::ForEachPlayerSkill<E_PLAYER_POSITION::MF>( aPlayerSkill, team, mLineup, tacticConfiguration, globalSkillBonus, aPredicate );
-	football::ForEachPlayerSkill<E_PLAYER_POSITION::AM>( aPlayerSkill, team, mLineup, tacticConfiguration, globalSkillBonus, aPredicate );
-	football::ForEachPlayerSkill<E_PLAYER_POSITION::FW>( aPlayerSkill, team, mLineup, tacticConfiguration, globalSkillBonus, aPredicate );
+	FOR_EACH_PLAYER_POSITION( CALL_FOR_EACH_PLAYER_SKILL, aPlayerSkill, team, mLineup, tacticConfiguration, globalSkillBonus, aPredicate );
 }
 
 namespace
