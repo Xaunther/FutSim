@@ -68,6 +68,15 @@ public:
 		const bool aIsHomeTeam, const std::string_view aTacticID, const CTeamStrategy& aOtherStrategy );
 
 	/**
+	 * @brief Calculates the ambient factor
+	 * @param aMatch Match definition.
+	 * @param aMatchConfiguration Match configuration.
+	 * @param aIsHomeTeam Whether the team is the home team.
+	*/
+	static skill_bonus CalculateAmbientFactor( const CMatch& aMatch, const CMatchConfiguration& aMatchConfiguration,
+		const bool aIsHomeTeam );
+
+	/**
 	 * @brief Applies the given predicate to the effective skill of each player.
 	 * @param aPlayerSkill Player skill to consider.
 	 * @param aMatch Match definition.

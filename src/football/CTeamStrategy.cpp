@@ -109,6 +109,13 @@ CTeamStrategy::skill_bonus CTeamStrategy::CalculateEffectivePlayerSkill( const s
 			team.GetSupportFactor(), tacticConfiguration, aIsHomeTeam, aOtherStrategy ) );
 }
 
+CTeamStrategy::skill_bonus CTeamStrategy::CalculateAmbientFactor( const CMatch& aMatch, const CMatchConfiguration& aMatchConfiguration,
+	const bool aIsHomeTeam )
+{
+	return aMatchConfiguration.AppliesAmbientFactor() && aIsHomeTeam ?
+		aMatch.GetHomeTeam().GetSupportFactor() * aMatch.GetStadium().GetAmbientFactor() : 1;
+}
+
 void CTeamStrategy::ForEachPlayerSkill( const E_PLAYER_SKILL& aPlayerSkill, const CMatch& aMatch,
 	const CMatchConfiguration& aMatchConfiguration, const bool aIsHomeTeam,
 	const CTeamStrategy& aOtherStrategy, const std::function<void( const skill_bonus& )>& aPredicate ) const
