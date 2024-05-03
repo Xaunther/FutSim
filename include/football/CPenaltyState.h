@@ -35,6 +35,13 @@ public:
 		std::uniform_random_bit_generator auto& aGenerator
 	);
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mStopper
 	const futsim::types::CPerson::name_type& GetGoalkeeper() const noexcept;
 
@@ -43,6 +50,21 @@ public:
 
 	//! @copydoc CChanceState::GetChanceOutcome
 	const E_CHANCE_OUTCOME& GetChanceOutcome() const noexcept;
+
+public:
+	/**
+	 * @brief Adds the class to JSON object.
+	 */
+	void ToJSON( json& aJSON ) const noexcept;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Penalty state";
+	//! JSON key for the \copybrief mOutcome
+	static inline constexpr std::string_view JSON_OUTCOME = CChanceState::JSON_OUTCOME;
+	//! JSON key for the \copybrief mShooter
+	static inline constexpr std::string_view JSON_SHOOTER = CChanceState::JSON_ACTOR<E_PLAYER_SKILL::Sh>;
+	//! JSON key for the \copybrief mStopper
+	static inline constexpr std::string_view JSON_STOPPER = CChanceState::JSON_ACTOR<E_PLAYER_SKILL::St>;
 };
 
 CPenaltyState::CPenaltyState(
@@ -57,7 +79,7 @@ CPenaltyState::CPenaltyState(
 		aMatchConfiguration.GetDrawConfiguration().CreatePenaltyOutcomeDistribution(
 			aGoalkeeper.GetPlayerSkills().GetSkill( E_PLAYER_SKILL::St )* CTeamStrategy::CalculateAmbientFactor( aMatch, aMatchConfiguration, !aHomeTeamShoot ),
 			aShooter.GetPlayerSkills().GetSkill( E_PLAYER_SKILL::Sh )* CTeamStrategy::CalculateAmbientFactor( aMatch, aMatchConfiguration, aHomeTeamShoot ) )( aGenerator ),
-		aGoalkeeper.GetKnownName(), {}, {}, aShooter.GetKnownName() )
+		aGoalkeeper.GetKnownName().data(), {}, {}, aShooter.GetKnownName().data() )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the penalty state." )
