@@ -17,6 +17,23 @@ namespace futsim::football
 #define EXPLICIT_INSTANTIATE_JSON_ACTOR(name, ... ) \
 	template void CChanceState::JSONActor<E_PLAYER_SKILL::name>( json& ) const noexcept; \
 
+CChanceState::CChanceState(
+	const chance_type& aChanceType,
+	const E_CHANCE_OUTCOME& aOutcome,
+	const optional_name& aStopper,
+	const optional_name& aTackler,
+	const optional_name& aPasser,
+	const optional_name& aShooter
+) noexcept :
+	mChanceType( aChanceType ),
+	mOutcome( aOutcome ),
+	mStopper( aStopper ),
+	mTackler( aTackler ),
+	mPasser( aPasser ),
+	mShooter( aShooter )
+{
+}
+
 void CChanceState::JSON( json& aJSON ) const noexcept
 {
 	std::visit( [ &aJSON ]( auto&& aChanceType ) { AddToJSONKey( aJSON, aChanceType, JSON_CHANCE_TYPE ); }, mChanceType );

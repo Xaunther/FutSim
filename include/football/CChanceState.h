@@ -70,6 +70,24 @@ public:
 
 protected:
 	/**
+	 * @brief Member constructor.
+	 * @param aChanceType \ref mChanceType
+	 * @param aOutcome \ref mOutcome
+	 * @param aStopper \ref mChanceType
+	 * @param aTackler \ref mChanceType
+	 * @param aPasser \ref mChanceType
+	 * @param aShooter \ref mChanceType
+	*/
+	explicit CChanceState(
+		const chance_type& aChanceType,
+		const E_CHANCE_OUTCOME& aOutcome,
+		const optional_name& aStopper = {},
+		const optional_name& aTackler = {},
+		const optional_name& aPasser = {},
+		const optional_name& aShooter = {}
+	) noexcept;
+
+	/**
 	 * @copydoc IJsonable::ToJSON
 	*/
 	void JSON( json& aJSON ) const noexcept override;
