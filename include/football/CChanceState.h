@@ -70,6 +70,24 @@ public:
 
 protected:
 	/**
+	 * @brief Member constructor.
+	 * @param aChanceType \ref mChanceType
+	 * @param aOutcome \ref mOutcome
+	 * @param aStopper \ref mChanceType
+	 * @param aTackler \ref mChanceType
+	 * @param aPasser \ref mChanceType
+	 * @param aShooter \ref mChanceType
+	*/
+	explicit CChanceState(
+		const chance_type& aChanceType,
+		const E_CHANCE_OUTCOME& aOutcome,
+		const optional_name& aStopper = {},
+		const optional_name& aTackler = {},
+		const optional_name& aPasser = {},
+		const optional_name& aShooter = {}
+	) noexcept;
+
+	/**
 	 * @copydoc IJsonable::ToJSON
 	*/
 	void JSON( json& aJSON ) const noexcept override;
@@ -87,16 +105,17 @@ public:
 	*/
 	template <E_PLAYER_SKILL tPlayerSkill> const optional_name& GetActor() const noexcept;
 
-private:
-	//! \copydoc GetActor
-	template <E_PLAYER_SKILL tPlayerSkill> optional_name& Actor() noexcept;
-
+protected:
 	/**
 	 * @brief Adds an actor to the JSON object.
 	 * @tparam tPlayerSkill Skill used by the actor.
 	 * @param aJSON JSON object.
 	*/
 	template <E_PLAYER_SKILL tPlayerSkill> void JSONActor( json& aJSON ) const noexcept;
+
+private:
+	//! \copydoc GetActor
+	template <E_PLAYER_SKILL tPlayerSkill> optional_name& Actor() noexcept;
 
 public:
 	//! JSON key for the class.

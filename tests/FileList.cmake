@@ -21,6 +21,7 @@ SET(FUTSIM_TESTS_UNIT_FOOTBALL_SOURCE
 	unit/football/TMatchConfiguration.cpp
 	unit/football/TTeamStrategy.cpp
 	unit/football/TPenaltyShootoutConfiguration.cpp
+	unit/football/TPenaltyState.cpp
 	unit/football/TPeriodState.cpp
 	unit/football/TPlayer.cpp
 	unit/football/TPlayerSkills.cpp
