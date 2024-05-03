@@ -122,7 +122,7 @@ public:
 	static inline constexpr std::string_view JSON_KEY = "Chance state";
 	//! JSON key for the \copybrief mChanceType
 	static inline constexpr std::string_view JSON_CHANCE_TYPE = "Chance type";
-	//! JSON key for the \copybrief mChanceType
+	//! JSON key for the \copybrief mOutcome
 	static inline constexpr std::string_view JSON_OUTCOME = "Outcome";
 	/**
 	 * @brief JSON key template for the actor.
