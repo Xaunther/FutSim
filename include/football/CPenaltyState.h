@@ -34,6 +34,15 @@ public:
 		const bool aHomeTeamShoot,
 		std::uniform_random_bit_generator auto& aGenerator
 	);
+
+	//! Retrieves the \copybrief mStopper
+	const futsim::types::CPerson::name_type& GetGoalkeeper() const noexcept;
+
+	//! Retrieves the \copybrief mShooter
+	const futsim::types::CPerson::name_type& GetShooter() const noexcept;
+
+	//! @copydoc CChanceState::GetChanceOutcome
+	const E_CHANCE_OUTCOME& GetChanceOutcome() const noexcept;
 };
 
 CPenaltyState::CPenaltyState(
