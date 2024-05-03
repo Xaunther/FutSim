@@ -14,16 +14,13 @@ namespace
 
 /**
  * @brief Calculates the effective player skill.
- * @param aAmbientFactor Stadium ambient factor
+ * @param aAmbientFactor Total ambient factor
  * @param aMatchConfiguration Match configuration
- * @param aSupportFactor Fan support factor.
  * @param aTacticConfiguration Tactic configuration.
- * @param aIsHomeTeam Whether the team is the home team.
  * @param aOtherStrategy Rival team's strategy.
 */
-types::CTacticConfiguration::skill_bonus CalculateGlobalSkillBonus( const types::CStadium::ambient_factor& aAmbientFactor,
-	const CMatchConfiguration& aMatchConfiguration, const types::CTeam::support_factor& aSupportFactor,
-	const CTacticConfiguration& aTacticConfiguration, const bool aIsHomeTeam, const CTeamStrategy& aOtherStrategy );
+types::CTacticConfiguration::skill_bonus CalculateGlobalSkillBonus( const types::CTacticConfiguration::skill_bonus& aAmbientFactor,
+	const CMatchConfiguration& aMatchConfiguration, const CTacticConfiguration& aTacticConfiguration, const CTeamStrategy& aOtherStrategy );
 
 /**
  * @brief Calculates the effective player skill.
@@ -105,8 +102,15 @@ CTeamStrategy::skill_bonus CTeamStrategy::CalculateEffectivePlayerSkill( const s
 	const auto& team = aIsHomeTeam ? aMatch.GetHomeTeam() : aMatch.GetAwayTeam();
 	const auto& tacticConfiguration = aMatchConfiguration.GetTacticsConfiguration().GetTacticConfigurations().at( aTacticID.data() );
 	return football::CalculateEffectivePlayerSkill( team, aPlayer, aPlayerSkill, tacticConfiguration.GetSkillBonus( aPlayerPosition, aPlayerSkill ),
-		CalculateGlobalSkillBonus( aMatch.GetStadium().GetAmbientFactor(), aMatchConfiguration,
-			team.GetSupportFactor(), tacticConfiguration, aIsHomeTeam, aOtherStrategy ) );
+		CalculateGlobalSkillBonus( CalculateAmbientFactor( aMatch, aMatchConfiguration, aIsHomeTeam ),
+			aMatchConfiguration, tacticConfiguration, aOtherStrategy ) );
+}
+
+CTeamStrategy::skill_bonus CTeamStrategy::CalculateAmbientFactor( const CMatch& aMatch, const CMatchConfiguration& aMatchConfiguration,
+	const bool aIsHomeTeam )
+{
+	return aMatchConfiguration.AppliesAmbientFactor() && aIsHomeTeam ?
+		aMatch.GetHomeTeam().GetSupportFactor() * aMatch.GetStadium().GetAmbientFactor() : 1;
 }
 
 void CTeamStrategy::ForEachPlayerSkill( const E_PLAYER_SKILL& aPlayerSkill, const CMatch& aMatch,
@@ -115,8 +119,8 @@ void CTeamStrategy::ForEachPlayerSkill( const E_PLAYER_SKILL& aPlayerSkill, cons
 {
 	const auto& team = aIsHomeTeam ? aMatch.GetHomeTeam() : aMatch.GetAwayTeam();
 	const auto& tacticConfiguration = aMatchConfiguration.GetTacticsConfiguration().GetTacticConfigurations().at( mTacticID );
-	const auto& globalSkillBonus = CalculateGlobalSkillBonus( aMatch.GetStadium().GetAmbientFactor(), aMatchConfiguration,
-		team.GetSupportFactor(), tacticConfiguration, aIsHomeTeam, aOtherStrategy );
+	const auto& globalSkillBonus = CalculateGlobalSkillBonus( CalculateAmbientFactor( aMatch, aMatchConfiguration, aIsHomeTeam ),
+		aMatchConfiguration, tacticConfiguration, aOtherStrategy );
 
 	FOR_EACH_PLAYER_POSITION( CALL_FOR_EACH_PLAYER_SKILL, aPlayerSkill, team, mLineup, tacticConfiguration, globalSkillBonus, aPredicate );
 }
@@ -124,13 +128,11 @@ void CTeamStrategy::ForEachPlayerSkill( const E_PLAYER_SKILL& aPlayerSkill, cons
 namespace
 {
 
-types::CTacticConfiguration::skill_bonus CalculateGlobalSkillBonus( const types::CStadium::ambient_factor& aAmbientFactor,
-	const CMatchConfiguration& aMatchConfiguration, const types::CTeam::support_factor& aSupportFactor,
-	const CTacticConfiguration& aTacticConfiguration, const bool aIsHomeTeam, const CTeamStrategy& aOtherStrategy )
+types::CTacticConfiguration::skill_bonus CalculateGlobalSkillBonus( const types::CTacticConfiguration::skill_bonus& aAmbientFactor,
+	const CMatchConfiguration& aMatchConfiguration, const CTacticConfiguration& aTacticConfiguration, const CTeamStrategy& aOtherStrategy )
 {
-	return ( aMatchConfiguration.AppliesAmbientFactor() && aIsHomeTeam ? aSupportFactor * aAmbientFactor : 1 )
-		* ( aTacticConfiguration.GetFavourableTactics().contains( aOtherStrategy.GetTacticID().data() ) ?
-			aMatchConfiguration.GetTacticsConfiguration().GetFavourableTacticSkillBonus() : 1 );
+	return aAmbientFactor * ( aTacticConfiguration.GetFavourableTactics().contains( aOtherStrategy.GetTacticID().data() ) ?
+		aMatchConfiguration.GetTacticsConfiguration().GetFavourableTacticSkillBonus() : 1 );
 }
 
 types::CTacticConfiguration::skill_bonus CalculateEffectivePlayerSkill( const CTeam& aTeam, const std::string_view aPlayer,

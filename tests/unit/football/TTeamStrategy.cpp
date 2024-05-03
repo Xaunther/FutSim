@@ -79,6 +79,9 @@ std::vector<std::string> TTeamStrategy::ObtainedResults() const noexcept
 			[ &result ]( const auto& aSkill ) { result.push_back( std::to_string( aSkill ) ); } );
 		awayTeamStrategy.ForEachPlayerSkill( E_PLAYER_SKILL::Tk, match, CMatchConfiguration{}, false, homeTeamStrategy,
 			[ &result ]( const auto& aSkill ) { result.push_back( std::to_string( aSkill ) ); } );
+
+		result.push_back( "Home team ambient factor: " + std::to_string( CTeamStrategy::CalculateAmbientFactor( match, CMatchConfiguration{}, true ) ) );
+		result.push_back( "Away team ambient factor: " + std::to_string( CTeamStrategy::CalculateAmbientFactor( match, CMatchConfiguration{}, false ) ) );
 	}
 
 	return result;
@@ -155,7 +158,10 @@ std::vector<std::string> TTeamStrategy::ExpectedResults() const noexcept
 		"0.880000",
 		// Base * 1.1 * 1 * 1 * (6/10)
 		"0.660000",
-		"0.660000"
+		"0.660000",
+		// Ambient factors
+		"Home team ambient factor: 1.320000",
+		"Away team ambient factor: 1.000000"
 		} );
 	return result;
 }
