@@ -105,16 +105,17 @@ public:
 	*/
 	template <E_PLAYER_SKILL tPlayerSkill> const optional_name& GetActor() const noexcept;
 
-private:
-	//! \copydoc GetActor
-	template <E_PLAYER_SKILL tPlayerSkill> optional_name& Actor() noexcept;
-
+protected:
 	/**
 	 * @brief Adds an actor to the JSON object.
 	 * @tparam tPlayerSkill Skill used by the actor.
 	 * @param aJSON JSON object.
 	*/
 	template <E_PLAYER_SKILL tPlayerSkill> void JSONActor( json& aJSON ) const noexcept;
+
+private:
+	//! \copydoc GetActor
+	template <E_PLAYER_SKILL tPlayerSkill> optional_name& Actor() noexcept;
 
 public:
 	//! JSON key for the class.
