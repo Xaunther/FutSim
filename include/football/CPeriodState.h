@@ -44,6 +44,7 @@ protected:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
+	//! Retrieves the \copybrief mPlays
 	const plays& GetPlays() const noexcept;
 
 private:
