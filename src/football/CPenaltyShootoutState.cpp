@@ -54,11 +54,11 @@ const CPenaltyShootoutState::penalty_states& CPenaltyShootoutState::GetPenalties
 
 void CPenaltyShootoutState::JSON( json& aJSON ) const noexcept
 {
-	for( auto& JSONPenalties = aJSON[ JSON_PENALTIES ]; const auto & penaltyPair : mPenalties )
+	for( auto& JSONPenalties = aJSON[ JSON_PENALTIES ]; const auto & penalty : mPenalties )
 	{
 		json elementJSON;
-		AddToJSONKey( elementJSON, penaltyPair.first, JSON_HOME_TEAM_PENALTY );
-		AddToJSON( elementJSON, penaltyPair.second );
+		AddToJSONKey( elementJSON, penalty.homeTeam, JSON_HOME_TEAM_PENALTY );
+		AddToJSON( elementJSON, penalty.state );
 		JSONPenalties.push_back( std::move( elementJSON ) );
 	}
 }
@@ -67,7 +67,7 @@ template <bool tHomeTeam> void CPenaltyShootoutState::PushPenaltyState( CPenalty
 	detail::shooters::const_iterator& aShooterIt, const detail::shooters& aShooters, score& aScore ) noexcept
 {
 	mPenalties.emplace_back( tHomeTeam, std::move( aPenaltyState ) );
-	if( mPenalties.back().second.GetChanceOutcome() == types::CGoalDrawConfiguration::E_CHANCE_OUTCOME::GOAL )
+	if( mPenalties.back().state.GetChanceOutcome() == types::CGoalDrawConfiguration::E_CHANCE_OUTCOME::GOAL )
 		aScore.Add<tHomeTeam>();
 	else
 		aScore.Add<!tHomeTeam>();
