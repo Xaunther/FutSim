@@ -55,6 +55,28 @@ void TPenaltyShootoutState::TestExceptions() const
 std::vector<std::string> TPenaltyShootoutState::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
+
+	std::mt19937 rng{ 1234 };
+
+	for( const auto& penaltyShootoutState : {
+		CPenaltyShootoutState{ CMatch{ TEAM, TEAM, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
+				CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{},
+						CTieCondition{ 0 }, {}, CPenaltyShootoutConfiguration{ E_PENALTY_SEQUENCE::AB, 5 } },
+				HOME_STRATEGY, AWAY_STRATEGY, true, rng },
+		CPenaltyShootoutState{ CMatch{ TEAM, TEAM, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
+				CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{},
+						CTieCondition{ 0 }, {}, CPenaltyShootoutConfiguration{ E_PENALTY_SEQUENCE::ABBA, 15 } },
+				HOME_STRATEGY, AWAY_STRATEGY, false, rng },
+		} )
+	{
+		result.push_back( std::string{ CPenaltyShootoutState::JSON_PENALTIES } + ": "
+			+ std::to_string( penaltyShootoutState.GetPenalties().size() ) );
+
+		futsim::types::IJsonable::json outputJSON;
+		AddToJSONKey( outputJSON, penaltyShootoutState );
+		result.push_back( outputJSON.dump( 1, '\t' ) );
+	}
+
 	return PRINT_OUTPUT ? result : std::vector<std::string>{};
 }
 
