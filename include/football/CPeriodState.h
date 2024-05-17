@@ -49,23 +49,11 @@ public:
 
 private:
 	/**
-	 * @brief Constructor from the match definition, configuration and current strategies.
-	 * @param aMatch Match definition.
-	 * @param aMatchConfiguration Match configuration.
-	 * @param aAttackingTeamStrategy Current match strategy for the attacking team.
-	 * @param aDefendingTeamStrategy Current match strategy for the defending team.
+	 * @brief Adds a play to the plays of the period
+	 * @param aPlayState Play to add.
 	 * @param aHomeTeamAttack Whether the home team is attacking.
-	 * @param aGenerator RNG to use.
-	 * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
 	*/
-	void Play(
-		const CMatch& aMatch,
-		const CMatchConfiguration& aMatchConfiguration,
-		const CTeamStrategy& aAttackingTeamStrategy,
-		const CTeamStrategy& aDefendingTeamStrategy,
-		const bool aHomeTeamAttack,
-		std::uniform_random_bit_generator auto& aGenerator
-	);
+	void PushPlayState( CPlayState&& aPlayState, const bool aHomeTeamAttack ) noexcept;
 
 	/**
 	 * @brief Returns whether the home team is starting the next attack.
@@ -99,26 +87,13 @@ CPeriodState::CPeriodState(
 	for( futsim::types::CPlayTime::period_time time = 0; time < aMatchConfiguration.GetPlayTime().GetPeriodTime(); ++time )
 	{
 		if( aHomeTeamAttack )
-			Play( aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aHomeTeamAttack, aGenerator );
+			PushPlayState( CPlayState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
+				aHomeTeamAttack, aGenerator }, aHomeTeamAttack );
 		else
-			Play( aMatch, aMatchConfiguration, aAwayTeamStrategy, aHomeTeamStrategy, aHomeTeamAttack, aGenerator );
+			PushPlayState( CPlayState{ aMatch, aMatchConfiguration, aAwayTeamStrategy, aHomeTeamStrategy,
+				aHomeTeamAttack, aGenerator }, aHomeTeamAttack );
 		aHomeTeamAttack = IsHomeTeamAttackNext();
 	}
-}
-
-void CPeriodState::Play(
-	const CMatch& aMatch,
-	const CMatchConfiguration& aMatchConfiguration,
-	const CTeamStrategy& aAttackingTeamStrategy,
-	const CTeamStrategy& aDefendingTeamStrategy,
-	const bool aHomeTeamAttack,
-	std::uniform_random_bit_generator auto& aGenerator
-)
-{
-	CPlayState playState{ aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, aGenerator };
-	auto homeTeamPlay = playState.GetPossessionState().GetOutcome() == types::CPossessionDrawConfiguration::E_POSSESSION_DRAW_OUTCOME::COUNTER_ATTACK ?
-		!aHomeTeamAttack : aHomeTeamAttack;
-	mPlays.emplace_back( homeTeamPlay, std::move( playState ) );
 }
 
 } // futsim::football namespace
