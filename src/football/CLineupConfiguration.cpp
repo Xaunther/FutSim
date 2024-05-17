@@ -35,7 +35,7 @@ void CheckLineupPosition( const types::CLineup::names::size_type& aPositionCount
  * @param aRangeDescription Range description to add to the error message.
 */
 void CheckMaxLineupPosition( const types::CLineup::names::size_type& aPositionCount,
-	const types::CLineupConfiguration::player_count_range::second_type& aMaxCount, const std::string_view aRangeDescription );
+	const types::CLineupConfiguration::player_count_range::max_type& aMaxCount, const std::string_view aRangeDescription );
 
 } // anonymous namespace
 
@@ -49,7 +49,7 @@ CLineupConfiguration::CLineupConfiguration(
 	mDFRange( CheckRange( aDFRange, "DF" ) ),
 	mMFRange( CheckRange( aMFRange, "MF" ) ),
 	mFWRange( CheckRange( aFWRange, "FW" ) ),
-	mMinPlayerCount( CheckRange( player_count_range{ aMinPlayerCount, MAX_PLAYERS }, "player" ).first ),
+	mMinPlayerCount( CheckRange( player_count_range{ aMinPlayerCount, MAX_PLAYERS }, "player" ).min ),
 	mBenchedPlayersCount( aBenchedPlayersCount )
 {
 }
@@ -57,15 +57,15 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the l
 
 CLineupConfiguration::CLineupConfiguration( const json& aJSON ) try :
 	mDFRange( aJSON.contains( JSON_MIN_DFS ) || aJSON.contains( JSON_MAX_DFS ) ?
-		CheckRange( { ValueFromRequiredJSONKey<player_count_range::first_type>( aJSON, JSON_MIN_DFS ),
-		ValueFromOptionalJSONKey<player_count_range::second_type>( aJSON, JSON_MAX_DFS ) }, "DF" ) : DEFAULT_DF_RANGE ),
+		CheckRange( { ValueFromRequiredJSONKey<player_count_range::min_type>( aJSON, JSON_MIN_DFS ),
+		ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, JSON_MAX_DFS ) }, "DF" ) : DEFAULT_DF_RANGE ),
 	mMFRange( aJSON.contains( JSON_MIN_MFS ) || aJSON.contains( JSON_MAX_MFS ) ?
-		CheckRange( { ValueFromRequiredJSONKey<player_count_range::first_type>( aJSON, JSON_MIN_MFS ),
-		ValueFromOptionalJSONKey<player_count_range::second_type>( aJSON, JSON_MAX_MFS ) }, "MF" ) : DEFAULT_MF_RANGE ),
+		CheckRange( { ValueFromRequiredJSONKey<player_count_range::min_type>( aJSON, JSON_MIN_MFS ),
+		ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, JSON_MAX_MFS ) }, "MF" ) : DEFAULT_MF_RANGE ),
 	mFWRange( aJSON.contains( JSON_MIN_FWS ) || aJSON.contains( JSON_MAX_FWS ) ?
-		CheckRange( { ValueFromRequiredJSONKey<player_count_range::first_type>( aJSON, JSON_MIN_FWS ),
-		ValueFromOptionalJSONKey<player_count_range::second_type>( aJSON, JSON_MAX_FWS ) }, "FW" ) : DEFAULT_FW_RANGE ),
-	mMinPlayerCount( CheckRange( { ValueFromOptionalJSONKey<player_count>( aJSON, JSON_MIN_PLAYERS, DEFAULT_MIN_PLAYERS ), MAX_PLAYERS }, "player" ).first ),
+		CheckRange( { ValueFromRequiredJSONKey<player_count_range::min_type>( aJSON, JSON_MIN_FWS ),
+		ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, JSON_MAX_FWS ) }, "FW" ) : DEFAULT_FW_RANGE ),
+	mMinPlayerCount( CheckRange( { ValueFromOptionalJSONKey<player_count>( aJSON, JSON_MIN_PLAYERS, DEFAULT_MIN_PLAYERS ), MAX_PLAYERS }, "player" ).min ),
 	mBenchedPlayersCount( ValueFromOptionalJSONKey<optional_player_count>( aJSON, JSON_BENCHED_PLAYERS ) )
 {
 }
@@ -73,15 +73,15 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the l
 
 void CLineupConfiguration::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mDFRange.first, JSON_MIN_DFS );
-	if( mDFRange.second )
-		AddToJSONKey( aJSON, *mDFRange.second, JSON_MAX_DFS );
-	AddToJSONKey( aJSON, mMFRange.first, JSON_MIN_MFS );
-	if( mMFRange.second )
-		AddToJSONKey( aJSON, *mMFRange.second, JSON_MAX_MFS );
-	AddToJSONKey( aJSON, mFWRange.first, JSON_MIN_FWS );
-	if( mFWRange.second )
-		AddToJSONKey( aJSON, *mFWRange.second, JSON_MAX_FWS );
+	AddToJSONKey( aJSON, mDFRange.min, JSON_MIN_DFS );
+	if( mDFRange.max )
+		AddToJSONKey( aJSON, *mDFRange.max, JSON_MAX_DFS );
+	AddToJSONKey( aJSON, mMFRange.min, JSON_MIN_MFS );
+	if( mMFRange.max )
+		AddToJSONKey( aJSON, *mMFRange.max, JSON_MAX_MFS );
+	AddToJSONKey( aJSON, mFWRange.min, JSON_MIN_FWS );
+	if( mFWRange.max )
+		AddToJSONKey( aJSON, *mFWRange.max, JSON_MAX_FWS );
 	AddToJSONKey( aJSON, mMinPlayerCount, JSON_MIN_PLAYERS );
 	if( mBenchedPlayersCount )
 		AddToJSONKey( aJSON, *mBenchedPlayersCount, JSON_BENCHED_PLAYERS );
@@ -131,7 +131,7 @@ namespace
 const types::CLineupConfiguration::player_count_range& CheckRange( const types::CLineupConfiguration::player_count_range& aRange,
 	const std::string_view aRangeDescription ) try
 {
-	if( aRange.second && ( *aRange.second ) < aRange.first )
+	if( aRange.max && ( *aRange.max ) < aRange.min )
 		throw std::invalid_argument{ "The maximum number of " + std::string{ aRangeDescription } + "s cannot be smaller than the minimum number." };
 	return aRange;
 }
@@ -140,14 +140,14 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the "
 void CheckLineupPosition( const types::CLineup::names::size_type& aPositionCount,
 	const types::CLineupConfiguration::player_count_range& aRange, const std::string_view aRangeDescription )
 {
-	if( aPositionCount < aRange.first )
+	if( aPositionCount < aRange.min )
 		throw std::invalid_argument{ "The lineup has less " + std::string{ aRangeDescription } + " (" + std::to_string( aPositionCount ) + ") "
-			"than the minimum allowed (" + std::to_string( aRange.first ) + ")." };
-	CheckMaxLineupPosition( aPositionCount, aRange.second, aRangeDescription );
+			"than the minimum allowed (" + std::to_string( aRange.min ) + ")." };
+	CheckMaxLineupPosition( aPositionCount, aRange.max, aRangeDescription );
 }
 
 void CheckMaxLineupPosition( const types::CLineup::names::size_type& aPositionCount,
-	const types::CLineupConfiguration::player_count_range::second_type& aMaxCount, const std::string_view aRangeDescription )
+	const types::CLineupConfiguration::player_count_range::max_type& aMaxCount, const std::string_view aRangeDescription )
 {
 	if( aMaxCount && aPositionCount > *aMaxCount )
 		throw std::invalid_argument{ "The lineup has more " + std::string{ aRangeDescription } + " (" + std::to_string( aPositionCount ) + ") "
