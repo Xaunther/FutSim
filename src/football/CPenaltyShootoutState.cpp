@@ -1,5 +1,7 @@
 #include "football/CPenaltyShootoutState.h"
 
+#include "JsonUtils.h"
+
 namespace futsim::football
 {
 
@@ -48,6 +50,17 @@ template void CPenaltyShootoutState::score::Add<false>() noexcept;
 const CPenaltyShootoutState::penalty_states& CPenaltyShootoutState::GetPenalties() const noexcept
 {
 	return mPenalties;
+}
+
+void CPenaltyShootoutState::JSON( json& aJSON ) const noexcept
+{
+	for( auto& JSONPenalties = aJSON[ JSON_PENALTIES ]; const auto & penaltyPair : mPenalties )
+	{
+		json elementJSON;
+		AddToJSONKey( elementJSON, penaltyPair.first, JSON_HOME_TEAM_PENALTY );
+		AddToJSON( elementJSON, penaltyPair.second );
+		JSONPenalties.push_back( std::move( elementJSON ) );
+	}
 }
 
 template <bool tHomeTeam> void CPenaltyShootoutState::PushPenaltyState( CPenaltyState&& aPenaltyState,

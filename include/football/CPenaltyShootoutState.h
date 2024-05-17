@@ -65,6 +65,11 @@ public:
 	//! Retrieves the \copybrief mPenalties
 	const penalty_states& GetPenalties() const noexcept;
 
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
 private:
 	/**
 	 * @brief Adds a penalty to the penalty states.
@@ -86,6 +91,15 @@ private:
 	*/
 	bool IsDecided( const types::CPenaltyShootoutConfiguration::penalty_count& aMinPenaltyCount, const score& aScore ) const noexcept;
 
+public:
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Penalty shootout state";
+	//! JSON key for the \copybrief mPenalties
+	static inline constexpr std::string_view JSON_PENALTIES = "Penalties";
+	//! JSON key to indicate if the penalty corresponds to the home team.
+	static inline constexpr std::string_view JSON_HOME_TEAM_PENALTY = "Home team penalty";
+
+private:
 	//! Penalties.
 	penalty_states mPenalties;
 };
