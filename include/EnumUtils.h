@@ -10,9 +10,9 @@ namespace futsim
 	inline std::string_view ToString(const ENUM_TYPE& aEnum) \
 	{ \
 		static_assert(std::is_enum<ENUM_TYPE>::value, #ENUM_TYPE " must be an enum!"); \
-		static const std::pair<ENUM_TYPE, std::string> enumStrings[] = __VA_ARGS__; \
+		static const struct{ ENUM_TYPE value; std::string description; } enumStrings[] = __VA_ARGS__; \
 		return (*std::find_if(std::cbegin(enumStrings), std::cend(enumStrings), \
-				[&aEnum](const auto& aEnumPair){return aEnumPair.first == aEnum;})).second; \
+				[&aEnum](const auto& aEnumString){return aEnumString.value == aEnum;})).description; \
 	} \
 
 //! Macro for both JSON and string serialization.

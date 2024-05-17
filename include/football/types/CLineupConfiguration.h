@@ -11,8 +11,15 @@ using optional_player_count = types::CPlayTime::subs_count;
 //! Type for a player count.
 using player_count = optional_player_count::value_type;
 
-//! Type for a player count range.
-using player_count_range = std::pair<player_count, optional_player_count>;
-
+//! Aggregate for a player count range.
+struct player_count_range
+{
+	using min_type = player_count;
+	using max_type = optional_player_count;
+	//! Minimum number of players.
+	min_type min;
+	//! Maximum number of players, if any.
+	max_type max;
+};
 
 } // futsim::football::types::CLineupConfiguration namespace

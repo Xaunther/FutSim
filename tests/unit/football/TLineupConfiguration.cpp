@@ -130,15 +130,15 @@ std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CLineupConfiguration::JSON_MIN_DFS } + ": " + std::to_string( lineupConfiguration.GetDFRange().first ) );
-		if( lineupConfiguration.GetDFRange().second )
-			result.push_back( std::string{ CLineupConfiguration::JSON_MAX_DFS } + ": " + std::to_string( *lineupConfiguration.GetDFRange().second ) );
-		result.push_back( std::string{ CLineupConfiguration::JSON_MIN_MFS } + ": " + std::to_string( lineupConfiguration.GetMFRange().first ) );
-		if( lineupConfiguration.GetMFRange().second )
-			result.push_back( std::string{ CLineupConfiguration::JSON_MAX_MFS } + ": " + std::to_string( *lineupConfiguration.GetMFRange().second ) );
-		result.push_back( std::string{ CLineupConfiguration::JSON_MIN_FWS } + ": " + std::to_string( lineupConfiguration.GetFWRange().first ) );
-		if( lineupConfiguration.GetFWRange().second )
-			result.push_back( std::string{ CLineupConfiguration::JSON_MAX_FWS } + ": " + std::to_string( *lineupConfiguration.GetFWRange().second ) );
+		result.push_back( std::string{ CLineupConfiguration::JSON_MIN_DFS } + ": " + std::to_string( lineupConfiguration.GetDFRange().min ) );
+		if( lineupConfiguration.GetDFRange().max )
+			result.push_back( std::string{ CLineupConfiguration::JSON_MAX_DFS } + ": " + std::to_string( *lineupConfiguration.GetDFRange().max ) );
+		result.push_back( std::string{ CLineupConfiguration::JSON_MIN_MFS } + ": " + std::to_string( lineupConfiguration.GetMFRange().min ) );
+		if( lineupConfiguration.GetMFRange().max )
+			result.push_back( std::string{ CLineupConfiguration::JSON_MAX_MFS } + ": " + std::to_string( *lineupConfiguration.GetMFRange().max ) );
+		result.push_back( std::string{ CLineupConfiguration::JSON_MIN_FWS } + ": " + std::to_string( lineupConfiguration.GetFWRange().min ) );
+		if( lineupConfiguration.GetFWRange().max )
+			result.push_back( std::string{ CLineupConfiguration::JSON_MAX_FWS } + ": " + std::to_string( *lineupConfiguration.GetFWRange().max ) );
 		result.push_back( std::string{ CLineupConfiguration::JSON_MIN_PLAYERS } + ": " + std::to_string( lineupConfiguration.GetMinPlayerCount() ) );
 		if( lineupConfiguration.GetBenchedPlayersCount() )
 			result.push_back( std::string{ CLineupConfiguration::JSON_BENCHED_PLAYERS } + ": " + std::to_string( *lineupConfiguration.GetBenchedPlayersCount() ) );

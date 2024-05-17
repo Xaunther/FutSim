@@ -149,6 +149,15 @@ private:
 namespace detail
 {
 
+//! Aggregate for the drawn player.
+struct drawn_player
+{
+	//! Player name.
+	std::string_view name;
+	//! Player position.
+	E_PLAYER_POSITION position;
+};
+
 /**
  * @brief Draws a player from a lineup.
  * @tparam tPlayerSkill Player skill to consider.
@@ -158,7 +167,7 @@ namespace detail
  * @return A pair containing the drawn player name and their position.
 */
 template <E_PLAYER_SKILL tPlayerSkill>
-std::pair<std::string_view, E_PLAYER_POSITION> DrawPlayer( const CGoalDrawConfiguration& aGoalDrawConfiguration,
+drawn_player DrawPlayer( const CGoalDrawConfiguration& aGoalDrawConfiguration,
 	const CLineup& aLineup, std::uniform_random_bit_generator auto& aGenerator );
 
 /**
@@ -214,8 +223,8 @@ CChanceState::CChanceState(
 			aOwnTeamStrategy.GetLineup(), aGenerator );
 		// Sets the drawn player to the given role
 		// @todo Remove redundant this usage when CLANG allows it https://github.com/llvm/llvm-project/issues/81243
-		this->Actor< tPlayerSkill >() = drawnPlayer.first;
-		return CTeamStrategy::CalculateEffectivePlayerSkill( drawnPlayer.first, tPlayerSkill, drawnPlayer.second, aMatch,
+		this->Actor< tPlayerSkill >() = drawnPlayer.name;
+		return CTeamStrategy::CalculateEffectivePlayerSkill( drawnPlayer.name, tPlayerSkill, drawnPlayer.position, aMatch,
 			aMatchConfiguration, aIsHomeTeam, aOwnTeamStrategy.GetTacticID(), aRivalTeamStrategy );
 	};
 
@@ -243,7 +252,7 @@ namespace detail
 {
 
 template <E_PLAYER_SKILL tPlayerSkill>
-std::pair<std::string_view, E_PLAYER_POSITION> DrawPlayer( const CGoalDrawConfiguration& aGoalDrawConfiguration,
+drawn_player DrawPlayer( const CGoalDrawConfiguration& aGoalDrawConfiguration,
 	const CLineup& aLineup, std::uniform_random_bit_generator auto& aGenerator )
 {
 	using enum E_PLAYER_POSITION;
