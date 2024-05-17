@@ -21,6 +21,13 @@ void CPeriodState::JSON( json& aJSON ) const noexcept
 	}
 }
 
+void CPeriodState::PushPlayState( CPlayState&& aPlayState, const bool aHomeTeamAttack ) noexcept
+{
+	auto homeTeamPlay = aPlayState.GetPossessionState().GetOutcome() == types::CPossessionDrawConfiguration::E_POSSESSION_DRAW_OUTCOME::COUNTER_ATTACK ?
+		!aHomeTeamAttack : aHomeTeamAttack;
+	mPlays.emplace_back( homeTeamPlay, std::move( aPlayState ) );
+}
+
 bool CPeriodState::IsHomeTeamAttackNext() const
 {
 	using enum types::CGoalDrawConfiguration::E_CHANCE_OUTCOME;
