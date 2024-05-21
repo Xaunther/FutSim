@@ -126,6 +126,8 @@ private:
 	name_type mManager;
 	//! Roster of players.
 	players mPlayers;
+	//! Map to improve player search.
+	name_index_map mNameIndexMap;
 	//! Support factor that dictates the support the team receives from the fans.
 	support_factor mSupportFactor;
 	//! Local fan attendance distribution parameters.
