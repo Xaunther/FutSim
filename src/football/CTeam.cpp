@@ -115,14 +115,11 @@ std::span<const CPlayer> CTeam::GetPlayers() const noexcept
 	return mPlayers;
 }
 
-const CPlayer& CTeam::GetPlayer( const std::string_view aKnownName ) const
+const CPlayer& CTeam::GetPlayer( const std::string_view aKnownName ) const try
 {
-	const auto& found = std::ranges::find_if( mPlayers,
-		[ &aKnownName ]( const auto& aPlayer ) {return aPlayer.GetKnownName() == aKnownName;} );
-	if( found == mPlayers.cend() )
-		throw std::invalid_argument{ std::string{ aKnownName } + " is not in " + mName + "'s list of players." };
-	return *found;
+	return mPlayers[ mNameIndexMap.at( aKnownName.data() ) ];
 }
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, aKnownName << " is not in " << mName + "'s list of players." )
 
 const CTeam::support_factor& CTeam::GetSupportFactor() const noexcept
 {
