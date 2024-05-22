@@ -55,7 +55,7 @@ public:
 	//! Retrieves the \copybrief mPlays
 	const plays& GetPlays() const noexcept;
 
-private:
+protected:
 	/**
 	 * @brief Adds a play to the plays of the period
 	 * @param aPlayState Play to add.
