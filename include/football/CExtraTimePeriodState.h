@@ -66,6 +66,9 @@ public:
 	 * @param aMatchConfiguration Match configuration.
 	*/
 	static const CMatchConfiguration& CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration );
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Extra time period state";
 };
 
 CExtraTimePeriodState::CExtraTimePeriodState(
