@@ -5,6 +5,13 @@
 namespace futsim::football
 {
 
+CPeriodState::CPeriodState(
+	const futsim::types::CPlayTime::period_time& aPeriodTime
+)
+{
+	mPlays.reserve( aPeriodTime );
+}
+
 const CPeriodState::plays& CPeriodState::GetPlays() const noexcept
 {
 	return mPlays;

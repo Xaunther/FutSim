@@ -39,6 +39,14 @@ public:
 
 protected:
 	/**
+	 * @brief Empty period constructor.
+	 * @param aPeriodTime Play time of the period.
+	*/
+	explicit CPeriodState(
+		const futsim::types::CPlayTime::period_time& aPeriodTime
+	);
+
+	/**
 	 * @copydoc IJsonable::ToJSON
 	*/
 	void JSON( json& aJSON ) const noexcept override;
