@@ -62,12 +62,6 @@ public:
 	);
 
 	/**
-	 * @brief Returns whether a goal has been scored in the last play.
-	 * @pre At least one play must have been occurred.
-	*/
-	bool HasGoalBeenScoredLast() const;
-
-	/**
 	 * @brief Checks that the match configuration can produce an extra time period.
 	 * @param aMatchConfiguration Match configuration.
 	*/
@@ -82,19 +76,10 @@ CExtraTimePeriodState::CExtraTimePeriodState(
 	bool aHomeTeamAttack,
 	std::uniform_random_bit_generator auto& aGenerator
 ) try :
-	CPeriodState( aMatchConfiguration.GetExtraTime()->GetPeriodTime() )
+	CPeriodState( aMatchConfiguration.GetExtraTime()->GetGoalRule() == E_GOAL_RULE::GOLDEN_GOAL ?
+		CPeriodState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aHomeTeamAttack, aGenerator, SGoldenGoalPeriodPlayPolicy{} } :
+		CPeriodState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aHomeTeamAttack, aGenerator, SDefaultPeriodPlayPolicy{} } )
 {
-	const auto& extraTime = *aMatchConfiguration.GetExtraTime();
-	do
-	{
-		if( aHomeTeamAttack )
-			PushPlayState( CPlayState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
-				aHomeTeamAttack, aGenerator }, aHomeTeamAttack );
-		else
-			PushPlayState( CPlayState{ aMatch, aMatchConfiguration, aAwayTeamStrategy, aHomeTeamStrategy,
-				aHomeTeamAttack, aGenerator }, aHomeTeamAttack );
-		aHomeTeamAttack = IsHomeTeamAttackNext();
-	} while( GetPlays().size() < extraTime.GetPeriodTime() && ( extraTime.GetGoalRule() != E_GOAL_RULE::GOLDEN_GOAL || !HasGoalBeenScoredLast() ) );
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the extra time period state." )
 

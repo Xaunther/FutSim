@@ -10,13 +10,6 @@ bool CPeriodState::SDefaultPeriodPlayPolicy::operator()( const plays& aPlays, co
 	return aPlays.size() < aMatchConfiguration.GetPlayTime().GetPeriodTime();
 }
 
-CPeriodState::CPeriodState(
-	const futsim::types::CPlayTime::period_time& aPeriodTime
-)
-{
-	mPlays.reserve( aPeriodTime );
-}
-
 const CPeriodState::plays& CPeriodState::GetPlays() const noexcept
 {
 	return mPlays;

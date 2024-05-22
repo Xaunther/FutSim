@@ -15,13 +15,6 @@ bool CExtraTimePeriodState::SGoldenGoalPeriodPlayPolicy::operator()( const plays
 		&& ( aPlays.back().state.GetChancesStates().empty() || aPlays.back().state.GetChancesStates().back().GetChanceOutcome() != GOAL );
 }
 
-bool CExtraTimePeriodState::HasGoalBeenScoredLast() const
-{
-	using enum types::CGoalDrawConfiguration::E_CHANCE_OUTCOME;
-	const auto& lastPlay = GetPlays().back();
-	return !lastPlay.state.GetChancesStates().empty() && lastPlay.state.GetChancesStates().back().GetChanceOutcome() == GOAL;
-}
-
 const CMatchConfiguration& CExtraTimePeriodState::CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration )
 {
 	if( !aMatchConfiguration.GetExtraTime() )
