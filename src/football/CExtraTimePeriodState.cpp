@@ -3,6 +3,11 @@
 namespace futsim::football
 {
 
+bool CExtraTimePeriodState::SDefaultPeriodPlayPolicy::operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const
+{
+	return aPlays.size() < aMatchConfiguration.GetExtraTime()->GetPeriodTime();
+}
+
 bool CExtraTimePeriodState::HasGoalBeenScoredLast() const
 {
 	using enum types::CGoalDrawConfiguration::E_CHANCE_OUTCOME;
