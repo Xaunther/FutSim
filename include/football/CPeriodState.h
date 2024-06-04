@@ -34,6 +34,40 @@ public:
 	};
 
 	/**
+	 * @brief Default policy functor for the plays of an extra time period.
+	 * @details All configured minutes are played.
+	*/
+	struct SDefaultExtraTimePeriodPlayPolicy
+	{
+		/**
+		 * @brief Returns whether another minute must be played.
+		 * @param aPlays Plays of the period.
+		 * @param aMatchConfiguration Match configuration.
+		*/
+		bool operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const;
+
+		/**
+		 * @brief Checks that the match configuration can be used in the policy.
+		 * @param aMatchConfiguration Match configuration.
+		*/
+		static const CMatchConfiguration& CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration );
+	};
+
+	/**
+	 * @brief Policy functor for the plays of an extra time period with golden goal.
+	 * @details Period also ends when a goal is scored.
+	*/
+	struct SGoldenGoalPeriodPlayPolicy : public SDefaultExtraTimePeriodPlayPolicy
+	{
+		/**
+		 * @brief Returns whether another minute must be played.
+		 * @param aPlays Plays of the period.
+		 * @param aMatchConfiguration Match configuration.
+		*/
+		bool operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const;
+	};
+
+	/**
 	 * @brief Constructor from the match definition, configuration and current strategies.
 	 * @param aMatch Match definition.
 	 * @param aMatchConfiguration Match configuration.

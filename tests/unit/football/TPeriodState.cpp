@@ -15,6 +15,9 @@ INITIALIZE_TEST( TPeriodState )
 
 void TPeriodState::TestExceptions() const
 {
+	// Test SDefaultExtraTimePeriodPlayPolicy::CheckMatchConfiguration
+	CheckException( []() { CPeriodState::SDefaultExtraTimePeriodPlayPolicy::CheckMatchConfiguration( CMatchConfiguration{} ); },
+		"The match configuration cannot be used for the default extra time period play policy." );
 }
 
 std::vector<std::string> TPeriodState::ObtainedResults() const noexcept
@@ -42,11 +45,21 @@ std::vector<std::string> TPeriodState::ObtainedResults() const noexcept
 			types::CLineup::names{ "Morris", "Adebayo" }, {} } };
 	const CTeamStrategy awayTeamStrategy{ "N", homeTeamStrategy.GetLineup() };
 
+	const CMatchConfiguration extraTimeMatchConfig{ CPlayTime{}, CLineupConfiguration{}, true,
+			CTacticsConfiguration{}, CTieCondition{}, CExtraTime{}, CPenaltyShootoutConfiguration{} };
+	const CMatchConfiguration goldenGoalMatchConfig{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, CTieCondition{},
+			CExtraTime{ CExtraTime::DEFAULT_PERIOD_COUNT, 200, CExtraTime::DEFAULT_AVAILABLE_SUBS, E_GOAL_RULE::GOLDEN_GOAL },
+			CPenaltyShootoutConfiguration{} };
+
 	for( const auto& periodState : {
 		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
 			CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, true, rng },
 		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
 			CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, false, rng },
+		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
+			extraTimeMatchConfig, homeTeamStrategy, awayTeamStrategy, true, rng, CPeriodState::SDefaultExtraTimePeriodPlayPolicy{} },
+		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
+			goldenGoalMatchConfig, homeTeamStrategy, awayTeamStrategy, false, rng, CPeriodState::SGoldenGoalPeriodPlayPolicy{} },
 		} )
 	{
 		result.push_back( std::string{ CPeriodState::JSON_PLAYS } + ": "
