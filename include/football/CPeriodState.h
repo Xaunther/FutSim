@@ -19,6 +19,21 @@ protected:
 
 public:
 	/**
+	 * @brief Default policy functor for the plays of the period.
+	 * @details All configured minutes are played.
+	*/
+	//! 
+	struct SDefaultPeriodPlayPolicy
+	{
+		/**
+		 * @brief Returns whether another minute must be played.
+		 * @param aPlays Plays of the period.
+		 * @param aMatchConfiguration Match configuration.
+		*/
+		bool operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const;
+	};
+
+	/**
 	 * @brief Constructor from the match definition, configuration and current strategies.
 	 * @param aMatch Match definition.
 	 * @param aMatchConfiguration Match configuration.
@@ -26,15 +41,18 @@ public:
 	 * @param aAwayTeamStrategy Current match strategy for the away team.
 	 * @param aHomeTeamAttack Whether the home team is attacking.
 	 * @param aGenerator RNG to use.
+	 * @param aPeriodPlayPolicy Period play policy.
 	 * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
 	*/
+	template <typename T = SDefaultPeriodPlayPolicy> requires types::CPeriodState::period_play_policy<T>
 	explicit CPeriodState(
 		const CMatch& aMatch,
 		const CMatchConfiguration& aMatchConfiguration,
 		const CTeamStrategy& aHomeTeamStrategy,
 		const CTeamStrategy& aAwayTeamStrategy,
 		bool aHomeTeamAttack,
-		std::uniform_random_bit_generator auto& aGenerator
+		std::uniform_random_bit_generator auto& aGenerator,
+		const T& aPeriodPlayPolicy = T{}
 	);
 
 protected:
@@ -47,7 +65,7 @@ public:
 	//! Retrieves the \copybrief mPlays
 	const plays& GetPlays() const noexcept;
 
-private:
+protected:
 	/**
 	 * @brief Adds a play to the plays of the period
 	 * @param aPlayState Play to add.
@@ -73,18 +91,20 @@ private:
 	plays mPlays;
 };
 
+template <typename T> requires types::CPeriodState::period_play_policy<T>
 CPeriodState::CPeriodState(
 	const CMatch& aMatch,
 	const CMatchConfiguration& aMatchConfiguration,
 	const CTeamStrategy& aHomeTeamStrategy,
 	const CTeamStrategy& aAwayTeamStrategy,
 	bool aHomeTeamAttack,
-	std::uniform_random_bit_generator auto& aGenerator
+	std::uniform_random_bit_generator auto& aGenerator,
+	const T& aPeriodPlayPolicy
 )
 {
 	mPlays.reserve( aMatchConfiguration.GetPlayTime().GetPeriodTime() );
 
-	for( futsim::types::CPlayTime::period_time time = 0; time < aMatchConfiguration.GetPlayTime().GetPeriodTime(); ++time )
+	do
 	{
 		if( aHomeTeamAttack )
 			PushPlayState( CPlayState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
@@ -93,7 +113,7 @@ CPeriodState::CPeriodState(
 			PushPlayState( CPlayState{ aMatch, aMatchConfiguration, aAwayTeamStrategy, aHomeTeamStrategy,
 				aHomeTeamAttack, aGenerator }, aHomeTeamAttack );
 		aHomeTeamAttack = IsHomeTeamAttackNext();
-	}
+	} while( aPeriodPlayPolicy( mPlays, aMatchConfiguration ) );
 }
 
 } // futsim::football namespace

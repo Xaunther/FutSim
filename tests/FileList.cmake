@@ -12,6 +12,7 @@ SET(FUTSIM_TESTS_UNIT_FOOTBALL_SOURCE
 	unit/football/TChancesDrawConfiguration.cpp
 	unit/football/TChanceState.cpp
 	unit/football/TDrawConfiguration.cpp
+	unit/football/TExtraTimePeriodState.cpp
 	unit/football/TFoulDrawConfiguration.cpp
 	unit/football/TFoulState.cpp
 	unit/football/TGoalDrawConfiguration.cpp

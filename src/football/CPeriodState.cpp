@@ -5,6 +5,11 @@
 namespace futsim::football
 {
 
+bool CPeriodState::SDefaultPeriodPlayPolicy::operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const
+{
+	return aPlays.size() < aMatchConfiguration.GetPlayTime().GetPeriodTime();
+}
+
 const CPeriodState::plays& CPeriodState::GetPlays() const noexcept
 {
 	return mPlays;
