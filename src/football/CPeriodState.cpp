@@ -10,6 +10,18 @@ bool CPeriodState::SDefaultPeriodPlayPolicy::operator()( const plays& aPlays, co
 	return aPlays.size() < aMatchConfiguration.GetPlayTime().GetPeriodTime();
 }
 
+bool CPeriodState::SDefaultExtraTimePeriodPlayPolicy::operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const
+{
+	return aPlays.size() < aMatchConfiguration.GetExtraTime()->GetPeriodTime();
+}
+
+bool CPeriodState::SGoldenGoalPeriodPlayPolicy::operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const
+{
+	using enum types::CGoalDrawConfiguration::E_CHANCE_OUTCOME;
+	return SDefaultExtraTimePeriodPlayPolicy::operator()( aPlays, aMatchConfiguration )
+		&& ( aPlays.back().state.GetChancesStates().empty() || aPlays.back().state.GetChancesStates().back().GetChanceOutcome() != GOAL );
+}
+
 const CPeriodState::plays& CPeriodState::GetPlays() const noexcept
 {
 	return mPlays;
