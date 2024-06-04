@@ -58,6 +58,8 @@ std::vector<std::string> TPlayState::ObtainedResults() const noexcept
 		for( const auto& chance : playState.GetChancesStates() )
 			result.push_back( std::string{ ToString( chance.GetChanceOutcome() ) } );
 
+		result.push_back( std::to_string( playState.IsGoalScored() ) );
+
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, playState );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

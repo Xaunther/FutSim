@@ -24,9 +24,7 @@ const CMatchConfiguration& CPeriodState::SDefaultExtraTimePeriodPlayPolicy::Chec
 
 bool CPeriodState::SGoldenGoalPeriodPlayPolicy::operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const
 {
-	using enum types::CGoalDrawConfiguration::E_CHANCE_OUTCOME;
-	return SDefaultExtraTimePeriodPlayPolicy::operator()( aPlays, aMatchConfiguration )
-		&& ( aPlays.back().state.GetChancesStates().empty() || aPlays.back().state.GetChancesStates().back().GetChanceOutcome() != GOAL );
+	return SDefaultExtraTimePeriodPlayPolicy::operator()( aPlays, aMatchConfiguration ) && !aPlays.back().state.IsGoalScored();
 }
 
 const CPeriodState::plays& CPeriodState::GetPlays() const noexcept

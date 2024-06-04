@@ -57,6 +57,9 @@ public:
 	//! Retrieves the \copybrief mChancesStates
 	const chances_states& GetChancesStates() const noexcept;
 
+	//! Returns whther the play ended in a goal.
+	bool IsGoalScored() const noexcept;
+
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Play state";
 	//! JSON key for the \copybrief mChancesStates
