@@ -54,6 +54,13 @@ public:
 		const T& aPeriodPolicy = T{}
 	);
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mStates
 	const period_states& GetStates() const noexcept;
 
