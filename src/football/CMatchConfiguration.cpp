@@ -20,6 +20,15 @@ const types::CMatchConfiguration::optional_tie_condition& CheckTieCondition(
 	const types::CMatchConfiguration::optional_tie_condition& aTieCondition,
 	const types::CMatchConfiguration::optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration );
 
+/**
+ * @brief Checks that the extra time is only configured with a tie condition.
+ * @param aExtraTime Extra time configuration.
+ * @param aTieCondition Tie condition.
+*/
+const types::CMatchConfiguration::optional_extra_time& CheckExtraTime(
+	const types::CMatchConfiguration::optional_extra_time& aExtraTime,
+	const types::CMatchConfiguration::optional_tie_condition& aTieCondition );
+
 } // anonymous namespace
 
 CMatchConfiguration::CMatchConfiguration(
@@ -37,7 +46,7 @@ CMatchConfiguration::CMatchConfiguration(
 	mApplyAmbientFactor( aApplyAmbientFactor ),
 	mTacticsConfiguration( aTacticsConfiguration ),
 	mTieCondition( CheckTieCondition( aTieCondition, aPenaltyShootoutConfiguration ) ),
-	mExtraTime( aExtraTime ),
+	mExtraTime( CheckExtraTime( aExtraTime, mTieCondition ) ),
 	mPenaltyShootoutConfiguration( aPenaltyShootoutConfiguration ),
 	mDrawConfiguration( aDrawConfiguration )
 {
@@ -134,6 +143,16 @@ const types::CMatchConfiguration::optional_tie_condition& CheckTieCondition(
 	return aTieCondition;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the tie condition." )
+
+const types::CMatchConfiguration::optional_extra_time& CheckExtraTime(
+	const types::CMatchConfiguration::optional_extra_time& aExtraTime,
+	const types::CMatchConfiguration::optional_tie_condition& aTieCondition ) try
+{
+	if( aExtraTime && !aTieCondition )
+		throw std::invalid_argument( "There cannot be extra time without a tie condition." );
+	return aExtraTime;
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the extra time configuration." )
 
 } // anonymous namespace
 
