@@ -29,6 +29,15 @@ const types::CMatchConfiguration::optional_extra_time& CheckExtraTime(
 	const types::CMatchConfiguration::optional_extra_time& aExtraTime,
 	const types::CMatchConfiguration::optional_tie_condition& aTieCondition );
 
+/**
+ * @brief Checks that the penalty shootout is only configured with a tie condition.
+ * @param aPenaltyShootoutConfiguration Penalty shootout configuration.
+ * @param aTieCondition Tie condition.
+*/
+const types::CMatchConfiguration::optional_penalty_shootout_configuration& CheckPenaltyShootoutConfiguration(
+	const types::CMatchConfiguration::optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration,
+	const types::CMatchConfiguration::optional_tie_condition& aTieCondition );
+
 } // anonymous namespace
 
 CMatchConfiguration::CMatchConfiguration(
@@ -47,7 +56,7 @@ CMatchConfiguration::CMatchConfiguration(
 	mTacticsConfiguration( aTacticsConfiguration ),
 	mTieCondition( CheckTieCondition( aTieCondition, aPenaltyShootoutConfiguration ) ),
 	mExtraTime( CheckExtraTime( aExtraTime, mTieCondition ) ),
-	mPenaltyShootoutConfiguration( aPenaltyShootoutConfiguration ),
+	mPenaltyShootoutConfiguration( CheckPenaltyShootoutConfiguration( aPenaltyShootoutConfiguration, mTieCondition ) ),
 	mDrawConfiguration( aDrawConfiguration )
 {
 }
@@ -153,6 +162,16 @@ const types::CMatchConfiguration::optional_extra_time& CheckExtraTime(
 	return aExtraTime;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the extra time configuration." )
+
+const types::CMatchConfiguration::optional_penalty_shootout_configuration& CheckPenaltyShootoutConfiguration(
+	const types::CMatchConfiguration::optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration,
+	const types::CMatchConfiguration::optional_tie_condition& aTieCondition ) try
+{
+	if( aPenaltyShootoutConfiguration && !aTieCondition )
+		throw std::invalid_argument( "There cannot be a penalty shootout without a tie condition." );
+	return aPenaltyShootoutConfiguration;
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the penalty shootout configuration." )
 
 } // anonymous namespace
 
