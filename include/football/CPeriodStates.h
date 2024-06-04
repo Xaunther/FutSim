@@ -75,17 +75,20 @@ public:
 	 * @param aHomeTeamStrategy Current match strategy for the home team.
 	 * @param aAwayTeamStrategy Current match strategy for the away team.
 	 * @param aGenerator RNG to use.
+	 * @param aPeriodPlayPolicy Period play policy.
 	 * @param aPeriodPolicy Period policy.
 	 * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
 	*/
-	template <typename T = SDefaultPeriodPolicy> requires types::CPeriodStates::period_policy<T>
+	template <typename T = CPeriodState::SDefaultPeriodPlayPolicy, typename U = SDefaultPeriodPolicy>
+		requires types::CPeriodState::period_play_policy<T>&& types::CPeriodStates::period_policy<U>
 	explicit CPeriodStates(
 		const CMatch& aMatch,
 		const CMatchConfiguration& aMatchConfiguration,
 		const CTeamStrategy& aHomeTeamStrategy,
 		const CTeamStrategy& aAwayTeamStrategy,
 		std::uniform_random_bit_generator auto& aGenerator,
-		const T& aPeriodPolicy = T{}
+		const T& aPeriodPlayPolicy = T{},
+		const U& aPeriodPolicy = U{}
 	);
 
 protected:
@@ -106,14 +109,15 @@ private:
 	period_states mStates;
 };
 
-template <typename T> requires types::CPeriodStates::period_policy<T>
+template <typename T, typename U> requires types::CPeriodState::period_play_policy<T>&& types::CPeriodStates::period_policy<U>
 CPeriodStates::CPeriodStates(
 	const CMatch& aMatch,
 	const CMatchConfiguration& aMatchConfiguration,
 	const CTeamStrategy& aHomeTeamStrategy,
 	const CTeamStrategy& aAwayTeamStrategy,
 	std::uniform_random_bit_generator auto& aGenerator,
-	const T& aPeriodPolicy
+	const T& aPeriodPlayPolicy,
+	const U& aPeriodPolicy
 ) try
 {
 	auto homeTeamAttack = std::bernoulli_distribution{}( aGenerator );
@@ -121,10 +125,10 @@ CPeriodStates::CPeriodStates(
 	{
 		if( homeTeamAttack )
 			mStates.emplace_back( aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
-				homeTeamAttack, aGenerator );
+				homeTeamAttack, aGenerator, aPeriodPlayPolicy );
 		else
 			mStates.emplace_back( aMatch, aMatchConfiguration, aAwayTeamStrategy, aHomeTeamStrategy,
-				homeTeamAttack, aGenerator );
+				homeTeamAttack, aGenerator, aPeriodPlayPolicy );
 		homeTeamAttack = !homeTeamAttack;
 	} while( aPeriodPolicy( mStates, aMatchConfiguration ) );
 }
