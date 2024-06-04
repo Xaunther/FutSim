@@ -36,6 +36,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CPenaltyShootoutState.h
 	include/football/CPenaltyState.h
 	include/football/CPeriodState.h
+	include/football/CPeriodStates.h
 	include/football/CPlayer.h
 	include/football/CPlayerSkills.h
 	include/football/CPlayState.h
@@ -62,6 +63,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/types/CPenaltyShootoutConfiguration.h
 	include/football/types/CPenaltyShootoutState.h
 	include/football/types/CPeriodState.h
+	include/football/types/CPeriodStates.h
 	include/football/types/CPlayerSkills.h
 	include/football/types/CPlayState.h
 	include/football/types/CPlayTime.h
@@ -101,6 +103,7 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CPenaltyShootoutState.cpp
 	src/football/CPenaltyState.cpp
 	src/football/CPeriodState.cpp
+	src/football/CPeriodStates.cpp
 	src/football/CPlayerSkills.cpp
 	src/football/CPlayer.cpp
 	src/football/CPlayState.cpp
