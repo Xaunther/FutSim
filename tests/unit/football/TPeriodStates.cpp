@@ -15,6 +15,12 @@ INITIALIZE_TEST( TPeriodStates )
 
 void TPeriodStates::TestExceptions() const
 {
+	// Test CheckMatchConfiguration
+	CheckException( []() { CPeriodStates::SDefaultExtraTimePeriodPolicy::CheckMatchConfiguration( CMatchConfiguration{} ); },
+		"The match configuration cannot be used for the default extra time period play policy." );
+	CheckException( []() { CPeriodStates::SDefaultExtraTimePeriodPolicy::CheckMatchConfiguration( CMatchConfiguration{
+		CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, {}, CExtraTime{}, CPenaltyShootoutConfiguration{} } ); },
+		"The match configuration cannot configure the extra time period states." );
 }
 
 std::vector<std::string> TPeriodStates::ObtainedResults() const noexcept
