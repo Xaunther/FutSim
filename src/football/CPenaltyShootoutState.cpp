@@ -47,11 +47,6 @@ template <bool tHomeTeam> void CPenaltyShootoutState::score::Add() noexcept
 template void CPenaltyShootoutState::score::Add<true>() noexcept;
 template void CPenaltyShootoutState::score::Add<false>() noexcept;
 
-const CPenaltyShootoutState::penalty_states& CPenaltyShootoutState::GetPenalties() const noexcept
-{
-	return mPenalties;
-}
-
 void CPenaltyShootoutState::JSON( json& aJSON ) const noexcept
 {
 	for( auto& JSONPenalties = aJSON[ JSON_PENALTIES ]; const auto & penalty : mPenalties )
@@ -61,6 +56,11 @@ void CPenaltyShootoutState::JSON( json& aJSON ) const noexcept
 		AddToJSON( elementJSON, penalty.state );
 		JSONPenalties.push_back( std::move( elementJSON ) );
 	}
+}
+
+const CPenaltyShootoutState::penalty_states& CPenaltyShootoutState::GetPenalties() const noexcept
+{
+	return mPenalties;
 }
 
 template <bool tHomeTeam> void CPenaltyShootoutState::PushPenaltyState( CPenaltyState&& aPenaltyState,

@@ -62,13 +62,15 @@ public:
 		std::uniform_random_bit_generator auto& aGenerator
 	);
 
-	//! Retrieves the \copybrief mPenalties
-	const penalty_states& GetPenalties() const noexcept;
-
+protected:
 	/**
 	 * @copydoc IJsonable::ToJSON
 	*/
 	void JSON( json& aJSON ) const noexcept override;
+
+public:
+	//! Retrieves the \copybrief mPenalties
+	const penalty_states& GetPenalties() const noexcept;
 
 private:
 	/**
