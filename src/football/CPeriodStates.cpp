@@ -18,9 +18,7 @@ bool CPeriodStates::SDefaultExtraTimePeriodPolicy::operator()(
 
 const CMatchConfiguration& CPeriodStates::SDefaultExtraTimePeriodPolicy::CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration )
 {
-	if( !CPeriodState::SDefaultExtraTimePeriodPlayPolicy::CheckMatchConfiguration( aMatchConfiguration ).GetTieCondition() )
-		throw std::invalid_argument{ "The match configuration cannot configure the extra time period states." };
-	return aMatchConfiguration;
+	return CPeriodState::SDefaultExtraTimePeriodPlayPolicy::CheckMatchConfiguration( aMatchConfiguration );
 }
 
 bool CPeriodStates::SSilverGoalPeriodPolicy::operator()(
