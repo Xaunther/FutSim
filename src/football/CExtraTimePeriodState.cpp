@@ -10,9 +10,7 @@ bool CExtraTimePeriodState::SDefaultPeriodPlayPolicy::operator()( const plays& a
 
 bool CExtraTimePeriodState::SGoldenGoalPeriodPlayPolicy::operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const
 {
-	using enum types::CGoalDrawConfiguration::E_CHANCE_OUTCOME;
-	return SDefaultPeriodPlayPolicy::operator()( aPlays, aMatchConfiguration )
-		&& ( aPlays.back().state.GetChancesStates().empty() || aPlays.back().state.GetChancesStates().back().GetChanceOutcome() != GOAL );
+	return SDefaultPeriodPlayPolicy::operator()( aPlays, aMatchConfiguration ) && !aPlays.back().state.IsGoalScored();
 }
 
 void CExtraTimePeriodState::JSON( json& aJSON ) const noexcept
