@@ -65,6 +65,9 @@ std::vector<std::string> TPeriodState::ObtainedResults() const noexcept
 		result.push_back( std::string{ CPeriodState::JSON_PLAYS } + ": "
 			+ std::to_string( periodState.GetPlays().size() ) );
 
+		result.push_back( std::to_string( periodState.CountScoredGoals( true ) ) );
+		result.push_back( std::to_string( periodState.CountScoredGoals( false ) ) );
+
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, periodState );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
