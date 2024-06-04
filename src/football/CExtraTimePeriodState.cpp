@@ -15,6 +15,11 @@ bool CExtraTimePeriodState::SGoldenGoalPeriodPlayPolicy::operator()( const plays
 		&& ( aPlays.back().state.GetChancesStates().empty() || aPlays.back().state.GetChancesStates().back().GetChanceOutcome() != GOAL );
 }
 
+void CExtraTimePeriodState::JSON( json& aJSON ) const noexcept
+{
+	CPeriodState::JSON( aJSON );
+}
+
 const CMatchConfiguration& CExtraTimePeriodState::CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration )
 {
 	if( !aMatchConfiguration.GetExtraTime() )

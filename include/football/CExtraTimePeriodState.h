@@ -61,6 +61,13 @@ public:
 		std::uniform_random_bit_generator auto& aGenerator
 	);
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	/**
 	 * @brief Checks that the match configuration can produce an extra time period.
 	 * @param aMatchConfiguration Match configuration.
