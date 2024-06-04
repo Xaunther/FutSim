@@ -4,6 +4,8 @@
 
 #include "football/types/CPeriodStates.h"
 
+#include "football/CPeriodState.h"
+
 namespace futsim::football
 {
 
@@ -17,6 +19,21 @@ protected:
 	using period_states = types::CPeriodStates::period_states;
 
 public:
+	/**
+	 * @brief Default policy functor for the periods.
+	 * @details All configured periods are played.
+	*/
+	//! 
+	struct SDefaultPeriodPolicy
+	{
+		/**
+		 * @brief Returns whether another period must be played.
+		 * @param aPeriodStates Current period states.
+		 * @param aMatchConfiguration Match configuration.
+		*/
+		bool operator()( const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const;
+	};
+
 	//! Retrieves the \copybrief mStates
 	const period_states& GetStates() const noexcept;
 
