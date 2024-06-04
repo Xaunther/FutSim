@@ -15,6 +15,9 @@ INITIALIZE_TEST( TPeriodState )
 
 void TPeriodState::TestExceptions() const
 {
+	// Test CheckMatchConfiguration
+	CheckException( []() { CExtraTimePeriodState::CheckMatchConfiguration( CMatchConfiguration{} ); },
+		"The match configuration cannot configure an extra time period state." );
 }
 
 std::vector<std::string> TPeriodState::ObtainedResults() const noexcept
