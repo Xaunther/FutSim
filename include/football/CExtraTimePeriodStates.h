@@ -11,6 +11,34 @@ namespace futsim::football
 */
 class CExtraTimePeriodStates : public CPeriodStates
 {
+public:
+	/**
+	 * @brief Default policy functor for the periods of extra time.
+	 * @details All configured periods are played.
+	*/
+	struct SDefaultPeriodPolicy
+	{
+		/**
+		 * @brief Returns whether another period must be played.
+		 * @param aPeriodStates Current period states.
+		 * @param aMatchConfiguration Match configuration.
+		*/
+		bool operator()( const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const;
+	};
+
+	/**
+	 * @brief Default policy functor for the periods of extra time with silver goal.
+	 * @details No more periods are played when the tie condition is no longer satisfied after a period.
+	*/
+	struct SSilverGoalPeriodPolicy : public SDefaultPeriodPolicy
+	{
+		/**
+		 * @brief Returns whether another period must be played.
+		 * @param aPeriodStates Current period states.
+		 * @param aMatchConfiguration Match configuration.
+		*/
+		bool operator()( const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const;
+	};
 };
 
 } // futsim::football namespace
