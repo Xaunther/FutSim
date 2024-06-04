@@ -2,6 +2,8 @@
 
 #include "IJsonable.h"
 
+#include "football/types/CPeriodStates.h"
+
 namespace futsim::football
 {
 
@@ -11,6 +13,16 @@ namespace futsim::football
 */
 class CPeriodStates : public IJsonable
 {
+protected:
+	using period_states = types::CPeriodStates::period_states;
+
+public:
+	//! Retrieves the \copybrief mStates
+	const period_states& GetStates() const noexcept;
+
+private:
+	//! Period states.
+	period_states mStates;
 };
 
 } // futsim::football namespace
