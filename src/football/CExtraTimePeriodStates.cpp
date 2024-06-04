@@ -21,4 +21,12 @@ bool CExtraTimePeriodStates::SSilverGoalPeriodPolicy::operator()(
 	return homeScoredGoals == awayScoredGoals && ( !aMatchConfiguration.GetTieCondition()->GetHomeTeamGoals() || homeScoredGoals == 0 );
 }
 
+const CMatchConfiguration& CExtraTimePeriodStates::CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration )
+{
+	if( !CExtraTimePeriodState::CheckMatchConfiguration( aMatchConfiguration ).GetTieCondition() )
+		throw std::invalid_argument{ "The match configuration cannot configure the extra time period states." };
+	return aMatchConfiguration;
+	return aMatchConfiguration;
+}
+
 } // futsim::football namespace

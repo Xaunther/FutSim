@@ -56,6 +56,12 @@ public:
 		const CTeamStrategy& aAwayTeamStrategy,
 		std::uniform_random_bit_generator auto& aGenerator
 	);
+
+	/**
+	 * @brief Checks that the match configuration can produce extra time periods.
+	 * @param aMatchConfiguration Match configuration.
+	*/
+	static const CMatchConfiguration& CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration );
 };
 
 CExtraTimePeriodStates::CExtraTimePeriodStates(
