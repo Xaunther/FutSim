@@ -10,11 +10,6 @@ bool CPeriodState::SDefaultPeriodPlayPolicy::operator()( const plays& aPlays, co
 	return aPlays.size() < aMatchConfiguration.GetPlayTime().GetPeriodTime();
 }
 
-const CPeriodState::plays& CPeriodState::GetPlays() const noexcept
-{
-	return mPlays;
-}
-
 void CPeriodState::JSON( json& aJSON ) const noexcept
 {
 	for( auto& JSONPlays = aJSON[ JSON_PLAYS ]; const auto & play : mPlays )
@@ -24,6 +19,17 @@ void CPeriodState::JSON( json& aJSON ) const noexcept
 		AddToJSON( elementJSON, play.state );
 		JSONPlays.push_back( std::move( elementJSON ) );
 	}
+}
+
+const CPeriodState::plays& CPeriodState::GetPlays() const noexcept
+{
+	return mPlays;
+}
+
+CPeriodState::goal_count CPeriodState::CountScoredGoals( const bool aHomeTeam ) const noexcept
+{
+	return static_cast< goal_count >( std::ranges::count_if( mPlays, [ &aHomeTeam ]( const auto& aPlay )
+		{ return aPlay.homeTeam == aHomeTeam && aPlay.state.IsGoalScored(); } ) );
 }
 
 void CPeriodState::PushPlayState( CPlayState&& aPlayState, const bool aHomeTeamAttack ) noexcept
