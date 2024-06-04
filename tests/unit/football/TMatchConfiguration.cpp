@@ -17,6 +17,10 @@ void TMatchConfiguration::TestExceptions() const
 	// Test member constructor
 	CheckException( []() { CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, CTieCondition{}, {}, {} }; },
 		"There cannot be a tie condition without a penalty shootout configuration" );
+	CheckException( []() { CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, {}, CExtraTime{}, {} }; },
+		"There cannot be extra time without a tie condition." );
+	CheckException( []() { CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, {}, {}, CPenaltyShootoutConfiguration{} }; },
+		"There cannot be a penalty shootout without a tie condition." );
 
 	// Test JSON constructor
 	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
@@ -27,6 +31,16 @@ void TMatchConfiguration::TestExceptions() const
 				}
 			}
 		} )" ); }, "There cannot be a tie condition without a penalty shootout configuration" );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
+			"Match configuration": {
+				"Extra time": {}
+			}
+		} )" ); }, "There cannot be extra time without a tie condition." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
+			"Match configuration": {
+				"Penalty shootout configuration": {}
+			}
+		} )" ); }, "There cannot be a penalty shootout without a tie condition." );
 
 	// Test CheckTeamStrategy
 	{

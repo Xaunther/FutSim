@@ -20,6 +20,24 @@ const types::CMatchConfiguration::optional_tie_condition& CheckTieCondition(
 	const types::CMatchConfiguration::optional_tie_condition& aTieCondition,
 	const types::CMatchConfiguration::optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration );
 
+/**
+ * @brief Checks that the extra time is only configured with a tie condition.
+ * @param aExtraTime Extra time configuration.
+ * @param aTieCondition Tie condition.
+*/
+const types::CMatchConfiguration::optional_extra_time& CheckExtraTime(
+	const types::CMatchConfiguration::optional_extra_time& aExtraTime,
+	const types::CMatchConfiguration::optional_tie_condition& aTieCondition );
+
+/**
+ * @brief Checks that the penalty shootout is only configured with a tie condition.
+ * @param aPenaltyShootoutConfiguration Penalty shootout configuration.
+ * @param aTieCondition Tie condition.
+*/
+const types::CMatchConfiguration::optional_penalty_shootout_configuration& CheckPenaltyShootoutConfiguration(
+	const types::CMatchConfiguration::optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration,
+	const types::CMatchConfiguration::optional_tie_condition& aTieCondition );
+
 } // anonymous namespace
 
 CMatchConfiguration::CMatchConfiguration(
@@ -37,8 +55,8 @@ CMatchConfiguration::CMatchConfiguration(
 	mApplyAmbientFactor( aApplyAmbientFactor ),
 	mTacticsConfiguration( aTacticsConfiguration ),
 	mTieCondition( CheckTieCondition( aTieCondition, aPenaltyShootoutConfiguration ) ),
-	mExtraTime( aExtraTime ),
-	mPenaltyShootoutConfiguration( aPenaltyShootoutConfiguration ),
+	mExtraTime( CheckExtraTime( aExtraTime, mTieCondition ) ),
+	mPenaltyShootoutConfiguration( CheckPenaltyShootoutConfiguration( aPenaltyShootoutConfiguration, mTieCondition ) ),
 	mDrawConfiguration( aDrawConfiguration )
 {
 }
@@ -50,8 +68,9 @@ CMatchConfiguration::CMatchConfiguration( const json& aJSON ) try :
 	mApplyAmbientFactor( ValueFromOptionalJSONKey<bool>( aJSON, JSON_APPLY_AMBIENT_FACTOR, DEFAULT_APPLY_AMBIENT_FACTOR ) ),
 	mTacticsConfiguration( ValueFromOptionalJSONKey<CTacticsConfiguration>( aJSON ) ),
 	mTieCondition( ValueFromOptionalJSONKey<optional_tie_condition>( aJSON, CTieCondition::JSON_KEY, {} ) ),
-	mExtraTime( ValueFromOptionalJSONKey<optional_extra_time>( aJSON, CExtraTime::JSON_KEY, {} ) ),
-	mPenaltyShootoutConfiguration( ValueFromOptionalJSONKey<optional_penalty_shootout_configuration>( aJSON, CPenaltyShootoutConfiguration::JSON_KEY, {} ) ),
+	mExtraTime( CheckExtraTime( ValueFromOptionalJSONKey<optional_extra_time>( aJSON, CExtraTime::JSON_KEY, {} ), mTieCondition ) ),
+	mPenaltyShootoutConfiguration( CheckPenaltyShootoutConfiguration(
+		ValueFromOptionalJSONKey<optional_penalty_shootout_configuration>( aJSON, CPenaltyShootoutConfiguration::JSON_KEY, {} ), mTieCondition ) ),
 	mDrawConfiguration( ValueFromOptionalJSONKey<CDrawConfiguration>( aJSON ) )
 {
 	CheckTieCondition( mTieCondition, mPenaltyShootoutConfiguration );
@@ -134,6 +153,26 @@ const types::CMatchConfiguration::optional_tie_condition& CheckTieCondition(
 	return aTieCondition;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the tie condition." )
+
+const types::CMatchConfiguration::optional_extra_time& CheckExtraTime(
+	const types::CMatchConfiguration::optional_extra_time& aExtraTime,
+	const types::CMatchConfiguration::optional_tie_condition& aTieCondition ) try
+{
+	if( aExtraTime && !aTieCondition )
+		throw std::invalid_argument( "There cannot be extra time without a tie condition." );
+	return aExtraTime;
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the extra time configuration." )
+
+const types::CMatchConfiguration::optional_penalty_shootout_configuration& CheckPenaltyShootoutConfiguration(
+	const types::CMatchConfiguration::optional_penalty_shootout_configuration& aPenaltyShootoutConfiguration,
+	const types::CMatchConfiguration::optional_tie_condition& aTieCondition ) try
+{
+	if( aPenaltyShootoutConfiguration && !aTieCondition )
+		throw std::invalid_argument( "There cannot be a penalty shootout without a tie condition." );
+	return aPenaltyShootoutConfiguration;
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the penalty shootout configuration." )
 
 } // anonymous namespace
 
