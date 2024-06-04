@@ -15,6 +15,13 @@ bool CPeriodState::SDefaultExtraTimePeriodPlayPolicy::operator()( const plays& a
 	return aPlays.size() < aMatchConfiguration.GetExtraTime()->GetPeriodTime();
 }
 
+const CMatchConfiguration& CPeriodState::SDefaultExtraTimePeriodPlayPolicy::CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration )
+{
+	if( !aMatchConfiguration.GetExtraTime() )
+		throw std::invalid_argument{ "The match configuration cannot be used for the default extra time period play policy." };
+	return aMatchConfiguration;
+}
+
 bool CPeriodState::SGoldenGoalPeriodPlayPolicy::operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const
 {
 	using enum types::CGoalDrawConfiguration::E_CHANCE_OUTCOME;

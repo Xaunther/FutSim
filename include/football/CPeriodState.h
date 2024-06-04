@@ -45,6 +45,12 @@ public:
 		 * @param aMatchConfiguration Match configuration.
 		*/
 		bool operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const;
+
+		/**
+		 * @brief Checks that the match configuration can be used in the policy.
+		 * @param aMatchConfiguration Match configuration.
+		*/
+		static const CMatchConfiguration& CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration );
 	};
 
 	/**
