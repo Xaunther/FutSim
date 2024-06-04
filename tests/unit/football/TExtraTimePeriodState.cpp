@@ -11,16 +11,16 @@ using namespace nlohmann;
 
 constexpr bool PRINT_OUTPUT = false;
 
-INITIALIZE_TEST( TPeriodState )
+INITIALIZE_TEST( TExtraTimePeriodState )
 
-void TPeriodState::TestExceptions() const
+void TExtraTimePeriodState::TestExceptions() const
 {
 	// Test CheckMatchConfiguration
 	CheckException( []() { CExtraTimePeriodState::CheckMatchConfiguration( CMatchConfiguration{} ); },
 		"The match configuration cannot configure an extra time period state." );
 }
 
-std::vector<std::string> TPeriodState::ObtainedResults() const noexcept
+std::vector<std::string> TExtraTimePeriodState::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
 
@@ -69,7 +69,7 @@ std::vector<std::string> TPeriodState::ObtainedResults() const noexcept
 	return PRINT_OUTPUT ? result : std::vector<std::string>{};
 }
 
-std::vector<std::string> TPeriodState::ExpectedResults() const noexcept
+std::vector<std::string> TExtraTimePeriodState::ExpectedResults() const noexcept
 {
 	return {};
 }
