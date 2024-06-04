@@ -35,23 +35,60 @@ public:
 	};
 
 	/**
+	 * @brief Default policy functor for the periods of extra time.
+	 * @details All configured extra time periods are played.
+	*/
+	struct SDefaultExtraTimePeriodPolicy
+	{
+		/**
+		 * @brief Returns whether another period must be played.
+		 * @param aPeriodStates Current period states.
+		 * @param aMatchConfiguration Match configuration.
+		*/
+		bool operator()( const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const;
+
+		/**
+		 * @brief Checks that the match configuration can produce extra time periods.
+		 * @param aMatchConfiguration Match configuration.
+		*/
+		static const CMatchConfiguration& CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration );
+	};
+
+	/**
+	 * @brief Default policy functor for the periods of extra time with silver goal.
+	 * @details No more extra time periods are played when the tie condition is no longer satisfied after a period.
+	*/
+	struct SSilverGoalPeriodPolicy : public SDefaultExtraTimePeriodPolicy
+	{
+		/**
+		 * @brief Returns whether another period must be played.
+		 * @param aPeriodStates Current period states.
+		 * @param aMatchConfiguration Match configuration.
+		*/
+		bool operator()( const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const;
+	};
+
+	/**
 	 * @brief Constructor from the match definition, configuration and current strategies.
 	 * @param aMatch Match definition.
 	 * @param aMatchConfiguration Match configuration.
 	 * @param aHomeTeamStrategy Current match strategy for the home team.
 	 * @param aAwayTeamStrategy Current match strategy for the away team.
 	 * @param aGenerator RNG to use.
+	 * @param aPeriodPlayPolicy Period play policy.
 	 * @param aPeriodPolicy Period policy.
 	 * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
 	*/
-	template <typename T = SDefaultPeriodPolicy> requires types::CPeriodStates::period_policy<T>
+	template <typename T = CPeriodState::SDefaultPeriodPlayPolicy, typename U = SDefaultPeriodPolicy>
+		requires types::CPeriodState::period_play_policy<T>&& types::CPeriodStates::period_policy<U>
 	explicit CPeriodStates(
 		const CMatch& aMatch,
 		const CMatchConfiguration& aMatchConfiguration,
 		const CTeamStrategy& aHomeTeamStrategy,
 		const CTeamStrategy& aAwayTeamStrategy,
 		std::uniform_random_bit_generator auto& aGenerator,
-		const T& aPeriodPolicy = T{}
+		const T& aPeriodPlayPolicy = T{},
+		const U& aPeriodPolicy = U{}
 	);
 
 protected:
@@ -72,14 +109,15 @@ private:
 	period_states mStates;
 };
 
-template <typename T> requires types::CPeriodStates::period_policy<T>
+template <typename T, typename U> requires types::CPeriodState::period_play_policy<T>&& types::CPeriodStates::period_policy<U>
 CPeriodStates::CPeriodStates(
 	const CMatch& aMatch,
 	const CMatchConfiguration& aMatchConfiguration,
 	const CTeamStrategy& aHomeTeamStrategy,
 	const CTeamStrategy& aAwayTeamStrategy,
 	std::uniform_random_bit_generator auto& aGenerator,
-	const T& aPeriodPolicy
+	const T& aPeriodPlayPolicy,
+	const U& aPeriodPolicy
 ) try
 {
 	auto homeTeamAttack = std::bernoulli_distribution{}( aGenerator );
@@ -87,10 +125,10 @@ CPeriodStates::CPeriodStates(
 	{
 		if( homeTeamAttack )
 			mStates.emplace_back( aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
-				homeTeamAttack, aGenerator );
+				homeTeamAttack, aGenerator, aPeriodPlayPolicy );
 		else
 			mStates.emplace_back( aMatch, aMatchConfiguration, aAwayTeamStrategy, aHomeTeamStrategy,
-				homeTeamAttack, aGenerator );
+				homeTeamAttack, aGenerator, aPeriodPlayPolicy );
 		homeTeamAttack = !homeTeamAttack;
 	} while( aPeriodPolicy( mStates, aMatchConfiguration ) );
 }

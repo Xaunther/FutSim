@@ -15,6 +15,12 @@ INITIALIZE_TEST( TPeriodStates )
 
 void TPeriodStates::TestExceptions() const
 {
+	// Test CheckMatchConfiguration
+	CheckException( []() { CPeriodStates::SDefaultExtraTimePeriodPolicy::CheckMatchConfiguration( CMatchConfiguration{} ); },
+		"The match configuration cannot be used for the default extra time period play policy." );
+	CheckException( []() { CPeriodStates::SDefaultExtraTimePeriodPolicy::CheckMatchConfiguration( CMatchConfiguration{
+		CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, {}, CExtraTime{}, CPenaltyShootoutConfiguration{} } ); },
+		"The match configuration cannot configure the extra time period states." );
 }
 
 std::vector<std::string> TPeriodStates::ObtainedResults() const noexcept
@@ -42,9 +48,24 @@ std::vector<std::string> TPeriodStates::ObtainedResults() const noexcept
 			types::CLineup::names{ "Morris", "Adebayo" }, {} } };
 	const CTeamStrategy awayTeamStrategy{ "N", homeTeamStrategy.GetLineup() };
 
+	const CMatchConfiguration extraTimeMatchConfig{ CPlayTime{}, CLineupConfiguration{}, true,
+			CTacticsConfiguration{}, CTieCondition{}, CExtraTime{}, CPenaltyShootoutConfiguration{} };
+	const CMatchConfiguration goldenGoalMatchConfig{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, CTieCondition{},
+			CExtraTime{ CExtraTime::DEFAULT_PERIOD_COUNT, 200, CExtraTime::DEFAULT_AVAILABLE_SUBS, E_GOAL_RULE::GOLDEN_GOAL },
+			CPenaltyShootoutConfiguration{} };
+	const CMatchConfiguration silverGoalMatchConfig{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, CTieCondition{},
+			CExtraTime{ 20, 15, CExtraTime::DEFAULT_AVAILABLE_SUBS, E_GOAL_RULE::SILVER_GOAL },
+			CPenaltyShootoutConfiguration{} };
+
 	for( const auto& periodStates : {
-		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
-			CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, rng },
+		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, CMatchConfiguration{},
+				homeTeamStrategy, awayTeamStrategy, rng },
+		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, extraTimeMatchConfig,
+				homeTeamStrategy, awayTeamStrategy, rng, CPeriodState::SDefaultExtraTimePeriodPlayPolicy{}, CPeriodStates::SDefaultExtraTimePeriodPolicy{} },
+		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, goldenGoalMatchConfig,
+				homeTeamStrategy, awayTeamStrategy, rng, CPeriodState::SGoldenGoalPeriodPlayPolicy{}, CPeriodStates::SSilverGoalPeriodPolicy{} },
+		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, silverGoalMatchConfig,
+				homeTeamStrategy, awayTeamStrategy, rng, CPeriodState::SDefaultExtraTimePeriodPlayPolicy{}, CPeriodStates::SSilverGoalPeriodPolicy{} },
 		} )
 	{
 		result.push_back( std::string{ CPeriodStates::JSON_KEY } + ": "
