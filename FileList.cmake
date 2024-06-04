@@ -24,6 +24,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CDrawConfiguration.h
 	include/football/CExtraTime.h
 	include/football/CExtraTimePeriodState.h
+	include/football/CExtraTimePeriodStates.h
 	include/football/CFoulDrawConfiguration.h
 	include/football/CFoulState.h
 	include/football/CGoalDrawConfiguration.h
@@ -91,6 +92,7 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CDrawConfiguration.cpp
 	src/football/CExtraTime.cpp
 	src/football/CExtraTimePeriodState.cpp
+	src/football/CExtraTimePeriodStates.cpp
 	src/football/CFoulDrawConfiguration.cpp
 	src/football/CFoulState.cpp
 	src/football/CGoalDrawConfiguration.cpp
