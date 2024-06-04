@@ -31,6 +31,16 @@ void TMatchConfiguration::TestExceptions() const
 				}
 			}
 		} )" ); }, "There cannot be a tie condition without a penalty shootout configuration" );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
+			"Match configuration": {
+				"Extra time": {}
+			}
+		} )" ); }, "There cannot be extra time without a tie condition." );
+	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
+			"Match configuration": {
+				"Penalty shootout configuration": {}
+			}
+		} )" ); }, "There cannot be a penalty shootout without a tie condition." );
 
 	// Test CheckTeamStrategy
 	{
