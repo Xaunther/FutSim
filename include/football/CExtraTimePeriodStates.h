@@ -39,6 +39,37 @@ public:
 		*/
 		bool operator()( const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const;
 	};
+
+	/**
+	 * @brief Constructor from the match definition, configuration and current strategies.
+	 * @param aMatch Match definition.
+	 * @param aMatchConfiguration Match configuration.
+	 * @param aHomeTeamStrategy Current match strategy for the home team.
+	 * @param aAwayTeamStrategy Current match strategy for the away team.
+	 * @param aGenerator RNG to use.
+	 * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
+	*/
+	explicit CExtraTimePeriodStates(
+		const CMatch& aMatch,
+		const CMatchConfiguration& aMatchConfiguration,
+		const CTeamStrategy& aHomeTeamStrategy,
+		const CTeamStrategy& aAwayTeamStrategy,
+		std::uniform_random_bit_generator auto& aGenerator
+	);
 };
+
+CExtraTimePeriodStates::CExtraTimePeriodStates(
+	const CMatch& aMatch,
+	const CMatchConfiguration& aMatchConfiguration,
+	const CTeamStrategy& aHomeTeamStrategy,
+	const CTeamStrategy& aAwayTeamStrategy,
+	std::uniform_random_bit_generator auto& aGenerator
+) try :
+	CPeriodStates( aMatchConfiguration.GetExtraTime()->GetGoalRule() == E_GOAL_RULE::SILVER_GOAL ?
+		CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator, SSilverGoalPeriodPolicy{} } :
+		CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator, SDefaultPeriodPolicy{} } )
+{
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the extra time period states." )
 
 } // futsim::football namespace
