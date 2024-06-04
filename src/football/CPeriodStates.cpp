@@ -10,6 +10,31 @@ bool CPeriodStates::SDefaultPeriodPolicy::operator()( const period_states& aPeri
 	return aPeriodStates.size() < aMatchConfiguration.GetPlayTime().GetPeriodCount();
 }
 
+bool CPeriodStates::SDefaultExtraTimePeriodPolicy::operator()(
+	const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const
+{
+	return aPeriodStates.size() < aMatchConfiguration.GetExtraTime()->GetPeriodCount();
+}
+
+const CMatchConfiguration& CPeriodStates::SDefaultExtraTimePeriodPolicy::CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration )
+{
+	if( !CPeriodState::SDefaultExtraTimePeriodPlayPolicy::CheckMatchConfiguration( aMatchConfiguration ).GetTieCondition() )
+		throw std::invalid_argument{ "The match configuration cannot configure the extra time period states." };
+	return aMatchConfiguration;
+}
+
+bool CPeriodStates::SSilverGoalPeriodPolicy::operator()(
+	const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const
+{
+	if( !SDefaultExtraTimePeriodPolicy::operator()( aPeriodStates, aMatchConfiguration ) )
+		return false;
+
+	// We only need to check the goals scored in the last period
+	const auto& homeScoredGoals = aPeriodStates.back().CountScoredGoals( true );
+	const auto& awayScoredGoals = aPeriodStates.back().CountScoredGoals( false );
+	return homeScoredGoals == awayScoredGoals && ( !aMatchConfiguration.GetTieCondition()->GetHomeTeamGoals() || homeScoredGoals == 0 );
+}
+
 void CPeriodStates::JSON( json& aJSON ) const noexcept
 {
 	AddKeyArrayToJSON( aJSON, mStates );
