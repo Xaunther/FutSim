@@ -17,6 +17,7 @@ class CPeriodStates : public IJsonable
 {
 protected:
 	using period_states = types::CPeriodStates::period_states;
+	using goal_count = types::CTieCondition::goal_count;
 
 public:
 	/**
@@ -100,6 +101,12 @@ protected:
 public:
 	//! Retrieves the \copybrief mStates
 	const period_states& GetStates() const noexcept;
+
+	/**
+	 * @brief Counts the goals scored by the given team.
+	 * @param aHomeTeam Whether to count the home team goals.
+	*/
+	goal_count CountScoredGoals( const bool aHomeTeam ) const noexcept;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Period states";
