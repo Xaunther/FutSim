@@ -57,6 +57,9 @@ public:
 	//! Retrieves the \copybrief mStates
 	const period_states& GetStates() const noexcept;
 
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Period states";
+
 private:
 	//! Period states.
 	period_states mStates;
