@@ -16,6 +16,7 @@ class CPeriodState : public IJsonable
 {
 protected:
 	using plays = types::CPeriodState::plays;
+	using goal_count = types::CTieCondition::goal_count;
 
 public:
 	/**
@@ -98,6 +99,12 @@ protected:
 public:
 	//! Retrieves the \copybrief mPlays
 	const plays& GetPlays() const noexcept;
+
+	/**
+	 * @brief Counts the goals scored by the given team.
+	 * @param aHomeTeam Whether to count the home team goals.
+	*/
+	goal_count CountScoredGoals( const bool aHomeTeam ) const noexcept;
 
 protected:
 	/**
