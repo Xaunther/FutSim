@@ -39,6 +39,13 @@ public:
 		std::uniform_random_bit_generator auto& aGenerator
 	);
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
+public:
 	//! Retrieves the \copybrief mMandatoryPlayTimeState
 	const CPeriodStates& GetMandatoryPlayTimeState() const noexcept;
 
@@ -47,6 +54,13 @@ public:
 
 	//! Retrieves the \copybrief mPenaltyShootoutState
 	const optional_penalty_shootout_state& GetPenaltyShootoutState() const noexcept;
+
+	//! JSON key for the class.
+	static inline constexpr std::string_view JSON_KEY = "Match state";
+	//! JSON key for the \copybrief mMandatoryPlayTimeState
+	static inline constexpr std::string_view JSON_MANDATORY_PERIOD_STATES = "Mandatory time period states";
+	//! JSON key for the \copybrief mExtraTimeState
+	static inline constexpr std::string_view JSON_EXTRA_PERIOD_STATES = "Extra time period states";
 
 private:
 	//! Mandatory play time of the match.
