@@ -15,6 +15,9 @@ INITIALIZE_TEST( TPeriodState )
 
 void TPeriodState::TestExceptions() const
 {
+	// Test SDefaultExtraTimePeriodPlayPolicy::CheckMatchConfiguration
+	CheckException( []() { CPeriodState::SDefaultExtraTimePeriodPlayPolicy::CheckMatchConfiguration( CMatchConfiguration{} ); },
+		"The match configuration cannot be used for the default extra time period play policy." );
 }
 
 std::vector<std::string> TPeriodState::ObtainedResults() const noexcept
