@@ -30,4 +30,10 @@ const CPlayState::chances_states& CPlayState::GetChancesStates() const noexcept
 	return mChancesStates;
 }
 
+bool CPlayState::IsGoalScored() const noexcept
+{
+	using enum types::CGoalDrawConfiguration::E_CHANCE_OUTCOME;
+	return !mChancesStates.empty() && mChancesStates.back().GetChanceOutcome() == GOAL;
+}
+
 } // futsim::football namespace
