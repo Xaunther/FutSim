@@ -39,10 +39,15 @@ jobs:
        chmod +x ./llvm.sh
        sudo ./llvm.sh 18
 
-    - name: Install nlohmann_json
+    - name: Install nlohmann_json in Ubuntu
       if: matrix.config.os == 'ubuntu-24.04'
       run: |
        sudo apt-get install nlohmann-json3-dev
+
+    - name: Install nlohmann_json in Windows
+      if: matrix.config.os == 'windows-latest'
+      run: |
+       git clone https://github.com/nlohmann/json externals
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
