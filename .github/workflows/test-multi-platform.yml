@@ -19,18 +19,25 @@ jobs:
       # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
         config:
-          - { os: ubuntu-24.04, build_type: "Release", c_compiler: "gcc", cpp_compiler: "g++" }
-          - { os: ubuntu-24.04, build_type: "Release", c_compiler: "clang-18", cpp_compiler: "clang++-18" }
-          - { os: windows-latest, build_type: "Release", c_compiler: "cl", cpp_compiler: "cl" }
+          - { os: ubuntu-24.04, build_type: "Release", c_compiler: "gcc", cpp_compiler: "g++", generator: "Ninja" }
+          - { os: ubuntu-24.04, build_type: "Release", c_compiler: "clang-18", cpp_compiler: "clang++-18", generator: "Ninja" }
+          - { os: windows-latest, build_type: "Release", c_compiler: "cl", cpp_compiler: "cl", generator: "\"Visual Studio 17 2022\"" }
 
     steps:
     - uses: actions/checkout@v4
       with:
         submodules: recursive
-    - uses: ts-graphviz/setup-graphviz@v2
-    - uses: ssciwr/doxygen-install@v1
-    - uses: ilammy/msvc-dev-cmd@v1
-    - uses: seanmiddleditch/gha-setup-ninja@v4
+
+    - name: Install Ubuntu dependencies
+      if: matrix.config.os == 'ubuntu-24.04'
+      run: |
+       sudo apt-get install nlohmann-json3-dev graphviz doxygen ninja-build
+
+    - name: Install Windows dependencies
+      if: matrix.config.os == 'windows-latest'
+      run: |
+       choco install graphviz doxygen.install
+       vcpkg install nlohmann-json
 
     - name: Install Clang 18
       if: matrix.config.cpp_compiler == 'clang++-18'
@@ -38,16 +45,6 @@ jobs:
        wget -O llvm.sh https://apt.llvm.org/llvm.sh
        chmod +x ./llvm.sh
        sudo ./llvm.sh 18
-
-    - name: Install nlohmann_json in Ubuntu
-      if: matrix.config.os == 'ubuntu-24.04'
-      run: |
-       sudo apt-get install nlohmann-json3-dev
-
-    - name: Install nlohmann_json in Windows
-      if: matrix.config.os == 'windows-latest'
-      run: |
-       vcpkg install nlohmann-json
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
@@ -65,7 +62,7 @@ jobs:
         -DCMAKE_CXX_COMPILER=${{ matrix.config.cpp_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }}
         -S ${{ github.workspace }}
-        -G Ninja
+        -G ${{ matrix.config.generator }}
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
