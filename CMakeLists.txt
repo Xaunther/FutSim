@@ -100,7 +100,8 @@ configure_file(${FUTSIM_INCLUDE_DIR}/Config.h.in ${FUTSIM_INCLUDE_DIR}/Config.h)
 configure_file(${FUTSIM_INCLUDE_DIR}/ENationality.h.in ${FUTSIM_INCLUDE_DIR}/ENationality.h)
 
 # Include directories
-include_directories(${FUTSIM_INCLUDE_DIR} ${FUTSIM_DIR}/src)
+find_path(JSON_INCLUDE_DIR NAMES nlohmann)
+include_directories(${FUTSIM_INCLUDE_DIR} ${FUTSIM_DIR}/src ${JSON_INCLUDE_DIR})
 
 # Link directories
 link_directories(${FUTSIM_LIBS_DIR})
