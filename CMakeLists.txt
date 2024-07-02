@@ -38,7 +38,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DJSON_USE_IMPLICIT_CONVERSIONS=0")
 set(CMAKE_CXX_FLAGS_RELEASE "-Os")
 
 # Find json package
-find_package(nlohmann_json)
+find_package(nlohmann_json 3.11 REQUIRED)
 
 # Function to add a new object module
 function(add_futsim_object_module MODULE_NAME SOURCES)
