@@ -38,8 +38,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DJSON_USE_IMPLICIT_CONVERSIONS=0")
 set(CMAKE_CXX_FLAGS_RELEASE "-Os")
 
 # Find json package
-set(JSON_DIR ${FUTSIM_DIR}/externals/json)
-add_subdirectory(${JSON_DIR})
+find_package(nlohmann_json 3.11 REQUIRED)
 
 # Function to add a new object module
 function(add_futsim_object_module MODULE_NAME SOURCES)
@@ -101,7 +100,8 @@ configure_file(${FUTSIM_INCLUDE_DIR}/Config.h.in ${FUTSIM_INCLUDE_DIR}/Config.h)
 configure_file(${FUTSIM_INCLUDE_DIR}/ENationality.h.in ${FUTSIM_INCLUDE_DIR}/ENationality.h)
 
 # Include directories
-include_directories(${FUTSIM_INCLUDE_DIR} ${FUTSIM_DIR}/src ${JSON_DIR}/include)
+find_path(JSON_INCLUDE_DIR NAMES nlohmann)
+include_directories(${FUTSIM_INCLUDE_DIR} ${FUTSIM_DIR}/src ${JSON_INCLUDE_DIR})
 
 # Link directories
 link_directories(${FUTSIM_LIBS_DIR})

@@ -1,6 +1,3 @@
 [submodule "doc/content/MathJax"]
 	path = doc/content/MathJax
 	url = https://github.com/mathjax/MathJax.git
-[submodule "externals/json"]
-	path = externals/json
-	url = git@github.com:nlohmann/json.git
