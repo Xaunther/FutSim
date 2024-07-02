@@ -47,7 +47,7 @@ jobs:
     - name: Install nlohmann_json in Windows
       if: matrix.config.os == 'windows-latest'
       run: |
-       git clone https://github.com/nlohmann/json externals
+       vcpkg install nlohmann-json
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
@@ -61,6 +61,7 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
+        -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake
         -DCMAKE_CXX_COMPILER=${{ matrix.config.cpp_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }}
         -S ${{ github.workspace }}
