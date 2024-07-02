@@ -19,8 +19,8 @@ jobs:
       # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
         config:
-          - { os: ubuntu-latest, build_type: "Release", c_compiler: "gcc", cpp_compiler: "g++" }
-          - { os: ubuntu-latest, build_type: "Release", c_compiler: "clang-18", cpp_compiler: "clang++-18" }
+          - { os: ubuntu-24.04, build_type: "Release", c_compiler: "gcc", cpp_compiler: "g++" }
+          - { os: ubuntu-24.04, build_type: "Release", c_compiler: "clang-18", cpp_compiler: "clang++-18" }
           - { os: windows-latest, build_type: "Release", c_compiler: "cl", cpp_compiler: "cl" }
 
     steps:
@@ -40,7 +40,7 @@ jobs:
        sudo ./llvm.sh 18
 
     - name: Install nlohmann_json
-      if: matrix.config.os == 'ubuntu-latest'
+      if: matrix.config.os == 'ubuntu-24.04'
       run: |
        sudo apt-get install nlohmann-json3-dev
 
