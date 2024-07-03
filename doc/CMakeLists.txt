@@ -11,7 +11,6 @@ endif()
 set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
 set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 set(CONTENT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/content)
-set(MATHJAX_PATH ${CONTENT_PATH}/MathJax)
 
 # Configure doxyfile
 configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
@@ -21,7 +20,6 @@ list(TRANSFORM FUTSIM_EXTERNAL_HEADERS PREPEND ${FUTSIM_DIR}/ OUTPUT_VARIABLE FU
 
 # Add command that generates the doxygen documentation
 add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/html/index.html
-	COMMAND ${CMAKE_COMMAND} -E copy_directory ${MATHJAX_PATH}/es5 ${CMAKE_CURRENT_SOURCE_DIR}/html/MathJax/es5
 	COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 	COMMENT "Generating documentation with Doxygen"
