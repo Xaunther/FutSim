@@ -9,7 +9,10 @@
 #include "football/CPossessionState.h"
 #include "football/EPlayerSkill.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -60,8 +63,6 @@ public:
 	//! Returns whther the play ended in a goal.
 	bool IsGoalScored() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Play state";
 	//! JSON key for the \copybrief mChancesStates
 	static inline constexpr std::string_view JSON_CHANCES = "Chances";
 
@@ -159,9 +160,15 @@ types::CPlayState::chances_states DrawChances(
 		types::CTacticConfiguration::skill_bonus TkSkill = 0, ShSkill = 0;
 		if( aMatchConfiguration.GetDrawConfiguration().CreateChanceDistribution( ( aDefendingTeamStrategy.ForEachPlayerSkill(
 			E_PLAYER_SKILL::Tk, aMatch, aMatchConfiguration, !aHomeTeamAttack, aAttackingTeamStrategy,
-			[ &TkSkill ]( const auto& aSkill ) { TkSkill += aSkill; } ), TkSkill ),
+			[ &TkSkill ]( const auto& aSkill )
+		{
+			TkSkill += aSkill;
+		} ), TkSkill ),
 			( aAttackingTeamStrategy.ForEachPlayerSkill( E_PLAYER_SKILL::Sh, aMatch, aMatchConfiguration, aHomeTeamAttack, aDefendingTeamStrategy,
-				[ &ShSkill ]( const auto& aSkill ) { ShSkill += aSkill; } ), ShSkill ) )( aGenerator ) )
+				[ &ShSkill ]( const auto& aSkill )
+		{
+			ShSkill += aSkill;
+		} ), ShSkill ) )( aGenerator ) )
 			return CreateChances<std::false_type>( aMatch, aMatchConfiguration, aAttackingTeamStrategy, aDefendingTeamStrategy, aHomeTeamAttack, aGenerator );
 	}
 	else if( aMatchConfiguration.GetDrawConfiguration().CreateSetPieceDistribution()( aGenerator ) )
@@ -189,4 +196,12 @@ types::CPlayState::chances_states CreateChances(
 
 } // detail namespace
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPlayState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Play state";
+};
+
+} // futsim namespace

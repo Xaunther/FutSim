@@ -14,11 +14,6 @@ protected:
 	using json = types::IJsonable::json;
 
 public:
-	//! JSON traits for any class
-	template <typename T> struct json_traits
-	{
-	};
-
 	/**
 	 * @brief Virtual destructor for base class.
 	 */
@@ -34,6 +29,11 @@ private:
 	 * @copydoc ToJSON
 	*/
 	virtual void JSON( json& aJSON ) const noexcept = 0;
+};
+
+//! JSON traits for any class
+template <typename T> struct json_traits
+{
 };
 
 } // futsim namespace

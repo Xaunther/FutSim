@@ -7,7 +7,10 @@
 
 #include "football/EPlayerSkill.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -135,8 +138,6 @@ public:
 	template <E_PLAYER_SKILL tPlayerSkill>
 	position_draw_distribution CreatePositionDrawDistribution() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Goal draw configuration";
 	//! JSON key for the \copybrief mAverageGoals
 	static inline constexpr std::string_view JSON_AVERAGE_GOALS = "Average goals";
 	//! JSON key for the \copybrief mAveragePenaltyGoals
@@ -197,6 +198,14 @@ private:
 
 	//! Probability to get an extra corner after any chance.
 	probability mExtraCornerProbability;
+};
+
+} // football namespace
+
+template <> struct json_traits<football::CGoalDrawConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Goal draw configuration";
 };
 
 } // futsim namespace

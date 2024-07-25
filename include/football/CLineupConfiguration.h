@@ -4,7 +4,10 @@
 
 #include "football/types/CLineupConfiguration.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 class CLineup;
@@ -70,8 +73,6 @@ public:
 	*/
 	const CLineup& CheckLineup( const CLineup& aLineup ) const;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Lineup configuration";
 	//! JSON key for the minimum number of DFs.
 	static inline constexpr std::string_view JSON_MIN_DFS = "Min DFs";
 	//! JSON key for the minimum number of MFs.
@@ -113,6 +114,14 @@ private:
 	player_count mMinPlayerCount;
 	//! Number of players on the bench. Empty for unlimited number.
 	optional_player_count mBenchedPlayersCount;
+};
+
+} // football namespace
+
+template <> struct json_traits<football::CLineupConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Lineup configuration";
 };
 
 } // futsim namespace

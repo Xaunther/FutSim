@@ -8,7 +8,10 @@
 #include <random>
 #include <span>
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 class CLineup;
@@ -100,8 +103,6 @@ public:
 	*/
 	const CLineup& CheckLineup( const CLineup& aLineup ) const;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Team";
 	//! JSON key for the \copybrief mName
 	static inline constexpr std::string_view JSON_NAME = "Name";
 	//! JSON key for the \copybrief mAbbreviation
@@ -134,4 +135,12 @@ private:
 	attendance_distribution::param_type mAttendanceDistributionParameters;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CTeam>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Team";
+};
+
+} // futsim namespace

@@ -48,7 +48,7 @@ inline T ValueFromJSON( const is_json_type auto& aJSON );
  * @param aKeyName Name of the key to search.
 */
 template<is_json_constructible T>
-inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName = T::JSON_KEY, auto&&... aArgs );
+inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName = json_traits<T>::KEY, auto&&... aArgs );
 
 /**
  * @brief Helper function to construct a non-jsonable type under a key in a JSON object.
@@ -66,7 +66,7 @@ inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::st
  * @param aDefaultValue Default value is key is not found.
 */
 template<is_json_constructible T>
-inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName = T::JSON_KEY, const T& aDefaultValue = T{}, auto&&... aArgs );
+inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName = json_traits<T>::KEY, const T& aDefaultValue = T{}, auto&&... aArgs );
 
 /**
  * @brief Helper function to construct a non-jsonable type under an optional key in a JSON object.
@@ -99,7 +99,7 @@ inline T ValueFromJSONString( const std::string_view& aJSONString );
  * @param aKeyName Name of the key to search.
 */
 template<is_json_constructible T>
-inline T ValueFromJSONKeyString( const std::string_view& aJSONString, const std::string_view aKeyName = T::JSON_KEY, auto&&... aArgs );
+inline T ValueFromJSONKeyString( const std::string_view& aJSONString, const std::string_view aKeyName = json_traits<T>::KEY, auto&&... aArgs );
 
 /**
  * @brief Helper function to construct a non-jsonable type from a key in a JSON string.
@@ -149,7 +149,7 @@ inline void AddKeyArrayToJSON( is_json_type auto& aJSON, const auto& aContainer,
  * @todo Remove template in favour of auto once MSVC allows to use decltype on local arguments (compiler bug).
 */
 template<is_jsonable T>
-inline void AddToJSONKey( is_json_type auto& aJSON, const T& aObject, const std::string_view aKeyName = T::JSON_KEY, auto&&... aArgs ) noexcept;
+inline void AddToJSONKey( is_json_type auto& aJSON, const T& aObject, const std::string_view aKeyName = json_traits<T>::KEY, auto&&... aArgs ) noexcept;
 
 /**
  * @brief Helper function to add a non-jsonable type to a JSON object.

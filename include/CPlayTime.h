@@ -47,8 +47,6 @@ public:
 	//! Retrieves the \copybrief mPeriodTime
 	const period_time& GetPeriodTime() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Play time";
 	//! JSON key for the \copybrief mPeriodCount
 	static inline constexpr std::string_view JSON_PERIOD_COUNT = "Period count";
 	//! JSON key for the \copybrief mPeriodTime
@@ -59,6 +57,12 @@ private:
 	period_count mPeriodCount;
 	//! Length of each period.
 	period_time mPeriodTime;
+};
+
+template <> struct json_traits<CPlayTime>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Play time";
 };
 
 } // futsim namespace

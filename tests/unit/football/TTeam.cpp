@@ -16,73 +16,126 @@ INITIALIZE_TEST( TTeam )
 void TTeam::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CTeam{ "", "lut", "Rob Edwards", {}, 1, 11000, 2000 }; }, "The name cannot be empty." );
-	CheckException( []() { CTeam{ "Luton Town FC", "l", "Rob Edwards", {}, 1, 11000, 2000 }; }, "The abbreviation must contain 3 characters, not 1." );
-	CheckException( []() { CTeam{ "Luton Town FC", "a_c", "Rob Edwards", {}, 1, 11000, 2000 }; }, "The abbreviation can only contain letters from A to Z." );
-	CheckException( []() { CTeam{ "Luton Town FC", "lut", "", {}, 1, 11000, 2000 }; }, "The manager name cannot be empty." );
-	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 0, 11000, 2000 }; }, "The support factor must be positive." );
-	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, -1000, 2000 }; }, "The mean attendance cannot be negative." );
-	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 0 }; }, "The standard deviation of the attendance must be positive." );
-	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
-		CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 60, 1 }, { 0, 0, 0, 0 } } },
-		CPlayer{ "Sean", "Longstaff", "", 26, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 80, 1 }, { 0, 0, 0, 0 } } },
-	}, 1, 11000, 0 }; }, "There are two players with the same known name 'Longstaff'." );
+	CheckException( []()
+	{
+		CTeam{ "", "lut", "Rob Edwards", {}, 1, 11000, 2000 };
+	}, "The name cannot be empty." );
+	CheckException( []()
+	{
+		CTeam{ "Luton Town FC", "l", "Rob Edwards", {}, 1, 11000, 2000 };
+	}, "The abbreviation must contain 3 characters, not 1." );
+	CheckException( []()
+	{
+		CTeam{ "Luton Town FC", "a_c", "Rob Edwards", {}, 1, 11000, 2000 };
+	}, "The abbreviation can only contain letters from A to Z." );
+	CheckException( []()
+	{
+		CTeam{ "Luton Town FC", "lut", "", {}, 1, 11000, 2000 };
+	}, "The manager name cannot be empty." );
+	CheckException( []()
+	{
+		CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 0, 11000, 2000 };
+	}, "The support factor must be positive." );
+	CheckException( []()
+	{
+		CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, -1000, 2000 };
+	}, "The mean attendance cannot be negative." );
+	CheckException( []()
+	{
+		CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 0 };
+	}, "The standard deviation of the attendance must be positive." );
+	CheckException( []()
+	{
+		CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
+			CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 60, 1 }, { 0, 0, 0, 0 } } },
+			CPlayer{ "Sean", "Longstaff", "", 26, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 80, 1 }, { 0, 0, 0, 0 } } },
+		}, 1, 11000, 0 };
+	}, "There are two players with the same known name 'Longstaff'." );
 
 	// Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {}
-		} )" ); }, "key 'Name' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+		} )" );
+	}, "key 'Name' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": ""
 			}
-		} )" ); }, "The name cannot be empty." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+		} )" );
+	}, "The name cannot be empty." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC"
 			}
-		} )" ); }, "key 'Abbreviation' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+		} )" );
+	}, "key 'Abbreviation' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC",
 				"Abbreviation": "l"
 			}
-		} )" ); }, "The abbreviation must contain 3 characters, not 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+		} )" );
+	}, "The abbreviation must contain 3 characters, not 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC",
 				"Abbreviation": "a_c"
 			}
-		} )" ); }, "The abbreviation can only contain letters from A to Z." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+		} )" );
+	}, "The abbreviation can only contain letters from A to Z." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC",
 				"Abbreviation": "lut"
 			}
-		} )" ); }, "key 'Manager' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+		} )" );
+	}, "key 'Manager' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC",
 				"Abbreviation": "lut",
 				"Manager": ""
 			}
-		} )" ); }, "The manager name cannot be empty." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+		} )" );
+	}, "The manager name cannot be empty." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC",
 				"Abbreviation": "lut",
 				"Manager": "Rob Edwards"
 			}
-		} )" ); }, "key 'Support factor' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+		} )" );
+	}, "key 'Support factor' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC",
 				"Abbreviation": "lut",
 				"Manager": "Rob Edwards",
 				"Support factor": 0
 			}
-		} )" ); }, "The support factor must be positive." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+		} )" );
+	}, "The support factor must be positive." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC",
 				"Abbreviation": "lut",
@@ -90,8 +143,11 @@ void TTeam::TestExceptions() const
 				"Support factor": 1,
 				"StdDev attendance": 1000
 			}
-		} )" ); }, "key 'Mean attendance' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+		} )" );
+	}, "key 'Mean attendance' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC",
 				"Abbreviation": "lut",
@@ -100,8 +156,11 @@ void TTeam::TestExceptions() const
 				"Mean attendance": -1000,
 				"StdDev attendance": 1000
 			}
-		} )" ); }, "The mean attendance cannot be negative." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+		} )" );
+	}, "The mean attendance cannot be negative." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC",
 				"Abbreviation": "lut",
@@ -109,8 +168,11 @@ void TTeam::TestExceptions() const
 				"Support factor": 1,
 				"Mean attendance": 11000
 			}
-		} )" ); }, "key 'StdDev attendance' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+		} )" );
+	}, "key 'StdDev attendance' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC",
 				"Abbreviation": "lut",
@@ -119,8 +181,11 @@ void TTeam::TestExceptions() const
 				"Mean attendance": 11000,
 				"StdDev attendance": 0
 			}
-		} )" ); }, "The standard deviation of the attendance must be positive." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTeam>( R"( {
+		} )" );
+	}, "The standard deviation of the attendance must be positive." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC",
 				"Abbreviation": "lut",
@@ -163,19 +228,26 @@ void TTeam::TestExceptions() const
 				"Mean attendance": 11000,
 				"StdDev attendance": 1000
 			}
-		} )" ); }, "There are two players with the same known name 'Longstaff'." );
+		} )" );
+	}, "There are two players with the same known name 'Longstaff'." );
 
 	// GetPlayer exception
-	CheckException( []() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
-		CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 60, 1 }, { 0, 0, 0, 0 } } },
-	}, 1, 11000, 1000 }.GetPlayer( "Messi" ); }, "Messi is not in Luton Town FC's list of players." );
+	CheckException( []()
+	{
+		CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
+			CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 60, 1 }, { 0, 0, 0, 0 } } },
+		}, 1, 11000, 1000 }.GetPlayer( "Messi" );
+	}, "Messi is not in Luton Town FC's list of players." );
 
 	// Test CheckLineup
 	{
 		const CLineup lineup{ "Ter Stegen", {}, {}, {}, {}, {}, {} };
-		CheckException( [ &lineup ]() { CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
-			CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 60, 1 }, { 0, 0, 0, 0 } } },
-			}, 1, 11000, 1000 }.CheckLineup( lineup ); }, "Error checking the lineup against the team." );
+		CheckException( [ &lineup ]()
+		{
+			CTeam{ "Luton Town FC", "lut", "Rob Edwards", {
+				CPlayer{ "Matty", "Longstaff", "", 23, futsim::E_NATIONALITY::GBR, CPlayerSkills{ { 1, 1, 60, 1 }, { 0, 0, 0, 0 } } },
+			}, 1, 11000, 1000 }.CheckLineup( lineup );
+		}, "Error checking the lineup against the team." );
 	}
 }
 
@@ -188,7 +260,7 @@ std::vector<std::string> TTeam::ObtainedResults() const noexcept
 			CPlayer{ "Lionel", "Messi", {}, 35, futsim::E_NATIONALITY::ARG, CPlayerSkills{ { 1, 1, 1, 99 }, { 0, 0, 0, 0 } } },
 			CPlayer{ "Ansu", "Fati", "Ansu Fati", 20, futsim::E_NATIONALITY::ESP, CPlayerSkills{ { 1, 1, 1, 80 }, { 0, 0, 0, 0 } } } },
 			1, 11000, 2000 },
-		futsim::ValueFromJSONKeyString<CTeam>( R"( {
+			futsim::ValueFromJSONKeyString<CTeam>( R"( {
 			"Team": {
 				"Name": "Luton Town FC",
 				"Abbreviation": "lut",
@@ -248,7 +320,7 @@ std::vector<std::string> TTeam::ObtainedResults() const noexcept
 		result.push_back( std::string{ CTeam::JSON_ABBREVIATION } + ": " + std::string{ team.GetAbbreviation() } );
 		result.push_back( std::string{ CTeam::JSON_MANAGER } + ": " + std::string{ team.GetManager() } );
 		for( const auto& player : team.GetPlayers() )
-			result.push_back( std::string{ CPlayer::JSON_KEY } + ": " + std::string{ team.GetPlayer( player.GetKnownName() ).GetKnownName() } );
+			result.push_back( std::string{ futsim::json_traits<CPlayer>::KEY } + ": " + std::string{ team.GetPlayer( player.GetKnownName() ).GetKnownName() } );
 		result.push_back( std::string{ CTeam::JSON_SUPPORT_FACTOR } + ": " + std::to_string( team.GetSupportFactor() ) );
 		result.push_back( std::string{ CTeam::JSON_MEAN_ATTENDANCE } + ": " + std::to_string( team.GetAttendanceDistributionParameters().mean() ) );
 		result.push_back( std::string{ CTeam::JSON_STD_DEV_ATTENDANCE } + ": " + std::to_string( team.GetAttendanceDistributionParameters().stddev() ) );

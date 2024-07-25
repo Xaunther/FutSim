@@ -10,7 +10,10 @@
 
 #include "ExceptionUtils.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 namespace detail
@@ -94,8 +97,6 @@ private:
 	bool IsDecided( const types::CPenaltyShootoutConfiguration::penalty_count& aMinPenaltyCount, const score& aScore ) const noexcept;
 
 public:
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Penalty shootout state";
 	//! JSON key for the \copybrief mPenalties
 	static inline constexpr std::string_view JSON_PENALTIES = "Penalties";
 	//! JSON key to indicate if the penalty corresponds to the home team.
@@ -182,7 +183,10 @@ shooters CreateShooters( const CTeam& aTeam, const auto& aCurrentPlayers, const 
 	for( const auto& currentPlayer : aCurrentPlayers )
 		result.emplace_back( std::cref( aTeam.GetPlayer( currentPlayer ) ) );
 
-	std::ranges::sort( result, std::ranges::greater{}, []( const CPlayer& aPlayer ) { return aPlayer.GetPlayerSkills().GetSkill( E_PLAYER_SKILL::Sh ); } );
+	std::ranges::sort( result, std::ranges::greater{}, []( const CPlayer& aPlayer )
+	{
+		return aPlayer.GetPlayerSkills().GetSkill( E_PLAYER_SKILL::Sh );
+	} );
 	result.erase( result.cbegin() + aShootersCount, result.cend() );
 	return result;
 }
@@ -190,4 +194,12 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the p
 
 } // detail namespace
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPenaltyShootoutState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Penalty shootout state";
+};
+
+} // futsim namespace

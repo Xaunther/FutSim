@@ -11,7 +11,10 @@
 
 #include "ExceptionUtils.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -118,8 +121,6 @@ private:
 	template <E_PLAYER_SKILL tPlayerSkill> optional_name& Actor() noexcept;
 
 public:
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Chance state";
 	//! JSON key for the \copybrief mChanceType
 	static inline constexpr std::string_view JSON_CHANCE_TYPE = "Chance type";
 	//! JSON key for the \copybrief mOutcome
@@ -307,4 +308,12 @@ types::CGoalDrawConfiguration::E_CHANCE_OUTCOME DrawOutcome( const types::CChanc
 
 } //detail namespace
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CChanceState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Chance state";
+};
+
+} // futsim namespace

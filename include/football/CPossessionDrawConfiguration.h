@@ -5,7 +5,10 @@
 #include "football/types/CDrawConfiguration.h"
 #include "football/types/CPossessionDrawConfiguration.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -40,8 +43,6 @@ public:
 	//! Retrieves the \copybrief mKeepPossessionProbability
 	const probability& GetKeepPossessionProbability() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Possession draw configuration";
 	//! JSON key for the \copybrief mKeepPossessionProbability
 	static inline constexpr std::string_view JSON_KEEP_POSSESSION_PROBABILITY = "Keep possession probability";
 	//! Default keep posssession probability.
@@ -50,6 +51,14 @@ public:
 private:
 	//! Center probability to keep possession.
 	probability mKeepPossessionProbability;
+};
+
+} // football namespace
+
+template <> struct json_traits<football::CPossessionDrawConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Possession draw configuration";
 };
 
 } // futsim namespace

@@ -7,7 +7,10 @@
 #include "football/CGoalDrawConfiguration.h"
 #include "football/CPossessionDrawConfiguration.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -177,9 +180,6 @@ public:
 		const effective_skill& aEffectiveGKSkill,
 		const effective_skill& aEffectiveFWSkill ) const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Draw configuration";
-
 private:
 	//! Possession draw configuration.
 	CPossessionDrawConfiguration mPossessionDrawConfiguration;
@@ -211,6 +211,14 @@ private:
 	probability mDefaultFarShotGoalProbability;
 	//! Default goal probability from near shot.
 	probability mDefaultNearShotGoalProbability;
+};
+
+} // football namespace
+
+template <> struct json_traits<football::CDrawConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Draw configuration";
 };
 
 } // futsim namespace

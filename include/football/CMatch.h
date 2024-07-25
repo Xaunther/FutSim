@@ -5,7 +5,10 @@
 #include "football/CTeam.h"
 #include "football/CStadium.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 class CTeamStrategy;
@@ -64,8 +67,6 @@ public:
 	*/
 	template <bool tHomeTeam> const CTeamStrategy& CheckTeamStrategy( const CTeamStrategy& aTeamStrategy ) const;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Match";
 	//! JSON key for the \copybrief mHomeTeam
 	static inline constexpr std::string_view JSON_HOME_TEAM = "Home team";
 	//! JSON key for the \copybrief mAwayTeam
@@ -84,4 +85,12 @@ private:
 	name_type mReferee;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CMatch>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Match";
+};
+
+} // futsim namespace

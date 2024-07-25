@@ -8,7 +8,10 @@
 
 #include "ExceptionUtils.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -57,8 +60,6 @@ public:
 	 */
 	void ToJSON( json& aJSON ) const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Penalty state";
 	//! JSON key for the \copybrief mOutcome
 	static inline constexpr std::string_view JSON_OUTCOME = CChanceState::JSON_OUTCOME;
 	//! JSON key for the \copybrief mShooter
@@ -84,4 +85,12 @@ CPenaltyState::CPenaltyState(
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the penalty state." )
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPenaltyState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Penalty state";
+};
+
+} // futsim namespace

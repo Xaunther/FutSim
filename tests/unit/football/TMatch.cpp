@@ -15,16 +15,24 @@ INITIALIZE_TEST( TMatch )
 void TMatch::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CMatch{
-		CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 2000 },
-		CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 2000 },
-		CStadium{ "Camp Nou", 98000, 1 }, "" }; }, "The referee name cannot be empty." );
+	CheckException( []()
+	{
+		CMatch{
+			CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 2000 },
+			CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 2000 },
+			CStadium{ "Camp Nou", 98000, 1 }, "" };
+	}, "The referee name cannot be empty." );
 
 	// Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CMatch>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CMatch>( R"( {
 			"Match": {}
-		} )" ); }, "key 'Home team' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CMatch>( R"( {
+		} )" );
+	}, "key 'Home team' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CMatch>( R"( {
 			"Match": {
 				"Home team": {
 					"Name": "Luton Town FC",
@@ -35,8 +43,11 @@ void TMatch::TestExceptions() const
 					"StdDev attendance": 1000
 				}
 			}
-		} )" ); }, "key 'Away team' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CMatch>( R"( {
+		} )" );
+	}, "key 'Away team' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CMatch>( R"( {
 			"Match": {
 				"Home team": {
 					"Name": "Luton Town FC",
@@ -55,8 +66,11 @@ void TMatch::TestExceptions() const
 					"StdDev attendance": 1000
 				}
 			}
-		} )" ); }, "key 'Stadium' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CMatch>( R"( {
+		} )" );
+	}, "key 'Stadium' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CMatch>( R"( {
 			"Match": {
 				"Home team": {
 					"Name": "Luton Town FC",
@@ -80,8 +94,11 @@ void TMatch::TestExceptions() const
 					"Ambient factor": 1
 				}
 			}
-		} )" ); }, "key 'Referee' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CMatch>( R"( {
+		} )" );
+	}, "key 'Referee' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CMatch>( R"( {
 			"Match": {
 				"Home team": {
 					"Name": "Luton Town FC",
@@ -106,17 +123,24 @@ void TMatch::TestExceptions() const
 				},
 				"Referee": ""
 			}
-		} )" ); }, "The referee name cannot be empty." );
+		} )" );
+	}, "The referee name cannot be empty." );
 
 	// Test CheckTeamStrategy
 	{
 		const CTeamStrategy teamStrategy{ "A", CLineup{ "Ter Stegen", {}, {}, {}, {}, {}, {} } };
 		const CMatch match{ CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 2000 },
-				CTeam{ "Manchester City FC", "mci", "Pep Guardiola", {}, 1, 50000, 6000 },
-				CStadium{ "Camp Nou", 98000, 1 }, "Michael Oliver" };
-		CheckException( [ &teamStrategy, &match ]() { match.CheckTeamStrategy<true>( teamStrategy ); },
+			CTeam{ "Manchester City FC", "mci", "Pep Guardiola", {}, 1, 50000, 6000 },
+			CStadium{ "Camp Nou", 98000, 1 }, "Michael Oliver" };
+		CheckException( [ &teamStrategy, &match ]()
+		{
+			match.CheckTeamStrategy<true>( teamStrategy );
+		},
 			"Error checking the team strategy against the match definition." );
-		CheckException( [ &teamStrategy, &match ]() { match.CheckTeamStrategy<false>( teamStrategy ); },
+		CheckException( [ &teamStrategy, &match ]()
+		{
+			match.CheckTeamStrategy<false>( teamStrategy );
+		},
 			"Error checking the team strategy against the match definition." );
 	}
 }
@@ -126,8 +150,8 @@ std::vector<std::string> TMatch::ObtainedResults() const noexcept
 	std::vector<std::string> result;
 	for( const auto& match : {
 		CMatch{ CTeam{ "Luton Town FC", "lut", "Rob Edwards", {}, 1, 11000, 2000 },
-			CTeam{ "Manchester City FC", "mci", "Pep Guardiola", {}, 1, 50000, 6000 },
-			CStadium{ "Camp Nou", 98000, 1 }, "Michael Oliver" },
+		CTeam{ "Manchester City FC", "mci", "Pep Guardiola", {}, 1, 50000, 6000 },
+		CStadium{ "Camp Nou", 98000, 1 }, "Michael Oliver" },
 		futsim::ValueFromJSONKeyString<CMatch>( R"( {
 			"Match": {
 				"Home team": {
@@ -157,7 +181,7 @@ std::vector<std::string> TMatch::ObtainedResults() const noexcept
 	{
 		result.push_back( std::string{ CMatch::JSON_HOME_TEAM } + ": " + std::string{ match.GetHomeTeam().GetName() } );
 		result.push_back( std::string{ CMatch::JSON_AWAY_TEAM } + ": " + std::string{ match.GetAwayTeam().GetName() } );
-		result.push_back( std::string{ CStadium::JSON_KEY } + ": " + std::string{ match.GetStadium().GetName() } );
+		result.push_back( std::string{ futsim::json_traits<CStadium>::KEY } + ": " + std::string{ match.GetStadium().GetName() } );
 		result.push_back( std::string{ CMatch::JSON_REFEREE } + ": " + std::string{ match.GetReferee() } );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, match );

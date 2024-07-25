@@ -4,7 +4,10 @@
 
 #include "types/CTacticConfiguration.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -74,8 +77,6 @@ private:
 	void CalculateBonusesTable();
 
 public:
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Tactic configuration";
 	//! JSON key for the \copybrief mTkBonus
 	static inline constexpr std::string_view JSON_TK_BONUS = "Tk bonus";
 	//! JSON key for the \copybrief mPsBonus
@@ -100,6 +101,13 @@ private:
 
 	//! Table containing the bonuses for each position and skill.
 	bonuses_table mBonusesTable{};
+};
+} // football namespace
+
+template <> struct json_traits<football::CTacticConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Tactic configuration";
 };
 
 } // futsim namespace

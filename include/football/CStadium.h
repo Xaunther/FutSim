@@ -4,7 +4,10 @@
 
 #include "types/CStadium.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -52,8 +55,6 @@ public:
 	//! Retrieves the \copybrief mAmbientFactor
 	const ambient_factor& GetAmbientFactor() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Stadium";
 	//! JSON key for the \copybrief mName
 	static inline constexpr std::string_view JSON_NAME = "Name";
 	//! JSON key for the \copybrief mCapacity
@@ -70,4 +71,12 @@ private:
 	ambient_factor mAmbientFactor;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CStadium>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Stadium";
+};
+
+} // futsim namespace

@@ -67,10 +67,10 @@ CMatchConfiguration::CMatchConfiguration( const json& aJSON ) try :
 	mLineupConfiguration( ValueFromOptionalJSONKey<CLineupConfiguration>( aJSON ) ),
 	mApplyAmbientFactor( ValueFromOptionalJSONKey<bool>( aJSON, JSON_APPLY_AMBIENT_FACTOR, DEFAULT_APPLY_AMBIENT_FACTOR ) ),
 	mTacticsConfiguration( ValueFromOptionalJSONKey<CTacticsConfiguration>( aJSON ) ),
-	mTieCondition( ValueFromOptionalJSONKey<optional_tie_condition>( aJSON, CTieCondition::JSON_KEY, {} ) ),
-	mExtraTime( CheckExtraTime( ValueFromOptionalJSONKey<optional_extra_time>( aJSON, CExtraTime::JSON_KEY, {} ), mTieCondition ) ),
+	mTieCondition( ValueFromOptionalJSONKey<optional_tie_condition>( aJSON, json_traits<CTieCondition>::KEY, {} ) ),
+	mExtraTime( CheckExtraTime( ValueFromOptionalJSONKey<optional_extra_time>( aJSON, json_traits<CExtraTime>::KEY, {} ), mTieCondition ) ),
 	mPenaltyShootoutConfiguration( CheckPenaltyShootoutConfiguration(
-		ValueFromOptionalJSONKey<optional_penalty_shootout_configuration>( aJSON, CPenaltyShootoutConfiguration::JSON_KEY, {} ), mTieCondition ) ),
+		ValueFromOptionalJSONKey<optional_penalty_shootout_configuration>( aJSON, json_traits<CPenaltyShootoutConfiguration>::KEY, {} ), mTieCondition ) ),
 	mDrawConfiguration( ValueFromOptionalJSONKey<CDrawConfiguration>( aJSON ) )
 {
 	CheckTieCondition( mTieCondition, mPenaltyShootoutConfiguration );

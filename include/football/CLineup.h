@@ -6,9 +6,11 @@
 
 #include <random>
 
-namespace futsim::football
+namespace futsim
 {
 
+namespace football
+{
 /**
  * @brief Class that defines a lineup.
 */
@@ -72,8 +74,6 @@ public:
 	*/
 	template <bool tUseSubs> auto CreatePlayersView() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Lineup";
 	//! JSON key for the GK.
 	static inline constexpr std::string_view JSON_GK = "GK";
 	//! JSON key for the DFs.
@@ -99,8 +99,16 @@ template <bool tUseSubs> auto CLineup::CreatePlayersView() const noexcept
 	if constexpr( tUseSubs )
 		return mPlayersLineup | std::ranges::views::join;
 	else
-		return mPlayersLineup | std::ranges::views::take( static_cast< names::size_type >( E_PLAYER_POSITION::FW ) + 1 )
+		return mPlayersLineup | std::ranges::views::take( static_cast<names::size_type>( E_PLAYER_POSITION::FW ) + 1 )
 		| std::ranges::views::join;
 }
+
+} // football namespace
+
+template <> struct json_traits<football::CLineup>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Lineup";
+};
 
 } // futsim namespace

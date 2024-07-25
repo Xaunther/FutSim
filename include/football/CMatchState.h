@@ -9,9 +9,11 @@
 
 #include "ExceptionUtils.h"
 
-namespace futsim::football
+namespace futsim
 {
 
+namespace football
+{
 /**
  * @brief Class that represents the state of a match.
 */
@@ -55,8 +57,6 @@ public:
 	//! Retrieves the \copybrief mPenaltyShootoutState
 	const optional_penalty_shootout_state& GetPenaltyShootoutState() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Match state";
 	//! JSON key for the \copybrief mMandatoryPlayTimeState
 	static inline constexpr std::string_view JSON_MANDATORY_PERIOD_STATES = "Mandatory time period states";
 	//! JSON key for the \copybrief mExtraTimeState
@@ -94,15 +94,15 @@ CMatchState::CMatchState(
 				{
 				case E_GOAL_RULE::SILVER_GOAL:
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-							CPeriodState::SDefaultExtraTimePeriodPlayPolicy{}, CPeriodStates::SSilverGoalPeriodPolicy{} };
+						CPeriodState::SDefaultExtraTimePeriodPlayPolicy{}, CPeriodStates::SSilverGoalPeriodPolicy{} };
 					break;
 				case E_GOAL_RULE::GOLDEN_GOAL:
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-							CPeriodState::SGoldenGoalPeriodPlayPolicy{}, CPeriodStates::SSilverGoalPeriodPolicy{} };
+						CPeriodState::SGoldenGoalPeriodPlayPolicy{}, CPeriodStates::SSilverGoalPeriodPolicy{} };
 					break;
 				default:
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-							CPeriodState::SDefaultExtraTimePeriodPlayPolicy{}, CPeriodStates::SDefaultExtraTimePeriodPolicy{} };
+						CPeriodState::SDefaultExtraTimePeriodPlayPolicy{}, CPeriodStates::SDefaultExtraTimePeriodPolicy{} };
 					break;
 				}
 				homeTeamGoals += mExtraTimeState->CountScoredGoals( true );
@@ -110,14 +110,22 @@ CMatchState::CMatchState(
 
 				if( tieCondition( homeTeamGoals, awayTeamGoals ) )
 					mPenaltyShootoutState = CPenaltyShootoutState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
-							std::bernoulli_distribution{}( aGenerator ), aGenerator };
+					std::bernoulli_distribution{}( aGenerator ), aGenerator };
 			}
 			else
 				mPenaltyShootoutState = CPenaltyShootoutState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
-						std::bernoulli_distribution{}( aGenerator ), aGenerator };
+				std::bernoulli_distribution{}( aGenerator ), aGenerator };
 		}
 	}
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the match state." )
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CMatchState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Match state";
+};
+
+} // futsim namespace

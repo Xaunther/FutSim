@@ -6,7 +6,10 @@
 #include "football/types/CChancesDrawConfiguration.h"
 #include "CEnumDistribution.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -82,8 +85,6 @@ public:
 	//! Creates the set piece type draw distribution.
 	set_piece_type_draw_distribution CreateSetPieceTypeDistribution() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Chances draw configuration";
 	//! JSON key for the \copybrief mAverageChances
 	static inline constexpr std::string_view JSON_AVERAGE_CHANCES = "Average chances";
 	//! JSON key for the \copybrief mAverageCornerKicks
@@ -140,6 +141,14 @@ private:
 
 	//! Set piece type distribution parameters.
 	set_piece_type_draw_distribution::param_type mSetPieceTypeDistributionParameters;
+};
+
+} // football namespace
+
+template <> struct json_traits<football::CChancesDrawConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Chances draw configuration";
 };
 
 } // futsim namespace

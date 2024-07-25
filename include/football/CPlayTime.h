@@ -4,7 +4,10 @@
 
 #include "football/types/CPlayTime.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -56,4 +59,12 @@ private:
 	subs_count mAvailableSubs;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPlayTime>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Play time";
+};
+
+} // futsim namespace

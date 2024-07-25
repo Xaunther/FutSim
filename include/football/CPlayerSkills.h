@@ -4,7 +4,10 @@
 
 #include "football/types/CPlayerSkills.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -54,8 +57,6 @@ public:
 	*/
 	const xp_type& GetExperience( const E_PLAYER_SKILL& aPlayerSkill ) const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Player skills";
 	//! JSON key for the St skill.
 	static inline constexpr std::string_view JSON_ST_SKILL = "St skill";
 	//! JSON key for the Tk skill.
@@ -80,4 +81,12 @@ private:
 	experiences mExperiences;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPlayerSkills>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Player skills";
+};
+
+} // futsim namespace

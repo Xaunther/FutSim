@@ -15,40 +15,64 @@ INITIALIZE_TEST( TMatchConfiguration )
 void TMatchConfiguration::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, CTieCondition{}, {}, {} }; },
+	CheckException( []()
+	{
+		CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, CTieCondition{}, {}, {} };
+	},
 		"There cannot be a tie condition without a penalty shootout configuration" );
-	CheckException( []() { CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, {}, CExtraTime{}, {} }; },
+	CheckException( []()
+	{
+		CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, {}, CExtraTime{}, {} };
+	},
 		"There cannot be extra time without a tie condition." );
-	CheckException( []() { CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, {}, {}, CPenaltyShootoutConfiguration{} }; },
+	CheckException( []()
+	{
+		CMatchConfiguration{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, {}, {}, CPenaltyShootoutConfiguration{} };
+	},
 		"There cannot be a penalty shootout without a tie condition." );
 
 	// Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
 			"Match configuration": {
 				"Tie condition": {
 					"Home team lead": 1,
 					"Home team goals": 3
 				}
 			}
-		} )" ); }, "There cannot be a tie condition without a penalty shootout configuration" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
+		} )" );
+	}, "There cannot be a tie condition without a penalty shootout configuration" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
 			"Match configuration": {
 				"Extra time": {}
 			}
-		} )" ); }, "There cannot be extra time without a tie condition." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
+		} )" );
+	}, "There cannot be extra time without a tie condition." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CMatchConfiguration>( R"( {
 			"Match configuration": {
 				"Penalty shootout configuration": {}
 			}
-		} )" ); }, "There cannot be a penalty shootout without a tie condition." );
+		} )" );
+	}, "There cannot be a penalty shootout without a tie condition." );
 
 	// Test CheckTeamStrategy
 	{
 		const CMatchConfiguration matchConfiguration;
 		const CLineup lineup{ "Kelleher", types::CLineup::names{ "Bradley" }, {}, {}, {}, {}, {} };
-		CheckException( [ &matchConfiguration, &lineup ]() { matchConfiguration.CheckTeamStrategy( CTeamStrategy{ "FF", lineup } ); },
+		CheckException( [ &matchConfiguration, &lineup ]()
+		{
+			matchConfiguration.CheckTeamStrategy( CTeamStrategy{ "FF", lineup } );
+		},
 			"The tactic 'FF' has not been configured." );
-		CheckException( [ &matchConfiguration, &lineup ]() { matchConfiguration.CheckTeamStrategy( CTeamStrategy{ "A", lineup } ); },
+		CheckException( [ &matchConfiguration, &lineup ]()
+		{
+			matchConfiguration.CheckTeamStrategy( CTeamStrategy{ "A", lineup } );
+		},
 			"Error checking the lineup against the configuration." );
 	}
 }
@@ -86,16 +110,16 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( matchConfiguration.GetPlayTime().JSON_KEY.data() );
-		result.push_back( matchConfiguration.GetLineupConfiguration().JSON_KEY.data() );
+		result.push_back( futsim::json_traits<std::decay_t<decltype( matchConfiguration.GetPlayTime() )>>::KEY.data() );
+		result.push_back( futsim::json_traits<std::decay_t<decltype( matchConfiguration.GetLineupConfiguration() )>>::KEY.data() );
 		result.push_back( std::string{ CMatchConfiguration::JSON_APPLY_AMBIENT_FACTOR } + ": " + std::to_string( matchConfiguration.AppliesAmbientFactor() ) );
-		result.push_back( matchConfiguration.GetTacticsConfiguration().JSON_KEY.data() );
+		result.push_back( futsim::json_traits<std::decay_t<decltype( matchConfiguration.GetTacticsConfiguration() )>>::KEY.data() );
 		if( matchConfiguration.GetTieCondition() )
-			result.push_back( ( *matchConfiguration.GetTieCondition() ).JSON_KEY.data() );
+			result.push_back( futsim::json_traits<std::decay_t<decltype( *matchConfiguration.GetTieCondition() )>>::KEY.data() );
 		if( matchConfiguration.GetExtraTime() )
-			result.push_back( ( *matchConfiguration.GetExtraTime() ).JSON_KEY.data() );
+			result.push_back( futsim::json_traits<std::decay_t<decltype( *matchConfiguration.GetExtraTime() )>>::KEY.data() );
 		if( matchConfiguration.GetPenaltyShootoutConfiguration() )
-			result.push_back( ( *matchConfiguration.GetPenaltyShootoutConfiguration() ).JSON_KEY.data() );
+			result.push_back( futsim::json_traits<std::decay_t<decltype( *matchConfiguration.GetPenaltyShootoutConfiguration() )>>::KEY.data() );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, matchConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

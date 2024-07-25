@@ -14,41 +14,91 @@ INITIALIZE_TEST( TDrawConfiguration )
 void TDrawConfiguration::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{ 10 }, CChancesDrawConfiguration{ 30, 1, 1, 1, 2, 20 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{ 10 }, CChancesDrawConfiguration{ 30, 1, 1, 1, 2, 20 } };
+	},
 		"The probability to get a set piece chance given a foul cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 100 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 100 } };
+	},
 		"The probability to get a chance after keeping possession or launching a counter attack cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 10, 15 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 10, 15 } };
+	},
 		"The corner probability cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 10, 4, 11 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 10, 4, 11 } };
+	},
 		"The 1 on 1 vs GK probability cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 10, 4, 2, 11 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 10, 4, 2, 11 } };
+	},
 		"The 1 on 1 vs DF probability cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 10, 4, 2, 1, 11 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 10, 4, 2, 1, 11 } };
+	},
 		"The near shot probability cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 10, 4, 2, 1, 3 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 10, 4, 2, 1, 3 } };
+	},
 		"The far shot probability cannot be negative." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 20, 10, 1, 1, 1, 5, 0.01 }, CGoalDrawConfiguration{ 4, 0.5 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 20, 10, 1, 1, 1, 5, 0.01 }, CGoalDrawConfiguration{ 4, 0.5 } };
+	},
 		"The penalty goal probability cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 20, 10, 1, 1, 1, 5, 1, 0.01 }, CGoalDrawConfiguration{ 4, 0.05, 0.5 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 20, 10, 1, 1, 1, 5, 1, 0.01 }, CGoalDrawConfiguration{ 4, 0.05, 0.5 } };
+	},
 		"The direct free kick goal probability cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 20, 10, 1, 1, 1, 0.1, 0.01, 0.01 }, CGoalDrawConfiguration{ 4, 0, 0, 2 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 20, 10, 1, 1, 1, 0.1, 0.01, 0.01 }, CGoalDrawConfiguration{ 4, 0, 0, 2 } };
+	},
 		"The indirect free kick goal probability cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{}, CGoalDrawConfiguration{ 50, 0, 0, 0, 25 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{}, CGoalDrawConfiguration{ 50, 0, 0, 0, 25 } };
+	},
 		"The corner goal probability cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{}, CGoalDrawConfiguration{ 50, 0, 0, 0, 0, 30 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{}, CGoalDrawConfiguration{ 50, 0, 0, 0, 0, 30 } };
+	},
 		"The far shot goal probability cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 20, 10, 1, 1, 1, 5, 1, 1 }, CGoalDrawConfiguration{ 4, 0.05, 0.05, 1 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{ 20, 10, 1, 1, 1, 5, 1, 1 }, CGoalDrawConfiguration{ 4, 0.05, 0.05, 1 } };
+	},
 		"The near shot goal probability cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{ 0.9 }, CFoulDrawConfiguration{ 10 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{ 0.9 }, CFoulDrawConfiguration{ 10 } };
+	},
 		"The joint probability of keeping possession or receiving a foul cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{}, CGoalDrawConfiguration{ 2.73, 0.25 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{}, CGoalDrawConfiguration{ 2.73, 0.25 } };
+	},
 		"The joint probability of scoring or getting an extra corner from a penalty cannot be greater than 1." );
-	CheckException( []() { CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{}, CGoalDrawConfiguration{ 2.73, 0, 0.6 } }; },
+	CheckException( []()
+	{
+		CDrawConfiguration{ CPossessionDrawConfiguration{}, CFoulDrawConfiguration{}, CChancesDrawConfiguration{}, CGoalDrawConfiguration{ 2.73, 0, 0.6 } };
+	},
 		"The joint probability of scoring or getting an extra corner from a direct free kick cannot be greater than 1." );
 
 	// Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Foul draw configuration": {
 					"Average fouls": 10
@@ -62,24 +112,33 @@ void TDrawConfiguration::TestExceptions() const
 					"Average set pieces": 20
 				}
 			}
-		} )" ); }, "The probability to get a set piece chance given a foul cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The probability to get a set piece chance given a foul cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Chances draw configuration": {
 					"Average chances": 100
 					
 				}
 			}
-		} )" ); }, "The probability to get a chance after keeping possession or launching a counter attack cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The probability to get a chance after keeping possession or launching a counter attack cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Chances draw configuration": {
 					"Average chances": 10,
 					"Average corner kicks": 15
 				}
 			}
-		} )" ); }, "The corner probability cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The corner probability cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Chances draw configuration": {
 					"Average chances": 10,
@@ -87,8 +146,11 @@ void TDrawConfiguration::TestExceptions() const
 					"Average 1 on 1 vs GK chances": 11
 				}
 			}
-		} )" ); }, "The 1 on 1 vs GK probability cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The 1 on 1 vs GK probability cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Chances draw configuration": {
 					"Average chances": 10,
@@ -97,8 +159,11 @@ void TDrawConfiguration::TestExceptions() const
 					"Average 1 on 1 vs DF chances": 11
 				}
 			}
-		} )" ); }, "The 1 on 1 vs DF probability cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The 1 on 1 vs DF probability cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Chances draw configuration": {
 					"Average chances": 10,
@@ -108,8 +173,11 @@ void TDrawConfiguration::TestExceptions() const
 					"Average near shots": 11
 				}
 			}
-		} )" ); }, "The near shot probability cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The near shot probability cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Chances draw configuration": {
 					"Average chances": 10,
@@ -119,8 +187,11 @@ void TDrawConfiguration::TestExceptions() const
 					"Average near shots": 3
 				}
 			}
-		} )" ); }, "The far shot probability cannot be negative." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The far shot probability cannot be negative." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Chances draw configuration": {
 					"Average chances": 20,
@@ -136,8 +207,11 @@ void TDrawConfiguration::TestExceptions() const
 					"Average penalty goals": 0.5
 				}
 			}
-		} )" ); }, "The penalty goal probability cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The penalty goal probability cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Chances draw configuration": {
 					"Average chances": 20,
@@ -155,8 +229,11 @@ void TDrawConfiguration::TestExceptions() const
 					"Average direct free kick goals": 0.5
 				}
 			}
-		} )" ); }, "The direct free kick goal probability cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The direct free kick goal probability cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Chances draw configuration": {
 					"Average chances": 20,
@@ -175,8 +252,11 @@ void TDrawConfiguration::TestExceptions() const
 					"Average indirect free kick goals": 2
 				}
 			}
-		} )" ); }, "The indirect free kick goal probability cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The indirect free kick goal probability cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Goal draw configuration": {
 					"Average goals": 50,
@@ -186,8 +266,11 @@ void TDrawConfiguration::TestExceptions() const
 					"Average corner goals": 25
 				}
 			}
-		} )" ); }, "The corner goal probability cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The corner goal probability cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Goal draw configuration": {
 					"Average goals": 50,
@@ -198,8 +281,11 @@ void TDrawConfiguration::TestExceptions() const
 					"Average far shot goals": 30
 				}
 			}
-		} )" ); }, "The far shot goal probability cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The far shot goal probability cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Chances draw configuration": {
 					"Average chances": 20,
@@ -218,8 +304,11 @@ void TDrawConfiguration::TestExceptions() const
 					"Average indirect free kick goals": 1
 				}
 			}
-		} )" ); }, "The near shot goal probability cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The near shot goal probability cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Possession draw configuration": {
 					"Keep possession probability": 0.9
@@ -228,16 +317,22 @@ void TDrawConfiguration::TestExceptions() const
 					"Average fouls": 10
 				}
 			}
-		} )" ); }, "The joint probability of keeping possession or receiving a foul cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The joint probability of keeping possession or receiving a foul cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Goal draw configuration": {
 					"Average goals": 2.73,
 					"Average penalty goals": 0.25
 				}
 			}
-		} )" ); }, "The joint probability of scoring or getting an extra corner from a penalty cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
+		} )" );
+	}, "The joint probability of scoring or getting an extra corner from a penalty cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CDrawConfiguration>( R"( {
 			"Draw configuration": {
 				"Goal draw configuration": {
 					"Average goals": 2.73,
@@ -245,7 +340,8 @@ void TDrawConfiguration::TestExceptions() const
 					"Average direct free kick goals": 0.6
 				}
 			}
-		} )" ); }, "The joint probability of scoring or getting an extra corner from a direct free kick cannot be greater than 1." );
+		} )" );
+	}, "The joint probability of scoring or getting an extra corner from a direct free kick cannot be greater than 1." );
 }
 
 std::vector<std::string> TDrawConfiguration::ObtainedResults() const noexcept
@@ -257,10 +353,10 @@ std::vector<std::string> TDrawConfiguration::ObtainedResults() const noexcept
 			"Draw configuration": {}
 		} )" ) } )
 	{
-		result.push_back( std::string{ drawConfiguration.GetPossessionDrawConfiguration().JSON_KEY } );
-		result.push_back( std::string{ drawConfiguration.GetFoulDrawConfiguration().JSON_KEY } );
-		result.push_back( std::string{ drawConfiguration.GetChancesDrawConfiguration().JSON_KEY } );
-		result.push_back( std::string{ drawConfiguration.GetGoalDrawConfiguration().JSON_KEY } );
+		result.push_back( std::string{ futsim::json_traits<std::decay_t<decltype( drawConfiguration.GetPossessionDrawConfiguration() )>>::KEY } );
+		result.push_back( std::string{ futsim::json_traits<std::decay_t<decltype( drawConfiguration.GetFoulDrawConfiguration() )>>::KEY } );
+		result.push_back( std::string{ futsim::json_traits<std::decay_t<decltype( drawConfiguration.GetChancesDrawConfiguration() )>>::KEY } );
+		result.push_back( std::string{ futsim::json_traits<std::decay_t<decltype( drawConfiguration.GetGoalDrawConfiguration() )>>::KEY } );
 
 		result.push_back( "Possession distribution:" );
 		for( const auto& probability : drawConfiguration.CreatePossessionDistribution( 1, 1 ).probabilities() )

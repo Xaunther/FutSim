@@ -4,7 +4,10 @@
 
 #include "football/CPlayerSkills.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -41,12 +44,17 @@ public:
 	//! Retrieves the \copybrief mPlayerSkills
 	const CPlayerSkills GetPlayerSkills() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Player";
-
 private:
 	//! Skills.
 	CPlayerSkills mPlayerSkills;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPlayer>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Player";
+};
+
+} // futsim namespace

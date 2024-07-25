@@ -14,14 +14,17 @@ INITIALIZE_TEST( TPlayer )
 void TPlayer::TestExceptions() const
 {
 	// Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayer>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPlayer>( R"( {
 			"Player": {
 				"First name": "Lionel",
 				"Surnames": "Messi",
 				"Age": 35,
 				"Nationality": "ARG"
 			}
-		} )" ); }, "key 'Player skills' not found" );
+		} )" );
+	}, "key 'Player skills' not found" );
 }
 
 std::vector<std::string> TPlayer::ObtainedResults() const noexcept
@@ -69,7 +72,7 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( player.GetPlayerSkills().JSON_KEY.data() );
+		result.push_back( futsim::json_traits<std::decay_t<decltype( player.GetPlayerSkills() )>>::KEY.data() );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, player );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

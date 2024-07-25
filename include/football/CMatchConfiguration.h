@@ -11,7 +11,10 @@
 #include "football/CTacticsConfiguration.h"
 #include "football/CTieCondition.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 class CTeamStrategy;
@@ -91,8 +94,6 @@ public:
 	*/
 	const CTeamStrategy& CheckTeamStrategy( const CTeamStrategy& aTeamStrategy ) const;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Match configuration";
 	//! JSON key for the \copybrief mApplyAmbientFactor
 	static inline constexpr std::string_view JSON_APPLY_AMBIENT_FACTOR = "Apply ambient factor";
 
@@ -117,6 +118,14 @@ private:
 
 	//! Draw configuration
 	CDrawConfiguration mDrawConfiguration;
+};
+
+} // football namespace
+
+template <> struct json_traits<football::CMatchConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Match configuration";
 };
 
 } // futsim namespace

@@ -6,7 +6,10 @@
 
 #include "football/CPeriodState.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -108,9 +111,6 @@ public:
 	*/
 	goal_count CountScoredGoals( const bool aHomeTeam ) const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Period states";
-
 private:
 	//! Period states.
 	period_states mStates;
@@ -141,4 +141,12 @@ CPeriodStates::CPeriodStates(
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the period states." )
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPeriodStates>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Period states";
+};
+
+} // futsim namespace
