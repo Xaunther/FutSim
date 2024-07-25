@@ -51,11 +51,8 @@ public:
 	//! @copydoc CChanceState::GetChanceOutcome
 	using CChanceState::GetChanceOutcome;
 
-public:
-	/**
-	 * @brief Adds the class to JSON object.
-	 */
-	void ToJSON( json& aJSON ) const noexcept;
+	//! @copydoc CChanceState::ToJSON
+	using CChanceState::ToJSON;
 
 	//! JSON key for the class.
 	static inline constexpr std::string_view JSON_KEY = "Penalty state";

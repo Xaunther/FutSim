@@ -22,9 +22,4 @@ const futsim::types::CPerson::name_type& CPenaltyState::GetShooter() const noexc
 	return *GetActor<E_PLAYER_SKILL::Sh>();
 }
 
-void CPenaltyState::ToJSON( json& aJSON ) const noexcept
-{
-	CChanceState::ToJSON( aJSON );
-}
-
 } // futsim::football namespace
