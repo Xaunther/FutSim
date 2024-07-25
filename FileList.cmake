@@ -52,6 +52,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/EPenaltySequence.h
 	include/football/EPlayerPosition.h
 	include/football/EPlayerSkill.h
+	include/football/IPeriodPlayPolicy.h
 	include/football/types/CChancesDrawConfiguration.h
 	include/football/types/CChanceState.h
 	include/football/types/CDrawConfiguration.h
@@ -116,6 +117,7 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CTacticsConfiguration.cpp
 	src/football/CTeam.cpp
 	src/football/CTieCondition.cpp
+	src/football/IPeriodPlayPolicy.cpp
 )
 
 # External headers
