@@ -22,11 +22,6 @@ const futsim::types::CPerson::name_type& CPenaltyState::GetShooter() const noexc
 	return *GetActor<E_PLAYER_SKILL::Sh>();
 }
 
-const CChanceState::E_CHANCE_OUTCOME& CPenaltyState::GetChanceOutcome() const noexcept
-{
-	return CChanceState::GetChanceOutcome();
-}
-
 void CPenaltyState::ToJSON( json& aJSON ) const noexcept
 {
 	CChanceState::ToJSON( aJSON );

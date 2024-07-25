@@ -49,7 +49,7 @@ public:
 	const futsim::types::CPerson::name_type& GetShooter() const noexcept;
 
 	//! @copydoc CChanceState::GetChanceOutcome
-	const E_CHANCE_OUTCOME& GetChanceOutcome() const noexcept;
+	using CChanceState::GetChanceOutcome;
 
 public:
 	/**
