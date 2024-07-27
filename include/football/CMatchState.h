@@ -6,6 +6,7 @@
 
 #include "football/CPeriodStates.h"
 #include "football/CPenaltyShootoutState.h"
+#include "football/SExtraTimePeriodPlayPolicy.h"
 
 #include "ExceptionUtils.h"
 
@@ -94,15 +95,15 @@ CMatchState::CMatchState(
 				{
 				case E_GOAL_RULE::SILVER_GOAL:
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-							CPeriodState::SDefaultExtraTimePeriodPlayPolicy{}, CPeriodStates::SSilverGoalPeriodPolicy{} };
+						SExtraTimePeriodPlayPolicy<E_GOAL_RULE::SILVER_GOAL>{}, CPeriodStates::SSilverGoalPeriodPolicy{} };
 					break;
 				case E_GOAL_RULE::GOLDEN_GOAL:
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-							CPeriodState::SGoldenGoalPeriodPlayPolicy{}, CPeriodStates::SSilverGoalPeriodPolicy{} };
+						SExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{}, CPeriodStates::SSilverGoalPeriodPolicy{} };
 					break;
 				default:
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-							CPeriodState::SDefaultExtraTimePeriodPlayPolicy{}, CPeriodStates::SDefaultExtraTimePeriodPolicy{} };
+						SExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CPeriodStates::SDefaultExtraTimePeriodPolicy{} };
 					break;
 				}
 				homeTeamGoals += mExtraTimeState->CountScoredGoals( true );
@@ -110,11 +111,11 @@ CMatchState::CMatchState(
 
 				if( tieCondition( homeTeamGoals, awayTeamGoals ) )
 					mPenaltyShootoutState = CPenaltyShootoutState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
-							std::bernoulli_distribution{}( aGenerator ), aGenerator };
+					std::bernoulli_distribution{}( aGenerator ), aGenerator };
 			}
 			else
 				mPenaltyShootoutState = CPenaltyShootoutState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
-						std::bernoulli_distribution{}( aGenerator ), aGenerator };
+				std::bernoulli_distribution{}( aGenerator ), aGenerator };
 		}
 	}
 }

@@ -5,28 +5,6 @@
 namespace futsim::football
 {
 
-bool CPeriodState::SDefaultPeriodPlayPolicy::operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const
-{
-	return aPlays.size() < aMatchConfiguration.GetPlayTime().GetPeriodTime();
-}
-
-bool CPeriodState::SDefaultExtraTimePeriodPlayPolicy::operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const
-{
-	return aPlays.size() < aMatchConfiguration.GetExtraTime()->GetPeriodTime();
-}
-
-const CMatchConfiguration& CPeriodState::SDefaultExtraTimePeriodPlayPolicy::CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration )
-{
-	if( !aMatchConfiguration.GetExtraTime() )
-		throw std::invalid_argument{ "The match configuration cannot be used for the default extra time period play policy." };
-	return aMatchConfiguration;
-}
-
-bool CPeriodState::SGoldenGoalPeriodPlayPolicy::operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const
-{
-	return SDefaultExtraTimePeriodPlayPolicy::operator()( aPlays, aMatchConfiguration ) && !aPlays.back().state.IsGoalScored();
-}
-
 void CPeriodState::JSON( json& aJSON ) const noexcept
 {
 	for( auto& JSONPlays = aJSON[ JSON_PLAYS ]; const auto & play : mPlays )
@@ -45,8 +23,10 @@ const CPeriodState::plays& CPeriodState::GetPlays() const noexcept
 
 CPeriodState::goal_count CPeriodState::CountScoredGoals( const bool aHomeTeam ) const noexcept
 {
-	return static_cast< goal_count >( std::ranges::count_if( mPlays, [ &aHomeTeam ]( const auto& aPlay )
-		{ return aPlay.homeTeam == aHomeTeam && aPlay.state.IsGoalScored(); } ) );
+	return static_cast<goal_count>( std::ranges::count_if( mPlays, [ &aHomeTeam ]( const auto& aPlay )
+	{
+		return aPlay.homeTeam == aHomeTeam && aPlay.state.IsGoalScored();
+	} ) );
 }
 
 void CPeriodState::PushPlayState( CPlayState&& aPlayState, const bool aHomeTeamAttack ) noexcept

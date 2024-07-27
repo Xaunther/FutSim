@@ -5,6 +5,7 @@
 #include "football/types/CPeriodStates.h"
 
 #include "football/CPeriodState.h"
+#include "football/SPeriodPlayPolicy.h"
 
 namespace futsim::football
 {
@@ -80,15 +81,14 @@ public:
 	 * @param aPeriodPolicy Period policy.
 	 * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
 	*/
-	template <typename T = CPeriodState::SDefaultPeriodPlayPolicy, typename U = SDefaultPeriodPolicy>
-		requires types::CPeriodState::period_play_policy<T>&& types::CPeriodStates::period_policy<U>
+	template <typename U = SDefaultPeriodPolicy> requires types::CPeriodStates::period_policy<U>
 	explicit CPeriodStates(
 		const CMatch& aMatch,
 		const CMatchConfiguration& aMatchConfiguration,
 		const CTeamStrategy& aHomeTeamStrategy,
 		const CTeamStrategy& aAwayTeamStrategy,
 		std::uniform_random_bit_generator auto& aGenerator,
-		const T& aPeriodPlayPolicy = T{},
+		const IPeriodPlayPolicy& aPeriodPlayPolicy = SPeriodPlayPolicy{},
 		const U& aPeriodPolicy = U{}
 	);
 
@@ -116,14 +116,14 @@ private:
 	period_states mStates;
 };
 
-template <typename T, typename U> requires types::CPeriodState::period_play_policy<T>&& types::CPeriodStates::period_policy<U>
+template <typename U> requires types::CPeriodStates::period_policy<U>
 CPeriodStates::CPeriodStates(
 	const CMatch& aMatch,
 	const CMatchConfiguration& aMatchConfiguration,
 	const CTeamStrategy& aHomeTeamStrategy,
 	const CTeamStrategy& aAwayTeamStrategy,
 	std::uniform_random_bit_generator auto& aGenerator,
-	const T& aPeriodPlayPolicy,
+	const IPeriodPlayPolicy& aPeriodPlayPolicy,
 	const U& aPeriodPolicy
 ) try
 {

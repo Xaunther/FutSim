@@ -1,4 +1,5 @@
 #include "football/CPeriodStates.h"
+#include "football/IExtraTimePeriodPlayPolicy.h"
 
 #include "JsonUtils.h"
 
@@ -18,7 +19,7 @@ bool CPeriodStates::SDefaultExtraTimePeriodPolicy::operator()(
 
 const CMatchConfiguration& CPeriodStates::SDefaultExtraTimePeriodPolicy::CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration )
 {
-	return CPeriodState::SDefaultExtraTimePeriodPlayPolicy::CheckMatchConfiguration( aMatchConfiguration );
+	return IExtraTimePeriodPlayPolicy::CheckMatchConfiguration( aMatchConfiguration );
 }
 
 bool CPeriodStates::SSilverGoalPeriodPolicy::operator()(
@@ -46,7 +47,10 @@ const CPeriodStates::period_states& CPeriodStates::GetStates() const noexcept
 CPeriodStates::goal_count CPeriodStates::CountScoredGoals( const bool aHomeTeam ) const noexcept
 {
 	return std::accumulate( mStates.cbegin(), mStates.cend(), goal_count{ 0 }, [ &aHomeTeam ]
-	( const auto& aSum, const auto& aPeriodState ) { return aSum + aPeriodState.CountScoredGoals( aHomeTeam ); } );
+	( const auto& aSum, const auto& aPeriodState )
+	{
+		return aSum + aPeriodState.CountScoredGoals( aHomeTeam );
+	} );
 }
 
 } // futsim::football namespace
