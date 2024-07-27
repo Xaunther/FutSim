@@ -2,6 +2,7 @@
 
 #include "football/CPeriodStates.h"
 #include "football/SExtraTimePeriodPlayPolicy.h"
+#include "football/SExtraTimePeriodPolicy.h"
 
 #include "JsonUtils.h"
 
@@ -19,7 +20,7 @@ void TPeriodStates::TestExceptions() const
 	// Test CheckMatchConfiguration
 	CheckException( []()
 	{
-		CPeriodStates::SDefaultExtraTimePeriodPolicy::CheckMatchConfiguration( CMatchConfiguration{} );
+		IExtraTimePeriodPolicy::CheckMatchConfiguration( CMatchConfiguration{} );
 	},
 		"The match configuration cannot be used for the default extra time period play policy." );
 }
@@ -62,11 +63,11 @@ std::vector<std::string> TPeriodStates::ObtainedResults() const noexcept
 		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, CMatchConfiguration{},
 		homeTeamStrategy, awayTeamStrategy, rng },
 		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, extraTimeMatchConfig,
-		homeTeamStrategy, awayTeamStrategy, rng, SExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CPeriodStates::SDefaultExtraTimePeriodPolicy{} },
+		homeTeamStrategy, awayTeamStrategy, rng, SExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, SExtraTimePeriodPolicy<E_GOAL_RULE::NO>{} },
 		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, goldenGoalMatchConfig,
-		homeTeamStrategy, awayTeamStrategy, rng, SExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{}, CPeriodStates::SSilverGoalPeriodPolicy{} },
+		homeTeamStrategy, awayTeamStrategy, rng, SExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{}, SExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>{} },
 		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, silverGoalMatchConfig,
-		homeTeamStrategy, awayTeamStrategy, rng, SExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CPeriodStates::SSilverGoalPeriodPolicy{} },
+		homeTeamStrategy, awayTeamStrategy, rng, SExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, SExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>{} },
 		} )
 	{
 		result.push_back( std::string{ CPeriodStates::JSON_KEY } + ": "

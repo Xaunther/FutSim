@@ -6,6 +6,7 @@
 
 #include "football/CPeriodState.h"
 #include "football/SPeriodPlayPolicy.h"
+#include "football/SPeriodPolicy.h"
 
 namespace futsim::football
 {
@@ -22,55 +23,6 @@ protected:
 
 public:
 	/**
-	 * @brief Default policy functor for the periods.
-	 * @details All configured periods are played.
-	*/
-	//! 
-	struct SDefaultPeriodPolicy
-	{
-		/**
-		 * @brief Returns whether another period must be played.
-		 * @param aPeriodStates Current period states.
-		 * @param aMatchConfiguration Match configuration.
-		*/
-		bool operator()( const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const;
-	};
-
-	/**
-	 * @brief Default policy functor for the periods of extra time.
-	 * @details All configured extra time periods are played.
-	*/
-	struct SDefaultExtraTimePeriodPolicy
-	{
-		/**
-		 * @brief Returns whether another period must be played.
-		 * @param aPeriodStates Current period states.
-		 * @param aMatchConfiguration Match configuration.
-		*/
-		bool operator()( const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const;
-
-		/**
-		 * @brief Checks that the match configuration can produce extra time periods.
-		 * @param aMatchConfiguration Match configuration.
-		*/
-		static const CMatchConfiguration& CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration );
-	};
-
-	/**
-	 * @brief Default policy functor for the periods of extra time with silver goal.
-	 * @details No more extra time periods are played when the tie condition is no longer satisfied after a period.
-	*/
-	struct SSilverGoalPeriodPolicy : public SDefaultExtraTimePeriodPolicy
-	{
-		/**
-		 * @brief Returns whether another period must be played.
-		 * @param aPeriodStates Current period states.
-		 * @param aMatchConfiguration Match configuration.
-		*/
-		bool operator()( const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const;
-	};
-
-	/**
 	 * @brief Constructor from the match definition, configuration and current strategies.
 	 * @param aMatch Match definition.
 	 * @param aMatchConfiguration Match configuration.
@@ -81,7 +33,6 @@ public:
 	 * @param aPeriodPolicy Period policy.
 	 * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
 	*/
-	template <typename U = SDefaultPeriodPolicy> requires types::CPeriodStates::period_policy<U>
 	explicit CPeriodStates(
 		const CMatch& aMatch,
 		const CMatchConfiguration& aMatchConfiguration,
@@ -89,7 +40,7 @@ public:
 		const CTeamStrategy& aAwayTeamStrategy,
 		std::uniform_random_bit_generator auto& aGenerator,
 		const IPeriodPlayPolicy& aPeriodPlayPolicy = SPeriodPlayPolicy{},
-		const U& aPeriodPolicy = U{}
+		const IPeriodPolicy& aPeriodPolicy = SPeriodPolicy{}
 	);
 
 protected:
@@ -116,7 +67,6 @@ private:
 	period_states mStates;
 };
 
-template <typename U> requires types::CPeriodStates::period_policy<U>
 CPeriodStates::CPeriodStates(
 	const CMatch& aMatch,
 	const CMatchConfiguration& aMatchConfiguration,
@@ -124,7 +74,7 @@ CPeriodStates::CPeriodStates(
 	const CTeamStrategy& aAwayTeamStrategy,
 	std::uniform_random_bit_generator auto& aGenerator,
 	const IPeriodPlayPolicy& aPeriodPlayPolicy,
-	const U& aPeriodPolicy
+	const IPeriodPolicy& aPeriodPolicy
 ) try
 {
 	auto homeTeamAttack = std::bernoulli_distribution{}( aGenerator );
