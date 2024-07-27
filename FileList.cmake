@@ -53,6 +53,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/EPlayerPosition.h
 	include/football/EPlayerSkill.h
 	include/football/IExtraTimePeriodPlayPolicy.h
+	include/football/IExtraTimePeriodPolicy.h
 	include/football/IPeriodPlayPolicy.h
 	include/football/IPeriodPolicy.h
 	include/football/SExtraTimePeriodPlayPolicy.h
@@ -122,6 +123,7 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CTeam.cpp
 	src/football/CTieCondition.cpp
 	src/football/IExtraTimePeriodPlayPolicy.cpp
+	src/football/IExtraTimePeriodPolicy.cpp
 	src/football/IPeriodPlayPolicy.cpp
 	src/football/IPeriodPolicy.cpp
 	src/football/SExtraTimePeriodPlayPolicy.cpp
