@@ -21,9 +21,9 @@ enum class myEnum
 };
 
 FUTSIM_STRING_ENUM( myEnum, {
-	{myEnum::A,"A"},
-	{myEnum::B,"B"},
-	{myEnum::C,"C"},
+	{ myEnum::A, "A" },
+	{ myEnum::B, "B" },
+	{ myEnum::C, "C" },
 	} );
 
 void TEnumDistribution::TestExceptions() const
@@ -48,8 +48,11 @@ std::vector<std::string> TEnumDistribution::ObtainedResults() const noexcept
 		result.push_back( "min: " + std::string{ ToString( enumDistribution.min() ) } );
 		result.push_back( "max: " + std::string{ ToString( enumDistribution.max() ) } );
 		result.push_back( "Probabilities:" );
-		for( const auto& probability : enumDistribution.probabilities() )
-			result.push_back( std::to_string( probability ) );
+		std::ranges::transform( enumDistribution.probabilities(), std::back_inserter( result ),
+			[]( const auto& aProbability )
+		{
+			return std::to_string( aProbability );
+		} );
 		enumDistribution( rng );
 		enumDistribution( rng, enumDistribution.param() );
 	}

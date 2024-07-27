@@ -179,10 +179,15 @@ shooters CreateShooters( const CTeam& aTeam, const auto& aCurrentPlayers, const 
 {
 	shooters result;
 	result.reserve( std::ranges::distance( aCurrentPlayers ) );
-	for( const auto& currentPlayer : aCurrentPlayers )
-		result.emplace_back( std::cref( aTeam.GetPlayer( currentPlayer ) ) );
+	std::ranges::transform( aCurrentPlayers, std::back_inserter( result ), [ &aTeam ]( const auto& aPlayer )
+	{
+		return std::cref( aTeam.GetPlayer( aPlayer ) );
+	} );
 
-	std::ranges::sort( result, std::ranges::greater{}, []( const CPlayer& aPlayer ) { return aPlayer.GetPlayerSkills().GetSkill( E_PLAYER_SKILL::Sh ); } );
+	std::ranges::sort( result, std::ranges::greater{}, []( const CPlayer& aPlayer )
+	{
+		return aPlayer.GetPlayerSkills().GetSkill( E_PLAYER_SKILL::Sh );
+	} );
 	result.erase( result.cbegin() + aShootersCount, result.cend() );
 	return result;
 }
