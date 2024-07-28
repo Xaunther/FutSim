@@ -1,7 +1,7 @@
 #include "ITest.h"
 
 #include "football/CPeriodState.h"
-#include "football/SExtraTimePeriodPlayPolicy.h"
+#include "football/CExtraTimePeriodPlayPolicy.h"
 
 #include "JsonUtils.h"
 
@@ -61,9 +61,9 @@ std::vector<std::string> TPeriodState::ObtainedResults() const noexcept
 		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
 		CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, false, rng },
 		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
-		extraTimeMatchConfig, homeTeamStrategy, awayTeamStrategy, true, rng, SExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{} },
+		extraTimeMatchConfig, homeTeamStrategy, awayTeamStrategy, true, rng, CExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{} },
 		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
-		goldenGoalMatchConfig, homeTeamStrategy, awayTeamStrategy, false, rng, SExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{} },
+		goldenGoalMatchConfig, homeTeamStrategy, awayTeamStrategy, false, rng, CExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{} },
 		} )
 	{
 		result.push_back( std::string{ CPeriodState::JSON_PLAYS } + ": "

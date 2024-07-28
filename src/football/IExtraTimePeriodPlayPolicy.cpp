@@ -6,7 +6,7 @@
 namespace futsim::football
 {
 
-bool IExtraTimePeriodPlayPolicy::operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const
+bool IExtraTimePeriodPlayPolicy::DoOperator( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const
 {
 	return aPlays.size() < aMatchConfiguration.GetExtraTime()->GetPeriodTime();
 }

@@ -13,9 +13,9 @@ class CMatchConfiguration;
  * @brief Functor for the plays of an extra time period.
 */
 template <E_GOAL_RULE GOAL_RULE>
-struct SExtraTimePeriodPlayPolicy : public IExtraTimePeriodPlayPolicy
+class CExtraTimePeriodPlayPolicy : public IExtraTimePeriodPlayPolicy
 {
-	bool operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const override;
+	bool DoOperator( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const override;
 };
 
 } // futsim::football namespace

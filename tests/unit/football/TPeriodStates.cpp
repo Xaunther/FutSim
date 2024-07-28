@@ -1,7 +1,7 @@
 #include "ITest.h"
 
 #include "football/CPeriodStates.h"
-#include "football/SExtraTimePeriodPlayPolicy.h"
+#include "football/CExtraTimePeriodPlayPolicy.h"
 #include "football/CExtraTimePeriodPolicy.h"
 
 #include "JsonUtils.h"
@@ -63,11 +63,11 @@ std::vector<std::string> TPeriodStates::ObtainedResults() const noexcept
 		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, CMatchConfiguration{},
 		homeTeamStrategy, awayTeamStrategy, rng },
 		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, extraTimeMatchConfig,
-		homeTeamStrategy, awayTeamStrategy, rng, SExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::NO>{} },
+		homeTeamStrategy, awayTeamStrategy, rng, CExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::NO>{} },
 		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, goldenGoalMatchConfig,
-		homeTeamStrategy, awayTeamStrategy, rng, SExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>{} },
+		homeTeamStrategy, awayTeamStrategy, rng, CExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>{} },
 		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, silverGoalMatchConfig,
-		homeTeamStrategy, awayTeamStrategy, rng, SExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>{} },
+		homeTeamStrategy, awayTeamStrategy, rng, CExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>{} },
 		} )
 	{
 		result.push_back( std::string{ CPeriodStates::JSON_KEY } + ": "

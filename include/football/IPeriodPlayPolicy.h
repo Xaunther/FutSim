@@ -17,11 +17,17 @@ protected:
 
 public:
 	/**
+	 * @copydoc DoOperator
+	*/
+	bool operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const;
+
+protected:
+	/**
 	 * @brief Returns whether another minute must be played.
 	 * @param aPlays Plays of the period.
 	 * @param aMatchConfiguration Match configuration.
 	*/
-	virtual bool operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const = 0;
+	virtual bool DoOperator( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const = 0;
 };
 
 } // futsim::football namespace

@@ -6,7 +6,7 @@
 namespace futsim::football
 {
 
-//! Macro to explicitly instantiate SExtraTimePeriodPlayPolicy struct
+//! Macro to explicitly instantiate CExtraTimePeriodPlayPolicy struct
 #define EXPLICIT_INSTANTIATE_STRUCT_EXTRA_TIME_PERIOD_POLICY(name, ... ) \
 	template class CExtraTimePeriodPolicy<E_GOAL_RULE::name>; \
 
