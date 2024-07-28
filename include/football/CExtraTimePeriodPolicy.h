@@ -13,9 +13,9 @@ class CMatchConfiguration;
  * @brief Functor for the periods at extra time.
 */
 template <E_GOAL_RULE GOAL_RULE>
-struct SExtraTimePeriodPolicy : public IExtraTimePeriodPolicy
+class CExtraTimePeriodPolicy : public IExtraTimePeriodPolicy
 {
-	bool operator()( const period_states& aPeriodStates,
+	bool DoOperator( const period_states& aPeriodStates,
 		const CMatchConfiguration& aMatchConfiguration ) const override;
 };
 

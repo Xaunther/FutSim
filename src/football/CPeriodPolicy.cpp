@@ -1,4 +1,4 @@
-#include "football/SPeriodPolicy.h"
+#include "football/CPeriodPolicy.h"
 
 #include "football/CMatchConfiguration.h"
 #include "football/CPeriodState.h"
@@ -6,10 +6,10 @@
 namespace futsim::football
 {
 
-bool SPeriodPolicy::operator()( const period_states& aPeriodStates,
+bool CPeriodPolicy::DoOperator( const period_states& aPeriodStates,
 	const CMatchConfiguration& aMatchConfiguration ) const
 {
-	return IPeriodPolicy::operator()( aPeriodStates, aMatchConfiguration );
+	return IPeriodPolicy::DoOperator( aPeriodStates, aMatchConfiguration );
 }
 
 } // futsim::football namespace

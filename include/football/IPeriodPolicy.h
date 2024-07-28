@@ -17,11 +17,18 @@ protected:
 
 public:
 	/**
+	 * @copydoc DoOperator
+	*/
+	bool operator()( const period_states& aPeriodStates,
+		const CMatchConfiguration& aMatchConfiguration ) const;
+
+protected:
+	/**
 	 * @brief Returns whether another period must be played.
 	 * @param aPeriodStates Current period states.
 	 * @param aMatchConfiguration Match configuration.
 	*/
-	virtual bool operator()( const period_states& aPeriodStates,
+	virtual bool DoOperator( const period_states& aPeriodStates,
 		const CMatchConfiguration& aMatchConfiguration ) const = 0;
 };
 

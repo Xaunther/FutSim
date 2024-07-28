@@ -10,9 +10,9 @@ class CMatchConfiguration;
 /**
  * @brief Functor for the periods.
 */
-struct SPeriodPolicy : public IPeriodPolicy
+class CPeriodPolicy : public IPeriodPolicy
 {
-	bool operator()( const period_states& aPeriodStates,
+	bool DoOperator( const period_states& aPeriodStates,
 		const CMatchConfiguration& aMatchConfiguration ) const override;
 };
 

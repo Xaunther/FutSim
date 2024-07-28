@@ -7,7 +7,7 @@
 #include "football/CPeriodStates.h"
 #include "football/CPenaltyShootoutState.h"
 #include "football/SExtraTimePeriodPlayPolicy.h"
-#include "football/SExtraTimePeriodPolicy.h"
+#include "football/CExtraTimePeriodPolicy.h"
 
 #include "ExceptionUtils.h"
 
@@ -96,15 +96,15 @@ CMatchState::CMatchState(
 				{
 				case E_GOAL_RULE::SILVER_GOAL:
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-						SExtraTimePeriodPlayPolicy<E_GOAL_RULE::SILVER_GOAL>{}, SExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>{} };
+						SExtraTimePeriodPlayPolicy<E_GOAL_RULE::SILVER_GOAL>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>{} };
 					break;
 				case E_GOAL_RULE::GOLDEN_GOAL:
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-						SExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{}, SExtraTimePeriodPolicy<E_GOAL_RULE::GOLDEN_GOAL>{} };
+						SExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::GOLDEN_GOAL>{} };
 					break;
 				default:
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-						SExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, SExtraTimePeriodPolicy<E_GOAL_RULE::NO>{} };
+						SExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::NO>{} };
 					break;
 				}
 				homeTeamGoals += mExtraTimeState->CountScoredGoals( true );

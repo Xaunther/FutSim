@@ -15,10 +15,10 @@ class IExtraTimePeriodPolicy : public IPeriodPolicy
 protected:
 	using period_states = types::CPeriodStates::period_states;
 
-public:
-	virtual bool operator()( const period_states& aPeriodStates,
+	virtual bool DoOperator( const period_states& aPeriodStates,
 		const CMatchConfiguration& aMatchConfiguration ) const override = 0;
 
+public:
 	/**
 	 * @brief Checks that the match configuration can produce extra time periods.
 	 * @param aMatchConfiguration Match configuration.

@@ -6,7 +6,7 @@
 
 #include "football/CPeriodState.h"
 #include "football/SPeriodPlayPolicy.h"
-#include "football/SPeriodPolicy.h"
+#include "football/CPeriodPolicy.h"
 
 namespace futsim::football
 {
@@ -40,7 +40,7 @@ public:
 		const CTeamStrategy& aAwayTeamStrategy,
 		std::uniform_random_bit_generator auto& aGenerator,
 		const IPeriodPlayPolicy& aPeriodPlayPolicy = SPeriodPlayPolicy{},
-		const IPeriodPolicy& aPeriodPolicy = SPeriodPolicy{}
+		const IPeriodPolicy& aPeriodPolicy = CPeriodPolicy{}
 	);
 
 protected:

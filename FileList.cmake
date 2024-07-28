@@ -23,6 +23,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CChanceState.h
 	include/football/CDrawConfiguration.h
 	include/football/CExtraTime.h
+	include/football/CExtraTimePeriodPolicy.h
 	include/football/CFoulDrawConfiguration.h
 	include/football/CFoulState.h
 	include/football/CGoalDrawConfiguration.h
@@ -35,6 +36,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CPenaltyShootoutConfiguration.h
 	include/football/CPenaltyShootoutState.h
 	include/football/CPenaltyState.h
+	include/football/CPeriodPolicy.h
 	include/football/CPeriodState.h
 	include/football/CPeriodStates.h
 	include/football/CPlayer.h
@@ -57,9 +59,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/IPeriodPlayPolicy.h
 	include/football/IPeriodPolicy.h
 	include/football/SExtraTimePeriodPlayPolicy.h
-	include/football/SExtraTimePeriodPolicy.h
 	include/football/SPeriodPlayPolicy.h
-	include/football/SPeriodPolicy.h
 	include/football/types/CChancesDrawConfiguration.h
 	include/football/types/CChanceState.h
 	include/football/types/CDrawConfiguration.h
@@ -99,6 +99,7 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CChanceState.cpp
 	src/football/CDrawConfiguration.cpp
 	src/football/CExtraTime.cpp
+	src/football/CExtraTimePeriodPolicy.cpp
 	src/football/CFoulDrawConfiguration.cpp
 	src/football/CFoulState.cpp
 	src/football/CGoalDrawConfiguration.cpp
@@ -111,6 +112,7 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CPenaltyShootoutConfiguration.cpp
 	src/football/CPenaltyShootoutState.cpp
 	src/football/CPenaltyState.cpp
+	src/football/CPeriodPolicy.cpp
 	src/football/CPeriodState.cpp
 	src/football/CPeriodStates.cpp
 	src/football/CPlayerSkills.cpp
@@ -129,9 +131,7 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/IPeriodPlayPolicy.cpp
 	src/football/IPeriodPolicy.cpp
 	src/football/SExtraTimePeriodPlayPolicy.cpp
-	src/football/SExtraTimePeriodPolicy.cpp
 	src/football/SPeriodPlayPolicy.cpp
-	src/football/SPeriodPolicy.cpp
 )
 
 # External headers
