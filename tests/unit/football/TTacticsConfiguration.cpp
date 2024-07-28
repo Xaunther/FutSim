@@ -32,7 +32,7 @@ void TTacticsConfiguration::TestExceptions() const
 		"The tactics 'A' and 'E' are favourable against each other, which is forbidden." );
 	CheckException( []()
 	{
-		CTacticsConfiguration{ CTacticsConfiguration::DEFAULT_TACTIC_CONFIGURATIONS, -0.5 };
+		CTacticsConfiguration{ futsim::default_traits<CTacticsConfiguration>::TACTIC_CONFIGURATIONS, -0.5 };
 	},
 		"The favourable tactic skill bonus cannot be negative" );
 

@@ -3,9 +3,36 @@
 #include "IJsonable.h"
 
 #include "football/types/CLineupConfiguration.h"
+#include "DefaultTraits.h"
 
 namespace futsim
 {
+
+namespace football
+{
+class CLineupConfiguration;
+}
+
+template <> struct default_traits<football::CLineupConfiguration>
+{
+protected:
+	using optional_player_count = football::types::CLineupConfiguration::optional_player_count;
+	using player_count = football::types::CLineupConfiguration::player_count;
+	using player_count_range = football::types::CLineupConfiguration::player_count_range;
+public:
+	//! Default \copybrief football::CLineupConfiguration::mDFRange
+	static inline constexpr player_count_range DF_RANGE = { 3, 6 };
+	//! Default \copybrief football::CLineupConfiguration::mMFRange
+	static inline constexpr player_count_range MF_RANGE = { 2, 6 };
+	//! Default \copybrief football::CLineupConfiguration::mFWRange
+	static inline constexpr player_count_range FW_RANGE = { 0, 4 };
+	//! Default \copybrief football::CLineupConfiguration::mMinPlayerCount
+	static inline constexpr player_count MIN_PLAYERS = 7;
+	//! Maximum number of players
+	static inline constexpr player_count MAX_PLAYERS = 11;
+	//! Default \copybrief football::CLineupConfiguration::mBenchedPlayersCount
+	static inline constexpr optional_player_count BENCHED_PLAYERS = 9;
+};
 
 namespace football
 {
@@ -32,11 +59,11 @@ public:
 	 * @param aBenchedPlayersCount \ref mBenchedPlayersCount
 	*/
 	explicit CLineupConfiguration(
-		const player_count_range& aDFRange = DEFAULT_DF_RANGE,
-		const player_count_range& aMFRange = DEFAULT_MF_RANGE,
-		const player_count_range& aFWRange = DEFAULT_FW_RANGE,
-		const player_count& aMinPlayerCount = DEFAULT_MIN_PLAYERS,
-		const optional_player_count& aBenchedPlayersCount = DEFAULT_BENCHED_PLAYERS
+		const player_count_range& aDFRange = default_traits<CLineupConfiguration>::DF_RANGE,
+		const player_count_range& aMFRange = default_traits<CLineupConfiguration>::MF_RANGE,
+		const player_count_range& aFWRange = default_traits<CLineupConfiguration>::FW_RANGE,
+		const player_count& aMinPlayerCount = default_traits<CLineupConfiguration>::MIN_PLAYERS,
+		const optional_player_count& aBenchedPlayersCount = default_traits<CLineupConfiguration>::BENCHED_PLAYERS
 	);
 
 	/**
@@ -72,19 +99,6 @@ public:
 	 * @param aLineup Lineup to check.
 	*/
 	const CLineup& CheckLineup( const CLineup& aLineup ) const;
-
-	//! Default \copybrief mDFRange
-	static inline constexpr player_count_range DEFAULT_DF_RANGE = { 3, 6 };
-	//! Default \copybrief mMFRange
-	static inline constexpr player_count_range DEFAULT_MF_RANGE = { 2, 6 };
-	//! Default \copybrief mFWRange
-	static inline constexpr player_count_range DEFAULT_FW_RANGE = { 0, 4 };
-	//! Default \copybrief mMinPlayerCount
-	static inline constexpr player_count DEFAULT_MIN_PLAYERS = 7;
-	//! Maximum number of players
-	static inline constexpr player_count MAX_PLAYERS = 11;
-	//! Default \copybrief mBenchedPlayersCount
-	static inline constexpr optional_player_count DEFAULT_BENCHED_PLAYERS = 9;
 
 private:
 	//! Allowed DFs count range.

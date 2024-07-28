@@ -4,9 +4,24 @@
 
 #include "football/types/CDrawConfiguration.h"
 #include "football/types/CPossessionDrawConfiguration.h"
+#include "DefaultTraits.h"
 
 namespace futsim
 {
+
+namespace football
+{
+class CPossessionDrawConfiguration;
+}
+
+template <> struct default_traits<football::CPossessionDrawConfiguration>
+{
+protected:
+	using probability = football::types::CDrawConfiguration::probability;
+public:
+	//! Default keep posssession probability.
+	static inline constexpr probability KEEP_POSSESSION_PROBABILITY = probability{ 295952 } / 460939;
+};
 
 namespace football
 {
@@ -25,7 +40,7 @@ public:
 	 * @param aKeepPossessionProbability \ref mKeepPossessionProbability
 	*/
 	explicit CPossessionDrawConfiguration(
-		const probability& aKeepPossessionProbability = DEFAULT_KEEP_POSSESSION_PROBABILITY );
+		const probability& aKeepPossessionProbability = default_traits<CPossessionDrawConfiguration>::KEEP_POSSESSION_PROBABILITY );
 
 	/**
 	 * @brief JSON constructor.
@@ -42,9 +57,6 @@ protected:
 public:
 	//! Retrieves the \copybrief mKeepPossessionProbability
 	const probability& GetKeepPossessionProbability() const noexcept;
-
-	//! Default keep posssession probability.
-	static inline constexpr probability DEFAULT_KEEP_POSSESSION_PROBABILITY = probability{ 295952 } / 460939;
 
 private:
 	//! Center probability to keep possession.

@@ -6,9 +6,40 @@
 #include "football/types/CGoalDrawConfiguration.h"
 
 #include "football/EPlayerSkill.h"
+#include "DefaultTraits.h"
 
 namespace futsim
 {
+
+namespace football
+{
+class CGoalDrawConfiguration;
+}
+
+template <> struct default_traits<football::CGoalDrawConfiguration>
+{
+protected:
+	using stat = football::types::CDrawConfiguration::stat;
+public:
+	//! Default \copybrief football::CGoalDrawConfiguration::mAverageGoals
+	static inline constexpr stat AVERAGE_GOALS = stat{ 1039 } / 380;
+	//! Default \copybrief football::CGoalDrawConfiguration::mAveragePenaltyGoals
+	static inline constexpr stat AVERAGE_PENALTY_GOALS = stat{ 74 } / 380;
+	//! Default \copybrief football::CGoalDrawConfiguration::mAverageDirectFreeKickGoals
+	static inline constexpr stat AVERAGE_DIRECT_FREE_KICK_GOALS = stat{ 17 } / 380;
+	//! Default \copybrief football::CGoalDrawConfiguration::mAverageIndirectFreeKickGoals
+	static inline constexpr stat AVERAGE_INDIRECT_FREE_KICK_GOALS = stat{ 38 } / 380;
+	//! Default \copybrief football::CGoalDrawConfiguration::mAverageCornerGoals
+	static inline constexpr stat AVERAGE_CORNER_GOALS = stat{ 151 } / 380;
+	//! Default \copybrief football::CGoalDrawConfiguration::mAverageFarShotGoals
+	static inline constexpr stat AVERAGE_FAR_SHOT_GOALS = stat{ 147 } / 380 - AVERAGE_DIRECT_FREE_KICK_GOALS;
+	//! Default \copybrief football::CGoalDrawConfiguration::m1vs1GKGoalProbability
+	static inline constexpr stat ONE_VS_ONE_GK_GOAL_PROBABILITY = 0.35;
+	//! Default \copybrief football::CGoalDrawConfiguration::m1vs1DFGoalProbability
+	static inline constexpr stat ONE_VS_ONE_DF_GOAL_PROBABILITY = 0.2;
+	//! Default \copybrief football::CGoalDrawConfiguration::mExtraCornerProbability
+	static inline constexpr stat EXTRA_CORNER_PROBABILITY = 0.25;
+};
 
 namespace football
 {
@@ -39,15 +70,15 @@ public:
 	 * @param aExtraCornerProbability \ref mExtraCornerProbability
 	*/
 	explicit CGoalDrawConfiguration(
-		const stat& aAverageGoals = DEFAULT_AVERAGE_GOALS,
-		const stat& aAveragePenaltyGoals = DEFAULT_AVERAGE_PENALTY_GOALS,
-		const stat& aAverageDirectFreeKickGoals = DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS,
-		const stat& aAverageIndirectFreeKickGoals = DEFAULT_AVERAGE_INDIRECT_FREE_KICK_GOALS,
-		const stat& aAverageCornerGoals = DEFAULT_AVERAGE_CORNER_GOALS,
-		const stat& aAverageFarShotGoals = DEFAULT_AVERAGE_FAR_SHOT_GOALS,
-		const stat& a1vs1GKGoalProbability = DEFAULT_1VS1_GK_GOAL_PROBABILITY,
-		const stat& a1vs1DFGoalProbability = DEFAULT_1VS1_DF_GOAL_PROBABILITY,
-		const stat& aExtraCornerProbability = DEFAULT_EXTRA_CORNER_PROBABILITY
+		const stat& aAverageGoals = default_traits<CGoalDrawConfiguration>::AVERAGE_GOALS,
+		const stat& aAveragePenaltyGoals = default_traits<CGoalDrawConfiguration>::AVERAGE_PENALTY_GOALS,
+		const stat& aAverageDirectFreeKickGoals = default_traits<CGoalDrawConfiguration>::AVERAGE_DIRECT_FREE_KICK_GOALS,
+		const stat& aAverageIndirectFreeKickGoals = default_traits<CGoalDrawConfiguration>::AVERAGE_INDIRECT_FREE_KICK_GOALS,
+		const stat& aAverageCornerGoals = default_traits<CGoalDrawConfiguration>::AVERAGE_CORNER_GOALS,
+		const stat& aAverageFarShotGoals = default_traits<CGoalDrawConfiguration>::AVERAGE_FAR_SHOT_GOALS,
+		const stat& a1vs1GKGoalProbability = default_traits<CGoalDrawConfiguration>::ONE_VS_ONE_GK_GOAL_PROBABILITY,
+		const stat& a1vs1DFGoalProbability = default_traits<CGoalDrawConfiguration>::ONE_VS_ONE_DF_GOAL_PROBABILITY,
+		const stat& aExtraCornerProbability = default_traits<CGoalDrawConfiguration>::EXTRA_CORNER_PROBABILITY
 	);
 
 	/**
@@ -137,25 +168,6 @@ public:
 	*/
 	template <E_PLAYER_SKILL tPlayerSkill>
 	position_draw_distribution CreatePositionDrawDistribution() const noexcept;
-
-	//! Default \copybrief mAverageGoals
-	static inline constexpr stat DEFAULT_AVERAGE_GOALS = stat{ 1039 } / 380;
-	//! Default \copybrief mAveragePenaltyGoals
-	static inline constexpr stat DEFAULT_AVERAGE_PENALTY_GOALS = stat{ 74 } / 380;
-	//! Default \copybrief mAverageDirectFreeKickGoals
-	static inline constexpr stat DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS = stat{ 17 } / 380;
-	//! Default \copybrief mAverageIndirectFreeKickGoals
-	static inline constexpr stat DEFAULT_AVERAGE_INDIRECT_FREE_KICK_GOALS = stat{ 38 } / 380;
-	//! Default \copybrief mAverageCornerGoals
-	static inline constexpr stat DEFAULT_AVERAGE_CORNER_GOALS = stat{ 151 } / 380;
-	//! Default \copybrief mAverageFarShotGoals
-	static inline constexpr stat DEFAULT_AVERAGE_FAR_SHOT_GOALS = stat{ 147 } / 380 - DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS;
-	//! Default \copybrief m1vs1GKGoalProbability
-	static inline constexpr stat DEFAULT_1VS1_GK_GOAL_PROBABILITY = 0.35;
-	//! Default \copybrief m1vs1DFGoalProbability
-	static inline constexpr stat DEFAULT_1VS1_DF_GOAL_PROBABILITY = 0.2;
-	//! Default \copybrief mExtraCornerProbability
-	static inline constexpr stat DEFAULT_EXTRA_CORNER_PROBABILITY = 0.25;
 
 private:
 	//! Average number of goals per 90 minutes.

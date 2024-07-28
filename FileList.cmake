@@ -4,6 +4,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/Config.h
 	include/CPerson.h
 	include/CPlayTime.h
+	include/DefaultTraits.h
 	include/ENationality.h
 	include/EnumUtils.h
 	include/ExceptionUtils.h

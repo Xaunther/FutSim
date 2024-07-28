@@ -85,8 +85,8 @@ CPossessionState::CPossessionState(
 
 	// Calculate each player's effective skill
 	std::vector<skill_bonus> attackSkills, defenseSkills;
-	attackSkills.reserve( CLineupConfiguration::MAX_PLAYERS );
-	defenseSkills.reserve( CLineupConfiguration::MAX_PLAYERS );
+	attackSkills.reserve( futsim::default_traits<CLineupConfiguration>::MAX_PLAYERS );
+	defenseSkills.reserve( futsim::default_traits<CLineupConfiguration>::MAX_PLAYERS );
 
 	aAttackingTeamStrategy.ForEachPlayerSkill( E_PLAYER_SKILL::Ps, aMatch,
 		aMatchConfiguration, aHomeTeamAttack, aDefendingTeamStrategy,

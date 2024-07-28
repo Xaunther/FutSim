@@ -5,9 +5,38 @@
 #include "football/types/CDrawConfiguration.h"
 #include "football/types/CChancesDrawConfiguration.h"
 #include "CEnumDistribution.h"
+#include "DefaultTraits.h"
 
 namespace futsim
 {
+
+namespace football
+{
+class CChancesDrawConfiguration;
+}
+
+template <> struct default_traits<football::CChancesDrawConfiguration>
+{
+protected:
+	using stat = football::types::CDrawConfiguration::stat;
+public:
+	//! Default \copybrief football::CChancesDrawConfiguration::mAverageChances
+	static inline constexpr stat AVERAGE_CHANCES = stat{ 9609 } / 380;
+	//! Default \copybrief football::CChancesDrawConfiguration::mAverageCornerKicks
+	static inline constexpr stat AVERAGE_CORNER_KICKS = stat{ 3830 } / 380;
+	//! Default \copybrief football::CChancesDrawConfiguration::mAverage1vs1GKs
+	static inline constexpr stat AVERAGE_1VS1_GKS = 2;
+	//! Default \copybrief football::CChancesDrawConfiguration::mAverage1vs1DFs
+	static inline constexpr stat AVERAGE_1VS1_DFS = 2.85;
+	//! Default \copybrief football::CChancesDrawConfiguration::mAverageNearShots
+	static inline constexpr stat AVERAGE_NEAR_SHOTS = 3;
+	//! Default \copybrief football::CChancesDrawConfiguration::mAverageSetPieces
+	static inline constexpr stat AVERAGE_SET_PIECES = stat{ 1545 } / 380;
+	//! Default \copybrief football::CChancesDrawConfiguration::mAveragePenalties
+	static inline constexpr stat AVERAGE_PENALTIES = stat{ 104 } / 380;
+	//! Default \copybrief football::CChancesDrawConfiguration::mAverageDirectFreeKicks
+	static inline constexpr stat AVERAGE_DIRECT_FREE_KICKS = stat{ 301 } / 380;
+};
 
 namespace football
 {
@@ -34,14 +63,14 @@ public:
 	 * @param aAverageDirectFreeKicks \ref mAverageDirectFreeKicks
 	*/
 	explicit CChancesDrawConfiguration(
-		const stat& aAverageChances = DEFAULT_AVERAGE_CHANCES,
-		const stat& aAverageCornerKicks = DEFAULT_AVERAGE_CORNER_KICKS,
-		const stat& aAverage1vs1GKs = DEFAULT_AVERAGE_1VS1_GKS,
-		const stat& aAverage1vs1DFs = DEFAULT_AVERAGE_1VS1_DFS,
-		const stat& aAverageNearShots = DEFAULT_AVERAGE_NEAR_SHOTS,
-		const stat& aAverageSetPieces = DEFAULT_AVERAGE_SET_PIECES,
-		const stat& aAveragePenalties = DEFAULT_AVERAGE_PENALTIES,
-		const stat& aAverageDirectFreeKicks = DEFAULT_AVERAGE_DIRECT_FREE_KICKS
+		const stat& aAverageChances = default_traits<CChancesDrawConfiguration>::AVERAGE_CHANCES,
+		const stat& aAverageCornerKicks = default_traits<CChancesDrawConfiguration>::AVERAGE_CORNER_KICKS,
+		const stat& aAverage1vs1GKs = default_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_GKS,
+		const stat& aAverage1vs1DFs = default_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_DFS,
+		const stat& aAverageNearShots = default_traits<CChancesDrawConfiguration>::AVERAGE_NEAR_SHOTS,
+		const stat& aAverageSetPieces = default_traits<CChancesDrawConfiguration>::AVERAGE_SET_PIECES,
+		const stat& aAveragePenalties = default_traits<CChancesDrawConfiguration>::AVERAGE_PENALTIES,
+		const stat& aAverageDirectFreeKicks = default_traits<CChancesDrawConfiguration>::AVERAGE_DIRECT_FREE_KICKS
 	);
 
 	/**
@@ -84,23 +113,6 @@ public:
 
 	//! Creates the set piece type draw distribution.
 	set_piece_type_draw_distribution CreateSetPieceTypeDistribution() const noexcept;
-
-	//! Default \copybrief mAverageChances
-	static inline constexpr stat DEFAULT_AVERAGE_CHANCES = stat{ 9609 } / 380;
-	//! Default \copybrief mAverageCornerKicks
-	static inline constexpr stat DEFAULT_AVERAGE_CORNER_KICKS = stat{ 3830 } / 380;
-	//! Default \copybrief mAverage1vs1GKs
-	static inline constexpr stat DEFAULT_AVERAGE_1VS1_GKS = 2;
-	//! Default \copybrief mAverage1vs1DFs
-	static inline constexpr stat DEFAULT_AVERAGE_1VS1_DFS = 2.85;
-	//! Default \copybrief mAverageNearShots
-	static inline constexpr stat DEFAULT_AVERAGE_NEAR_SHOTS = 3;
-	//! Default \copybrief mAverageSetPieces
-	static inline constexpr stat DEFAULT_AVERAGE_SET_PIECES = stat{ 1545 } / 380;
-	//! Default \copybrief mAveragePenalties
-	static inline constexpr stat DEFAULT_AVERAGE_PENALTIES = stat{ 104 } / 380;
-	//! Default \copybrief mAverageDirectFreeKicks
-	static inline constexpr stat DEFAULT_AVERAGE_DIRECT_FREE_KICKS = stat{ 301 } / 380;
 
 private:
 	//! Average number of chances per 90 minutes.

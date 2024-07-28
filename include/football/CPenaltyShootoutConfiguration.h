@@ -4,9 +4,26 @@
 
 #include "football/types/CPenaltyShootoutConfiguration.h"
 #include "football/EPenaltySequence.h"
+#include "DefaultTraits.h"
 
 namespace futsim
 {
+
+namespace football
+{
+class CPenaltyShootoutConfiguration;
+}
+
+template <> struct default_traits<football::CPenaltyShootoutConfiguration>
+{
+protected:
+	using penalty_count = football::types::CPenaltyShootoutConfiguration::penalty_count;
+public:
+	//! Default \copybrief football::CPenaltyShootoutConfiguration::mPenaltySequence
+	static inline constexpr football::E_PENALTY_SEQUENCE PENALTY_SEQUENCE = football::E_PENALTY_SEQUENCE::AB;
+	//! Default \copybrief football::CPenaltyShootoutConfiguration::mMinPenaltyCount
+	static inline constexpr penalty_count PENALTY_COUNT = 5;
+};
 
 namespace football
 {
@@ -26,8 +43,8 @@ public:
 	 * @param aMinPenaltyCount \ref mMinPenaltyCount
 	*/
 	explicit CPenaltyShootoutConfiguration(
-		const E_PENALTY_SEQUENCE& aPenaltySequence = DEFAULT_PENALTY_SEQUENCE,
-		const penalty_count& aMinPenaltyCount = DEFAULT_PENALTY_COUNT ) noexcept;
+		const E_PENALTY_SEQUENCE& aPenaltySequence = default_traits<CPenaltyShootoutConfiguration>::PENALTY_SEQUENCE,
+		const penalty_count& aMinPenaltyCount = default_traits<CPenaltyShootoutConfiguration>::PENALTY_COUNT ) noexcept;
 
 	/**
 	 * @brief JSON constructor.
@@ -47,12 +64,6 @@ public:
 
 	//! Retrieves the \copybrief mMinPenaltyCount
 	const penalty_count& GetMinPenaltyCount() const noexcept;
-
-	//! Default \copybrief mPenaltySequence
-	static inline constexpr E_PENALTY_SEQUENCE DEFAULT_PENALTY_SEQUENCE = E_PENALTY_SEQUENCE::AB;
-
-	//! Default \copybrief mMinPenaltyCount
-	static inline constexpr penalty_count DEFAULT_PENALTY_COUNT = 5;
 
 private:
 	//! Penalty sequence.

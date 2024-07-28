@@ -16,6 +16,17 @@ namespace futsim
 
 namespace football
 {
+class CMatchConfiguration;
+}
+
+template <> struct default_traits<football::CMatchConfiguration>
+{
+	//! Default \copybrief football::CMatchConfiguration::mApplyAmbientFactor
+	static inline constexpr bool APPLY_AMBIENT_FACTOR = true;
+};
+
+namespace football
+{
 
 class CTeamStrategy;
 
@@ -44,7 +55,7 @@ public:
 	explicit CMatchConfiguration(
 		const CPlayTime& aPlayTime = CPlayTime{},
 		const CLineupConfiguration& aLineupConfiguration = CLineupConfiguration{},
-		const bool aApplyAmbientFactor = DEFAULT_APPLY_AMBIENT_FACTOR,
+		const bool aApplyAmbientFactor = default_traits<CMatchConfiguration>::APPLY_AMBIENT_FACTOR,
 		const CTacticsConfiguration& aTacticsConfiguration = CTacticsConfiguration{},
 		const optional_tie_condition& aTieCondition = {},
 		const optional_extra_time& aExtraTime = {},
@@ -93,9 +104,6 @@ public:
 	 * @param aTeamStrategy Team strategy to check.
 	*/
 	const CTeamStrategy& CheckTeamStrategy( const CTeamStrategy& aTeamStrategy ) const;
-
-	//! Default \copybrief mApplyAmbientFactor
-	static inline constexpr bool DEFAULT_APPLY_AMBIENT_FACTOR = true;
 
 private:
 	//! Play time configuration.

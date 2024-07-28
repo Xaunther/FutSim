@@ -37,9 +37,9 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the t
 
 CTacticsConfiguration::CTacticsConfiguration( const json& aJSON ) try :
 	mTacticConfigurations( CheckTacticConfigurations( aJSON.find( json_traits<CTacticsConfiguration>::TACTIC_CONFIGURATIONS ) != aJSON.cend() ?
-		CreateTacticConfigurationsFromJSON( aJSON.at( json_traits<CTacticsConfiguration>::TACTIC_CONFIGURATIONS ) ) : DEFAULT_TACTIC_CONFIGURATIONS ) ),
+		CreateTacticConfigurationsFromJSON( aJSON.at( json_traits<CTacticsConfiguration>::TACTIC_CONFIGURATIONS ) ) : default_traits<CTacticsConfiguration>::TACTIC_CONFIGURATIONS ) ),
 	mFavourableTacticSkillBonus( CheckNonNegativeness( ValueFromOptionalJSONKey<skill_bonus>(
-		aJSON, json_traits<CTacticsConfiguration>::FAVOURABLE_TACTIC_SKILL_BONUS, DEFAULT_FAVOURABLE_TACTIC_SKILL_BONUS ), "favourable tactic skill bonus" ) )
+		aJSON, json_traits<CTacticsConfiguration>::FAVOURABLE_TACTIC_SKILL_BONUS, default_traits<CTacticsConfiguration>::FAVOURABLE_TACTIC_SKILL_BONUS ), "favourable tactic skill bonus" ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tactics configuration from JSON." )

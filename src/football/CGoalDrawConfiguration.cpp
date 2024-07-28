@@ -40,23 +40,23 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the g
 
 CGoalDrawConfiguration::CGoalDrawConfiguration( const json& aJSON ) try :
 	mAverageGoals( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_GOALS, DEFAULT_AVERAGE_GOALS ), "average number of goals" ) ),
+		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_GOALS, default_traits<CGoalDrawConfiguration>::AVERAGE_GOALS ), "average number of goals" ) ),
 	mAveragePenaltyGoals( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_PENALTY_GOALS, DEFAULT_AVERAGE_PENALTY_GOALS ), "average number of penalty goals" ) ),
+		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_PENALTY_GOALS, default_traits<CGoalDrawConfiguration>::AVERAGE_PENALTY_GOALS ), "average number of penalty goals" ) ),
 	mAverageDirectFreeKickGoals( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_DIRECT_FREE_KICK_GOALS, DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS ), "average number of direct free kick goals" ) ),
+		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_DIRECT_FREE_KICK_GOALS, default_traits<CGoalDrawConfiguration>::AVERAGE_DIRECT_FREE_KICK_GOALS ), "average number of direct free kick goals" ) ),
 	mAverageIndirectFreeKickGoals( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_INDIRECT_FREE_KICK_GOALS, DEFAULT_AVERAGE_INDIRECT_FREE_KICK_GOALS ), "average number of indirect free kick goals" ) ),
+		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_INDIRECT_FREE_KICK_GOALS, default_traits<CGoalDrawConfiguration>::AVERAGE_INDIRECT_FREE_KICK_GOALS ), "average number of indirect free kick goals" ) ),
 	mAverageCornerGoals( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_CORNER_GOALS, DEFAULT_AVERAGE_CORNER_GOALS ), "average number of corner kick goals" ) ),
+		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_CORNER_GOALS, default_traits<CGoalDrawConfiguration>::AVERAGE_CORNER_GOALS ), "average number of corner kick goals" ) ),
 	mAverageFarShotGoals( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_FAR_SHOT_GOALS, DEFAULT_AVERAGE_FAR_SHOT_GOALS ), "average number of far shot goals" ) ),
+		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_FAR_SHOT_GOALS, default_traits<CGoalDrawConfiguration>::AVERAGE_FAR_SHOT_GOALS ), "average number of far shot goals" ) ),
 	m1vs1GKGoalProbability( CheckProbability( ValueFromOptionalJSONKey<probability>(
-		aJSON, json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_GK_GOAL_PROBABILITY, DEFAULT_1VS1_GK_GOAL_PROBABILITY ), "probability to score in a 1 on 1 vs GK chance" ) ),
+		aJSON, json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_GK_GOAL_PROBABILITY, default_traits<CGoalDrawConfiguration>::ONE_VS_ONE_GK_GOAL_PROBABILITY ), "probability to score in a 1 on 1 vs GK chance" ) ),
 	m1vs1DFGoalProbability( CheckProbability( ValueFromOptionalJSONKey<probability>(
-		aJSON, json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_DF_GOAL_PROBABILITY, DEFAULT_1VS1_DF_GOAL_PROBABILITY ), "probability to score in a 1 on 1 vs DF chance" ) ),
+		aJSON, json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_DF_GOAL_PROBABILITY, default_traits<CGoalDrawConfiguration>::ONE_VS_ONE_DF_GOAL_PROBABILITY ), "probability to score in a 1 on 1 vs DF chance" ) ),
 	mExtraCornerProbability( CheckProbability( ValueFromOptionalJSONKey<probability>(
-		aJSON, json_traits<CGoalDrawConfiguration>::EXTRA_CORNER_PROBABILITY, DEFAULT_EXTRA_CORNER_PROBABILITY ), "probability to be awarded an extra corner" ) )
+		aJSON, json_traits<CGoalDrawConfiguration>::EXTRA_CORNER_PROBABILITY, default_traits<CGoalDrawConfiguration>::EXTRA_CORNER_PROBABILITY ), "probability to be awarded an extra corner" ) )
 {
 	CheckProbability( mExtraCornerProbability + m1vs1GKGoalProbability,
 		"joint probability of getting an extra corner or scoring in a 1 on 1 vs GK chance" );

@@ -23,21 +23,21 @@ void TLineupConfiguration::TestExceptions() const
 		"The maximum number of DFs cannot be smaller than the minimum number." );
 	CheckException( []()
 	{
-		CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
+		CLineupConfiguration{ futsim::default_traits<CLineupConfiguration>::DF_RANGE,
 		types::CLineupConfiguration::player_count_range{ 1, 0 } };
 	},
 		"The maximum number of MFs cannot be smaller than the minimum number." );
 	CheckException( []()
 	{
-		CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
-		CLineupConfiguration::DEFAULT_MF_RANGE,
+		CLineupConfiguration{ futsim::default_traits<CLineupConfiguration>::DF_RANGE,
+		futsim::default_traits<CLineupConfiguration>::MF_RANGE,
 		types::CLineupConfiguration::player_count_range{ 1, 0 } };
 	},
 		"The maximum number of FWs cannot be smaller than the minimum number." );
 	CheckException( []()
 	{
-		CLineupConfiguration{ CLineupConfiguration::DEFAULT_DF_RANGE,
-		CLineupConfiguration::DEFAULT_MF_RANGE, CLineupConfiguration::DEFAULT_FW_RANGE, 12 };
+		CLineupConfiguration{ futsim::default_traits<CLineupConfiguration>::DF_RANGE,
+		futsim::default_traits<CLineupConfiguration>::MF_RANGE, futsim::default_traits<CLineupConfiguration>::FW_RANGE, 12 };
 	},
 		"The maximum number of players cannot be smaller than the minimum number." );
 

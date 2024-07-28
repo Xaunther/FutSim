@@ -26,7 +26,7 @@ CTacticConfiguration::CTacticConfiguration( const json& aJSON ) try :
 	mTkBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, json_traits<CTacticConfiguration>::TK_BONUS ) ),
 	mPsBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, json_traits<CTacticConfiguration>::PS_BONUS ) ),
 	mFavourableTactics( ValueFromOptionalJSONKey<ids>( aJSON, json_traits<CTacticConfiguration>::FAVOURABLE_TACTICS, {} ) ),
-	mPositionPenalties( ValueFromOptionalJSONKey<position_penalties>( aJSON, json_traits<CTacticConfiguration>::POSITION_PENALTIES, DEFAULT_POSITION_PENALTIES ) )
+	mPositionPenalties( ValueFromOptionalJSONKey<position_penalties>( aJSON, json_traits<CTacticConfiguration>::POSITION_PENALTIES, default_traits<CTacticConfiguration>::POSITION_PENALTIES ) )
 {
 	CalculateBonusesTable();
 }

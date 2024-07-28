@@ -20,12 +20,12 @@ void TFoulDrawConfiguration::TestExceptions() const
 	}, "The average number of fouls cannot be negative." );
 	CheckException( []()
 	{
-		CFoulDrawConfiguration{ CFoulDrawConfiguration::DEFAULT_AVERAGE_FOULS, -1 };
+		CFoulDrawConfiguration{ futsim::default_traits<CFoulDrawConfiguration>::AVERAGE_FOULS, -1 };
 	},
 		"The average number of yellow cards cannot be negative." );
 	CheckException( []()
 	{
-		CFoulDrawConfiguration{ CFoulDrawConfiguration::DEFAULT_AVERAGE_FOULS, CFoulDrawConfiguration::DEFAULT_AVERAGE_YELLOW_CARDS, -1 };
+		CFoulDrawConfiguration{ futsim::default_traits<CFoulDrawConfiguration>::AVERAGE_FOULS, futsim::default_traits<CFoulDrawConfiguration>::AVERAGE_YELLOW_CARDS, -1 };
 	},
 		"The average number of red cards cannot be negative." );
 	CheckException( []()

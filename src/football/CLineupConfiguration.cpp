@@ -49,7 +49,7 @@ CLineupConfiguration::CLineupConfiguration(
 	mDFRange( CheckRange( aDFRange, "DF" ) ),
 	mMFRange( CheckRange( aMFRange, "MF" ) ),
 	mFWRange( CheckRange( aFWRange, "FW" ) ),
-	mMinPlayerCount( CheckRange( player_count_range{ aMinPlayerCount, MAX_PLAYERS }, "player" ).min ),
+	mMinPlayerCount( CheckRange( player_count_range{ aMinPlayerCount, default_traits<CLineupConfiguration>::MAX_PLAYERS }, "player" ).min ),
 	mBenchedPlayersCount( aBenchedPlayersCount )
 {
 }
@@ -58,14 +58,14 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the l
 CLineupConfiguration::CLineupConfiguration( const json& aJSON ) try :
 	mDFRange( aJSON.contains( json_traits<CLineupConfiguration>::MIN_DFS ) || aJSON.contains( json_traits<CLineupConfiguration>::MAX_DFS ) ?
 		CheckRange( { ValueFromRequiredJSONKey<player_count_range::min_type>( aJSON, json_traits<CLineupConfiguration>::MIN_DFS ),
-			ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, json_traits<CLineupConfiguration>::MAX_DFS ) }, "DF" ) : DEFAULT_DF_RANGE ),
+			ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, json_traits<CLineupConfiguration>::MAX_DFS ) }, "DF" ) : default_traits<CLineupConfiguration>::DF_RANGE ),
 	mMFRange( aJSON.contains( json_traits<CLineupConfiguration>::MIN_MFS ) || aJSON.contains( json_traits<CLineupConfiguration>::MAX_MFS ) ?
 		CheckRange( { ValueFromRequiredJSONKey<player_count_range::min_type>( aJSON, json_traits<CLineupConfiguration>::MIN_MFS ),
-			ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, json_traits<CLineupConfiguration>::MAX_MFS ) }, "MF" ) : DEFAULT_MF_RANGE ),
+			ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, json_traits<CLineupConfiguration>::MAX_MFS ) }, "MF" ) : default_traits<CLineupConfiguration>::MF_RANGE ),
 	mFWRange( aJSON.contains( json_traits<CLineupConfiguration>::MIN_FWS ) || aJSON.contains( json_traits<CLineupConfiguration>::MAX_FWS ) ?
 		CheckRange( { ValueFromRequiredJSONKey<player_count_range::min_type>( aJSON, json_traits<CLineupConfiguration>::MIN_FWS ),
-			ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, json_traits<CLineupConfiguration>::MAX_FWS ) }, "FW" ) : DEFAULT_FW_RANGE ),
-	mMinPlayerCount( CheckRange( { ValueFromOptionalJSONKey<player_count>( aJSON, json_traits<CLineupConfiguration>::MIN_PLAYERS, DEFAULT_MIN_PLAYERS ), MAX_PLAYERS }, "player" ).min ),
+			ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, json_traits<CLineupConfiguration>::MAX_FWS ) }, "FW" ) : default_traits<CLineupConfiguration>::FW_RANGE ),
+	mMinPlayerCount( CheckRange( { ValueFromOptionalJSONKey<player_count>( aJSON, json_traits<CLineupConfiguration>::MIN_PLAYERS, default_traits<CLineupConfiguration>::MIN_PLAYERS ), default_traits<CLineupConfiguration>::MAX_PLAYERS }, "player" ).min ),
 	mBenchedPlayersCount( ValueFromOptionalJSONKey<optional_player_count>( aJSON, json_traits<CLineupConfiguration>::BENCHED_PLAYERS ) )
 {
 }
@@ -120,7 +120,7 @@ const CLineup& CLineupConfiguration::CheckLineup( const CLineup& aLineup ) const
 		+ aLineup.GetPlayers< E_PLAYER_POSITION::AM >().size(), mMFRange, "DM+MF+AM" );
 	CheckLineupPosition( aLineup.GetPlayers< E_PLAYER_POSITION::FW >().size(), mFWRange, "FW" );
 	CheckMaxLineupPosition( aLineup.GetSubs().size(), mBenchedPlayersCount, "subs" );
-	CheckLineupPosition( std::ranges::distance( aLineup.CreatePlayersView<false>() ), { mMinPlayerCount, MAX_PLAYERS }, "players" );
+	CheckLineupPosition( std::ranges::distance( aLineup.CreatePlayersView<false>() ), { mMinPlayerCount, default_traits<CLineupConfiguration>::MAX_PLAYERS }, "players" );
 	return aLineup;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the lineup against the configuration." )
