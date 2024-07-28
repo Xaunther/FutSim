@@ -14,9 +14,12 @@ INITIALIZE_TEST( TLineup )
 void TLineup::TestExceptions() const
 {
 	// Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CLineup>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CLineup>( R"( {
 			"Lineup": {}
-		} )" ); }, "key 'GK' not found" );
+		} )" );
+	}, "key 'GK' not found" );
 }
 
 std::vector<std::string> TLineup::ObtainedResults() const noexcept
@@ -25,10 +28,10 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 
 	for( const auto& lineup : {
 		CLineup{ "Kelleher",
-			types::CLineup::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
-			types::CLineup::names{ "Endo" }, types::CLineup::names{ "Mac Allister", "Szoboszlai" }, types::CLineup::names{},
-			types::CLineup::names{ "Elliot", "Darwin Núñez", "Luis Díaz" },
-			types::CLineup::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas" } },
+		types::CLineup::names{ "Bradley", "Quansah", "Van Dijk", "Joe Gomez" },
+		types::CLineup::names{ "Endo" }, types::CLineup::names{ "Mac Allister", "Szoboszlai" }, types::CLineup::names{},
+		types::CLineup::names{ "Elliot", "Darwin Núñez", "Luis Díaz" },
+		types::CLineup::names{ "Salah", "Gakpo", "Robertson", "Adrián", "Tsimikas", "Bobby Clark", "McConnell", "Nallo", "Koumas" } },
 		futsim::ValueFromJSONKeyString<CLineup>( R"( {
 			"Lineup": {
 				"GK": "Kelleher",
@@ -40,23 +43,23 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CLineup::JSON_GK } + ": " + std::string{ lineup.GetPlayers< E_PLAYER_POSITION::GK >() } );
-		result.push_back( std::string{ CLineup::JSON_DFS } + ":" );
+		result.push_back( std::string{ futsim::json_traits<CLineup>::GK } + ": " + std::string{ lineup.GetPlayers< E_PLAYER_POSITION::GK >() } );
+		result.push_back( std::string{ futsim::json_traits<CLineup>::DFS } + ":" );
 		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::DF >() )
 			result.push_back( player );
-		result.push_back( std::string{ CLineup::JSON_DMS } + ":" );
+		result.push_back( std::string{ futsim::json_traits<CLineup>::DMS } + ":" );
 		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::DM >() )
 			result.push_back( player );
-		result.push_back( std::string{ CLineup::JSON_MFS } + ":" );
+		result.push_back( std::string{ futsim::json_traits<CLineup>::MFS } + ":" );
 		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::MF >() )
 			result.push_back( player );
-		result.push_back( std::string{ CLineup::JSON_AMS } + ":" );
+		result.push_back( std::string{ futsim::json_traits<CLineup>::AMS } + ":" );
 		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::AM >() )
 			result.push_back( player );
-		result.push_back( std::string{ CLineup::JSON_FWS } + ":" );
+		result.push_back( std::string{ futsim::json_traits<CLineup>::FWS } + ":" );
 		for( const auto& player : lineup.GetPlayers< E_PLAYER_POSITION::FW >() )
 			result.push_back( player );
-		result.push_back( std::string{ CLineup::JSON_SUBS } + ":" );
+		result.push_back( std::string{ futsim::json_traits<CLineup>::SUBS } + ":" );
 		for( const auto& player : lineup.GetSubs() )
 			result.push_back( player );
 		result.push_back( "Playing players:" );

@@ -4,7 +4,10 @@
 
 #include "football/EGoalRule.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -39,11 +42,6 @@ public:
 	//! Retrieves the \copybrief mGoalRule
 	const E_GOAL_RULE& GetGoalRule() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Extra time";
-	//! JSON key for the \copybrief mGoalRule
-	static inline constexpr std::string_view JSON_GOAL_RULE = "Goal rule";
-
 	//! Default \copybrief mPeriodTime
 	static inline constexpr period_count DEFAULT_PERIOD_TIME = 15;
 	//! Default \copybrief mAvailableSubs
@@ -56,4 +54,14 @@ private:
 	E_GOAL_RULE mGoalRule;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CExtraTime>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Extra time";
+	//! JSON key for the \copybrief football::CExtraTime::mGoalRule
+	static inline constexpr std::string_view GOAL_RULE = "Goal rule";
+};
+
+} // futsim namespace

@@ -10,7 +10,10 @@
 
 #include "ExceptionUtils.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 namespace detail
@@ -93,15 +96,6 @@ private:
 	*/
 	bool IsDecided( const types::CPenaltyShootoutConfiguration::penalty_count& aMinPenaltyCount, const score& aScore ) const noexcept;
 
-public:
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Penalty shootout state";
-	//! JSON key for the \copybrief mPenalties
-	static inline constexpr std::string_view JSON_PENALTIES = "Penalties";
-	//! JSON key to indicate if the penalty corresponds to the home team.
-	static inline constexpr std::string_view JSON_HOME_TEAM_PENALTY = "Home team penalty";
-
-private:
 	//! Penalties.
 	penalty_states mPenalties;
 };
@@ -195,4 +189,16 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the p
 
 } // detail namespace
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPenaltyShootoutState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Penalty shootout state";
+	//! JSON key for the \copybrief football::CPenaltyShootoutState::mPenalties
+	static inline constexpr std::string_view PENALTIES = "Penalties";
+	//! JSON key to indicate if the penalty corresponds to the home team.
+	static inline constexpr std::string_view HOME_TEAM_PENALTY = "Home team penalty";
+};
+
+} // futsim namespace

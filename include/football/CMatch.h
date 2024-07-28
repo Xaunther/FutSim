@@ -5,7 +5,10 @@
 #include "football/CTeam.h"
 #include "football/CStadium.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 class CTeamStrategy;
@@ -64,15 +67,6 @@ public:
 	*/
 	template <bool tHomeTeam> const CTeamStrategy& CheckTeamStrategy( const CTeamStrategy& aTeamStrategy ) const;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Match";
-	//! JSON key for the \copybrief mHomeTeam
-	static inline constexpr std::string_view JSON_HOME_TEAM = "Home team";
-	//! JSON key for the \copybrief mAwayTeam
-	static inline constexpr std::string_view JSON_AWAY_TEAM = "Away team";
-	//! JSON key for the \copybrief mReferee
-	static inline constexpr std::string_view JSON_REFEREE = "Referee";
-
 private:
 	//! Home team.
 	CTeam mHomeTeam;
@@ -84,4 +78,18 @@ private:
 	name_type mReferee;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CMatch>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Match";
+	//! JSON key for the \copybrief football::CMatch::mHomeTeam
+	static inline constexpr std::string_view HOME_TEAM = "Home team";
+	//! JSON key for the \copybrief football::CMatch::mAwayTeam
+	static inline constexpr std::string_view AWAY_TEAM = "Away team";
+	//! JSON key for the \copybrief football::CMatch::mReferee
+	static inline constexpr std::string_view REFEREE = "Referee";
+};
+
+} // futsim namespace

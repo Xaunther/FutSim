@@ -23,10 +23,10 @@ CTacticConfiguration::CTacticConfiguration(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tactic configuration." )
 
 CTacticConfiguration::CTacticConfiguration( const json& aJSON ) try :
-	mTkBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, JSON_TK_BONUS ) ),
-	mPsBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, JSON_PS_BONUS ) ),
-	mFavourableTactics( ValueFromOptionalJSONKey<ids>( aJSON, JSON_FAVOURABLE_TACTICS, {} ) ),
-	mPositionPenalties( ValueFromOptionalJSONKey<position_penalties>( aJSON, JSON_POSITION_PENALTIES, DEFAULT_POSITION_PENALTIES ) )
+	mTkBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, json_traits<CTacticConfiguration>::TK_BONUS ) ),
+	mPsBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, json_traits<CTacticConfiguration>::PS_BONUS ) ),
+	mFavourableTactics( ValueFromOptionalJSONKey<ids>( aJSON, json_traits<CTacticConfiguration>::FAVOURABLE_TACTICS, {} ) ),
+	mPositionPenalties( ValueFromOptionalJSONKey<position_penalties>( aJSON, json_traits<CTacticConfiguration>::POSITION_PENALTIES, DEFAULT_POSITION_PENALTIES ) )
 {
 	CalculateBonusesTable();
 }
@@ -34,11 +34,11 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the t
 
 void CTacticConfiguration::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mTkBonus, JSON_TK_BONUS );
-	AddToJSONKey( aJSON, mPsBonus, JSON_PS_BONUS );
+	AddToJSONKey( aJSON, mTkBonus, json_traits<CTacticConfiguration>::TK_BONUS );
+	AddToJSONKey( aJSON, mPsBonus, json_traits<CTacticConfiguration>::PS_BONUS );
 	if( !mFavourableTactics.empty() )
-		AddToJSONKey( aJSON, mFavourableTactics, JSON_FAVOURABLE_TACTICS );
-	AddToJSONKey( aJSON, mPositionPenalties, JSON_POSITION_PENALTIES );
+		AddToJSONKey( aJSON, mFavourableTactics, json_traits<CTacticConfiguration>::FAVOURABLE_TACTICS );
+	AddToJSONKey( aJSON, mPositionPenalties, json_traits<CTacticConfiguration>::POSITION_PENALTIES );
 }
 
 const CTacticConfiguration::skill_bonus& CTacticConfiguration::GetTkBonus() const noexcept
@@ -64,14 +64,14 @@ const CTacticConfiguration::position_penalties& CTacticConfiguration::GetPositio
 const CTacticConfiguration::skill_bonus& CTacticConfiguration::GetSkillBonus(
 	const E_PLAYER_POSITION& aPlayerPosition, const E_PLAYER_SKILL& aPlayerSkill ) const noexcept
 {
-	return mBonusesTable[ static_cast< bonuses_table::size_type >( aPlayerPosition ) ]
-		[ static_cast< bonuses_table::value_type::size_type >( aPlayerSkill ) ];
+	return mBonusesTable[ static_cast<bonuses_table::size_type>( aPlayerPosition ) ]
+		[ static_cast<bonuses_table::value_type::size_type>( aPlayerSkill ) ];
 }
 
 CTacticConfiguration::skill_bonus& CTacticConfiguration::SkillBonus(
 	const E_PLAYER_POSITION& aPlayerPosition, const E_PLAYER_SKILL& aPlayerSkill ) noexcept
 {
-	return const_cast< CTacticConfiguration::skill_bonus& >( GetSkillBonus( aPlayerPosition, aPlayerSkill ) );
+	return const_cast<CTacticConfiguration::skill_bonus&>( GetSkillBonus( aPlayerPosition, aPlayerSkill ) );
 }
 
 void CTacticConfiguration::CalculateBonusesTable() try

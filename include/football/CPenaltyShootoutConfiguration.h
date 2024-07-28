@@ -5,7 +5,10 @@
 #include "football/types/CPenaltyShootoutConfiguration.h"
 #include "football/EPenaltySequence.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -45,13 +48,6 @@ public:
 	//! Retrieves the \copybrief mMinPenaltyCount
 	const penalty_count& GetMinPenaltyCount() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Penalty shootout configuration";
-	//! JSON key for the \copybrief mPenaltySequence
-	static inline constexpr std::string_view JSON_SEQUENCE = "Sequence";
-	//! JSON key for the \copybrief mMinPenaltyCount
-	static inline constexpr std::string_view JSON_MIN_PENALTY_COUNT = "Min penalty count";
-
 	//! Default \copybrief mPenaltySequence
 	static inline constexpr E_PENALTY_SEQUENCE DEFAULT_PENALTY_SEQUENCE = E_PENALTY_SEQUENCE::AB;
 
@@ -65,4 +61,16 @@ private:
 	penalty_count mMinPenaltyCount;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPenaltyShootoutConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Penalty shootout configuration";
+	//! JSON key for the \copybrief football::CPenaltyShootoutConfiguration::mPenaltySequence
+	static inline constexpr std::string_view SEQUENCE = "Sequence";
+	//! JSON key for the \copybrief football::CPenaltyShootoutConfiguration::mMinPenaltyCount
+	static inline constexpr std::string_view MIN_PENALTY_COUNT = "Min penalty count";
+};
+
+} // futsim namespace

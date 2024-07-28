@@ -43,17 +43,17 @@ CTieCondition::CTieCondition(
 }
 
 CTieCondition::CTieCondition( const json& aJSON ) try :
-	mHomeTeamLead( ValueFromOptionalJSONKey<goal_difference>( aJSON, JSON_HOME_TEAM_LEAD ) ),
-	mHomeTeamGoals( CheckHomeTeamGoals( ValueFromOptionalJSONKey<optional_goal_count>( aJSON, JSON_HOME_TEAM_GOALS ), mHomeTeamLead ) )
+	mHomeTeamLead( ValueFromOptionalJSONKey<goal_difference>( aJSON, json_traits<CTieCondition>::HOME_TEAM_LEAD ) ),
+	mHomeTeamGoals( CheckHomeTeamGoals( ValueFromOptionalJSONKey<optional_goal_count>( aJSON, json_traits<CTieCondition>::HOME_TEAM_GOALS ), mHomeTeamLead ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tie conditions from JSON." )
 
 void CTieCondition::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mHomeTeamLead, JSON_HOME_TEAM_LEAD );
+	AddToJSONKey( aJSON, mHomeTeamLead, json_traits<CTieCondition>::HOME_TEAM_LEAD );
 	if( mHomeTeamGoals )
-		AddToJSONKey( aJSON, *mHomeTeamGoals, JSON_HOME_TEAM_GOALS );
+		AddToJSONKey( aJSON, *mHomeTeamGoals, json_traits<CTieCondition>::HOME_TEAM_GOALS );
 }
 
 const CTieCondition::goal_difference& CTieCondition::GetHomeTeamLead() const noexcept

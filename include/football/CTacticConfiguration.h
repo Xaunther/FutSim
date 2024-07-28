@@ -4,7 +4,10 @@
 
 #include "types/CTacticConfiguration.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -74,17 +77,6 @@ private:
 	void CalculateBonusesTable();
 
 public:
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Tactic configuration";
-	//! JSON key for the \copybrief mTkBonus
-	static inline constexpr std::string_view JSON_TK_BONUS = "Tk bonus";
-	//! JSON key for the \copybrief mPsBonus
-	static inline constexpr std::string_view JSON_PS_BONUS = "Ps bonus";
-	//! JSON key for the \copybrief mFavourableTactics
-	static inline constexpr std::string_view JSON_FAVOURABLE_TACTICS = "Favourable tactics";
-	//! JSON key for the \copybrief mPositionPenalties
-	static inline constexpr std::string_view JSON_POSITION_PENALTIES = "Position penalties";
-
 	//! Default \copybrief mPositionPenalties
 	static inline constexpr position_penalties DEFAULT_POSITION_PENALTIES = { 0, -0.2, -0.4 };
 
@@ -100,6 +92,22 @@ private:
 
 	//! Table containing the bonuses for each position and skill.
 	bonuses_table mBonusesTable{};
+};
+
+} // football namespace
+
+template <> struct json_traits<football::CTacticConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Tactic configuration";
+	//! JSON key for the \copybrief football::CTacticConfiguration::mTkBonus
+	static inline constexpr std::string_view TK_BONUS = "Tk bonus";
+	//! JSON key for the \copybrief football::CTacticConfiguration::mPsBonus
+	static inline constexpr std::string_view PS_BONUS = "Ps bonus";
+	//! JSON key for the \copybrief football::CTacticConfiguration::mFavourableTactics
+	static inline constexpr std::string_view FAVOURABLE_TACTICS = "Favourable tactics";
+	//! JSON key for the \copybrief football::CTacticConfiguration::mPositionPenalties
+	static inline constexpr std::string_view POSITION_PENALTIES = "Position penalties";
 };
 
 } // futsim namespace

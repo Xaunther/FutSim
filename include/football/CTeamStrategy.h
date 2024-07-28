@@ -5,7 +5,10 @@
 #include "football/CLineup.h"
 #include "football/types/CTacticConfiguration.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 class CMatch;
@@ -91,12 +94,6 @@ public:
 		const CMatchConfiguration& aMatchConfiguration, const bool aIsHomeTeam, const CTeamStrategy& aOtherStrategy,
 		const std::function<void( const skill_bonus& )>& aPredicate ) const;
 
-public:
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Team strategy";
-	//! JSON key for the \copybrief mTacticID
-	static inline constexpr std::string_view JSON_TACTIC = "Tactic";
-
 private:
 	//! Used tactic ID.
 	id mTacticID;
@@ -104,4 +101,14 @@ private:
 	CLineup mLineup;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CTeamStrategy>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Team strategy";
+	//! JSON key for the \copybrief football::CTeamStrategy::mTacticID
+	static inline constexpr std::string_view TACTIC = "Tactic";
+};
+
+} // futsim namespace

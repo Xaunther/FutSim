@@ -7,10 +7,10 @@ namespace futsim::football
 
 void CPeriodState::JSON( json& aJSON ) const noexcept
 {
-	for( auto& JSONPlays = aJSON[ JSON_PLAYS ]; const auto & play : mPlays )
+	for( auto& JSONPlays = aJSON[ json_traits<CPeriodState>::PLAYS ]; const auto & play : mPlays )
 	{
 		json elementJSON;
-		AddToJSONKey( elementJSON, play.homeTeam, JSON_HOME_TEAM_PLAY );
+		AddToJSONKey( elementJSON, play.homeTeam, json_traits<CPeriodState>::HOME_TEAM_PLAY );
 		AddToJSON( elementJSON, play.state );
 		JSONPlays.push_back( std::move( elementJSON ) );
 	}

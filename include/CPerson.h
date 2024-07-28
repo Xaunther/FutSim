@@ -67,19 +67,6 @@ public:
 	//! Retrieves the \copybrief mNationality
 	const E_NATIONALITY& GetNationality() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Person";
-	//! JSON key for the \copybrief mFirstName
-	static inline constexpr std::string_view JSON_FIRST_NAME = "First name";
-	//! JSON key for the \copybrief mSurnames
-	static inline constexpr std::string_view JSON_SURNAMES = "Surnames";
-	//! JSON key for the \copybrief mKnownName
-	static inline constexpr std::string_view JSON_KNOWN_NAME = "Known name";
-	//! JSON key for the \copybrief mAge
-	static inline constexpr std::string_view JSON_AGE = "Age";
-	//! JSON key for the \copybrief mNationality
-	static inline constexpr std::string_view JSON_NATIONALITY = "Nationality";
-
 private:
 	//! First name.
 	name_type mFirstName;
@@ -91,6 +78,22 @@ private:
 	unsigned short mAge;
 	//! Nationality.
 	E_NATIONALITY mNationality;
+};
+
+template <> struct json_traits<CPerson>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Person";
+	//! JSON key for the \copybrief CPerson::mFirstName
+	static inline constexpr std::string_view FIRST_NAME = "First name";
+	//! JSON key for the \copybrief CPerson::mSurnames
+	static inline constexpr std::string_view SURNAMES = "Surnames";
+	//! JSON key for the \copybrief CPerson::mKnownName
+	static inline constexpr std::string_view KNOWN_NAME = "Known name";
+	//! JSON key for the \copybrief CPerson::mAge
+	static inline constexpr std::string_view AGE = "Age";
+	//! JSON key for the \copybrief CPerson::mNationality
+	static inline constexpr std::string_view NATIONALITY = "Nationality";
 };
 
 } // futsim namespace

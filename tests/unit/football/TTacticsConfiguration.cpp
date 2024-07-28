@@ -14,24 +14,41 @@ INITIALIZE_TEST( TTacticsConfiguration )
 void TTacticsConfiguration::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CTacticsConfiguration{ types::CTacticsConfiguration::tactic_configurations{} }; },
+	CheckException( []()
+	{
+		CTacticsConfiguration{ types::CTacticsConfiguration::tactic_configurations{} };
+	},
 		"The tactic configurations cannot be empty" );
-	CheckException( []() { CTacticsConfiguration{ { { "A", CTacticConfiguration{ 0, 0, { "A" } } } } }; },
+	CheckException( []()
+	{
+		CTacticsConfiguration{ { { "A", CTacticConfiguration{ 0, 0, { "A" } } } } };
+	},
 		"The tactics 'A' and 'A' are favourable against each other, which is forbidden." );
-	CheckException( []() { CTacticsConfiguration{ { { "A", CTacticConfiguration{ 0, 0, { "E" } } },
-		{ "E", CTacticConfiguration{ 0, 0, { "A" } } } } }; },
+	CheckException( []()
+	{
+		CTacticsConfiguration{ { { "A", CTacticConfiguration{ 0, 0, { "E" } } },
+		{ "E", CTacticConfiguration{ 0, 0, { "A" } } } } };
+	},
 		"The tactics 'A' and 'E' are favourable against each other, which is forbidden." );
-	CheckException( []() { CTacticsConfiguration{ CTacticsConfiguration::DEFAULT_TACTIC_CONFIGURATIONS, -0.5 }; },
+	CheckException( []()
+	{
+		CTacticsConfiguration{ CTacticsConfiguration::DEFAULT_TACTIC_CONFIGURATIONS, -0.5 };
+	},
 		"The favourable tactic skill bonus cannot be negative" );
 
 	// Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTacticsConfiguration>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTacticsConfiguration>( R"( {
 			"Tactics configuration": {
 				"Tactic configurations": {}
 			}
-		} )" ); }, "The tactic configurations cannot be empty" );
+		} )" );
+	}, "The tactic configurations cannot be empty" );
 
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTacticsConfiguration>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTacticsConfiguration>( R"( {
 			"Tactics configuration": {
 				"Tactic configurations": {
 					"A": {
@@ -41,8 +58,11 @@ void TTacticsConfiguration::TestExceptions() const
 					}
 				}
 			}
-		} )" ); }, "The tactics 'A' and 'A' are favourable against each other, which is forbidden." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTacticsConfiguration>( R"( {
+		} )" );
+	}, "The tactics 'A' and 'A' are favourable against each other, which is forbidden." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTacticsConfiguration>( R"( {
 			"Tactics configuration": {
 				"Tactic configurations": {
 					"A": {
@@ -57,25 +77,29 @@ void TTacticsConfiguration::TestExceptions() const
 					}
 				}
 			}
-		} )" ); }, "The tactics 'A' and 'E' are favourable against each other, which is forbidden." );
+		} )" );
+	}, "The tactics 'A' and 'E' are favourable against each other, which is forbidden." );
 
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTacticsConfiguration>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTacticsConfiguration>( R"( {
 			"Tactics configuration": {
 				"Favourable tactic skill bonus": -1
 			}
-		} )" ); }, "The favourable tactic skill bonus cannot be negative" );
+		} )" );
+	}, "The favourable tactic skill bonus cannot be negative" );
 }
 
 std::vector<std::string> TTacticsConfiguration::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& tacticsConfiguration : {
-	CTacticsConfiguration{},
-	CTacticsConfiguration{ { { "A", CTacticConfiguration{ 0, 0, { "E" } } }, { "E", CTacticConfiguration{ 0, 0 } } }, 1.3 },
-	futsim::ValueFromJSONKeyString<CTacticsConfiguration>( R"( {
+		CTacticsConfiguration{},
+		CTacticsConfiguration{ { { "A", CTacticConfiguration{ 0, 0, { "E" } } }, { "E", CTacticConfiguration{ 0, 0 } } }, 1.3 },
+		futsim::ValueFromJSONKeyString<CTacticsConfiguration>( R"( {
 			"Tactics configuration": {}
 		} )" ),
-	futsim::ValueFromJSONKeyString<CTacticsConfiguration>( R"( {
+		futsim::ValueFromJSONKeyString<CTacticsConfiguration>( R"( {
 			"Tactics configuration": {
 				"Tactic configurations": {
 					"A": {
@@ -92,10 +116,10 @@ std::vector<std::string> TTacticsConfiguration::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CTacticsConfiguration::JSON_TACTIC_CONFIGURATIONS } + ":" );
+		result.push_back( std::string{ futsim::json_traits<CTacticsConfiguration>::TACTIC_CONFIGURATIONS } + ":" );
 		for( const auto& tacticConfiguration : tacticsConfiguration.GetTacticConfigurations() )
 			result.push_back( tacticConfiguration.first );
-		result.push_back( std::string{ CTacticsConfiguration::JSON_FAVOURABLE_TACTIC_SKILL_BONUS } + ": " + std::to_string( tacticsConfiguration.GetFavourableTacticSkillBonus() ) );
+		result.push_back( std::string{ futsim::json_traits<CTacticsConfiguration>::FAVOURABLE_TACTIC_SKILL_BONUS } + ": " + std::to_string( tacticsConfiguration.GetFavourableTacticSkillBonus() ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, tacticsConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

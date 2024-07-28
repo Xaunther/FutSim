@@ -7,11 +7,11 @@ namespace futsim::football
 
 void CPossessionState::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mOutcome, JSON_OUTCOME );
+	AddToJSONKey( aJSON, mOutcome, json_traits<CPossessionState>::OUTCOME );
 	if( mTackler )
-		AddToJSONKey( aJSON, *mTackler, JSON_TACKLER );
+		AddToJSONKey( aJSON, *mTackler, json_traits<CPossessionState>::TACKLER );
 	if( mPasser )
-		AddToJSONKey( aJSON, *mPasser, JSON_PASSER );
+		AddToJSONKey( aJSON, *mPasser, json_traits<CPossessionState>::PASSER );
 }
 
 const CPossessionState::optional_name& CPossessionState::GetTackler() const noexcept

@@ -12,7 +12,7 @@ void CPlayState::JSON( json& aJSON ) const noexcept
 	if( mFoulState )
 		AddToJSON( aJSON, *mFoulState );
 	if( !mChancesStates.empty() )
-		AddArrayToJSONKey( aJSON, mChancesStates, JSON_CHANCES );
+		AddArrayToJSONKey( aJSON, mChancesStates, json_traits<CPlayState>::CHANCES );
 }
 
 const CPossessionState& CPlayState::GetPossessionState() const noexcept

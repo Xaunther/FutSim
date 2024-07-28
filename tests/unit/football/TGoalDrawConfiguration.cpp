@@ -16,105 +16,171 @@ INITIALIZE_TEST( TGoalDrawConfiguration )
 void TGoalDrawConfiguration::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CGoalDrawConfiguration{ -1 }; },
+	CheckException( []()
+	{
+		CGoalDrawConfiguration{ -1 };
+	},
 		"The average number of goals cannot be negative." );
-	CheckException( []() { CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, -1 }; },
+	CheckException( []()
+	{
+		CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, -1 };
+	},
 		"The average number of penalty goals cannot be negative." );
-	CheckException( []() { CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS, -1 }; },
+	CheckException( []()
+	{
+		CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS, -1 };
+	},
 		"The average number of direct free kick goals cannot be negative." );
-	CheckException( []() { CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
-		CGoalDrawConfiguration::DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS, -1 }; },
+	CheckException( []()
+	{
+		CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
+		CGoalDrawConfiguration::DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS, -1 };
+	},
 		"The average number of indirect free kick goals cannot be negative." );
-	CheckException( []() { CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
-		CGoalDrawConfiguration::DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_INDIRECT_FREE_KICK_GOALS, -1 }; },
+	CheckException( []()
+	{
+		CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
+		CGoalDrawConfiguration::DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_INDIRECT_FREE_KICK_GOALS, -1 };
+	},
 		"The average number of corner kick goals cannot be negative." );
-	CheckException( []() { CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
+	CheckException( []()
+	{
+		CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
 		CGoalDrawConfiguration::DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_INDIRECT_FREE_KICK_GOALS,
-		CGoalDrawConfiguration::DEFAULT_AVERAGE_CORNER_GOALS, -1 }; },
+		CGoalDrawConfiguration::DEFAULT_AVERAGE_CORNER_GOALS, -1 };
+	},
 		"The average number of far shot goals cannot be negative." );
-	CheckException( []() { CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
+	CheckException( []()
+	{
+		CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
 		CGoalDrawConfiguration::DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_INDIRECT_FREE_KICK_GOALS,
-		CGoalDrawConfiguration::DEFAULT_AVERAGE_CORNER_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_FAR_SHOT_GOALS, -1 }; },
+		CGoalDrawConfiguration::DEFAULT_AVERAGE_CORNER_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_FAR_SHOT_GOALS, -1 };
+	},
 		"The probability to score in a 1 on 1 vs GK chance cannot be negative." );
-	CheckException( []() { CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
+	CheckException( []()
+	{
+		CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
 		CGoalDrawConfiguration::DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_INDIRECT_FREE_KICK_GOALS,
 		CGoalDrawConfiguration::DEFAULT_AVERAGE_CORNER_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_FAR_SHOT_GOALS,
-		CGoalDrawConfiguration::DEFAULT_1VS1_GK_GOAL_PROBABILITY, -1 }; },
+		CGoalDrawConfiguration::DEFAULT_1VS1_GK_GOAL_PROBABILITY, -1 };
+	},
 		"The probability to score in a 1 on 1 vs DF chance cannot be negative." );
-	CheckException( []() { CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
+	CheckException( []()
+	{
+		CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
 		CGoalDrawConfiguration::DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_INDIRECT_FREE_KICK_GOALS,
 		CGoalDrawConfiguration::DEFAULT_AVERAGE_CORNER_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_FAR_SHOT_GOALS,
-		CGoalDrawConfiguration::DEFAULT_1VS1_GK_GOAL_PROBABILITY, CGoalDrawConfiguration::DEFAULT_1VS1_DF_GOAL_PROBABILITY, -1 }; },
+		CGoalDrawConfiguration::DEFAULT_1VS1_GK_GOAL_PROBABILITY, CGoalDrawConfiguration::DEFAULT_1VS1_DF_GOAL_PROBABILITY, -1 };
+	},
 		"The probability to be awarded an extra corner cannot be negative." );
-	CheckException( []() { CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
+	CheckException( []()
+	{
+		CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
 		CGoalDrawConfiguration::DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_INDIRECT_FREE_KICK_GOALS,
 		CGoalDrawConfiguration::DEFAULT_AVERAGE_CORNER_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_FAR_SHOT_GOALS,
-		0.8, CGoalDrawConfiguration::DEFAULT_1VS1_DF_GOAL_PROBABILITY, 0.3 }; },
+		0.8, CGoalDrawConfiguration::DEFAULT_1VS1_DF_GOAL_PROBABILITY, 0.3 };
+	},
 		"The joint probability of getting an extra corner or scoring in a 1 on 1 vs GK chance cannot be greater than 1." );
-	CheckException( []() { CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
+	CheckException( []()
+	{
+		CGoalDrawConfiguration{ CGoalDrawConfiguration::DEFAULT_AVERAGE_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_PENALTY_GOALS,
 		CGoalDrawConfiguration::DEFAULT_AVERAGE_DIRECT_FREE_KICK_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_INDIRECT_FREE_KICK_GOALS,
 		CGoalDrawConfiguration::DEFAULT_AVERAGE_CORNER_GOALS, CGoalDrawConfiguration::DEFAULT_AVERAGE_FAR_SHOT_GOALS,
-		CGoalDrawConfiguration::DEFAULT_1VS1_GK_GOAL_PROBABILITY, 0.8, 0.3 }; },
+		CGoalDrawConfiguration::DEFAULT_1VS1_GK_GOAL_PROBABILITY, 0.8, 0.3 };
+	},
 		"The joint probability of getting an extra corner or scoring in a 1 on 1 vs DF chance cannot be greater than 1." );
 
 	// Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
 			"Goal draw configuration": {
 				"Average goals": -1
 			}
-		} )" ); }, "The average number of goals cannot be negative." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
+		} )" );
+	}, "The average number of goals cannot be negative." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
 			"Goal draw configuration": {
 				"Average penalty goals": -1
 			}
-		} )" ); }, "The average number of penalty goals cannot be negative." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
+		} )" );
+	}, "The average number of penalty goals cannot be negative." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
 			"Goal draw configuration": {
 				"Average direct free kick goals": -1
 			}
-		} )" ); }, "The average number of direct free kick goals cannot be negative." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
+		} )" );
+	}, "The average number of direct free kick goals cannot be negative." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
 			"Goal draw configuration": {
 				"Average indirect free kick goals": -1
 			}
-		} )" ); }, "The average number of indirect free kick goals cannot be negative." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
+		} )" );
+	}, "The average number of indirect free kick goals cannot be negative." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
 			"Goal draw configuration": {
 				"Average corner goals": -1
 			}
-		} )" ); }, "The average number of corner kick goals cannot be negative." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
+		} )" );
+	}, "The average number of corner kick goals cannot be negative." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
 			"Goal draw configuration": {
 				"Average far shot goals": -1
 			}
-		} )" ); }, "The average number of far shot goals cannot be negative." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
+		} )" );
+	}, "The average number of far shot goals cannot be negative." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
 			"Goal draw configuration": {
 				"1 on 1 vs GK chance goal probability": -1
 			}
-		} )" ); }, "The probability to score in a 1 on 1 vs GK chance cannot be negative." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
+		} )" );
+	}, "The probability to score in a 1 on 1 vs GK chance cannot be negative." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
 			"Goal draw configuration": {
 				"1 on 1 vs DF chance goal probability": -1
 			}
-		} )" ); }, "The probability to score in a 1 on 1 vs DF chance cannot be negative." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
+		} )" );
+	}, "The probability to score in a 1 on 1 vs DF chance cannot be negative." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
 			"Goal draw configuration": {
 				"Extra corner probability": -1
 			}
-		} )" ); }, "The probability to be awarded an extra corner cannot be negative." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
+		} )" );
+	}, "The probability to be awarded an extra corner cannot be negative." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
 			"Goal draw configuration": {
 				"1 on 1 vs GK chance goal probability": 0.8,
 				"Extra corner probability": 0.3
 			}
-		} )" ); }, "The joint probability of getting an extra corner or scoring in a 1 on 1 vs GK chance cannot be greater than 1." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
+		} )" );
+	}, "The joint probability of getting an extra corner or scoring in a 1 on 1 vs GK chance cannot be greater than 1." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CGoalDrawConfiguration>( R"( {
 			"Goal draw configuration": {
 				"1 on 1 vs DF chance goal probability": 0.8,
 				"Extra corner probability": 0.3
 			}
-		} )" ); }, "The joint probability of getting an extra corner or scoring in a 1 on 1 vs DF chance cannot be greater than 1." );
+		} )" );
+	}, "The joint probability of getting an extra corner or scoring in a 1 on 1 vs DF chance cannot be greater than 1." );
 }
 
 std::vector<std::string> TGoalDrawConfiguration::ObtainedResults() const noexcept
@@ -140,15 +206,15 @@ std::vector<std::string> TGoalDrawConfiguration::ObtainedResults() const noexcep
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CGoalDrawConfiguration::JSON_AVERAGE_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageGoals() ) );
-		result.push_back( std::string{ CGoalDrawConfiguration::JSON_AVERAGE_PENALTY_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAveragePenaltyGoals() ) );
-		result.push_back( std::string{ CGoalDrawConfiguration::JSON_AVERAGE_DIRECT_FREE_KICK_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageDirectFreeKickGoals() ) );
-		result.push_back( std::string{ CGoalDrawConfiguration::JSON_AVERAGE_INDIRECT_FREE_KICK_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageIndirectFreeKickGoals() ) );
-		result.push_back( std::string{ CGoalDrawConfiguration::JSON_AVERAGE_CORNER_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageCornerGoals() ) );
-		result.push_back( std::string{ CGoalDrawConfiguration::JSON_AVERAGE_FAR_SHOT_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageFarShotGoals() ) );
-		result.push_back( std::string{ CGoalDrawConfiguration::JSON_1VS1_GK_GOAL_PROBABILITY } + ": " + std::to_string( goalDrawConfiguration.Get1vs1GKGoalProbability() ) );
-		result.push_back( std::string{ CGoalDrawConfiguration::JSON_1VS1_DF_GOAL_PROBABILITY } + ": " + std::to_string( goalDrawConfiguration.Get1vs1DFGoalProbability() ) );
-		result.push_back( std::string{ CGoalDrawConfiguration::JSON_EXTRA_CORNER_PROBABILITY } + ": " + std::to_string( goalDrawConfiguration.GetExtraCornerProbability() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageGoals() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_PENALTY_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAveragePenaltyGoals() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_DIRECT_FREE_KICK_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageDirectFreeKickGoals() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_INDIRECT_FREE_KICK_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageIndirectFreeKickGoals() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_CORNER_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageCornerGoals() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_FAR_SHOT_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageFarShotGoals() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_GK_GOAL_PROBABILITY } + ": " + std::to_string( goalDrawConfiguration.Get1vs1GKGoalProbability() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_DF_GOAL_PROBABILITY } + ": " + std::to_string( goalDrawConfiguration.Get1vs1DFGoalProbability() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::EXTRA_CORNER_PROBABILITY } + ": " + std::to_string( goalDrawConfiguration.GetExtraCornerProbability() ) );
 		result.push_back( "Default 1 on 1 vs GK chance outcome distribution" );
 		for( const auto& probability : goalDrawConfiguration.Create1vs1GKOutcomeDistribution( 1, 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );

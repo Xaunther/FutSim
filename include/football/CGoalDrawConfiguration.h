@@ -7,7 +7,10 @@
 
 #include "football/EPlayerSkill.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -135,27 +138,6 @@ public:
 	template <E_PLAYER_SKILL tPlayerSkill>
 	position_draw_distribution CreatePositionDrawDistribution() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Goal draw configuration";
-	//! JSON key for the \copybrief mAverageGoals
-	static inline constexpr std::string_view JSON_AVERAGE_GOALS = "Average goals";
-	//! JSON key for the \copybrief mAveragePenaltyGoals
-	static inline constexpr std::string_view JSON_AVERAGE_PENALTY_GOALS = "Average penalty goals";
-	//! JSON key for the \copybrief mAverageDirectFreeKickGoals
-	static inline constexpr std::string_view JSON_AVERAGE_DIRECT_FREE_KICK_GOALS = "Average direct free kick goals";
-	//! JSON key for the \copybrief mAverageIndirectFreeKickGoals
-	static inline constexpr std::string_view JSON_AVERAGE_INDIRECT_FREE_KICK_GOALS = "Average indirect free kick goals";
-	//! JSON key for the \copybrief mAverageCornerGoals
-	static inline constexpr std::string_view JSON_AVERAGE_CORNER_GOALS = "Average corner goals";
-	//! JSON key for the \copybrief mAverageFarShotGoals
-	static inline constexpr std::string_view JSON_AVERAGE_FAR_SHOT_GOALS = "Average far shot goals";
-	//! JSON key for the \copybrief m1vs1GKGoalProbability
-	static inline constexpr std::string_view JSON_1VS1_GK_GOAL_PROBABILITY = "1 on 1 vs GK chance goal probability";
-	//! JSON key for the \copybrief m1vs1DFGoalProbability
-	static inline constexpr std::string_view JSON_1VS1_DF_GOAL_PROBABILITY = "1 on 1 vs DF chance goal probability";
-	//! JSON key for the \copybrief mExtraCornerProbability
-	static inline constexpr std::string_view JSON_EXTRA_CORNER_PROBABILITY = "Extra corner probability";
-
 	//! Default \copybrief mAverageGoals
 	static inline constexpr stat DEFAULT_AVERAGE_GOALS = stat{ 1039 } / 380;
 	//! Default \copybrief mAveragePenaltyGoals
@@ -197,6 +179,32 @@ private:
 
 	//! Probability to get an extra corner after any chance.
 	probability mExtraCornerProbability;
+};
+
+} // football namespace
+
+template <> struct json_traits<football::CGoalDrawConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Goal draw configuration";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageGoals
+	static inline constexpr std::string_view AVERAGE_GOALS = "Average goals";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAveragePenaltyGoals
+	static inline constexpr std::string_view AVERAGE_PENALTY_GOALS = "Average penalty goals";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageDirectFreeKickGoals
+	static inline constexpr std::string_view AVERAGE_DIRECT_FREE_KICK_GOALS = "Average direct free kick goals";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageIndirectFreeKickGoals
+	static inline constexpr std::string_view AVERAGE_INDIRECT_FREE_KICK_GOALS = "Average indirect free kick goals";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageCornerGoals
+	static inline constexpr std::string_view AVERAGE_CORNER_GOALS = "Average corner goals";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageFarShotGoals
+	static inline constexpr std::string_view AVERAGE_FAR_SHOT_GOALS = "Average far shot goals";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::m1vs1GKGoalProbability
+	static inline constexpr std::string_view ONE_VS_ONE_GK_GOAL_PROBABILITY = "1 on 1 vs GK chance goal probability";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::m1vs1DFGoalProbability
+	static inline constexpr std::string_view ONE_VS_ONE_DF_GOAL_PROBABILITY = "1 on 1 vs DF chance goal probability";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mExtraCornerProbability
+	static inline constexpr std::string_view EXTRA_CORNER_PROBABILITY = "Extra corner probability";
 };
 
 } // futsim namespace

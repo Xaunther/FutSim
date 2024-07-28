@@ -4,7 +4,10 @@
 
 #include "football/types/CPlayTime.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -41,9 +44,6 @@ public:
 	//! Retrieves the \copybrief mAvailableSubs
 	const subs_count& GetAvailableSubs() const noexcept;
 
-	//! JSON key for the \copybrief mAvailableSubs
-	static inline constexpr std::string_view JSON_AVAILABLE_SUBS = "Available subs";
-
 	//! Default \copybrief mPeriodCount
 	static inline constexpr period_count DEFAULT_PERIOD_COUNT = 2;
 	//! Default \copybrief mPeriodTime
@@ -56,4 +56,12 @@ private:
 	subs_count mAvailableSubs;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPlayTime> : public json_traits<CPlayTime>
+{
+	///! JSON key for the \copybrief football::CPlayTime::mAvailableSubs
+	static inline constexpr std::string_view AVAILABLE_SUBS = "Available subs";
+};
+
+} // futsim namespace

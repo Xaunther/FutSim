@@ -7,7 +7,10 @@
 #include "football/CLineup.h"
 #include "CEnumDistribution.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -71,15 +74,6 @@ public:
 	std::string_view DrawFoulCommitter( const CLineup& aLineup,
 		std::uniform_random_bit_generator auto& aGenerator ) const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Foul draw configuration";
-	//! JSON key for the \copybrief mAverageFouls
-	static inline constexpr std::string_view JSON_AVERAGE_FOULS = "Average fouls";
-	//! JSON key for the \copybrief mAverageYellowCards
-	static inline constexpr std::string_view JSON_AVERAGE_YELLOW_CARDS = "Average yellow cards";
-	//! JSON key for the \copybrief mAverageRedCards
-	static inline constexpr std::string_view JSON_AVERAGE_RED_CARDS = "Average red cards";
-
 	//! Default \copybrief mAverageFouls
 	static inline constexpr stat DEFAULT_AVERAGE_FOULS = stat{ 8195 } / 380;
 	//! Default \copybrief mAverageYellowCards
@@ -110,7 +104,20 @@ std::string_view CFoulDrawConfiguration::DrawFoulCommitter( const CLineup& aLine
 {
 	const auto& players = aLineup.CreatePlayersView<false>();
 	return *( players | std::ranges::views::drop( std::uniform_int_distribution<types::CLineup::names::size_type>{
-		0, static_cast< types::CLineup::names::size_type >( std::ranges::distance( players ) - 1 ) }( aGenerator ) ) ).begin();
+		0, static_cast<types::CLineup::names::size_type>( std::ranges::distance( players ) - 1 ) }( aGenerator ) ) ).begin();
 }
+} // football namespace
+
+template <> struct json_traits<football::CFoulDrawConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Foul draw configuration";
+	//! JSON key for the \copybrief football::CFoulDrawConfiguration::mAverageFouls
+	static inline constexpr std::string_view AVERAGE_FOULS = "Average fouls";
+	//! JSON key for the \copybrief football::CFoulDrawConfiguration::mAverageYellowCards
+	static inline constexpr std::string_view AVERAGE_YELLOW_CARDS = "Average yellow cards";
+	//! JSON key for the \copybrief football::CFoulDrawConfiguration::mAverageRedCards
+	static inline constexpr std::string_view AVERAGE_RED_CARDS = "Average red cards";
+};
 
 } // futsim namespace

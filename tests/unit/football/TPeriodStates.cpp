@@ -70,7 +70,7 @@ std::vector<std::string> TPeriodStates::ObtainedResults() const noexcept
 		homeTeamStrategy, awayTeamStrategy, rng, CExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>{} },
 		} )
 	{
-		result.push_back( std::string{ CPeriodStates::JSON_KEY } + ": "
+		result.push_back( std::string{ futsim::json_traits<CPeriodStates>::KEY } + ": "
 			+ std::to_string( periodStates.GetStates().size() ) );
 
 		futsim::types::IJsonable::json outputJSON;

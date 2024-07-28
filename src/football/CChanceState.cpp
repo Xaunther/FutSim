@@ -36,8 +36,11 @@ CChanceState::CChanceState(
 
 void CChanceState::JSON( json& aJSON ) const noexcept
 {
-	std::visit( [ &aJSON ]( auto&& aChanceType ) { AddToJSONKey( aJSON, aChanceType, JSON_CHANCE_TYPE ); }, mChanceType );
-	AddToJSONKey( aJSON, mOutcome, JSON_OUTCOME );
+	std::visit( [ &aJSON ]( auto&& aChanceType )
+	{
+		AddToJSONKey( aJSON, aChanceType, json_traits<CChanceState>::CHANCE_TYPE );
+	}, mChanceType );
+	AddToJSONKey( aJSON, mOutcome, json_traits<CChanceState>::OUTCOME );
 	JSONActor<E_PLAYER_SKILL::St>( aJSON );
 	JSONActor<E_PLAYER_SKILL::Tk>( aJSON );
 	JSONActor<E_PLAYER_SKILL::Ps>( aJSON );
@@ -74,14 +77,14 @@ FOR_EACH_PLAYER_SKILL( EXPLICIT_INSTANTIATE_GET_ACTOR )
 
 template <E_PLAYER_SKILL tPlayerSkill> CChanceState::optional_name& CChanceState::Actor() noexcept
 {
-	return const_cast< optional_name& >( GetActor<tPlayerSkill>() );
+	return const_cast<optional_name&>( GetActor<tPlayerSkill>() );
 }
 FOR_EACH_PLAYER_SKILL( EXPLICIT_INSTANTIATE_ACTOR )
 
 template <E_PLAYER_SKILL tPlayerSkill> void CChanceState::JSONActor( json& aJSON ) const noexcept
 {
 	if( const auto& actor = GetActor<tPlayerSkill>() )
-		AddToJSONKey( aJSON, *actor, JSON_ACTOR<tPlayerSkill> );
+		AddToJSONKey( aJSON, *actor, json_traits<CChanceState>::ACTOR<tPlayerSkill> );
 }
 FOR_EACH_PLAYER_SKILL( EXPLICIT_INSTANTIATE_JSON_ACTOR )
 

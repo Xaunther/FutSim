@@ -8,7 +8,10 @@
 
 #include "ExceptionUtils.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -53,15 +56,6 @@ public:
 
 	//! @copydoc CChanceState::ToJSON
 	using CChanceState::ToJSON;
-
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Penalty state";
-	//! JSON key for the \copybrief mOutcome
-	static inline constexpr std::string_view JSON_OUTCOME = CChanceState::JSON_OUTCOME;
-	//! JSON key for the \copybrief mShooter
-	static inline constexpr std::string_view JSON_SHOOTER = CChanceState::JSON_ACTOR<E_PLAYER_SKILL::Sh>;
-	//! JSON key for the \copybrief mStopper
-	static inline constexpr std::string_view JSON_STOPPER = CChanceState::JSON_ACTOR<E_PLAYER_SKILL::St>;
 };
 
 CPenaltyState::CPenaltyState(
@@ -81,4 +75,18 @@ CPenaltyState::CPenaltyState(
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the penalty state." )
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPenaltyState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Penalty state";
+	//! JSON key for the \copybrief football::CPenaltyState::mOutcome
+	static inline constexpr std::string_view OUTCOME = json_traits<football::CChanceState>::OUTCOME;
+	//! JSON key for the \copybrief football::CPenaltyState::mShooter
+	static inline constexpr std::string_view SHOOTER = json_traits<football::CChanceState>::ACTOR<football::E_PLAYER_SKILL::Sh>;
+	//! JSON key for the \copybrief football::CPenaltyState::mStopper
+	static inline constexpr std::string_view STOPPER = json_traits<football::CChanceState>::ACTOR<football::E_PLAYER_SKILL::St>;
+};
+
+} // futsim namespace

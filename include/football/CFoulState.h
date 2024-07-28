@@ -8,7 +8,10 @@
 #include "football/CMatchConfiguration.h"
 #include "football/CTeamStrategy.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -47,13 +50,6 @@ public:
 	//! Retrieves the \copybrief mOutcome
 	const E_FOUL_DRAW_OUTCOME& GetOutcome() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Foul state";
-	//! JSON key for the \copybrief mCommitter
-	static inline constexpr std::string_view JSON_COMMIITER = "Committer";
-	//! JSON key for the \copybrief mOutcome
-	static inline constexpr std::string_view JSON_OUTCOME = "Outcome";
-
 private:
 	//! Player that committed the foul.
 	name_type mCommitter;
@@ -71,4 +67,16 @@ CFoulState::CFoulState(
 {
 }
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CFoulState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Foul state";
+	//! JSON key for the \copybrief football::CFoulState::mCommitter
+	static inline constexpr std::string_view COMMIITER = "Committer";
+	//! JSON key for the \copybrief football::CFoulState::mOutcome
+	static inline constexpr std::string_view OUTCOME = "Outcome";
+};
+
+} // futsim namespace

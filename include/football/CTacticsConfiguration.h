@@ -5,7 +5,10 @@
 #include "football/CTacticConfiguration.h"
 #include "football/types/CTacticsConfiguration.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -49,30 +52,35 @@ public:
 
 	//! Default \copybrief mTacticConfigurations
 	static inline tactic_configurations DEFAULT_TACTIC_CONFIGURATIONS = {
-		{ "N", CTacticConfiguration{ 0, 0, {"A", "E"} } },
-		{ "A", CTacticConfiguration{ -0.5, -0.2, {"D", "E"} } },
-		{ "D", CTacticConfiguration{ 0.7, -0.2, {"L", "P"} } },
-		{ "L", CTacticConfiguration{ 0.3, -0.6, {"C", "N"} } },
-		{ "C", CTacticConfiguration{ 0.5, -0.8, {"A", "P"} } },
-		{ "P", CTacticConfiguration{ -0.2, 0.6, {"L", "N"} } },
-		{ "E", CTacticConfiguration{ -0.3, 0.2, {"D", "C"} } }
+		{ "N", CTacticConfiguration{ 0, 0, { "A", "E" } } },
+		{ "A", CTacticConfiguration{ -0.5, -0.2, { "D", "E" } } },
+		{ "D", CTacticConfiguration{ 0.7, -0.2, { "L", "P" } } },
+		{ "L", CTacticConfiguration{ 0.3, -0.6, { "C", "N" } } },
+		{ "C", CTacticConfiguration{ 0.5, -0.8, { "A", "P" } } },
+		{ "P", CTacticConfiguration{ -0.2, 0.6, { "L", "N" } } },
+		{ "E", CTacticConfiguration{ -0.3, 0.2, { "D", "C" } } }
 	};
 
 	//! Default \copybrief mFavourableTacticSkillBonus
 	static inline constexpr skill_bonus DEFAULT_FAVOURABLE_TACTIC_SKILL_BONUS = 1.1;
-
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Tactics configuration";
-	//! JSON key for the \copybrief mTacticConfigurations
-	static inline constexpr std::string_view JSON_TACTIC_CONFIGURATIONS = "Tactic configurations";
-	//! JSON key for the \copybrief mFavourableTacticSkillBonus
-	static inline constexpr std::string_view JSON_FAVOURABLE_TACTIC_SKILL_BONUS = "Favourable tactic skill bonus";
 
 private:
 	//! Tactic configurations.
 	tactic_configurations mTacticConfigurations;
 	//! Favourable tactic skill bonus.
 	skill_bonus mFavourableTacticSkillBonus;
+};
+
+} // football namespace
+
+template <> struct json_traits<football::CTacticsConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Tactics configuration";
+	//! JSON key for the \copybrief football::CTacticsConfiguration::mTacticConfigurations
+	static inline constexpr std::string_view TACTIC_CONFIGURATIONS = "Tactic configurations";
+	//! JSON key for the \copybrief football::CTacticsConfiguration::mFavourableTacticSkillBonus
+	static inline constexpr std::string_view FAVOURABLE_TACTIC_SKILL_BONUS = "Favourable tactic skill bonus";
 };
 
 } // futsim namespace

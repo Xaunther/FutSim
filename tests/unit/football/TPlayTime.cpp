@@ -44,7 +44,7 @@ std::vector<std::string> TPlayTime::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CPlayTime::JSON_AVAILABLE_SUBS } + ": " + std::to_string( playTime.GetAvailableSubs().value_or( 9999 ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayTime>::AVAILABLE_SUBS } + ": " + std::to_string( playTime.GetAvailableSubs().value_or( 9999 ) ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, playTime );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

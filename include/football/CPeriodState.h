@@ -7,7 +7,10 @@
 #include "football/CPlayState.h"
 #include "football/CPeriodPlayPolicy.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -70,14 +73,6 @@ protected:
 	*/
 	bool IsHomeTeamAttackNext() const;
 
-public:
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Period state";
-	//! JSON key for the \copybrief mPlays
-	static inline constexpr std::string_view JSON_PLAYS = "Plays";
-	//! JSON key to indicate if the play corresponds to the home team.
-	static inline constexpr std::string_view JSON_HOME_TEAM_PLAY = "Home team play";
-
 private:
 	//! Plays of the period.
 	plays mPlays;
@@ -107,4 +102,16 @@ CPeriodState::CPeriodState(
 	} while( aPeriodPlayPolicy( mPlays, aMatchConfiguration ) );
 }
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPeriodState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Period state";
+	//! JSON key for the \copybrief football::CPeriodState::mPlays
+	static inline constexpr std::string_view PLAYS = "Plays";
+	//! JSON key to indicate if the play corresponds to the home team.
+	static inline constexpr std::string_view HOME_TEAM_PLAY = "Home team play";
+};
+
+} // futsim namespace

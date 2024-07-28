@@ -31,18 +31,18 @@ CStadium::CStadium(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the stadium." )
 
 CStadium::CStadium( const json& aJSON ) try :
-	mName( CheckName( ValueFromRequiredJSONKey<std::string>( aJSON, JSON_NAME ), "stadium name" ) ),
-	mCapacity( ValueFromRequiredJSONKey<capacity>( aJSON, JSON_CAPACITY ) ),
-	mAmbientFactor( CheckAmbientFactor( ValueFromRequiredJSONKey<ambient_factor>( aJSON, JSON_AMBIENT_FACTOR ) ) )
+	mName( CheckName( ValueFromRequiredJSONKey<std::string>( aJSON, json_traits<CStadium>::NAME ), "stadium name" ) ),
+	mCapacity( ValueFromRequiredJSONKey<capacity>( aJSON, json_traits<CStadium>::CAPACITY ) ),
+	mAmbientFactor( CheckAmbientFactor( ValueFromRequiredJSONKey<ambient_factor>( aJSON, json_traits<CStadium>::AMBIENT_FACTOR ) ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the stadium from JSON." )
 
 void CStadium::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mName, JSON_NAME );
-	AddToJSONKey( aJSON, mCapacity, JSON_CAPACITY );
-	AddToJSONKey( aJSON, mAmbientFactor, JSON_AMBIENT_FACTOR );
+	AddToJSONKey( aJSON, mName, json_traits<CStadium>::NAME );
+	AddToJSONKey( aJSON, mCapacity, json_traits<CStadium>::CAPACITY );
+	AddToJSONKey( aJSON, mAmbientFactor, json_traits<CStadium>::AMBIENT_FACTOR );
 }
 
 std::string_view CStadium::GetName() const noexcept

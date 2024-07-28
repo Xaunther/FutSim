@@ -66,7 +66,7 @@ std::vector<std::string> TPeriodState::ObtainedResults() const noexcept
 		goldenGoalMatchConfig, homeTeamStrategy, awayTeamStrategy, false, rng, CExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{} },
 		} )
 	{
-		result.push_back( std::string{ CPeriodState::JSON_PLAYS } + ": "
+		result.push_back( std::string{ futsim::json_traits<CPeriodState>::PLAYS } + ": "
 			+ std::to_string( periodState.GetPlays().size() ) );
 
 		result.push_back( std::to_string( periodState.CountScoredGoals( true ) ) );
