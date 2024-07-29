@@ -17,6 +17,11 @@ protected:
 
 public:
 	/**
+	 * @brief Virtual destructor for base class.
+	 */
+	virtual ~IPeriodPolicy() = default;
+
+	/**
 	 * @copydoc DoOperator
 	*/
 	bool operator()( const period_states& aPeriodStates,
