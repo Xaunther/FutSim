@@ -14,38 +14,50 @@ INITIALIZE_TEST( TTacticConfiguration )
 void TTacticConfiguration::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CTacticConfiguration{ 10, 10 }; }, "The Sh bonus for DF cannot be negative." );
+	CheckException( []()
+	{
+		CTacticConfiguration{ 10, 10 };
+	}, "The Sh bonus for DF cannot be negative." );
 
 	// Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTacticConfiguration>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTacticConfiguration>( R"( {
 			"Tactic configuration": {}
-		} )" ); }, "key 'Tk bonus' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTacticConfiguration>( R"( {
+		} )" );
+	}, "key 'Tk bonus' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTacticConfiguration>( R"( {
 			"Tactic configuration": {
 				"Tk bonus": 0
 			}
-		} )" ); }, "key 'Ps bonus' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTacticConfiguration>( R"( {
+		} )" );
+	}, "key 'Ps bonus' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTacticConfiguration>( R"( {
 			"Tactic configuration": {
 				"Tk bonus": 10,
 				"Ps bonus": 10
 			}
-		} )" ); }, "The Sh bonus for DF cannot be negative." );
+		} )" );
+	}, "The Sh bonus for DF cannot be negative." );
 }
 
 std::vector<std::string> TTacticConfiguration::ObtainedResults() const noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& tacticConfiguration : {
-	CTacticConfiguration{ 0, 0 },
-	CTacticConfiguration{ -0.5, -0.2, { "E", "D" }, { 0, -0.1, -0.3 } },
-	futsim::ValueFromJSONKeyString<CTacticConfiguration>( R"( {
+		CTacticConfiguration{ 0, 0 },
+		CTacticConfiguration{ -0.5, -0.2, { "E", "D" }, { 0, -0.1, -0.3 } },
+		futsim::ValueFromJSONKeyString<CTacticConfiguration>( R"( {
 			"Tactic configuration": {
 				"Tk bonus": 0,
 				"Ps bonus": 0
 			}
 		} )" ),
-	futsim::ValueFromJSONKeyString<CTacticConfiguration>( R"( {
+		futsim::ValueFromJSONKeyString<CTacticConfiguration>( R"( {
 			"Tactic configuration": {
 				"Tk bonus": -0.5,
 				"Ps bonus": -0.2,
@@ -61,12 +73,12 @@ std::vector<std::string> TTacticConfiguration::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CTacticConfiguration::JSON_TK_BONUS } + ": " + std::to_string( tacticConfiguration.GetTkBonus() ) );
-		result.push_back( std::string{ CTacticConfiguration::JSON_PS_BONUS } + ": " + std::to_string( tacticConfiguration.GetPsBonus() ) );
-		result.push_back( std::string{ CTacticConfiguration::JSON_FAVOURABLE_TACTICS } + ": " );
+		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::TK_BONUS } + ": " + std::to_string( tacticConfiguration.GetTkBonus() ) );
+		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::PS_BONUS } + ": " + std::to_string( tacticConfiguration.GetPsBonus() ) );
+		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::FAVOURABLE_TACTICS } + ": " );
 		for( const auto& favourableTactic : tacticConfiguration.GetFavourableTactics() )
 			result.push_back( std::string{ favourableTactic } );
-		result.push_back( std::string{ CTacticConfiguration::JSON_POSITION_PENALTIES } + ": " );
+		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::POSITION_PENALTIES } + ": " );
 		for( const auto& positionPenalty : tacticConfiguration.GetPositionPenalties() )
 			result.push_back( std::to_string( positionPenalty ) );
 		result.push_back( "St bonus for GK: " + std::to_string( tacticConfiguration.GetSkillBonus( E_PLAYER_POSITION::GK, E_PLAYER_SKILL::St ) ) );

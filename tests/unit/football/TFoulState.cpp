@@ -28,8 +28,8 @@ std::vector<std::string> TFoulState::ObtainedResults() const noexcept
 	for( const auto& foulState : {
 		CFoulState{ CMatchConfiguration{}, CTeamStrategy{ "A", CLineup{ "Ter Stegen", {}, {}, {}, {}, {}, {} } }, rng } } )
 	{
-		result.push_back( std::string{ CFoulState::JSON_COMMIITER } + ": " + std::string{ foulState.GetCommitter() } );
-		result.push_back( std::string{ CFoulState::JSON_OUTCOME } + ": " + std::string{ ToString( foulState.GetOutcome() ) } );
+		result.push_back( std::string{ futsim::json_traits<CFoulState>::COMMIITER } + ": " + std::string{ foulState.GetCommitter() } );
+		result.push_back( std::string{ futsim::json_traits<CFoulState>::OUTCOME } + ": " + std::string{ ToString( foulState.GetOutcome() ) } );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, foulState );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

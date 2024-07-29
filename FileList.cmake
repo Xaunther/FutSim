@@ -4,6 +4,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/Config.h
 	include/CPerson.h
 	include/CPlayTime.h
+	include/DefaultTraits.h
 	include/ENationality.h
 	include/EnumUtils.h
 	include/ExceptionUtils.h
@@ -23,6 +24,8 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CChanceState.h
 	include/football/CDrawConfiguration.h
 	include/football/CExtraTime.h
+	include/football/CExtraTimePeriodPlayPolicy.h
+	include/football/CExtraTimePeriodPolicy.h
 	include/football/CFoulDrawConfiguration.h
 	include/football/CFoulState.h
 	include/football/CGoalDrawConfiguration.h
@@ -35,6 +38,8 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CPenaltyShootoutConfiguration.h
 	include/football/CPenaltyShootoutState.h
 	include/football/CPenaltyState.h
+	include/football/CPeriodPlayPolicy.h
+	include/football/CPeriodPolicy.h
 	include/football/CPeriodState.h
 	include/football/CPeriodStates.h
 	include/football/CPlayer.h
@@ -52,6 +57,10 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/EPenaltySequence.h
 	include/football/EPlayerPosition.h
 	include/football/EPlayerSkill.h
+	include/football/IExtraTimePeriodPlayPolicy.h
+	include/football/IExtraTimePeriodPolicy.h
+	include/football/IPeriodPlayPolicy.h
+	include/football/IPeriodPolicy.h
 	include/football/types/CChancesDrawConfiguration.h
 	include/football/types/CChanceState.h
 	include/football/types/CDrawConfiguration.h
@@ -91,6 +100,8 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CChanceState.cpp
 	src/football/CDrawConfiguration.cpp
 	src/football/CExtraTime.cpp
+	src/football/CExtraTimePeriodPlayPolicy.cpp
+	src/football/CExtraTimePeriodPolicy.cpp
 	src/football/CFoulDrawConfiguration.cpp
 	src/football/CFoulState.cpp
 	src/football/CGoalDrawConfiguration.cpp
@@ -103,6 +114,8 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CPenaltyShootoutConfiguration.cpp
 	src/football/CPenaltyShootoutState.cpp
 	src/football/CPenaltyState.cpp
+	src/football/CPeriodPlayPolicy.cpp
+	src/football/CPeriodPolicy.cpp
 	src/football/CPeriodState.cpp
 	src/football/CPeriodStates.cpp
 	src/football/CPlayerSkills.cpp
@@ -116,6 +129,10 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CTacticsConfiguration.cpp
 	src/football/CTeam.cpp
 	src/football/CTieCondition.cpp
+	src/football/IExtraTimePeriodPlayPolicy.cpp
+	src/football/IExtraTimePeriodPolicy.cpp
+	src/football/IPeriodPlayPolicy.cpp
+	src/football/IPeriodPolicy.cpp
 )
 
 # External headers

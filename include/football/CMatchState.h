@@ -6,10 +6,15 @@
 
 #include "football/CPeriodStates.h"
 #include "football/CPenaltyShootoutState.h"
+#include "football/CExtraTimePeriodPlayPolicy.h"
+#include "football/CExtraTimePeriodPolicy.h"
 
 #include "ExceptionUtils.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -55,13 +60,6 @@ public:
 	//! Retrieves the \copybrief mPenaltyShootoutState
 	const optional_penalty_shootout_state& GetPenaltyShootoutState() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Match state";
-	//! JSON key for the \copybrief mMandatoryPlayTimeState
-	static inline constexpr std::string_view JSON_MANDATORY_PERIOD_STATES = "Mandatory time period states";
-	//! JSON key for the \copybrief mExtraTimeState
-	static inline constexpr std::string_view JSON_EXTRA_PERIOD_STATES = "Extra time period states";
-
 private:
 	//! Mandatory play time of the match.
 	CPeriodStates mMandatoryPlayTimeState;
@@ -94,15 +92,15 @@ CMatchState::CMatchState(
 				{
 				case E_GOAL_RULE::SILVER_GOAL:
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-							CPeriodState::SDefaultExtraTimePeriodPlayPolicy{}, CPeriodStates::SSilverGoalPeriodPolicy{} };
+						CExtraTimePeriodPlayPolicy<E_GOAL_RULE::SILVER_GOAL>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>{} };
 					break;
 				case E_GOAL_RULE::GOLDEN_GOAL:
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-							CPeriodState::SGoldenGoalPeriodPlayPolicy{}, CPeriodStates::SSilverGoalPeriodPolicy{} };
+						CExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::GOLDEN_GOAL>{} };
 					break;
 				default:
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-							CPeriodState::SDefaultExtraTimePeriodPlayPolicy{}, CPeriodStates::SDefaultExtraTimePeriodPolicy{} };
+						CExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::NO>{} };
 					break;
 				}
 				homeTeamGoals += mExtraTimeState->CountScoredGoals( true );
@@ -110,14 +108,26 @@ CMatchState::CMatchState(
 
 				if( tieCondition( homeTeamGoals, awayTeamGoals ) )
 					mPenaltyShootoutState = CPenaltyShootoutState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
-							std::bernoulli_distribution{}( aGenerator ), aGenerator };
+					std::bernoulli_distribution{}( aGenerator ), aGenerator };
 			}
 			else
 				mPenaltyShootoutState = CPenaltyShootoutState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
-						std::bernoulli_distribution{}( aGenerator ), aGenerator };
+				std::bernoulli_distribution{}( aGenerator ), aGenerator };
 		}
 	}
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the match state." )
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CMatchState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Match state";
+	//! JSON key for the \copybrief football::CMatchState::mMandatoryPlayTimeState
+	static inline constexpr std::string_view MANDATORY_PERIOD_STATES = "Mandatory time period states";
+	//! JSON key for the \copybrief football::CMatchState::mExtraTimeState
+	static inline constexpr std::string_view EXTRA_PERIOD_STATES = "Extra time period states";
+};
+
+} // futsim namespace

@@ -18,9 +18,9 @@ CPlayTime::CPlayTime(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the football play time." )
 
 CPlayTime::CPlayTime( const json& aJSON ) try :
-	futsim::CPlayTime( ValueFromOptionalJSONKey<period_count>( aJSON, JSON_PERIOD_COUNT, DEFAULT_PERIOD_COUNT ),
-		ValueFromOptionalJSONKey<period_time>( aJSON, JSON_PERIOD_TIME, DEFAULT_PERIOD_TIME ) ),
-	mAvailableSubs( ValueFromOptionalJSONKey<subs_count>( aJSON, JSON_AVAILABLE_SUBS ) )
+	futsim::CPlayTime( ValueFromOptionalJSONKey<period_count>( aJSON, json_traits<CPlayTime>::PERIOD_COUNT, default_traits<CPlayTime>::PERIOD_COUNT ),
+		ValueFromOptionalJSONKey<period_time>( aJSON, json_traits<CPlayTime>::PERIOD_TIME, default_traits<CPlayTime>::PERIOD_TIME ) ),
+	mAvailableSubs( ValueFromOptionalJSONKey<subs_count>( aJSON, json_traits<CPlayTime>::AVAILABLE_SUBS ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the football play time from JSON." )
@@ -29,7 +29,7 @@ void CPlayTime::JSON( json& aJSON ) const noexcept
 {
 	futsim::CPlayTime::JSON( aJSON );
 	if( mAvailableSubs )
-		AddToJSONKey( aJSON, *mAvailableSubs, JSON_AVAILABLE_SUBS );
+		AddToJSONKey( aJSON, *mAvailableSubs, json_traits<CPlayTime>::AVAILABLE_SUBS );
 }
 
 const CPlayTime::subs_count& CPlayTime::GetAvailableSubs() const noexcept

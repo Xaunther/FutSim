@@ -42,8 +42,8 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ObtainedResults() const 
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CPenaltyShootoutConfiguration::JSON_SEQUENCE } + ": " + std::string{ ToString( penaltyShootoutConfiguration.GetPenaltySequence() ) } );
-		result.push_back( std::string{ CPenaltyShootoutConfiguration::JSON_MIN_PENALTY_COUNT } + ": " + std::to_string( penaltyShootoutConfiguration.GetMinPenaltyCount() ) );
+		result.push_back( std::string{ futsim::json_traits<CPenaltyShootoutConfiguration>::SEQUENCE } + ": " + std::string{ ToString( penaltyShootoutConfiguration.GetPenaltySequence() ) } );
+		result.push_back( std::string{ futsim::json_traits<CPenaltyShootoutConfiguration>::MIN_PENALTY_COUNT } + ": " + std::to_string( penaltyShootoutConfiguration.GetMinPenaltyCount() ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, penaltyShootoutConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

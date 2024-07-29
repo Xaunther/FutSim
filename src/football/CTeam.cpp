@@ -71,28 +71,28 @@ CTeam::CTeam(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the team." )
 
 CTeam::CTeam( const json& aJSON ) try :
-	mName( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, JSON_NAME ), "name" ) ),
-	mAbbreviation( CheckAbbreviation( ValueFromRequiredJSONKey<name_type>( aJSON, JSON_ABBREVIATION ) ) ),
-	mManager( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, JSON_MANAGER ), "manager name" ) ),
+	mName( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, json_traits<CTeam>::NAME ), "name" ) ),
+	mAbbreviation( CheckAbbreviation( ValueFromRequiredJSONKey<name_type>( aJSON, json_traits<CTeam>::ABBREVIATION ) ) ),
+	mManager( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, json_traits<CTeam>::MANAGER ), "manager name" ) ),
 	mPlayers( CreatePlayersFromJSON( aJSON ) ),
 	mNameIndexMap( CreateNameIndexMap( mPlayers ) ),
-	mSupportFactor( CheckPositiveness( ValueFromRequiredJSONKey<support_factor>( aJSON, JSON_SUPPORT_FACTOR ), "support factor" ) ),
-	mAttendanceDistributionParameters( CheckNonNegativeness( ValueFromRequiredJSONKey<double>( aJSON, JSON_MEAN_ATTENDANCE ), "mean attendance" ),
-		CheckPositiveness( ValueFromRequiredJSONKey<double>( aJSON, JSON_STD_DEV_ATTENDANCE ), "standard deviation of the attendance" ) )
+	mSupportFactor( CheckPositiveness( ValueFromRequiredJSONKey<support_factor>( aJSON, json_traits<CTeam>::SUPPORT_FACTOR ), "support factor" ) ),
+	mAttendanceDistributionParameters( CheckNonNegativeness( ValueFromRequiredJSONKey<double>( aJSON, json_traits<CTeam>::MEAN_ATTENDANCE ), "mean attendance" ),
+		CheckPositiveness( ValueFromRequiredJSONKey<double>( aJSON, json_traits<CTeam>::STD_DEV_ATTENDANCE ), "standard deviation of the attendance" ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the team from JSON." )
 
 void CTeam::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mName, JSON_NAME );
-	AddToJSONKey( aJSON, mAbbreviation, JSON_ABBREVIATION );
-	AddToJSONKey( aJSON, mManager, JSON_MANAGER );
+	AddToJSONKey( aJSON, mName, json_traits<CTeam>::NAME );
+	AddToJSONKey( aJSON, mAbbreviation, json_traits<CTeam>::ABBREVIATION );
+	AddToJSONKey( aJSON, mManager, json_traits<CTeam>::MANAGER );
 	if( !mPlayers.empty() )
-		AddArrayToJSONKey( aJSON, mPlayers, JSON_PLAYERS );
-	AddToJSONKey( aJSON, mSupportFactor, JSON_SUPPORT_FACTOR );
-	AddToJSONKey( aJSON, mAttendanceDistributionParameters.mean(), JSON_MEAN_ATTENDANCE );
-	AddToJSONKey( aJSON, mAttendanceDistributionParameters.stddev(), JSON_STD_DEV_ATTENDANCE );
+		AddArrayToJSONKey( aJSON, mPlayers, json_traits<CTeam>::PLAYERS );
+	AddToJSONKey( aJSON, mSupportFactor, json_traits<CTeam>::SUPPORT_FACTOR );
+	AddToJSONKey( aJSON, mAttendanceDistributionParameters.mean(), json_traits<CTeam>::MEAN_ATTENDANCE );
+	AddToJSONKey( aJSON, mAttendanceDistributionParameters.stddev(), json_traits<CTeam>::STD_DEV_ATTENDANCE );
 }
 
 std::string_view CTeam::GetName() const noexcept
@@ -139,7 +139,10 @@ CTeam::attendance CTeam::GenerateAttendance( std::uniform_random_bit_generator a
 
 const CLineup& CTeam::CheckLineup( const CLineup& aLineup ) const try
 {
-	std::ranges::for_each( aLineup.CreatePlayersView<true>(), [ this ]( const auto& aPlayer ) { GetPlayer( aPlayer ); } );
+	std::ranges::for_each( aLineup.CreatePlayersView<true>(), [ this ]( const auto& aPlayer )
+	{
+		GetPlayer( aPlayer );
+	} );
 	return aLineup;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the lineup against the team." )
@@ -160,7 +163,7 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the a
 types::CTeam::players CreatePlayersFromJSON( const futsim::types::IJsonable::json& aJSON ) try
 {
 	types::CTeam::players result;
-	for( const auto& JSONPlayer : ValueFromOptionalJSONKey<futsim::types::IJsonable::json>( aJSON, CTeam::JSON_PLAYERS ) )
+	for( const auto& JSONPlayer : ValueFromOptionalJSONKey<futsim::types::IJsonable::json>( aJSON, json_traits<CTeam>::PLAYERS ) )
 		result.emplace_back( ValueFromJSON<types::CTeam::players::value_type>( JSONPlayer ) );
 	return result;
 }

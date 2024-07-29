@@ -6,8 +6,30 @@
 #include "football/types/CFoulDrawConfiguration.h"
 #include "football/CLineup.h"
 #include "CEnumDistribution.h"
+#include "DefaultTraits.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
+{
+class CFoulDrawConfiguration;
+}
+
+template <> struct default_traits<football::CFoulDrawConfiguration>
+{
+protected:
+	using stat = football::types::CDrawConfiguration::stat;
+public:
+	//! Default \copybrief football::CFoulDrawConfiguration::mAverageFouls
+	static inline constexpr stat AVERAGE_FOULS = stat{ 8195 } / 380;
+	//! Default \copybrief football::CFoulDrawConfiguration::mAverageYellowCards
+	static inline constexpr stat AVERAGE_YELLOW_CARDS = stat{ 1375 } / 380;
+	//! Default \copybrief football::CFoulDrawConfiguration::mAverageRedCards
+	static inline constexpr stat AVERAGE_RED_CARDS = stat{ 31 } / 380;
+};
+
+namespace football
 {
 
 /**
@@ -28,9 +50,9 @@ public:
 	 * @param aAverageRedCards \ref mAverageRedCards
 	*/
 	explicit CFoulDrawConfiguration(
-		const stat& aAverageFouls = DEFAULT_AVERAGE_FOULS,
-		const stat& aAverageYellowCards = DEFAULT_AVERAGE_YELLOW_CARDS,
-		const stat& aAverageRedCards = DEFAULT_AVERAGE_RED_CARDS
+		const stat& aAverageFouls = default_traits<CFoulDrawConfiguration>::AVERAGE_FOULS,
+		const stat& aAverageYellowCards = default_traits<CFoulDrawConfiguration>::AVERAGE_YELLOW_CARDS,
+		const stat& aAverageRedCards = default_traits<CFoulDrawConfiguration>::AVERAGE_RED_CARDS
 	);
 
 	/**
@@ -71,22 +93,6 @@ public:
 	std::string_view DrawFoulCommitter( const CLineup& aLineup,
 		std::uniform_random_bit_generator auto& aGenerator ) const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Foul draw configuration";
-	//! JSON key for the \copybrief mAverageFouls
-	static inline constexpr std::string_view JSON_AVERAGE_FOULS = "Average fouls";
-	//! JSON key for the \copybrief mAverageYellowCards
-	static inline constexpr std::string_view JSON_AVERAGE_YELLOW_CARDS = "Average yellow cards";
-	//! JSON key for the \copybrief mAverageRedCards
-	static inline constexpr std::string_view JSON_AVERAGE_RED_CARDS = "Average red cards";
-
-	//! Default \copybrief mAverageFouls
-	static inline constexpr stat DEFAULT_AVERAGE_FOULS = stat{ 8195 } / 380;
-	//! Default \copybrief mAverageYellowCards
-	static inline constexpr stat DEFAULT_AVERAGE_YELLOW_CARDS = stat{ 1375 } / 380;
-	//! Default \copybrief mAverageRedCards
-	static inline constexpr stat DEFAULT_AVERAGE_RED_CARDS = stat{ 31 } / 380;
-
 	//! Number of minutes of the matches used to take the data from.
 	static inline constexpr unsigned int MATCH_MINUTES = 90;
 
@@ -110,7 +116,20 @@ std::string_view CFoulDrawConfiguration::DrawFoulCommitter( const CLineup& aLine
 {
 	const auto& players = aLineup.CreatePlayersView<false>();
 	return *( players | std::ranges::views::drop( std::uniform_int_distribution<types::CLineup::names::size_type>{
-		0, static_cast< types::CLineup::names::size_type >( std::ranges::distance( players ) - 1 ) }( aGenerator ) ) ).begin();
+		0, static_cast<types::CLineup::names::size_type>( std::ranges::distance( players ) - 1 ) }( aGenerator ) ) ).begin();
 }
+} // football namespace
+
+template <> struct json_traits<football::CFoulDrawConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Foul draw configuration";
+	//! JSON key for the \copybrief football::CFoulDrawConfiguration::mAverageFouls
+	static inline constexpr std::string_view AVERAGE_FOULS = "Average fouls";
+	//! JSON key for the \copybrief football::CFoulDrawConfiguration::mAverageYellowCards
+	static inline constexpr std::string_view AVERAGE_YELLOW_CARDS = "Average yellow cards";
+	//! JSON key for the \copybrief football::CFoulDrawConfiguration::mAverageRedCards
+	static inline constexpr std::string_view AVERAGE_RED_CARDS = "Average red cards";
+};
 
 } // futsim namespace

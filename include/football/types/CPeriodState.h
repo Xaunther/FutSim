@@ -5,7 +5,6 @@
 namespace futsim::football
 {
 
-class CMatchConfiguration;
 class CPlayState;
 
 namespace types::CPeriodState
@@ -24,13 +23,6 @@ template <typename T = football::CPlayState> struct play
 
 //! Container for the plays in a period.
 using plays = std::vector<play<>>;
-
-//! Concept for a period play policy
-template<typename T> concept period_play_policy =
-	requires ( T aPolicy, const plays & aPlays, const football::CMatchConfiguration & aMatchConfiguration )
-{
-	{ aPolicy( aPlays, aMatchConfiguration ) } -> std::same_as<bool>;
-};
 
 } // types::CPeriodState namespace
 

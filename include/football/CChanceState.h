@@ -11,7 +11,10 @@
 
 #include "ExceptionUtils.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -117,21 +120,6 @@ private:
 	//! \copydoc GetActor
 	template <E_PLAYER_SKILL tPlayerSkill> optional_name& Actor() noexcept;
 
-public:
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Chance state";
-	//! JSON key for the \copybrief mChanceType
-	static inline constexpr std::string_view JSON_CHANCE_TYPE = "Chance type";
-	//! JSON key for the \copybrief mOutcome
-	static inline constexpr std::string_view JSON_OUTCOME = "Outcome";
-	/**
-	 * @brief JSON key template for the actor.
-	 * @tparam tPlayerSkill Skill used by the actor.
-	 * @todo Remove initializer when GCC no longer requires it (bug).
-	*/
-	template<E_PLAYER_SKILL tPlayerSkill> static inline constexpr std::string_view JSON_ACTOR{};
-
-private:
 	//! Chance type draw outcome.
 	chance_type mChanceType;
 	//! Chance outcome.
@@ -178,15 +166,6 @@ drawn_player DrawPlayer( const CGoalDrawConfiguration& aGoalDrawConfiguration,
 types::CGoalDrawConfiguration::E_CHANCE_OUTCOME DrawOutcome( const types::CChanceState::chance_type& aChanceType, const auto& aOutcomeDrawer );
 
 } // detail namespace
-
-//! JSON key for the \copybrief mStopper
-template <> inline constexpr std::string_view CChanceState::JSON_ACTOR<E_PLAYER_SKILL::St> = "Goalkeeper";
-//! JSON key for the \copybrief mTackler
-template <> inline constexpr std::string_view CChanceState::JSON_ACTOR<E_PLAYER_SKILL::Tk> = "Tackler";
-//! JSON key for the \copybrief mPasser
-template <> inline constexpr std::string_view CChanceState::JSON_ACTOR<E_PLAYER_SKILL::Ps> = "Passer";
-//! JSON key for the \copybrief mShooter
-template <> inline constexpr std::string_view CChanceState::JSON_ACTOR<E_PLAYER_SKILL::Sh> = "Shooter";
 
 template <typename tIsSetPiece> requires std::same_as<tIsSetPiece, std::true_type> || std::same_as<tIsSetPiece, std::false_type>
 CChanceState::CChanceState(
@@ -307,4 +286,24 @@ types::CGoalDrawConfiguration::E_CHANCE_OUTCOME DrawOutcome( const types::CChanc
 
 } //detail namespace
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CChanceState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Chance state";
+	//! JSON key for the \copybrief football::CChanceState::mChanceType
+	static inline constexpr std::string_view CHANCE_TYPE = "Chance type";
+	//! JSON key for the \copybrief football::CChanceState::mOutcome
+	static inline constexpr std::string_view OUTCOME = "Outcome";
+	/**
+	 * @brief JSON key template for the actor.
+	 * @tparam tPlayerSkill Skill used by the actor.
+	*/
+	template<football::E_PLAYER_SKILL tPlayerSkill> static inline constexpr std::string_view ACTOR =
+		tPlayerSkill == football::E_PLAYER_SKILL::St ? "Goalkeeper" :
+		tPlayerSkill == football::E_PLAYER_SKILL::Tk ? "Tackler" :
+		tPlayerSkill == football::E_PLAYER_SKILL::Ps ? "Passer" : "Shooter";
+};
+
+} // futsim namespace

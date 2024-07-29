@@ -14,37 +14,58 @@ INITIALIZE_TEST( TStadium )
 void TStadium::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CStadium{ "", 1000, 1 }; }, "The stadium name cannot be empty." );
-	CheckException( []() { CStadium{ "Camp Nou", 98000, -2 }; }, "The ambient factor cannot be negative." );
+	CheckException( []()
+	{
+		CStadium{ "", 1000, 1 };
+	}, "The stadium name cannot be empty." );
+	CheckException( []()
+	{
+		CStadium{ "Camp Nou", 98000, -2 };
+	}, "The ambient factor cannot be negative." );
 
 	// Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CStadium>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CStadium>( R"( {
 			"Stadium": {}
-		} )" ); }, "key 'Name' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CStadium>( R"( {
+		} )" );
+	}, "key 'Name' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CStadium>( R"( {
 			"Stadium": {
 				"Name": ""
 			}
-		} )" ); }, "The stadium name cannot be empty." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CStadium>( R"( {
+		} )" );
+	}, "The stadium name cannot be empty." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CStadium>( R"( {
 			"Stadium": {
 				"Name": "Camp Nou"
 			}
-		} )" ); }, "key 'Capacity' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CStadium>( R"( {
+		} )" );
+	}, "key 'Capacity' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CStadium>( R"( {
 			"Stadium": {
 				"Name": "Camp Nou",
 				"Capacity": 98000
 			}
-		} )" ); }, "key 'Ambient factor' not found" );
+		} )" );
+	}, "key 'Ambient factor' not found" );
 
-	CheckException( []() { futsim::ValueFromJSONKeyString<CStadium>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CStadium>( R"( {
 			"Stadium": {
 				"Name": "Camp Nou",
 				"Capacity": 98000,
 				"Ambient factor": -2
 			}
-		} )" ); }, "The ambient factor cannot be negative." );
+		} )" );
+	}, "The ambient factor cannot be negative." );
 }
 
 std::vector<std::string> TStadium::ObtainedResults() const noexcept
@@ -69,9 +90,9 @@ std::vector<std::string> TStadium::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CStadium::JSON_NAME } + ": " + std::string{ stadium.GetName() } );
-		result.push_back( std::string{ CStadium::JSON_CAPACITY } + ": " + std::to_string( stadium.GetCapacity() ) );
-		result.push_back( std::string{ CStadium::JSON_AMBIENT_FACTOR } + ": " + std::to_string( stadium.GetAmbientFactor() ) );
+		result.push_back( std::string{ futsim::json_traits<CStadium>::NAME } + ": " + std::string{ stadium.GetName() } );
+		result.push_back( std::string{ futsim::json_traits<CStadium>::CAPACITY } + ": " + std::to_string( stadium.GetCapacity() ) );
+		result.push_back( std::string{ futsim::json_traits<CStadium>::AMBIENT_FACTOR } + ": " + std::to_string( stadium.GetAmbientFactor() ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, stadium );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

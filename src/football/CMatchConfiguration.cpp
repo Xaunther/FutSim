@@ -65,12 +65,12 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the m
 CMatchConfiguration::CMatchConfiguration( const json& aJSON ) try :
 	mPlayTime( ValueFromOptionalJSONKey<CPlayTime>( aJSON ) ),
 	mLineupConfiguration( ValueFromOptionalJSONKey<CLineupConfiguration>( aJSON ) ),
-	mApplyAmbientFactor( ValueFromOptionalJSONKey<bool>( aJSON, JSON_APPLY_AMBIENT_FACTOR, DEFAULT_APPLY_AMBIENT_FACTOR ) ),
+	mApplyAmbientFactor( ValueFromOptionalJSONKey<bool>( aJSON, json_traits<CMatchConfiguration>::APPLY_AMBIENT_FACTOR, default_traits<CMatchConfiguration>::APPLY_AMBIENT_FACTOR ) ),
 	mTacticsConfiguration( ValueFromOptionalJSONKey<CTacticsConfiguration>( aJSON ) ),
-	mTieCondition( ValueFromOptionalJSONKey<optional_tie_condition>( aJSON, CTieCondition::JSON_KEY, {} ) ),
-	mExtraTime( CheckExtraTime( ValueFromOptionalJSONKey<optional_extra_time>( aJSON, CExtraTime::JSON_KEY, {} ), mTieCondition ) ),
+	mTieCondition( ValueFromOptionalJSONKey<optional_tie_condition>( aJSON, json_traits<CTieCondition>::KEY, {} ) ),
+	mExtraTime( CheckExtraTime( ValueFromOptionalJSONKey<optional_extra_time>( aJSON, json_traits<CExtraTime>::KEY, {} ), mTieCondition ) ),
 	mPenaltyShootoutConfiguration( CheckPenaltyShootoutConfiguration(
-		ValueFromOptionalJSONKey<optional_penalty_shootout_configuration>( aJSON, CPenaltyShootoutConfiguration::JSON_KEY, {} ), mTieCondition ) ),
+		ValueFromOptionalJSONKey<optional_penalty_shootout_configuration>( aJSON, json_traits<CPenaltyShootoutConfiguration>::KEY, {} ), mTieCondition ) ),
 	mDrawConfiguration( ValueFromOptionalJSONKey<CDrawConfiguration>( aJSON ) )
 {
 	CheckTieCondition( mTieCondition, mPenaltyShootoutConfiguration );
@@ -81,7 +81,7 @@ void CMatchConfiguration::JSON( json& aJSON ) const noexcept
 {
 	AddToJSONKey( aJSON, mPlayTime );
 	AddToJSONKey( aJSON, mLineupConfiguration );
-	AddToJSONKey( aJSON, mApplyAmbientFactor, JSON_APPLY_AMBIENT_FACTOR );
+	AddToJSONKey( aJSON, mApplyAmbientFactor, json_traits<CMatchConfiguration>::APPLY_AMBIENT_FACTOR );
 	AddToJSONKey( aJSON, mTacticsConfiguration );
 	if( mTieCondition )
 		AddToJSONKey( aJSON, *mTieCondition );

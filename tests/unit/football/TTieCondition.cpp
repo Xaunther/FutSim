@@ -14,15 +14,21 @@ INITIALIZE_TEST( TTieCondition )
 void TTieCondition::TestExceptions() const
 {
 	// Test member constructor.
-	CheckException( []() { CTieCondition{ 5, 1 }; }, "The home team goals cannot be smaller than the home team lead." );
+	CheckException( []()
+	{
+		CTieCondition{ 5, 1 };
+	}, "The home team goals cannot be smaller than the home team lead." );
 
 	// Test JSON constructor.
-	CheckException( []() { futsim::ValueFromJSONKeyString<CTieCondition>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CTieCondition>( R"( {
 			"Tie condition": {
 				"Home team lead" : 5,
 				"Home team goals": 1
 			}
-		} )" ); }, "The home team goals cannot be smaller than the home team lead." );
+		} )" );
+	}, "The home team goals cannot be smaller than the home team lead." );
 }
 
 std::vector<std::string> TTieCondition::ObtainedResults() const noexcept
@@ -50,9 +56,9 @@ std::vector<std::string> TTieCondition::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CTieCondition::JSON_HOME_TEAM_LEAD } + ": " + std::to_string( tieCondition.GetHomeTeamLead() ) );
+		result.push_back( std::string{ futsim::json_traits<CTieCondition>::HOME_TEAM_LEAD } + ": " + std::to_string( tieCondition.GetHomeTeamLead() ) );
 		if( tieCondition.GetHomeTeamGoals() )
-			result.push_back( std::string{ CTieCondition::JSON_HOME_TEAM_GOALS } + ": " + std::to_string( *tieCondition.GetHomeTeamGoals() ) );
+			result.push_back( std::string{ futsim::json_traits<CTieCondition>::HOME_TEAM_GOALS } + ": " + std::to_string( *tieCondition.GetHomeTeamGoals() ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, tieCondition );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

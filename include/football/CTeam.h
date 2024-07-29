@@ -8,7 +8,10 @@
 #include <random>
 #include <span>
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 class CLineup;
@@ -100,23 +103,6 @@ public:
 	*/
 	const CLineup& CheckLineup( const CLineup& aLineup ) const;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Team";
-	//! JSON key for the \copybrief mName
-	static inline constexpr std::string_view JSON_NAME = "Name";
-	//! JSON key for the \copybrief mAbbreviation
-	static inline constexpr std::string_view JSON_ABBREVIATION = "Abbreviation";
-	//! JSON key for the \copybrief mManager
-	static inline constexpr std::string_view JSON_MANAGER = "Manager";
-	//! JSON key for the \copybrief mPlayers
-	static inline constexpr std::string_view JSON_PLAYERS = "Players";
-	//! JSON key for the \copybrief mSupportFactor
-	static inline constexpr std::string_view JSON_SUPPORT_FACTOR = "Support factor";
-	//! JSON key for the mean attendance.
-	static inline constexpr std::string_view JSON_MEAN_ATTENDANCE = "Mean attendance";
-	//! JSON key for the standard deviation of the attendance.
-	static inline constexpr std::string_view JSON_STD_DEV_ATTENDANCE = "StdDev attendance";
-
 private:
 	//! Team name.
 	name_type mName;
@@ -134,4 +120,26 @@ private:
 	attendance_distribution::param_type mAttendanceDistributionParameters;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CTeam>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Team";
+	//! JSON key for the \copybrief football::CTeam::mName
+	static inline constexpr std::string_view NAME = "Name";
+	//! JSON key for the \copybrief football::CTeam::mAbbreviation
+	static inline constexpr std::string_view ABBREVIATION = "Abbreviation";
+	//! JSON key for the \copybrief football::CTeam::mManager
+	static inline constexpr std::string_view MANAGER = "Manager";
+	//! JSON key for the \copybrief football::CTeam::mPlayers
+	static inline constexpr std::string_view PLAYERS = "Players";
+	//! JSON key for the \copybrief football::CTeam::mSupportFactor
+	static inline constexpr std::string_view SUPPORT_FACTOR = "Support factor";
+	//! JSON key for the mean attendance.
+	static inline constexpr std::string_view MEAN_ATTENDANCE = "Mean attendance";
+	//! JSON key for the standard deviation of the attendance.
+	static inline constexpr std::string_view STD_DEV_ATTENDANCE = "StdDev attendance";
+};
+
+} // futsim namespace
