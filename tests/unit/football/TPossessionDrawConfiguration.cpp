@@ -14,20 +14,32 @@ INITIALIZE_TEST( TPossessionDrawConfiguration )
 void TPossessionDrawConfiguration::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CPossessionDrawConfiguration{ -2 }; }, "The probability to keep possession cannot be negative." );
-	CheckException( []() { CPossessionDrawConfiguration{ 2 }; }, "The probability to keep possession cannot be greater than 1." );
+	CheckException( []()
+	{
+		CPossessionDrawConfiguration{ -2 };
+	}, "The probability to keep possession cannot be negative." );
+	CheckException( []()
+	{
+		CPossessionDrawConfiguration{ 2 };
+	}, "The probability to keep possession cannot be greater than 1." );
 
 	// Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPossessionDrawConfiguration>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPossessionDrawConfiguration>( R"( {
 			"Possession draw configuration": {
 				"Keep possession probability": -2
 			}
-		} )" ); }, "The probability to keep possession cannot be negative." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPossessionDrawConfiguration>( R"( {
+		} )" );
+	}, "The probability to keep possession cannot be negative." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPossessionDrawConfiguration>( R"( {
 			"Possession draw configuration": {
 				"Keep possession probability": 2
 			}
-		} )" ); }, "The probability to keep possession cannot be greater than 1." );
+		} )" );
+	}, "The probability to keep possession cannot be greater than 1." );
 }
 
 std::vector<std::string> TPossessionDrawConfiguration::ObtainedResults() const noexcept
@@ -47,7 +59,7 @@ std::vector<std::string> TPossessionDrawConfiguration::ObtainedResults() const n
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CPossessionDrawConfiguration::JSON_KEEP_POSSESSION_PROBABILITY } + ": " + std::to_string( possessionDrawConfiguration.GetKeepPossessionProbability() ) );
+		result.push_back( std::string{ futsim::json_traits<CPossessionDrawConfiguration>::KEEP_POSSESSION_PROBABILITY } + ": " + std::to_string( possessionDrawConfiguration.GetKeepPossessionProbability() ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, possessionDrawConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

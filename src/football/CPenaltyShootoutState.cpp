@@ -49,10 +49,10 @@ template void CPenaltyShootoutState::score::Add<false>() noexcept;
 
 void CPenaltyShootoutState::JSON( json& aJSON ) const noexcept
 {
-	for( auto& JSONPenalties = aJSON[ JSON_PENALTIES ]; const auto & penalty : mPenalties )
+	for( auto& JSONPenalties = aJSON[ json_traits<CPenaltyShootoutState>::PENALTIES ]; const auto & penalty : mPenalties )
 	{
 		json elementJSON;
-		AddToJSONKey( elementJSON, penalty.homeTeam, JSON_HOME_TEAM_PENALTY );
+		AddToJSONKey( elementJSON, penalty.homeTeam, json_traits<CPenaltyShootoutState>::HOME_TEAM_PENALTY );
 		AddToJSON( elementJSON, penalty.state );
 		JSONPenalties.push_back( std::move( elementJSON ) );
 	}
@@ -80,7 +80,7 @@ template void CPenaltyShootoutState::PushPenaltyState<false>( CPenaltyState&&, d
 bool CPenaltyShootoutState::IsDecided( const types::CPenaltyShootoutConfiguration::penalty_count& aMinPenaltyCount,
 	const score& aScore ) const noexcept
 {
-	return std::abs( static_cast< int >( aScore.home - aScore.away ) ) >= 2 &&
+	return std::abs( static_cast<int>( aScore.home - aScore.away ) ) >= 2 &&
 		( aScore.home > aMinPenaltyCount || aScore.away > aMinPenaltyCount );
 }
 

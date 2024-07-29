@@ -16,16 +16,16 @@ CPenaltyShootoutConfiguration::CPenaltyShootoutConfiguration(
 }
 
 CPenaltyShootoutConfiguration::CPenaltyShootoutConfiguration( const json& aJSON ) try :
-	mPenaltySequence( ValueFromOptionalJSONKey<E_PENALTY_SEQUENCE>( aJSON, JSON_SEQUENCE, DEFAULT_PENALTY_SEQUENCE ) ),
-	mMinPenaltyCount( ValueFromOptionalJSONKey<penalty_count>( aJSON, JSON_MIN_PENALTY_COUNT, DEFAULT_PENALTY_COUNT ) )
+	mPenaltySequence( ValueFromOptionalJSONKey<E_PENALTY_SEQUENCE>( aJSON, json_traits<CPenaltyShootoutConfiguration>::SEQUENCE, default_traits<CPenaltyShootoutConfiguration>::PENALTY_SEQUENCE ) ),
+	mMinPenaltyCount( ValueFromOptionalJSONKey<penalty_count>( aJSON, json_traits<CPenaltyShootoutConfiguration>::MIN_PENALTY_COUNT, default_traits<CPenaltyShootoutConfiguration>::PENALTY_COUNT ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the penalty shootout configuration from JSON." )
 
 void CPenaltyShootoutConfiguration::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mPenaltySequence, JSON_SEQUENCE );
-	AddToJSONKey( aJSON, mMinPenaltyCount, JSON_MIN_PENALTY_COUNT );
+	AddToJSONKey( aJSON, mPenaltySequence, json_traits<CPenaltyShootoutConfiguration>::SEQUENCE );
+	AddToJSONKey( aJSON, mMinPenaltyCount, json_traits<CPenaltyShootoutConfiguration>::MIN_PENALTY_COUNT );
 }
 
 const E_PENALTY_SEQUENCE& CPenaltyShootoutConfiguration::GetPenaltySequence() const noexcept

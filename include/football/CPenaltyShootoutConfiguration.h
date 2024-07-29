@@ -4,8 +4,28 @@
 
 #include "football/types/CPenaltyShootoutConfiguration.h"
 #include "football/EPenaltySequence.h"
+#include "DefaultTraits.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
+{
+class CPenaltyShootoutConfiguration;
+}
+
+template <> struct default_traits<football::CPenaltyShootoutConfiguration>
+{
+protected:
+	using penalty_count = football::types::CPenaltyShootoutConfiguration::penalty_count;
+public:
+	//! Default \copybrief football::CPenaltyShootoutConfiguration::mPenaltySequence
+	static inline constexpr football::E_PENALTY_SEQUENCE PENALTY_SEQUENCE = football::E_PENALTY_SEQUENCE::AB;
+	//! Default \copybrief football::CPenaltyShootoutConfiguration::mMinPenaltyCount
+	static inline constexpr penalty_count PENALTY_COUNT = 5;
+};
+
+namespace football
 {
 
 /**
@@ -23,8 +43,8 @@ public:
 	 * @param aMinPenaltyCount \ref mMinPenaltyCount
 	*/
 	explicit CPenaltyShootoutConfiguration(
-		const E_PENALTY_SEQUENCE& aPenaltySequence = DEFAULT_PENALTY_SEQUENCE,
-		const penalty_count& aMinPenaltyCount = DEFAULT_PENALTY_COUNT ) noexcept;
+		const E_PENALTY_SEQUENCE& aPenaltySequence = default_traits<CPenaltyShootoutConfiguration>::PENALTY_SEQUENCE,
+		const penalty_count& aMinPenaltyCount = default_traits<CPenaltyShootoutConfiguration>::PENALTY_COUNT ) noexcept;
 
 	/**
 	 * @brief JSON constructor.
@@ -45,19 +65,6 @@ public:
 	//! Retrieves the \copybrief mMinPenaltyCount
 	const penalty_count& GetMinPenaltyCount() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Penalty shootout configuration";
-	//! JSON key for the \copybrief mPenaltySequence
-	static inline constexpr std::string_view JSON_SEQUENCE = "Sequence";
-	//! JSON key for the \copybrief mMinPenaltyCount
-	static inline constexpr std::string_view JSON_MIN_PENALTY_COUNT = "Min penalty count";
-
-	//! Default \copybrief mPenaltySequence
-	static inline constexpr E_PENALTY_SEQUENCE DEFAULT_PENALTY_SEQUENCE = E_PENALTY_SEQUENCE::AB;
-
-	//! Default \copybrief mMinPenaltyCount
-	static inline constexpr penalty_count DEFAULT_PENALTY_COUNT = 5;
-
 private:
 	//! Penalty sequence.
 	E_PENALTY_SEQUENCE mPenaltySequence;
@@ -65,4 +72,16 @@ private:
 	penalty_count mMinPenaltyCount;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPenaltyShootoutConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Penalty shootout configuration";
+	//! JSON key for the \copybrief football::CPenaltyShootoutConfiguration::mPenaltySequence
+	static inline constexpr std::string_view SEQUENCE = "Sequence";
+	//! JSON key for the \copybrief football::CPenaltyShootoutConfiguration::mMinPenaltyCount
+	static inline constexpr std::string_view MIN_PENALTY_COUNT = "Min penalty count";
+};
+
+} // futsim namespace

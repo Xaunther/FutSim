@@ -5,8 +5,13 @@
 #include "football/types/CPeriodStates.h"
 
 #include "football/CPeriodState.h"
+#include "football/CPeriodPlayPolicy.h"
+#include "football/CPeriodPolicy.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -21,55 +26,6 @@ protected:
 
 public:
 	/**
-	 * @brief Default policy functor for the periods.
-	 * @details All configured periods are played.
-	*/
-	//! 
-	struct SDefaultPeriodPolicy
-	{
-		/**
-		 * @brief Returns whether another period must be played.
-		 * @param aPeriodStates Current period states.
-		 * @param aMatchConfiguration Match configuration.
-		*/
-		bool operator()( const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const;
-	};
-
-	/**
-	 * @brief Default policy functor for the periods of extra time.
-	 * @details All configured extra time periods are played.
-	*/
-	struct SDefaultExtraTimePeriodPolicy
-	{
-		/**
-		 * @brief Returns whether another period must be played.
-		 * @param aPeriodStates Current period states.
-		 * @param aMatchConfiguration Match configuration.
-		*/
-		bool operator()( const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const;
-
-		/**
-		 * @brief Checks that the match configuration can produce extra time periods.
-		 * @param aMatchConfiguration Match configuration.
-		*/
-		static const CMatchConfiguration& CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration );
-	};
-
-	/**
-	 * @brief Default policy functor for the periods of extra time with silver goal.
-	 * @details No more extra time periods are played when the tie condition is no longer satisfied after a period.
-	*/
-	struct SSilverGoalPeriodPolicy : public SDefaultExtraTimePeriodPolicy
-	{
-		/**
-		 * @brief Returns whether another period must be played.
-		 * @param aPeriodStates Current period states.
-		 * @param aMatchConfiguration Match configuration.
-		*/
-		bool operator()( const period_states& aPeriodStates, const CMatchConfiguration& aMatchConfiguration ) const;
-	};
-
-	/**
 	 * @brief Constructor from the match definition, configuration and current strategies.
 	 * @param aMatch Match definition.
 	 * @param aMatchConfiguration Match configuration.
@@ -80,16 +36,14 @@ public:
 	 * @param aPeriodPolicy Period policy.
 	 * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
 	*/
-	template <typename T = CPeriodState::SDefaultPeriodPlayPolicy, typename U = SDefaultPeriodPolicy>
-		requires types::CPeriodState::period_play_policy<T>&& types::CPeriodStates::period_policy<U>
 	explicit CPeriodStates(
 		const CMatch& aMatch,
 		const CMatchConfiguration& aMatchConfiguration,
 		const CTeamStrategy& aHomeTeamStrategy,
 		const CTeamStrategy& aAwayTeamStrategy,
 		std::uniform_random_bit_generator auto& aGenerator,
-		const T& aPeriodPlayPolicy = T{},
-		const U& aPeriodPolicy = U{}
+		const IPeriodPlayPolicy& aPeriodPlayPolicy = CPeriodPlayPolicy{},
+		const IPeriodPolicy& aPeriodPolicy = CPeriodPolicy{}
 	);
 
 protected:
@@ -108,23 +62,19 @@ public:
 	*/
 	goal_count CountScoredGoals( const bool aHomeTeam ) const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Period states";
-
 private:
 	//! Period states.
 	period_states mStates;
 };
 
-template <typename T, typename U> requires types::CPeriodState::period_play_policy<T>&& types::CPeriodStates::period_policy<U>
 CPeriodStates::CPeriodStates(
 	const CMatch& aMatch,
 	const CMatchConfiguration& aMatchConfiguration,
 	const CTeamStrategy& aHomeTeamStrategy,
 	const CTeamStrategy& aAwayTeamStrategy,
 	std::uniform_random_bit_generator auto& aGenerator,
-	const T& aPeriodPlayPolicy,
-	const U& aPeriodPolicy
+	const IPeriodPlayPolicy& aPeriodPlayPolicy,
+	const IPeriodPolicy& aPeriodPolicy
 ) try
 {
 	auto homeTeamAttack = std::bernoulli_distribution{}( aGenerator );
@@ -141,4 +91,12 @@ CPeriodStates::CPeriodStates(
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the period states." )
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPeriodStates>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Period states";
+};
+
+} // futsim namespace

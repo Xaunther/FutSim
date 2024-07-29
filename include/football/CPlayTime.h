@@ -3,8 +3,31 @@
 #include "../CPlayTime.h"
 
 #include "football/types/CPlayTime.h"
+#include "DefaultTraits.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
+{
+class CPlayTime;
+}
+
+template <> struct default_traits<football::CPlayTime>
+{
+protected:
+	using period_count = types::CPlayTime::period_count;
+	using subs_count = football::types::CPlayTime::subs_count;
+public:
+	//! Default \copybrief football::CPlayTime::mPeriodCount
+	static inline constexpr period_count PERIOD_COUNT = 2;
+	//! Default \copybrief football::CPlayTime::mPeriodTime
+	static inline constexpr period_count PERIOD_TIME = 45;
+	//! Default \copybrief football::CPlayTime::mAvailableSubs
+	static inline constexpr subs_count AVAILABLE_SUBS = 5;
+};
+
+namespace football
 {
 
 /**
@@ -21,9 +44,9 @@ public:
 	 * @param aAvailableSubs \ref mAvailableSubs
 	*/
 	explicit CPlayTime(
-		const period_count& aPeriodCount = DEFAULT_PERIOD_COUNT,
-		const period_time& aPeriodTime = DEFAULT_PERIOD_TIME,
-		const subs_count& aAvailableSubs = DEFAULT_AVAILABLE_SUBS );
+		const period_count& aPeriodCount = default_traits<CPlayTime>::PERIOD_COUNT,
+		const period_time& aPeriodTime = default_traits<CPlayTime>::PERIOD_TIME,
+		const subs_count& aAvailableSubs = default_traits<CPlayTime>::AVAILABLE_SUBS );
 
 	/**
 	 * @brief JSON constructor.
@@ -41,19 +64,17 @@ public:
 	//! Retrieves the \copybrief mAvailableSubs
 	const subs_count& GetAvailableSubs() const noexcept;
 
-	//! JSON key for the \copybrief mAvailableSubs
-	static inline constexpr std::string_view JSON_AVAILABLE_SUBS = "Available subs";
-
-	//! Default \copybrief mPeriodCount
-	static inline constexpr period_count DEFAULT_PERIOD_COUNT = 2;
-	//! Default \copybrief mPeriodTime
-	static inline constexpr period_count DEFAULT_PERIOD_TIME = 45;
-	//! Default \copybrief mAvailableSubs
-	static inline constexpr subs_count DEFAULT_AVAILABLE_SUBS = 5;
-
 private:
 	//! Number of available subs.
 	subs_count mAvailableSubs;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPlayTime> : public json_traits<CPlayTime>
+{
+	///! JSON key for the \copybrief football::CPlayTime::mAvailableSubs
+	static inline constexpr std::string_view AVAILABLE_SUBS = "Available subs";
+};
+
+} // futsim namespace

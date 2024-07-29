@@ -4,7 +4,29 @@
 
 #include "football/EGoalRule.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
+{
+class CExtraTime;
+}
+
+template <> struct default_traits<football::CExtraTime>
+{
+protected:
+	using period_count = types::CPlayTime::period_count;
+	using subs_count = football::types::CPlayTime::subs_count;
+public:
+	//! Default \copybrief football::CExtraTime::mPeriodTime
+	static inline constexpr period_count PERIOD_TIME = 15;
+	//! Default \copybrief football::CExtraTime::mAvailableSubs
+	static inline constexpr subs_count AVAILABLE_SUBS = 1;
+	//! Default \copybrief football::CExtraTime::mGoalRule
+	static inline constexpr football::E_GOAL_RULE GOAL_RULE = football::E_GOAL_RULE::NO;
+};
+
+namespace football
 {
 
 /**
@@ -18,10 +40,10 @@ public:
 	 * @param aGoalRule \ref mGoalRule
 	*/
 	explicit CExtraTime(
-		const period_count& aPeriodCount = DEFAULT_PERIOD_COUNT,
-		const period_time& aPeriodTime = DEFAULT_PERIOD_TIME,
-		const subs_count& aAvailableSubs = DEFAULT_AVAILABLE_SUBS,
-		const E_GOAL_RULE& aGoalRule = DEFAULT_GOAL_RULE );
+		const period_count& aPeriodCount = default_traits<CPlayTime>::PERIOD_COUNT,
+		const period_time& aPeriodTime = default_traits<CExtraTime>::PERIOD_TIME,
+		const subs_count& aAvailableSubs = default_traits<CExtraTime>::AVAILABLE_SUBS,
+		const E_GOAL_RULE& aGoalRule = default_traits<CExtraTime>::GOAL_RULE );
 
 	/**
 	 * @brief JSON constructor.
@@ -39,21 +61,19 @@ public:
 	//! Retrieves the \copybrief mGoalRule
 	const E_GOAL_RULE& GetGoalRule() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Extra time";
-	//! JSON key for the \copybrief mGoalRule
-	static inline constexpr std::string_view JSON_GOAL_RULE = "Goal rule";
-
-	//! Default \copybrief mPeriodTime
-	static inline constexpr period_count DEFAULT_PERIOD_TIME = 15;
-	//! Default \copybrief mAvailableSubs
-	static inline constexpr subs_count DEFAULT_AVAILABLE_SUBS = 1;
-	//! Default \copybrief mGoalRule
-	static inline constexpr E_GOAL_RULE DEFAULT_GOAL_RULE = E_GOAL_RULE::NO;
-
 private:
 	//! Goal rule.
 	E_GOAL_RULE mGoalRule;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CExtraTime>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Extra time";
+	//! JSON key for the \copybrief football::CExtraTime::mGoalRule
+	static inline constexpr std::string_view GOAL_RULE = "Goal rule";
+};
+
+} // futsim namespace

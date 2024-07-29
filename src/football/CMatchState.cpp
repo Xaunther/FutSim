@@ -7,9 +7,9 @@ namespace futsim::football
 
 void CMatchState::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mMandatoryPlayTimeState, JSON_MANDATORY_PERIOD_STATES );
+	AddToJSONKey( aJSON, mMandatoryPlayTimeState, json_traits<CMatchState>::MANDATORY_PERIOD_STATES );
 	if( mExtraTimeState )
-		AddToJSONKey( aJSON, *mExtraTimeState, JSON_EXTRA_PERIOD_STATES );
+		AddToJSONKey( aJSON, *mExtraTimeState, json_traits<CMatchState>::EXTRA_PERIOD_STATES );
 	if( mPenaltyShootoutState )
 		AddToJSONKey( aJSON, *mPenaltyShootoutState );
 }

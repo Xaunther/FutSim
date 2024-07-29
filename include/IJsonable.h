@@ -31,4 +31,9 @@ private:
 	virtual void JSON( json& aJSON ) const noexcept = 0;
 };
 
+//! JSON traits for any class.
+template <typename T> struct json_traits
+{
+};
+
 } // futsim namespace

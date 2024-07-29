@@ -14,68 +14,109 @@ INITIALIZE_TEST( TPlayerSkills )
 void TPlayerSkills::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CPlayerSkills{ { 0, 1, 1, 1 }, { 1, 1, 1, 1 } }; }, "The St skill value must be greater than 0." );
-	CheckException( []() { CPlayerSkills{ { 1, 0, 1, 1 }, { 1, 1, 1, 1 } }; }, "The Tk skill value must be greater than 0." );
-	CheckException( []() { CPlayerSkills{ { 1, 1, 0, 1 }, { 1, 1, 1, 1 } }; }, "The Ps skill value must be greater than 0." );
-	CheckException( []() { CPlayerSkills{ { 1, 1, 1, 0 }, { 1, 1, 1, 1 } }; }, "The Sh skill value must be greater than 0." );
+	CheckException( []()
+	{
+		CPlayerSkills{ { 0, 1, 1, 1 }, { 1, 1, 1, 1 } };
+	}, "The St skill value must be greater than 0." );
+	CheckException( []()
+	{
+		CPlayerSkills{ { 1, 0, 1, 1 }, { 1, 1, 1, 1 } };
+	}, "The Tk skill value must be greater than 0." );
+	CheckException( []()
+	{
+		CPlayerSkills{ { 1, 1, 0, 1 }, { 1, 1, 1, 1 } };
+	}, "The Ps skill value must be greater than 0." );
+	CheckException( []()
+	{
+		CPlayerSkills{ { 1, 1, 1, 0 }, { 1, 1, 1, 1 } };
+	}, "The Sh skill value must be greater than 0." );
 
 	// Test JSON constructor
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {}
-		} )" ); }, "key 'St skill' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
+		} )" );
+	}, "key 'St skill' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"St skill": 0
 			}
-		} )" ); }, "The St skill value must be greater than 0." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
+		} )" );
+	}, "The St skill value must be greater than 0." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"St skill": 1
 			}
-		} )" ); }, "key 'Tk skill' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
+		} )" );
+	}, "key 'Tk skill' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"St skill": 1,
 				"Tk skill": 0
 			}
-		} )" ); }, "The Tk skill value must be greater than 0." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
+		} )" );
+	}, "The Tk skill value must be greater than 0." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"St skill": 1,
 				"Tk skill": 1
 			}
-		} )" ); }, "key 'Ps skill' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
+		} )" );
+	}, "key 'Ps skill' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"St skill": 1,
 				"Tk skill": 1,
 				"Ps skill": 0
 			}
-		} )" ); }, "The Ps skill value must be greater than 0." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
+		} )" );
+	}, "The Ps skill value must be greater than 0." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"St skill": 1,
 				"Tk skill": 1,
 				"Ps skill": 1
 			}
-		} )" ); }, "key 'Sh skill' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
+		} )" );
+	}, "key 'Sh skill' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"St skill": 1,
 				"Tk skill": 1,
 				"Ps skill": 1,
 				"Sh skill": 0
 			}
-		} )" ); }, "The Sh skill value must be greater than 0." );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
+		} )" );
+	}, "The Sh skill value must be greater than 0." );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"St skill": 1,
 				"Tk skill": 1,
 				"Ps skill": 1,
 				"Sh skill": 1
 			}
-		} )" ); }, "key 'St experience' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
+		} )" );
+	}, "key 'St experience' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"St skill": 1,
 				"Tk skill": 1,
@@ -83,8 +124,11 @@ void TPlayerSkills::TestExceptions() const
 				"Sh skill": 1,
 				"St experience": 0
 			}
-		} )" ); }, "key 'Tk experience' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
+		} )" );
+	}, "key 'Tk experience' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"St skill": 1,
 				"Tk skill": 1,
@@ -93,8 +137,11 @@ void TPlayerSkills::TestExceptions() const
 				"St experience": 0,
 				"Tk experience": 0
 			}
-		} )" ); }, "key 'Ps experience' not found" );
-	CheckException( []() { futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
+		} )" );
+	}, "key 'Ps experience' not found" );
+	CheckException( []()
+	{
+		futsim::ValueFromJSONKeyString<CPlayerSkills>( R"( {
 			"Player skills": {
 				"St skill": 1,
 				"Tk skill": 1,
@@ -104,7 +151,8 @@ void TPlayerSkills::TestExceptions() const
 				"Tk experience": 0,
 				"Ps experience": 0
 			}
-		} )" ); }, "key 'Sh experience' not found" );
+		} )" );
+	}, "key 'Sh experience' not found" );
 }
 
 std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
@@ -139,14 +187,14 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CPlayerSkills::JSON_ST_SKILL } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::St ) ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_TK_SKILL } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Tk ) ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_PS_SKILL } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Ps ) ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_SH_SKILL } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Sh ) ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_ST_XP } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::St ) ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_TK_XP } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Tk ) ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_PS_XP } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Ps ) ) );
-		result.push_back( std::string{ CPlayerSkills::JSON_SH_XP } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Sh ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::ST_SKILL } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::St ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::TK_SKILL } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Tk ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::PS_SKILL } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Ps ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::SH_SKILL } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Sh ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::ST_XP } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::St ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::TK_XP } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Tk ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::PS_XP } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Ps ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::SH_XP } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Sh ) ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, playerSkills );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

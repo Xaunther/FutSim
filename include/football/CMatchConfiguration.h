@@ -11,7 +11,21 @@
 #include "football/CTacticsConfiguration.h"
 #include "football/CTieCondition.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
+{
+class CMatchConfiguration;
+}
+
+template <> struct default_traits<football::CMatchConfiguration>
+{
+	//! Default \copybrief football::CMatchConfiguration::mApplyAmbientFactor
+	static inline constexpr bool APPLY_AMBIENT_FACTOR = true;
+};
+
+namespace football
 {
 
 class CTeamStrategy;
@@ -41,7 +55,7 @@ public:
 	explicit CMatchConfiguration(
 		const CPlayTime& aPlayTime = CPlayTime{},
 		const CLineupConfiguration& aLineupConfiguration = CLineupConfiguration{},
-		const bool aApplyAmbientFactor = DEFAULT_APPLY_AMBIENT_FACTOR,
+		const bool aApplyAmbientFactor = default_traits<CMatchConfiguration>::APPLY_AMBIENT_FACTOR,
 		const CTacticsConfiguration& aTacticsConfiguration = CTacticsConfiguration{},
 		const optional_tie_condition& aTieCondition = {},
 		const optional_extra_time& aExtraTime = {},
@@ -91,14 +105,6 @@ public:
 	*/
 	const CTeamStrategy& CheckTeamStrategy( const CTeamStrategy& aTeamStrategy ) const;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Match configuration";
-	//! JSON key for the \copybrief mApplyAmbientFactor
-	static inline constexpr std::string_view JSON_APPLY_AMBIENT_FACTOR = "Apply ambient factor";
-
-	//! Default \copybrief mApplyAmbientFactor
-	static inline constexpr bool DEFAULT_APPLY_AMBIENT_FACTOR = true;
-
 private:
 	//! Play time configuration.
 	CPlayTime mPlayTime;
@@ -117,6 +123,16 @@ private:
 
 	//! Draw configuration
 	CDrawConfiguration mDrawConfiguration;
+};
+
+} // football namespace
+
+template <> struct json_traits<football::CMatchConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Match configuration";
+	//! JSON key for the \copybrief football::CMatchConfiguration::mApplyAmbientFactor
+	static inline constexpr std::string_view APPLY_AMBIENT_FACTOR = "Apply ambient factor";
 };
 
 } // futsim namespace

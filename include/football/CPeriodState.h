@@ -5,8 +5,12 @@
 #include "types/CPeriodState.h"
 
 #include "football/CPlayState.h"
+#include "football/CPeriodPlayPolicy.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -20,55 +24,6 @@ protected:
 
 public:
 	/**
-	 * @brief Default policy functor for the plays of the period.
-	 * @details All configured minutes are played.
-	*/
-	//! 
-	struct SDefaultPeriodPlayPolicy
-	{
-		/**
-		 * @brief Returns whether another minute must be played.
-		 * @param aPlays Plays of the period.
-		 * @param aMatchConfiguration Match configuration.
-		*/
-		bool operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const;
-	};
-
-	/**
-	 * @brief Default policy functor for the plays of an extra time period.
-	 * @details All configured minutes are played.
-	*/
-	struct SDefaultExtraTimePeriodPlayPolicy
-	{
-		/**
-		 * @brief Returns whether another minute must be played.
-		 * @param aPlays Plays of the period.
-		 * @param aMatchConfiguration Match configuration.
-		*/
-		bool operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const;
-
-		/**
-		 * @brief Checks that the match configuration can be used in the policy.
-		 * @param aMatchConfiguration Match configuration.
-		*/
-		static const CMatchConfiguration& CheckMatchConfiguration( const CMatchConfiguration& aMatchConfiguration );
-	};
-
-	/**
-	 * @brief Policy functor for the plays of an extra time period with golden goal.
-	 * @details Period also ends when a goal is scored.
-	*/
-	struct SGoldenGoalPeriodPlayPolicy : public SDefaultExtraTimePeriodPlayPolicy
-	{
-		/**
-		 * @brief Returns whether another minute must be played.
-		 * @param aPlays Plays of the period.
-		 * @param aMatchConfiguration Match configuration.
-		*/
-		bool operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const;
-	};
-
-	/**
 	 * @brief Constructor from the match definition, configuration and current strategies.
 	 * @param aMatch Match definition.
 	 * @param aMatchConfiguration Match configuration.
@@ -79,7 +34,6 @@ public:
 	 * @param aPeriodPlayPolicy Period play policy.
 	 * @pre The team strategies must both pass \ref CMatchConfiguration::CheckTeamStrategy and \ref CMatch::CheckTeamStrategy
 	*/
-	template <typename T = SDefaultPeriodPlayPolicy> requires types::CPeriodState::period_play_policy<T>
 	explicit CPeriodState(
 		const CMatch& aMatch,
 		const CMatchConfiguration& aMatchConfiguration,
@@ -87,7 +41,7 @@ public:
 		const CTeamStrategy& aAwayTeamStrategy,
 		bool aHomeTeamAttack,
 		std::uniform_random_bit_generator auto& aGenerator,
-		const T& aPeriodPlayPolicy = T{}
+		const IPeriodPlayPolicy& aPeriodPlayPolicy = CPeriodPlayPolicy{}
 	);
 
 protected:
@@ -119,20 +73,11 @@ protected:
 	*/
 	bool IsHomeTeamAttackNext() const;
 
-public:
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Period state";
-	//! JSON key for the \copybrief mPlays
-	static inline constexpr std::string_view JSON_PLAYS = "Plays";
-	//! JSON key to indicate if the play corresponds to the home team.
-	static inline constexpr std::string_view JSON_HOME_TEAM_PLAY = "Home team play";
-
 private:
 	//! Plays of the period.
 	plays mPlays;
 };
 
-template <typename T> requires types::CPeriodState::period_play_policy<T>
 CPeriodState::CPeriodState(
 	const CMatch& aMatch,
 	const CMatchConfiguration& aMatchConfiguration,
@@ -140,7 +85,7 @@ CPeriodState::CPeriodState(
 	const CTeamStrategy& aAwayTeamStrategy,
 	bool aHomeTeamAttack,
 	std::uniform_random_bit_generator auto& aGenerator,
-	const T& aPeriodPlayPolicy
+	const IPeriodPlayPolicy& aPeriodPlayPolicy
 )
 {
 	mPlays.reserve( aMatchConfiguration.GetPlayTime().GetPeriodTime() );
@@ -157,4 +102,16 @@ CPeriodState::CPeriodState(
 	} while( aPeriodPlayPolicy( mPlays, aMatchConfiguration ) );
 }
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPeriodState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Period state";
+	//! JSON key for the \copybrief football::CPeriodState::mPlays
+	static inline constexpr std::string_view PLAYS = "Plays";
+	//! JSON key to indicate if the play corresponds to the home team.
+	static inline constexpr std::string_view HOME_TEAM_PLAY = "Home team play";
+};
+
+} // futsim namespace

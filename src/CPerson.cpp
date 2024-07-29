@@ -24,23 +24,23 @@ CPerson::CPerson(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player." )
 
 CPerson::CPerson( const json& aJSON ) try :
-	mFirstName( CheckName( ValueFromRequiredJSONKey<std::string>( aJSON, JSON_FIRST_NAME ), "name" ) ),
-	mSurnames( CheckName( ValueFromRequiredJSONKey<std::string>( aJSON, JSON_SURNAMES ), "surnames" ) ),
-	mKnownName( ValueFromOptionalJSONKey<std::string>( aJSON, JSON_KNOWN_NAME, mSurnames ) ),
-	mAge( ValueFromRequiredJSONKey<unsigned short>( aJSON, JSON_AGE ) ),
-	mNationality( ValueFromRequiredJSONKey<E_NATIONALITY>( aJSON, JSON_NATIONALITY ) )
+	mFirstName( CheckName( ValueFromRequiredJSONKey<std::string>( aJSON, json_traits<CPerson>::FIRST_NAME ), "name" ) ),
+	mSurnames( CheckName( ValueFromRequiredJSONKey<std::string>( aJSON, json_traits<CPerson>::SURNAMES ), "surnames" ) ),
+	mKnownName( ValueFromOptionalJSONKey<std::string>( aJSON, json_traits<CPerson>::KNOWN_NAME, mSurnames ) ),
+	mAge( ValueFromRequiredJSONKey<unsigned short>( aJSON, json_traits<CPerson>::AGE ) ),
+	mNationality( ValueFromRequiredJSONKey<E_NATIONALITY>( aJSON, json_traits<CPerson>::NATIONALITY ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player from JSON." )
 
 void CPerson::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mFirstName, JSON_FIRST_NAME );
-	AddToJSONKey( aJSON, mSurnames, JSON_SURNAMES );
+	AddToJSONKey( aJSON, mFirstName, json_traits<CPerson>::FIRST_NAME );
+	AddToJSONKey( aJSON, mSurnames, json_traits<CPerson>::SURNAMES );
 	if( mKnownName != mSurnames )
-		AddToJSONKey( aJSON, mKnownName, JSON_KNOWN_NAME );
-	AddToJSONKey( aJSON, mAge, JSON_AGE );
-	AddToJSONKey( aJSON, mNationality, JSON_NATIONALITY );
+		AddToJSONKey( aJSON, mKnownName, json_traits<CPerson>::KNOWN_NAME );
+	AddToJSONKey( aJSON, mAge, json_traits<CPerson>::AGE );
+	AddToJSONKey( aJSON, mNationality, json_traits<CPerson>::NATIONALITY );
 }
 
 std::string_view CPerson::GetFirstName() const noexcept

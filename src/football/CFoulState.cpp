@@ -8,8 +8,8 @@ namespace futsim::football
 
 void CFoulState::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mCommitter, JSON_COMMIITER );
-	AddToJSONKey( aJSON, mOutcome, JSON_OUTCOME );
+	AddToJSONKey( aJSON, mCommitter, json_traits<CFoulState>::COMMIITER );
+	AddToJSONKey( aJSON, mOutcome, json_traits<CFoulState>::OUTCOME );
 }
 
 std::string_view CFoulState::GetCommitter() const noexcept

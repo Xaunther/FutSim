@@ -4,7 +4,10 @@
 
 #include "types/CStadium.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -52,15 +55,6 @@ public:
 	//! Retrieves the \copybrief mAmbientFactor
 	const ambient_factor& GetAmbientFactor() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Stadium";
-	//! JSON key for the \copybrief mName
-	static inline constexpr std::string_view JSON_NAME = "Name";
-	//! JSON key for the \copybrief mCapacity
-	static inline constexpr std::string_view JSON_CAPACITY = "Capacity";
-	//! JSON key for the \copybrief mAmbientFactor
-	static inline constexpr std::string_view JSON_AMBIENT_FACTOR = "Ambient factor";
-
 private:
 	//! Stadium name.
 	std::string mName;
@@ -70,4 +64,18 @@ private:
 	ambient_factor mAmbientFactor;
 };
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CStadium>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Stadium";
+	//! JSON key for the \copybrief football::CStadium::mName
+	static inline constexpr std::string_view NAME = "Name";
+	//! JSON key for the \copybrief football::CStadium::mCapacity
+	static inline constexpr std::string_view CAPACITY = "Capacity";
+	//! JSON key for the \copybrief football::CStadium::mAmbientFactor
+	static inline constexpr std::string_view AMBIENT_FACTOR = "Ambient factor";
+};
+
+} // futsim namespace

@@ -3,8 +3,38 @@
 #include "IJsonable.h"
 
 #include "football/types/CLineupConfiguration.h"
+#include "DefaultTraits.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
+{
+class CLineupConfiguration;
+}
+
+template <> struct default_traits<football::CLineupConfiguration>
+{
+protected:
+	using optional_player_count = football::types::CLineupConfiguration::optional_player_count;
+	using player_count = football::types::CLineupConfiguration::player_count;
+	using player_count_range = football::types::CLineupConfiguration::player_count_range;
+public:
+	//! Default \copybrief football::CLineupConfiguration::mDFRange
+	static inline constexpr player_count_range DF_RANGE = { 3, 6 };
+	//! Default \copybrief football::CLineupConfiguration::mMFRange
+	static inline constexpr player_count_range MF_RANGE = { 2, 6 };
+	//! Default \copybrief football::CLineupConfiguration::mFWRange
+	static inline constexpr player_count_range FW_RANGE = { 0, 4 };
+	//! Default \copybrief football::CLineupConfiguration::mMinPlayerCount
+	static inline constexpr player_count MIN_PLAYERS = 7;
+	//! Maximum number of players
+	static inline constexpr player_count MAX_PLAYERS = 11;
+	//! Default \copybrief football::CLineupConfiguration::mBenchedPlayersCount
+	static inline constexpr optional_player_count BENCHED_PLAYERS = 9;
+};
+
+namespace football
 {
 
 class CLineup;
@@ -29,11 +59,11 @@ public:
 	 * @param aBenchedPlayersCount \ref mBenchedPlayersCount
 	*/
 	explicit CLineupConfiguration(
-		const player_count_range& aDFRange = DEFAULT_DF_RANGE,
-		const player_count_range& aMFRange = DEFAULT_MF_RANGE,
-		const player_count_range& aFWRange = DEFAULT_FW_RANGE,
-		const player_count& aMinPlayerCount = DEFAULT_MIN_PLAYERS,
-		const optional_player_count& aBenchedPlayersCount = DEFAULT_BENCHED_PLAYERS
+		const player_count_range& aDFRange = default_traits<CLineupConfiguration>::DF_RANGE,
+		const player_count_range& aMFRange = default_traits<CLineupConfiguration>::MF_RANGE,
+		const player_count_range& aFWRange = default_traits<CLineupConfiguration>::FW_RANGE,
+		const player_count& aMinPlayerCount = default_traits<CLineupConfiguration>::MIN_PLAYERS,
+		const optional_player_count& aBenchedPlayersCount = default_traits<CLineupConfiguration>::BENCHED_PLAYERS
 	);
 
 	/**
@@ -70,38 +100,6 @@ public:
 	*/
 	const CLineup& CheckLineup( const CLineup& aLineup ) const;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Lineup configuration";
-	//! JSON key for the minimum number of DFs.
-	static inline constexpr std::string_view JSON_MIN_DFS = "Min DFs";
-	//! JSON key for the minimum number of MFs.
-	static inline constexpr std::string_view JSON_MIN_MFS = "Min MFs";
-	//! JSON key for the minimum number of FWs.
-	static inline constexpr std::string_view JSON_MIN_FWS = "Min FWs";
-	//! JSON key for the maximum number of DFs.
-	static inline constexpr std::string_view JSON_MAX_DFS = "Max DFs";
-	//! JSON key for the maximum number of MFs.
-	static inline constexpr std::string_view JSON_MAX_MFS = "Max MFs";
-	//! JSON key for the maximum number of FWs.
-	static inline constexpr std::string_view JSON_MAX_FWS = "Max FWs";
-	//! JSON key for the \copybrief mMinPlayerCount
-	static inline constexpr std::string_view JSON_MIN_PLAYERS = "Min players";
-	//! JSON key for the \copybrief mBenchedPlayersCount
-	static inline constexpr std::string_view JSON_BENCHED_PLAYERS = "Benched players";
-
-	//! Default \copybrief mDFRange
-	static inline constexpr player_count_range DEFAULT_DF_RANGE = { 3, 6 };
-	//! Default \copybrief mMFRange
-	static inline constexpr player_count_range DEFAULT_MF_RANGE = { 2, 6 };
-	//! Default \copybrief mFWRange
-	static inline constexpr player_count_range DEFAULT_FW_RANGE = { 0, 4 };
-	//! Default \copybrief mMinPlayerCount
-	static inline constexpr player_count DEFAULT_MIN_PLAYERS = 7;
-	//! Maximum number of players
-	static inline constexpr player_count MAX_PLAYERS = 11;
-	//! Default \copybrief mBenchedPlayersCount
-	static inline constexpr optional_player_count DEFAULT_BENCHED_PLAYERS = 9;
-
 private:
 	//! Allowed DFs count range.
 	player_count_range mDFRange;
@@ -113,6 +111,30 @@ private:
 	player_count mMinPlayerCount;
 	//! Number of players on the bench. Empty for unlimited number.
 	optional_player_count mBenchedPlayersCount;
+};
+
+} // football namespace
+
+template <> struct json_traits<football::CLineupConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Lineup configuration";
+	//! JSON key for the minimum number of DFs.
+	static inline constexpr std::string_view MIN_DFS = "Min DFs";
+	//! JSON key for the minimum number of MFs.
+	static inline constexpr std::string_view MIN_MFS = "Min MFs";
+	//! JSON key for the minimum number of FWs.
+	static inline constexpr std::string_view MIN_FWS = "Min FWs";
+	//! JSON key for the maximum number of DFs.
+	static inline constexpr std::string_view MAX_DFS = "Max DFs";
+	//! JSON key for the maximum number of MFs.
+	static inline constexpr std::string_view MAX_MFS = "Max MFs";
+	//! JSON key for the maximum number of FWs.
+	static inline constexpr std::string_view MAX_FWS = "Max FWs";
+	//! JSON key for the \copybrief football::CLineupConfiguration::mMinPlayerCount
+	static inline constexpr std::string_view MIN_PLAYERS = "Min players";
+	//! JSON key for the \copybrief football::CLineupConfiguration::mBenchedPlayersCount
+	static inline constexpr std::string_view BENCHED_PLAYERS = "Benched players";
 };
 
 } // futsim namespace

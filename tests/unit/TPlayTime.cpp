@@ -14,31 +14,49 @@ INITIALIZE_TEST( TPlayTime )
 void TPlayTime::TestExceptions() const
 {
 	// Test member constructor
-	CheckException( []() { CPlayTime{ 0, 45 }; },
+	CheckException( []()
+	{
+		CPlayTime{ 0, 45 };
+	},
 		"The number of periods cannot be zero." );
-	CheckException( []() { CPlayTime{ 2, 0 }; },
+	CheckException( []()
+	{
+		CPlayTime{ 2, 0 };
+	},
 		"The length of the period cannot be zero." );
 
 	// Test JSON constructor
-	CheckException( []() { ValueFromJSONKeyString<CPlayTime>( R"( {
+	CheckException( []()
+	{
+		ValueFromJSONKeyString<CPlayTime>( R"( {
 			"Play time": {}
-		} )" ); }, "key 'Period count' not found" );
-	CheckException( []() { ValueFromJSONKeyString<CPlayTime>( R"( {
+		} )" );
+	}, "key 'Period count' not found" );
+	CheckException( []()
+	{
+		ValueFromJSONKeyString<CPlayTime>( R"( {
 			"Play time": {
 				"Period count": 0
 			}
-		} )" ); }, "The number of periods cannot be zero." );
-	CheckException( []() { ValueFromJSONKeyString<CPlayTime>( R"( {
+		} )" );
+	}, "The number of periods cannot be zero." );
+	CheckException( []()
+	{
+		ValueFromJSONKeyString<CPlayTime>( R"( {
 			"Play time": {
 				"Period count": 2
 			}
-		} )" ); }, "key 'Period time' not found" );
-	CheckException( []() { ValueFromJSONKeyString<CPlayTime>( R"( {
+		} )" );
+	}, "key 'Period time' not found" );
+	CheckException( []()
+	{
+		ValueFromJSONKeyString<CPlayTime>( R"( {
 			"Play time": {
 				"Period count": 2,
 				"Period time": 0
 			}
-		} )" ); }, "The length of the period cannot be zero." );
+		} )" );
+	}, "The length of the period cannot be zero." );
 }
 
 std::vector<std::string> TPlayTime::ObtainedResults() const noexcept
@@ -54,8 +72,8 @@ std::vector<std::string> TPlayTime::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ CPlayTime::JSON_PERIOD_COUNT } + ": " + std::to_string( playTime.GetPeriodCount() ) );
-		result.push_back( std::string{ CPlayTime::JSON_PERIOD_TIME } + ": " + std::to_string( playTime.GetPeriodTime() ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayTime>::PERIOD_COUNT } + ": " + std::to_string( playTime.GetPeriodCount() ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayTime>::PERIOD_TIME } + ": " + std::to_string( playTime.GetPeriodTime() ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, playTime );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

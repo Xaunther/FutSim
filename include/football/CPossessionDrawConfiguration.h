@@ -4,8 +4,26 @@
 
 #include "football/types/CDrawConfiguration.h"
 #include "football/types/CPossessionDrawConfiguration.h"
+#include "DefaultTraits.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
+{
+class CPossessionDrawConfiguration;
+}
+
+template <> struct default_traits<football::CPossessionDrawConfiguration>
+{
+protected:
+	using probability = football::types::CDrawConfiguration::probability;
+public:
+	//! Default keep posssession probability.
+	static inline constexpr probability KEEP_POSSESSION_PROBABILITY = probability{ 295952 } / 460939;
+};
+
+namespace football
 {
 
 /**
@@ -22,7 +40,7 @@ public:
 	 * @param aKeepPossessionProbability \ref mKeepPossessionProbability
 	*/
 	explicit CPossessionDrawConfiguration(
-		const probability& aKeepPossessionProbability = DEFAULT_KEEP_POSSESSION_PROBABILITY );
+		const probability& aKeepPossessionProbability = default_traits<CPossessionDrawConfiguration>::KEEP_POSSESSION_PROBABILITY );
 
 	/**
 	 * @brief JSON constructor.
@@ -40,16 +58,19 @@ public:
 	//! Retrieves the \copybrief mKeepPossessionProbability
 	const probability& GetKeepPossessionProbability() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Possession draw configuration";
-	//! JSON key for the \copybrief mKeepPossessionProbability
-	static inline constexpr std::string_view JSON_KEEP_POSSESSION_PROBABILITY = "Keep possession probability";
-	//! Default keep posssession probability.
-	static inline constexpr probability DEFAULT_KEEP_POSSESSION_PROBABILITY = probability{ 295952 } / 460939;
-
 private:
 	//! Center probability to keep possession.
 	probability mKeepPossessionProbability;
+};
+
+} // football namespace
+
+template <> struct json_traits<football::CPossessionDrawConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Possession draw configuration";
+	//! JSON key for the \copybrief football::CPossessionDrawConfiguration::mKeepPossessionProbability
+	static inline constexpr std::string_view KEEP_POSSESSION_PROBABILITY = "Keep possession probability";
 };
 
 } // futsim namespace

@@ -12,7 +12,10 @@
 
 #include "ExceptionUtils.h"
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -60,15 +63,6 @@ public:
 	//! Retrieves the \copybrief mPasser
 	const optional_name& GetPasser() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Possession state";
-	//! JSON key for the \copybrief mOutcome
-	static inline constexpr std::string_view JSON_OUTCOME = "Outcome";
-	//! JSON key for the \copybrief mTackler
-	static inline constexpr std::string_view JSON_TACKLER = "Tackler";
-	//! JSON key for the \copybrief mPasser
-	static inline constexpr std::string_view JSON_PASSER = "Passer";
-
 private:
 	//! Possession draw outcome.
 	E_POSSESSION_DRAW_OUTCOME mOutcome;
@@ -91,15 +85,21 @@ CPossessionState::CPossessionState(
 
 	// Calculate each player's effective skill
 	std::vector<skill_bonus> attackSkills, defenseSkills;
-	attackSkills.reserve( CLineupConfiguration::MAX_PLAYERS );
-	defenseSkills.reserve( CLineupConfiguration::MAX_PLAYERS );
+	attackSkills.reserve( futsim::default_traits<CLineupConfiguration>::MAX_PLAYERS );
+	defenseSkills.reserve( futsim::default_traits<CLineupConfiguration>::MAX_PLAYERS );
 
 	aAttackingTeamStrategy.ForEachPlayerSkill( E_PLAYER_SKILL::Ps, aMatch,
 		aMatchConfiguration, aHomeTeamAttack, aDefendingTeamStrategy,
-		[ &attackSkills ]( const auto& aSkill ) { attackSkills.emplace_back( aSkill ); } );
+		[ &attackSkills ]( const auto& aSkill )
+	{
+		attackSkills.emplace_back( aSkill );
+	} );
 	aDefendingTeamStrategy.ForEachPlayerSkill( E_PLAYER_SKILL::Tk, aMatch,
 		aMatchConfiguration, !aHomeTeamAttack, aAttackingTeamStrategy,
-		[ &defenseSkills ]( const auto& aSkill ) { defenseSkills.emplace_back( aSkill ); } );
+		[ &defenseSkills ]( const auto& aSkill )
+	{
+		defenseSkills.emplace_back( aSkill );
+	} );
 
 	// Draw possession outcome
 	mOutcome = aMatchConfiguration.GetDrawConfiguration().CreatePossessionDistribution(
@@ -107,10 +107,12 @@ CPossessionState::CPossessionState(
 		std::accumulate( attackSkills.cbegin(), attackSkills.cend(), skill_bonus{} ) )( aGenerator );
 
 	// Draw acting player
-	const auto DrawPlayer = [ &aGenerator ]( const auto& aLineup, const auto& aSkills ) {
+	const auto DrawPlayer = [ &aGenerator ]( const auto& aLineup, const auto& aSkills )
+	{
 		return *( aLineup.template CreatePlayersView<false>()
 			| std::ranges::views::drop( std::discrete_distribution<types::CLineup::names::size_type>{
-			aSkills.cbegin(), aSkills.cend() }( aGenerator ) ) ).begin(); };
+			aSkills.cbegin(), aSkills.cend() }( aGenerator ) ) ).begin();
+	};
 
 	if( mOutcome == E_POSSESSION_DRAW_OUTCOME::KEEP_POSSESSION )
 		mPasser = DrawPlayer( aAttackingTeamStrategy.GetLineup(), attackSkills );
@@ -119,4 +121,18 @@ CPossessionState::CPossessionState(
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the possession state." )
 
-} // futsim::football namespace
+} // football namespace
+
+template <> struct json_traits<football::CPossessionState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Possession state";
+	//! JSON key for the \copybrief football::CPossessionState::mOutcome
+	static inline constexpr std::string_view OUTCOME = "Outcome";
+	//! JSON key for the \copybrief football::CPossessionState::mTackler
+	static inline constexpr std::string_view TACKLER = "Tackler";
+	//! JSON key for the \copybrief football::CPossessionState::mPasser
+	static inline constexpr std::string_view PASSER = "Passer";
+};
+
+} // futsim namespace

@@ -6,7 +6,10 @@
 
 #include <random>
 
-namespace futsim::football
+namespace futsim
+{
+
+namespace football
 {
 
 /**
@@ -72,23 +75,6 @@ public:
 	*/
 	template <bool tUseSubs> auto CreatePlayersView() const noexcept;
 
-	//! JSON key for the class.
-	static inline constexpr std::string_view JSON_KEY = "Lineup";
-	//! JSON key for the GK.
-	static inline constexpr std::string_view JSON_GK = "GK";
-	//! JSON key for the DFs.
-	static inline constexpr std::string_view JSON_DFS = "DFs";
-	//! JSON key for the DMs.
-	static inline constexpr std::string_view JSON_DMS = "DMs";
-	//! JSON key for the MFs.
-	static inline constexpr std::string_view JSON_MFS = "MFs";
-	//! JSON key for the AMs.
-	static inline constexpr std::string_view JSON_AMS = "AMs";
-	//! JSON key for the FWs.
-	static inline constexpr std::string_view JSON_FWS = "FWs";
-	//! JSON key for the substitutes.
-	static inline constexpr std::string_view JSON_SUBS = "Subs";
-
 private:
 	//! Lined up players by position.
 	position_names mPlayersLineup;
@@ -99,8 +85,30 @@ template <bool tUseSubs> auto CLineup::CreatePlayersView() const noexcept
 	if constexpr( tUseSubs )
 		return mPlayersLineup | std::ranges::views::join;
 	else
-		return mPlayersLineup | std::ranges::views::take( static_cast< names::size_type >( E_PLAYER_POSITION::FW ) + 1 )
+		return mPlayersLineup | std::ranges::views::take( static_cast<names::size_type>( E_PLAYER_POSITION::FW ) + 1 )
 		| std::ranges::views::join;
 }
+
+} // football namespace
+
+template <> struct json_traits<football::CLineup>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Lineup";
+	//! JSON key for the GK.
+	static inline constexpr std::string_view GK = "GK";
+	//! JSON key for the DFs.
+	static inline constexpr std::string_view DFS = "DFs";
+	//! JSON key for the DMs.
+	static inline constexpr std::string_view DMS = "DMs";
+	//! JSON key for the MFs.
+	static inline constexpr std::string_view MFS = "MFs";
+	//! JSON key for the AMs.
+	static inline constexpr std::string_view AMS = "AMs";
+	//! JSON key for the FWs.
+	static inline constexpr std::string_view FWS = "FWs";
+	//! JSON key for the substitutes.
+	static inline constexpr std::string_view SUBS = "Subs";
+};
 
 } // futsim namespace
