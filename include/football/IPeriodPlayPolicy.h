@@ -17,6 +17,11 @@ protected:
 
 public:
 	/**
+	 * @brief Virtual destructor for base class.
+	 */
+	virtual ~IPeriodPlayPolicy() = default;
+
+	/**
 	 * @copydoc DoOperator
 	*/
 	bool operator()( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const;
