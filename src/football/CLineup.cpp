@@ -34,12 +34,12 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the l
 
 CLineup::CLineup( const json& aJSON ) try :
 	mPlayersLineup( {
-	names{ ValueFromRequiredJSONKey<name>( aJSON, json_traits<CLineup>::GK ) },
-	ValueFromOptionalJSONKey<names>( aJSON, json_traits<CLineup>::DFS ),
-	ValueFromOptionalJSONKey<names>( aJSON, json_traits<CLineup>::DMS ),
-	ValueFromOptionalJSONKey<names>( aJSON, json_traits<CLineup>::MFS ),
-	ValueFromOptionalJSONKey<names>( aJSON, json_traits<CLineup>::AMS ),
-	ValueFromOptionalJSONKey<names>( aJSON, json_traits<CLineup>::FWS ),
+	names{ ValueFromRequiredJSONKey<name>( aJSON, json_traits<CLineup>::POSITION<E_PLAYER_POSITION::GK> ) },
+	ValueFromOptionalJSONKey<names>( aJSON, json_traits<CLineup>::POSITION<E_PLAYER_POSITION::DF> ),
+	ValueFromOptionalJSONKey<names>( aJSON, json_traits<CLineup>::POSITION<E_PLAYER_POSITION::DM> ),
+	ValueFromOptionalJSONKey<names>( aJSON, json_traits<CLineup>::POSITION<E_PLAYER_POSITION::MF> ),
+	ValueFromOptionalJSONKey<names>( aJSON, json_traits<CLineup>::POSITION<E_PLAYER_POSITION::AM> ),
+	ValueFromOptionalJSONKey<names>( aJSON, json_traits<CLineup>::POSITION<E_PLAYER_POSITION::FW> ),
 	ValueFromOptionalJSONKey<names>( aJSON, json_traits<CLineup>::SUBS ),
 		} )
 {
@@ -48,17 +48,17 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the l
 
 void CLineup::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, GetPlayers< E_PLAYER_POSITION::GK >(), json_traits<CLineup>::GK );
+	AddToJSONKey( aJSON, GetPlayers< E_PLAYER_POSITION::GK >(), json_traits<CLineup>::POSITION<E_PLAYER_POSITION::GK> );
 	if( const auto& players = GetPlayers< E_PLAYER_POSITION::DF >(); !players.empty() )
-		AddToJSONKey( aJSON, players, json_traits<CLineup>::DFS );
+		AddToJSONKey( aJSON, players, json_traits<CLineup>::POSITION<E_PLAYER_POSITION::DF> );
 	if( const auto& players = GetPlayers< E_PLAYER_POSITION::DM >(); !players.empty() )
-		AddToJSONKey( aJSON, players, json_traits<CLineup>::DMS );
+		AddToJSONKey( aJSON, players, json_traits<CLineup>::POSITION<E_PLAYER_POSITION::DM> );
 	if( const auto& players = GetPlayers< E_PLAYER_POSITION::MF >(); !players.empty() )
-		AddToJSONKey( aJSON, players, json_traits<CLineup>::MFS );
+		AddToJSONKey( aJSON, players, json_traits<CLineup>::POSITION<E_PLAYER_POSITION::MF> );
 	if( const auto& players = GetPlayers< E_PLAYER_POSITION::AM >(); !players.empty() )
-		AddToJSONKey( aJSON, players, json_traits<CLineup>::AMS );
+		AddToJSONKey( aJSON, players, json_traits<CLineup>::POSITION<E_PLAYER_POSITION::AM> );
 	if( const auto& players = GetPlayers< E_PLAYER_POSITION::FW >(); !players.empty() )
-		AddToJSONKey( aJSON, players, json_traits<CLineup>::FWS );
+		AddToJSONKey( aJSON, players, json_traits<CLineup>::POSITION<E_PLAYER_POSITION::FW> );
 	if( const auto& players = GetSubs(); !players.empty() )
 		AddToJSONKey( aJSON, players, json_traits<CLineup>::SUBS );
 }

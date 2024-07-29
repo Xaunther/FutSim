@@ -95,20 +95,17 @@ template <> struct json_traits<football::CLineup>
 {
 	//! JSON key for the class.
 	static inline constexpr std::string_view KEY = "Lineup";
-	//! JSON key for the GK.
-	static inline constexpr std::string_view GK = "GK";
-	//! JSON key for the DFs.
-	static inline constexpr std::string_view DFS = "DFs";
-	//! JSON key for the DMs.
-	static inline constexpr std::string_view DMS = "DMs";
-	//! JSON key for the MFs.
-	static inline constexpr std::string_view MFS = "MFs";
-	//! JSON key for the AMs.
-	static inline constexpr std::string_view AMS = "AMs";
-	//! JSON key for the FWs.
-	static inline constexpr std::string_view FWS = "FWs";
+	//! JSON key for a position
+	template <football::E_PLAYER_POSITION tPlayerPosition> static inline constexpr std::string_view POSITION{};
 	//! JSON key for the substitutes.
 	static inline constexpr std::string_view SUBS = "Subs";
 };
+
+template <> inline constexpr std::string_view json_traits<football::CLineup>::POSITION<football::E_PLAYER_POSITION::GK> = "GK";
+template <> inline constexpr std::string_view json_traits<football::CLineup>::POSITION<football::E_PLAYER_POSITION::DF> = "DFs";
+template <> inline constexpr std::string_view json_traits<football::CLineup>::POSITION<football::E_PLAYER_POSITION::DM> = "DMs";
+template <> inline constexpr std::string_view json_traits<football::CLineup>::POSITION<football::E_PLAYER_POSITION::MF> = "MFs";
+template <> inline constexpr std::string_view json_traits<football::CLineup>::POSITION<football::E_PLAYER_POSITION::AM> = "AMs";
+template <> inline constexpr std::string_view json_traits<football::CLineup>::POSITION<football::E_PLAYER_POSITION::FW> = "FWs";
 
 } // futsim namespace
