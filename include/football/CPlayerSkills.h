@@ -70,22 +70,13 @@ template <> struct json_traits<football::CPlayerSkills>
 {
 	//! JSON key for the class.
 	static inline constexpr std::string_view KEY = "Player skills";
-	//! JSON key for the St skill.
-	static inline constexpr std::string_view ST_SKILL = "St skill";
-	//! JSON key for the Tk skill.
-	static inline constexpr std::string_view TK_SKILL = "Tk skill";
-	//! JSON key for the Ps skill.
-	static inline constexpr std::string_view PS_SKILL = "Ps skill";
-	//! JSON key for the Sh skill.
-	static inline constexpr std::string_view SH_SKILL = "Sh skill";
-	//! JSON key for the St experience.
-	static inline constexpr std::string_view ST_XP = "St experience";
-	//! JSON key for the Tk experience.
-	static inline constexpr std::string_view TK_XP = "Tk experience";
-	//! JSON key for the Ps experience.
-	static inline constexpr std::string_view PS_XP = "Ps experience";
-	//! JSON key for the Sh experience.
-	static inline constexpr std::string_view SH_XP = "Sh experience";
+	//! JSON key for a skill.
+	template <football::E_PLAYER_SKILL tPlayerSkill> static inline constexpr std::string_view SKILL{};
+	//! JSON key for a skill experience.
+	template <football::E_PLAYER_SKILL tPlayerSkill> static inline constexpr std::string_view XP{};
 };
+
+FOR_EACH_PLAYER_SKILL( FUTSIM_INSTANTIATE_ENUM_TRAIT, football::CPlayerSkills, SKILL, football::E_PLAYER_SKILL, " skill" )
+FOR_EACH_PLAYER_SKILL( FUTSIM_INSTANTIATE_ENUM_TRAIT, football::CPlayerSkills, XP, football::E_PLAYER_SKILL, " experience" )
 
 } // futsim namespace
