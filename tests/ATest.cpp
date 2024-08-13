@@ -14,7 +14,8 @@ constexpr std::string_view REL_PATH = "../Testing/Temporary";
 
 } // anonymous namespace
 
-ATest::ATest()
+ATest::ATest( const std::string_view aName ) :
+	mName( aName )
 {
 	mExpectedStream.open( std::filesystem::current_path() / REL_PATH / EXPECTED_FILENAME, std::ios_base::app );
 	mObtainedStream.open( std::filesystem::current_path() / REL_PATH / OBTAINED_FILENAME, std::ios_base::app );

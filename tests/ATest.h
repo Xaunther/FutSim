@@ -12,8 +12,9 @@ class ATest
 public:
 	/**
 	 * @brief Default constructor.
+	 * @param aName Name of the test.
 	 */
-	ATest();
+	ATest( const std::string_view aName );
 
 	/**
 	 * @brief Virtual destructor to avoid instantiation of interface class.
@@ -65,6 +66,12 @@ private:
 #define INITIALIZE_CLASS( CLASS )												\
 	class CLASS : public ATest													\
 	{																			\
+	public:																		\
+		CLASS( const std::string_view aName ) :									\
+			ATest( aName )														\
+		{																		\
+		}																		\
+	private:																	\
 		void TestExceptions() const override; 									\
 		std::vector<std::string> ObtainedResults() const noexcept override; 	\
 		std::vector<std::string> ExpectedResults() const noexcept override; 	\
@@ -76,7 +83,7 @@ private:
 #define INITIALIZE_MAIN( CLASS )				\
 	int main() try								\
 	{											\
-		CLASS{}.Run();							\
+		CLASS{ #CLASS }.Run();					\
 		return 0;								\
 	}											\
 	catch(const std::exception& aException)		\
