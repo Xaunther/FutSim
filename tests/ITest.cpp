@@ -1,6 +1,7 @@
 #include "ITest.h"
 
 #include <algorithm>
+#include <filesystem>
 #include <iostream>
 #include <sstream>
 
@@ -15,6 +16,8 @@ constexpr std::string_view REL_PATH = "../Testing/Temporary";
 
 ITest::ITest()
 {
+	mExpectedStream.open( std::filesystem::current_path() / REL_PATH / EXPECTED_FILENAME, std::ios_base::app );
+	mObtainedStream.open( std::filesystem::current_path() / REL_PATH / OBTAINED_FILENAME, std::ios_base::app );
 }
 
 void ITest::Run() const
