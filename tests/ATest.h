@@ -14,7 +14,7 @@ public:
 	 * @brief Default constructor.
 	 * @param aName Name of the test.
 	 */
-	ATest( const std::string_view aName );
+	explicit ATest( const std::string_view aName );
 
 	/**
 	 * @brief Virtual destructor to avoid instantiation of interface class.
