@@ -67,7 +67,7 @@ private:
 	class CLASS : public ATest													\
 	{																			\
 	public:																		\
-		CLASS( const std::string_view aName ) :									\
+		explicit CLASS( const std::string_view aName ) :									\
 			ATest( aName )														\
 		{																		\
 		}																		\
