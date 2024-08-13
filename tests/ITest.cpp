@@ -9,6 +9,7 @@ namespace
 
 constexpr std::string_view EXPECTED_FILENAME = "expected.txt";
 constexpr std::string_view OBTAINED_FILENAME = "obtained.txt";
+constexpr std::string_view REL_PATH = "../Testing/Temporary";
 
 } // anonymous namespace
 
