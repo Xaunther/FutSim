@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fstream>
 #include <functional>
 #include <string_view>
 
@@ -49,6 +50,11 @@ private:
 	 * @brief Private implementation to get the expected results from the test.
 	*/
 	virtual constexpr std::vector<std::string> ExpectedResults() const noexcept = 0;
+
+	//! Stream for the expected results.
+	mutable std::ofstream mExpectedStream;
+	//! Stream for the obtained results.
+	mutable std::ofstream mObtainedStream;
 };
 
 /**
