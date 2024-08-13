@@ -10,6 +10,11 @@ class ITest
 {
 public:
 	/**
+	 * @brief Default constructor.
+	 */
+	ITest();
+
+	/**
 	 * @brief Virtual destructor to avoid instantiation of interface class.
 	*/
 	virtual ~ITest() = default;

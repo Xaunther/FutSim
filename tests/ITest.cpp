@@ -4,6 +4,10 @@
 #include <iostream>
 #include <sstream>
 
+ITest::ITest()
+{
+}
+
 void ITest::Run() const
 {
 	this->TestExceptions();
@@ -48,10 +52,16 @@ void ITest::CheckResults( const std::vector<std::string>& aObtained, const std::
 		ss << "The obtained results do not match the expected results.\n"
 			<< "Expected\n"
 			<< "-----------------------------------------\n";
-		std::ranges::for_each( aExpected, [ &ss ]( const auto& aResult ) { ss << aResult << "\n"; } );
+		std::ranges::for_each( aExpected, [ &ss ]( const auto& aResult )
+		{
+			ss << aResult << "\n";
+		} );
 		ss << "Obtained\n"
 			<< "-----------------------------------------\n";
-		std::ranges::for_each( aObtained, [ &ss ]( const auto& aResult ) { ss << aResult << "\n"; } );
+		std::ranges::for_each( aObtained, [ &ss ]( const auto& aResult )
+		{
+			ss << aResult << "\n";
+		} );
 		throw std::invalid_argument{ ss.str() };
 	}
 }
