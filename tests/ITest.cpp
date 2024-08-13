@@ -4,6 +4,14 @@
 #include <iostream>
 #include <sstream>
 
+namespace
+{
+
+constexpr std::string_view EXPECTED_FILENAME = "expected.txt";
+constexpr std::string_view OBTAINED_FILENAME = "obtained.txt";
+
+} // anonymous namespace
+
 ITest::ITest()
 {
 }
