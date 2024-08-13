@@ -20,6 +20,12 @@ ITest::ITest()
 	mObtainedStream.open( std::filesystem::current_path() / REL_PATH / OBTAINED_FILENAME, std::ios_base::app );
 }
 
+ITest::~ITest()
+{
+	mExpectedStream.close();
+	mObtainedStream.close();
+}
+
 void ITest::Run() const
 {
 	this->TestExceptions();

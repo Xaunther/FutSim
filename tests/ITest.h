@@ -18,7 +18,7 @@ public:
 	/**
 	 * @brief Virtual destructor to avoid instantiation of interface class.
 	*/
-	virtual ~ITest() = default;
+	virtual ~ITest();
 
 	/**
 	 * @brief Public interface to run the test.
