@@ -71,6 +71,7 @@ void ATest::CheckResults( const std::vector<std::string>& aObtained, const std::
 		ss << "The obtained results do not match the expected results.\n"
 			<< "Expected\n"
 			<< "-----------------------------------------\n";
+		mExpectedStream << "In test " << mName << ":\n";
 		std::ranges::for_each( aExpected, [ &ss, this ]( const auto& aResult )
 		{
 			ss << aResult << "\n";
@@ -78,6 +79,7 @@ void ATest::CheckResults( const std::vector<std::string>& aObtained, const std::
 		} );
 		ss << "Obtained\n"
 			<< "-----------------------------------------\n";
+		mObtainedStream << "In test " << mName << ":\n";
 		std::ranges::for_each( aObtained, [ &ss, this ]( const auto& aResult )
 		{
 			ss << aResult << "\n";
