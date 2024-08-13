@@ -55,6 +55,8 @@ private:
 	mutable std::ofstream mExpectedStream;
 	//! Stream for the obtained results.
 	mutable std::ofstream mObtainedStream;
+	//! Name for the test.
+	const std::string_view mName;
 };
 
 /**
