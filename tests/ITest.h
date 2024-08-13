@@ -34,7 +34,7 @@ private:
 	/**
 	 * @brief Results checker.
 	*/
-	static void CheckResults( const std::vector<std::string>& aObtained, const std::vector<std::string>& aExpected );
+	void CheckResults( const std::vector<std::string>& aObtained, const std::vector<std::string>& aExpected ) const;
 
 	/**
 	 * @brief Private implementation to test exceptions.
