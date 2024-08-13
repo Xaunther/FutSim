@@ -1,4 +1,4 @@
-#include "ITest.h"
+#include "ATest.h"
 
 #include <algorithm>
 #include <filesystem>
@@ -14,26 +14,26 @@ constexpr std::string_view REL_PATH = "../Testing/Temporary";
 
 } // anonymous namespace
 
-ITest::ITest()
+ATest::ATest()
 {
 	mExpectedStream.open( std::filesystem::current_path() / REL_PATH / EXPECTED_FILENAME, std::ios_base::app );
 	mObtainedStream.open( std::filesystem::current_path() / REL_PATH / OBTAINED_FILENAME, std::ios_base::app );
 }
 
-ITest::~ITest()
+ATest::~ATest()
 {
 	mExpectedStream.close();
 	mObtainedStream.close();
 }
 
-void ITest::Run() const
+void ATest::Run() const
 {
 	this->TestExceptions();
 
 	CheckResults( this->ObtainedResults(), this->ExpectedResults() );
 }
 
-void ITest::CheckException( const std::function<void()>& aFunction, const std::string_view aExpectedErrorMsg )
+void ATest::CheckException( const std::function<void()>& aFunction, const std::string_view aExpectedErrorMsg )
 {
 	try
 	{
@@ -62,7 +62,7 @@ void ITest::CheckException( const std::function<void()>& aFunction, const std::s
 	throw std::invalid_argument{ ss.str() };
 }
 
-void ITest::CheckResults( const std::vector<std::string>& aObtained, const std::vector<std::string>& aExpected ) const
+void ATest::CheckResults( const std::vector<std::string>& aObtained, const std::vector<std::string>& aExpected ) const
 {
 	if( aObtained != aExpected )
 	{

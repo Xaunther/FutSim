@@ -5,20 +5,20 @@
 #include <string_view>
 
 /**
- * @brief Interface class for all tests.
+ * @brief Abstract class for all tests.
 */
-class ITest
+class ATest
 {
 public:
 	/**
 	 * @brief Default constructor.
 	 */
-	ITest();
+	ATest();
 
 	/**
 	 * @brief Virtual destructor to avoid instantiation of interface class.
 	*/
-	virtual ~ITest();
+	virtual ~ATest();
 
 	/**
 	 * @brief Public interface to run the test.
@@ -58,10 +58,10 @@ private:
 };
 
 /**
- * @brief Macro to initialize derived test class from ITest.
+ * @brief Macro to initialize derived test class from ATest.
 */
 #define INITIALIZE_CLASS( CLASS )												\
-	class CLASS : public ITest													\
+	class CLASS : public ATest													\
 	{																			\
 		void TestExceptions() const override; 									\
 		std::vector<std::string> ObtainedResults() const noexcept override; 	\
