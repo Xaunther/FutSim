@@ -1,18 +1,25 @@
 #pragma once
 
+#include <fstream>
 #include <functional>
 #include <string_view>
 
 /**
- * @brief Interface class for all tests.
+ * @brief Abstract class for all tests.
 */
-class ITest
+class ATest
 {
 public:
 	/**
+	 * @brief Default constructor.
+	 * @param aName Name of the test.
+	 */
+	explicit ATest( const std::string_view aName );
+
+	/**
 	 * @brief Virtual destructor to avoid instantiation of interface class.
 	*/
-	virtual ~ITest() = default;
+	virtual ~ATest();
 
 	/**
 	 * @brief Public interface to run the test.
@@ -28,7 +35,7 @@ private:
 	/**
 	 * @brief Results checker.
 	*/
-	static void CheckResults( const std::vector<std::string>& aObtained, const std::vector<std::string>& aExpected );
+	void CheckResults( const std::vector<std::string>& aObtained, const std::vector<std::string>& aExpected ) const;
 
 	/**
 	 * @brief Private implementation to test exceptions.
@@ -44,14 +51,27 @@ private:
 	 * @brief Private implementation to get the expected results from the test.
 	*/
 	virtual constexpr std::vector<std::string> ExpectedResults() const noexcept = 0;
+
+	//! Stream for the expected results.
+	mutable std::ofstream mExpectedStream;
+	//! Stream for the obtained results.
+	mutable std::ofstream mObtainedStream;
+	//! Name for the test.
+	const std::string_view mName;
 };
 
 /**
- * @brief Macro to initialize derived test class from ITest.
+ * @brief Macro to initialize derived test class from ATest.
 */
 #define INITIALIZE_CLASS( CLASS )												\
-	class CLASS : public ITest													\
+	class CLASS : public ATest													\
 	{																			\
+	public:																		\
+		explicit CLASS( const std::string_view aName ) :									\
+			ATest( aName )														\
+		{																		\
+		}																		\
+	private:																	\
 		void TestExceptions() const override; 									\
 		std::vector<std::string> ObtainedResults() const noexcept override; 	\
 		std::vector<std::string> ExpectedResults() const noexcept override; 	\
@@ -63,7 +83,7 @@ private:
 #define INITIALIZE_MAIN( CLASS )				\
 	int main() try								\
 	{											\
-		CLASS{}.Run();							\
+		CLASS{ #CLASS }.Run();					\
 		return 0;								\
 	}											\
 	catch(const std::exception& aException)		\
