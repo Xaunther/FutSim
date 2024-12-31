@@ -12,11 +12,22 @@ namespace futsim
 
 namespace football
 {
+class CDrawConfiguration;
+}
+
+template <> struct json_traits<football::CDrawConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Draw configuration";
+};
+
+namespace football
+{
 
 /**
  * @brief Class that configures the draws of a match.
 */
-class CDrawConfiguration : public IJsonable
+class CDrawConfiguration : public IJsonable, protected json_traits<CDrawConfiguration>
 {
 protected:
 	using effective_skill = types::CDrawConfiguration::effective_skill;
@@ -214,11 +225,5 @@ private:
 };
 
 } // football namespace
-
-template <> struct json_traits<football::CDrawConfiguration>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Draw configuration";
-};
 
 } // futsim namespace
