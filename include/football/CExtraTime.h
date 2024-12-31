@@ -26,24 +26,38 @@ public:
 	static inline constexpr football::E_GOAL_RULE GOAL_RULE = football::E_GOAL_RULE::NO;
 };
 
+template <> struct json_traits<football::CExtraTime>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Extra time";
+	//! JSON key for the \copybrief football::CExtraTime::mGoalRule
+	static inline constexpr std::string_view GOAL_RULE_KEY = "Goal rule";
+};
+
 namespace football
 {
 
 /**
  * @brief Class that defines an extra time phase of a football match.
 */
-class CExtraTime : public CPlayTime
+class CExtraTime : public CPlayTime, protected default_traits<CExtraTime>, protected json_traits<CExtraTime>
 {
+protected:
+	using CPlayTime::period_count;
+	using CPlayTime::subs_count;
+	using default_traits<CExtraTime>::PERIOD_TIME;
+	using default_traits<CExtraTime>::AVAILABLE_SUBS;
+
 public:
 	/**
 	 * @copydoc futsim::football::CPlayTime::CPlayTime
 	 * @param aGoalRule \ref mGoalRule
 	*/
 	explicit CExtraTime(
-		const period_count& aPeriodCount = default_traits<CPlayTime>::PERIOD_COUNT,
-		const period_time& aPeriodTime = default_traits<CExtraTime>::PERIOD_TIME,
-		const subs_count& aAvailableSubs = default_traits<CExtraTime>::AVAILABLE_SUBS,
-		const E_GOAL_RULE& aGoalRule = default_traits<CExtraTime>::GOAL_RULE );
+		const period_count& aPeriodCount = PERIOD_COUNT,
+		const period_time& aPeriodTime = PERIOD_TIME,
+		const subs_count& aAvailableSubs = AVAILABLE_SUBS,
+		const E_GOAL_RULE& aGoalRule = GOAL_RULE );
 
 	/**
 	 * @brief JSON constructor.
@@ -67,13 +81,5 @@ private:
 };
 
 } // football namespace
-
-template <> struct json_traits<football::CExtraTime>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Extra time";
-	//! JSON key for the \copybrief football::CExtraTime::mGoalRule
-	static inline constexpr std::string_view GOAL_RULE = "Goal rule";
-};
 
 } // futsim namespace
