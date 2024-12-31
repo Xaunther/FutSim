@@ -13,11 +13,28 @@ namespace futsim
 
 namespace football
 {
+class CPenaltyState;
+}
+
+template <> struct json_traits<football::CPenaltyState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Penalty state";
+	//! JSON key for the \copybrief football::CPenaltyState::mOutcome
+	static inline constexpr std::string_view OUTCOME_KEY = json_traits<football::CChanceState>::OUTCOME;
+	//! JSON key for the \copybrief football::CPenaltyState::mShooter
+	static inline constexpr std::string_view SHOOTER_KEY = json_traits<football::CChanceState>::ACTOR<football::E_PLAYER_SKILL::Sh>;
+	//! JSON key for the \copybrief football::CPenaltyState::mStopper
+	static inline constexpr std::string_view STOPPER_KEY = json_traits<football::CChanceState>::ACTOR<football::E_PLAYER_SKILL::St>;
+};
+
+namespace football
+{
 
 /**
  * @brief Class that represents the state of a penalty in a penalty shootout.
 */
-class CPenaltyState : private CChanceState
+class CPenaltyState : private CChanceState, protected json_traits<CPenaltyState>
 {
 public:
 	/**
@@ -76,17 +93,5 @@ CPenaltyState::CPenaltyState(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the penalty state." )
 
 } // football namespace
-
-template <> struct json_traits<football::CPenaltyState>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Penalty state";
-	//! JSON key for the \copybrief football::CPenaltyState::mOutcome
-	static inline constexpr std::string_view OUTCOME = json_traits<football::CChanceState>::OUTCOME;
-	//! JSON key for the \copybrief football::CPenaltyState::mShooter
-	static inline constexpr std::string_view SHOOTER = json_traits<football::CChanceState>::ACTOR<football::E_PLAYER_SKILL::Sh>;
-	//! JSON key for the \copybrief football::CPenaltyState::mStopper
-	static inline constexpr std::string_view STOPPER = json_traits<football::CChanceState>::ACTOR<football::E_PLAYER_SKILL::St>;
-};
 
 } // futsim namespace
