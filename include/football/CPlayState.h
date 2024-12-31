@@ -14,11 +14,24 @@ namespace futsim
 
 namespace football
 {
+class CPlayState;
+}
+
+template <> struct json_traits<football::CPlayState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Play state";
+	//! JSON key for the \copybrief football::CPlayState::mChancesStates
+	static inline constexpr std::string_view CHANCES_KEY = "Chances";
+};
+
+namespace football
+{
 
 /**
  * @brief Class that represents the state of a single play.
 */
-class CPlayState : public IJsonable
+class CPlayState : public IJsonable, protected json_traits<CPlayState>
 {
 protected:
 	using optional_foul_state = types::CPlayState::optional_foul_state;
@@ -194,13 +207,5 @@ types::CPlayState::chances_states CreateChances(
 } // detail namespace
 
 } // football namespace
-
-template <> struct json_traits<football::CPlayState>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Play state";
-	//! JSON key for the \copybrief football::CPlayState::mChancesStates
-	static inline constexpr std::string_view CHANCES = "Chances";
-};
 
 } // futsim namespace
