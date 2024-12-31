@@ -1,24 +1,11 @@
 #pragma once
 
 #include "CPerson.h"
+#include "football/traits/CPlayer.h"
 
 #include "football/CPlayerSkills.h"
 
-namespace futsim
-{
-
-namespace football
-{
-class CPlayer;
-}
-
-template <> struct json_traits<football::CPlayer>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Player";
-};
-
-namespace football
+namespace futsim::football
 {
 
 /**
@@ -60,6 +47,4 @@ private:
 	CPlayerSkills mPlayerSkills;
 };
 
-} // football namespace
-
-} // futsim namespacefootball::
+} // futsim::football namespace
