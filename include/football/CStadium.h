@@ -9,11 +9,28 @@ namespace futsim
 
 namespace football
 {
+class CStadium;
+}
+
+template <> struct json_traits<football::CStadium>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Stadium";
+	//! JSON key for the \copybrief football::CStadium::mName
+	static inline constexpr std::string_view NAME_KEY = "Name";
+	//! JSON key for the \copybrief football::CStadium::mCapacity
+	static inline constexpr std::string_view CAPACITY_KEY = "Capacity";
+	//! JSON key for the \copybrief football::CStadium::mAmbientFactor
+	static inline constexpr std::string_view AMBIENT_FACTOR_KEY = "Ambient factor";
+};
+
+namespace football
+{
 
 /**
  * @brief Class that defines a football stadium.
 */
-class CStadium : public IJsonable
+class CStadium : public IJsonable, protected json_traits<CStadium>
 {
 protected:
 	using capacity = types::CStadium::capacity;
@@ -65,17 +82,5 @@ private:
 };
 
 } // football namespace
-
-template <> struct json_traits<football::CStadium>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Stadium";
-	//! JSON key for the \copybrief football::CStadium::mName
-	static inline constexpr std::string_view NAME = "Name";
-	//! JSON key for the \copybrief football::CStadium::mCapacity
-	static inline constexpr std::string_view CAPACITY = "Capacity";
-	//! JSON key for the \copybrief football::CStadium::mAmbientFactor
-	static inline constexpr std::string_view AMBIENT_FACTOR = "Ambient factor";
-};
 
 } // futsim namespace

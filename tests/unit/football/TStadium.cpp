@@ -90,9 +90,9 @@ std::vector<std::string> TStadium::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<CStadium>::NAME } + ": " + std::string{ stadium.GetName() } );
-		result.push_back( std::string{ futsim::json_traits<CStadium>::CAPACITY } + ": " + std::to_string( stadium.GetCapacity() ) );
-		result.push_back( std::string{ futsim::json_traits<CStadium>::AMBIENT_FACTOR } + ": " + std::to_string( stadium.GetAmbientFactor() ) );
+		result.push_back( std::string{ futsim::json_traits<CStadium>::NAME_KEY } + ": " + std::string{ stadium.GetName() } );
+		result.push_back( std::string{ futsim::json_traits<CStadium>::CAPACITY_KEY } + ": " + std::to_string( stadium.GetCapacity() ) );
+		result.push_back( std::string{ futsim::json_traits<CStadium>::AMBIENT_FACTOR_KEY } + ": " + std::to_string( stadium.GetAmbientFactor() ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, stadium );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
