@@ -16,11 +16,26 @@ namespace futsim
 
 namespace football
 {
+class CMatchState;
+}
+
+template <> struct json_traits<football::CMatchState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Match state";
+	//! JSON key for the \copybrief football::CMatchState::mMandatoryPlayTimeState
+	static inline constexpr std::string_view MANDATORY_PERIOD_STATES_KEY = "Mandatory time period states";
+	//! JSON key for the \copybrief football::CMatchState::mExtraTimeState
+	static inline constexpr std::string_view EXTRA_PERIOD_STATES_KEY = "Extra time period states";
+};
+
+namespace football
+{
 
 /**
  * @brief Class that represents the state of a match.
 */
-class CMatchState : public IJsonable
+class CMatchState : public IJsonable, protected json_traits<CMatchState>
 {
 protected:
 	using optional_period_states = types::CMatchState::optional_period_states;
@@ -119,15 +134,5 @@ CMatchState::CMatchState(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the match state." )
 
 } // football namespace
-
-template <> struct json_traits<football::CMatchState>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Match state";
-	//! JSON key for the \copybrief football::CMatchState::mMandatoryPlayTimeState
-	static inline constexpr std::string_view MANDATORY_PERIOD_STATES = "Mandatory time period states";
-	//! JSON key for the \copybrief football::CMatchState::mExtraTimeState
-	static inline constexpr std::string_view EXTRA_PERIOD_STATES = "Extra time period states";
-};
 
 } // futsim namespace
