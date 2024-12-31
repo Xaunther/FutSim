@@ -17,6 +17,9 @@ namespace futsim::football
 */
 class CPenaltyState : private CChanceState, protected json_traits<CPenaltyState>
 {
+protected:
+	using json_traits<CPenaltyState>::OUTCOME_KEY;
+
 public:
 	/**
 	 * @brief Constructor from the goalkeeper, penalty taker and configuration.

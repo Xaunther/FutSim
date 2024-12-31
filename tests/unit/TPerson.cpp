@@ -103,11 +103,11 @@ std::vector<std::string> TPerson::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<CPerson>::FIRST_NAME } + ": " + std::string{ person.GetFirstName() } );
-		result.push_back( std::string{ futsim::json_traits<CPerson>::SURNAMES } + ": " + std::string{ person.GetSurnames() } );
-		result.push_back( std::string{ futsim::json_traits<CPerson>::KNOWN_NAME } + ": " + std::string{ person.GetKnownName() } );
-		result.push_back( std::string{ futsim::json_traits<CPerson>::AGE } + ": " + std::to_string( person.GetAge() ) );
-		result.push_back( std::string{ futsim::json_traits<CPerson>::NATIONALITY } + ": " + std::string{ ToString( person.GetNationality() ) } );
+		result.push_back( std::string{ futsim::json_traits<CPerson>::FIRST_NAME_KEY } + ": " + std::string{ person.GetFirstName() } );
+		result.push_back( std::string{ futsim::json_traits<CPerson>::SURNAMES_KEY } + ": " + std::string{ person.GetSurnames() } );
+		result.push_back( std::string{ futsim::json_traits<CPerson>::KNOWN_NAME_KEY } + ": " + std::string{ person.GetKnownName() } );
+		result.push_back( std::string{ futsim::json_traits<CPerson>::AGE_KEY } + ": " + std::to_string( person.GetAge() ) );
+		result.push_back( std::string{ futsim::json_traits<CPerson>::NATIONALITY_KEY } + ": " + std::string{ ToString( person.GetNationality() ) } );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, person );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

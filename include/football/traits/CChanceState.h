@@ -19,9 +19,9 @@ template <> struct json_traits<football::CChanceState>
 	//! JSON key for the class.
 	static inline constexpr std::string_view KEY = "Chance state";
 	//! JSON key for the \copybrief football::CChanceState::mChanceType
-	static inline constexpr std::string_view CHANCE_TYPE = "Chance type";
+	static inline constexpr std::string_view CHANCE_TYPE_KEY = "Chance type";
 	//! JSON key for the \copybrief football::CChanceState::mOutcome
-	static inline constexpr std::string_view OUTCOME = "Outcome";
+	static inline constexpr std::string_view OUTCOME_KEY = "Outcome";
 	/**
 	 * @brief JSON key template for the actor.
 	 * @tparam tPlayerSkill Skill used by the actor.

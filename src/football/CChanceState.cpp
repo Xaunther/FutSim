@@ -38,9 +38,9 @@ void CChanceState::JSON( json& aJSON ) const noexcept
 {
 	std::visit( [ &aJSON ]( auto&& aChanceType )
 	{
-		AddToJSONKey( aJSON, aChanceType, CHANCE_TYPE );
+		AddToJSONKey( aJSON, aChanceType, CHANCE_TYPE_KEY );
 	}, mChanceType );
-	AddToJSONKey( aJSON, mOutcome, OUTCOME );
+	AddToJSONKey( aJSON, mOutcome, OUTCOME_KEY );
 	JSONActor<E_PLAYER_SKILL::St>( aJSON );
 	JSONActor<E_PLAYER_SKILL::Tk>( aJSON );
 	JSONActor<E_PLAYER_SKILL::Ps>( aJSON );
