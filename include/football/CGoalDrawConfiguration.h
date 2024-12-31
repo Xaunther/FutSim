@@ -41,13 +41,37 @@ public:
 	static inline constexpr stat EXTRA_CORNER_PROBABILITY = 0.25;
 };
 
+template <> struct json_traits<football::CGoalDrawConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Goal draw configuration";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageGoals
+	static inline constexpr std::string_view AVERAGE_GOALS_KEY = "Average goals";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAveragePenaltyGoals
+	static inline constexpr std::string_view AVERAGE_PENALTY_GOALS_KEY = "Average penalty goals";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageDirectFreeKickGoals
+	static inline constexpr std::string_view AVERAGE_DIRECT_FREE_KICK_GOALS_KEY = "Average direct free kick goals";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageIndirectFreeKickGoals
+	static inline constexpr std::string_view AVERAGE_INDIRECT_FREE_KICK_GOALS_KEY = "Average indirect free kick goals";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageCornerGoals
+	static inline constexpr std::string_view AVERAGE_CORNER_GOALS_KEY = "Average corner goals";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageFarShotGoals
+	static inline constexpr std::string_view AVERAGE_FAR_SHOT_GOALS_KEY = "Average far shot goals";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::m1vs1GKGoalProbability
+	static inline constexpr std::string_view ONE_VS_ONE_GK_GOAL_PROBABILITY_KEY = "1 on 1 vs GK chance goal probability";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::m1vs1DFGoalProbability
+	static inline constexpr std::string_view ONE_VS_ONE_DF_GOAL_PROBABILITY_KEY = "1 on 1 vs DF chance goal probability";
+	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mExtraCornerProbability
+	static inline constexpr std::string_view EXTRA_CORNER_PROBABILITY_KEY = "Extra corner probability";
+};
+
 namespace football
 {
 
 /**
  * @brief Class that configures the draws of the outcomes of every chance.
 */
-class CGoalDrawConfiguration : public IJsonable
+class CGoalDrawConfiguration : public IJsonable, protected default_traits<CGoalDrawConfiguration>, protected json_traits<CGoalDrawConfiguration>
 {
 protected:
 	using probability = types::CDrawConfiguration::probability;
@@ -70,15 +94,15 @@ public:
 	 * @param aExtraCornerProbability \ref mExtraCornerProbability
 	*/
 	explicit CGoalDrawConfiguration(
-		const stat& aAverageGoals = default_traits<CGoalDrawConfiguration>::AVERAGE_GOALS,
-		const stat& aAveragePenaltyGoals = default_traits<CGoalDrawConfiguration>::AVERAGE_PENALTY_GOALS,
-		const stat& aAverageDirectFreeKickGoals = default_traits<CGoalDrawConfiguration>::AVERAGE_DIRECT_FREE_KICK_GOALS,
-		const stat& aAverageIndirectFreeKickGoals = default_traits<CGoalDrawConfiguration>::AVERAGE_INDIRECT_FREE_KICK_GOALS,
-		const stat& aAverageCornerGoals = default_traits<CGoalDrawConfiguration>::AVERAGE_CORNER_GOALS,
-		const stat& aAverageFarShotGoals = default_traits<CGoalDrawConfiguration>::AVERAGE_FAR_SHOT_GOALS,
-		const stat& a1vs1GKGoalProbability = default_traits<CGoalDrawConfiguration>::ONE_VS_ONE_GK_GOAL_PROBABILITY,
-		const stat& a1vs1DFGoalProbability = default_traits<CGoalDrawConfiguration>::ONE_VS_ONE_DF_GOAL_PROBABILITY,
-		const stat& aExtraCornerProbability = default_traits<CGoalDrawConfiguration>::EXTRA_CORNER_PROBABILITY
+		const stat& aAverageGoals = AVERAGE_GOALS,
+		const stat& aAveragePenaltyGoals = AVERAGE_PENALTY_GOALS,
+		const stat& aAverageDirectFreeKickGoals = AVERAGE_DIRECT_FREE_KICK_GOALS,
+		const stat& aAverageIndirectFreeKickGoals = AVERAGE_INDIRECT_FREE_KICK_GOALS,
+		const stat& aAverageCornerGoals = AVERAGE_CORNER_GOALS,
+		const stat& aAverageFarShotGoals = AVERAGE_FAR_SHOT_GOALS,
+		const stat& a1vs1GKGoalProbability = ONE_VS_ONE_GK_GOAL_PROBABILITY,
+		const stat& a1vs1DFGoalProbability = ONE_VS_ONE_DF_GOAL_PROBABILITY,
+		const stat& aExtraCornerProbability = EXTRA_CORNER_PROBABILITY
 	);
 
 	/**
@@ -194,29 +218,5 @@ private:
 };
 
 } // football namespace
-
-template <> struct json_traits<football::CGoalDrawConfiguration>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Goal draw configuration";
-	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageGoals
-	static inline constexpr std::string_view AVERAGE_GOALS = "Average goals";
-	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAveragePenaltyGoals
-	static inline constexpr std::string_view AVERAGE_PENALTY_GOALS = "Average penalty goals";
-	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageDirectFreeKickGoals
-	static inline constexpr std::string_view AVERAGE_DIRECT_FREE_KICK_GOALS = "Average direct free kick goals";
-	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageIndirectFreeKickGoals
-	static inline constexpr std::string_view AVERAGE_INDIRECT_FREE_KICK_GOALS = "Average indirect free kick goals";
-	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageCornerGoals
-	static inline constexpr std::string_view AVERAGE_CORNER_GOALS = "Average corner goals";
-	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mAverageFarShotGoals
-	static inline constexpr std::string_view AVERAGE_FAR_SHOT_GOALS = "Average far shot goals";
-	//! JSON key for the \copybrief football::CGoalDrawConfiguration::m1vs1GKGoalProbability
-	static inline constexpr std::string_view ONE_VS_ONE_GK_GOAL_PROBABILITY = "1 on 1 vs GK chance goal probability";
-	//! JSON key for the \copybrief football::CGoalDrawConfiguration::m1vs1DFGoalProbability
-	static inline constexpr std::string_view ONE_VS_ONE_DF_GOAL_PROBABILITY = "1 on 1 vs DF chance goal probability";
-	//! JSON key for the \copybrief football::CGoalDrawConfiguration::mExtraCornerProbability
-	static inline constexpr std::string_view EXTRA_CORNER_PROBABILITY = "Extra corner probability";
-};
 
 } // futsim namespace
