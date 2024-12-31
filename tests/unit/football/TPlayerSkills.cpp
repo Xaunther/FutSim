@@ -187,14 +187,14 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::St> } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::St ) ) );
-		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Tk> } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Tk ) ) );
-		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Ps> } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Ps ) ) );
-		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Sh> } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Sh ) ) );
-		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::XP<E_PLAYER_SKILL::St> } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::St ) ) );
-		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::XP<E_PLAYER_SKILL::Tk> } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Tk ) ) );
-		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::XP<E_PLAYER_SKILL::Ps> } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Ps ) ) );
-		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::XP<E_PLAYER_SKILL::Sh> } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Sh ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::SKILL_KEY<E_PLAYER_SKILL::St> } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::St ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::SKILL_KEY<E_PLAYER_SKILL::Tk> } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Tk ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::SKILL_KEY<E_PLAYER_SKILL::Ps> } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Ps ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::SKILL_KEY<E_PLAYER_SKILL::Sh> } + ": " + std::to_string( playerSkills.GetSkill( E_PLAYER_SKILL::Sh ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::XP_KEY<E_PLAYER_SKILL::St> } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::St ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::XP_KEY<E_PLAYER_SKILL::Tk> } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Tk ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::XP_KEY<E_PLAYER_SKILL::Ps> } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Ps ) ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerSkills>::XP_KEY<E_PLAYER_SKILL::Sh> } + ": " + std::to_string( playerSkills.GetExperience( E_PLAYER_SKILL::Sh ) ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, playerSkills );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
