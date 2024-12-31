@@ -19,9 +19,9 @@ CExtraTime::CExtraTime(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the football extra time." )
 
 CExtraTime::CExtraTime( const json& aJSON ) try :
-	CPlayTime( ValueFromOptionalJSONKey<period_count>( aJSON, PERIOD_COUNT_KEY, default_traits<CPlayTime>::PERIOD_COUNT ),
+	CPlayTime( ValueFromOptionalJSONKey<period_count>( aJSON, PERIOD_COUNT_KEY, PERIOD_COUNT ),
 		ValueFromOptionalJSONKey<period_time>( aJSON, PERIOD_TIME_KEY, default_traits<CExtraTime>::PERIOD_TIME ),
-		ValueFromOptionalJSONKey<subs_count>( aJSON, json_traits<CPlayTime>::AVAILABLE_SUBS, default_traits<CExtraTime>::AVAILABLE_SUBS ) ),
+		ValueFromOptionalJSONKey<subs_count>( aJSON, AVAILABLE_SUBS_KEY, default_traits<CExtraTime>::AVAILABLE_SUBS ) ),
 	mGoalRule( ValueFromOptionalJSONKey<E_GOAL_RULE>( aJSON, json_traits<CExtraTime>::GOAL_RULE, default_traits<CExtraTime>::GOAL_RULE ) )
 {
 }

@@ -15,7 +15,7 @@ class CPlayTime;
 
 template <> struct default_traits<football::CPlayTime>
 {
-protected:
+private:
 	using period_count = types::CPlayTime::period_count;
 	using subs_count = football::types::CPlayTime::subs_count;
 public:
@@ -27,15 +27,22 @@ public:
 	static inline constexpr subs_count AVAILABLE_SUBS = 5;
 };
 
+template <> struct json_traits<football::CPlayTime> : public json_traits<CPlayTime>
+{
+	///! JSON key for the \copybrief football::CPlayTime::mAvailableSubs
+	static inline constexpr std::string_view AVAILABLE_SUBS_KEY = "Available subs";
+};
+
 namespace football
 {
 
 /**
  * @brief Class that defines a play time phase of a football match.
 */
-class CPlayTime : public futsim::CPlayTime
+class CPlayTime : public futsim::CPlayTime, protected default_traits<CPlayTime>, protected json_traits<CPlayTime>
 {
 protected:
+	using futsim::CPlayTime::period_count;
 	using subs_count = types::CPlayTime::subs_count;
 
 public:
@@ -44,9 +51,9 @@ public:
 	 * @param aAvailableSubs \ref mAvailableSubs
 	*/
 	explicit CPlayTime(
-		const period_count& aPeriodCount = default_traits<CPlayTime>::PERIOD_COUNT,
-		const period_time& aPeriodTime = default_traits<CPlayTime>::PERIOD_TIME,
-		const subs_count& aAvailableSubs = default_traits<CPlayTime>::AVAILABLE_SUBS );
+		const period_count& aPeriodCount = PERIOD_COUNT,
+		const period_time& aPeriodTime = PERIOD_TIME,
+		const subs_count& aAvailableSubs = AVAILABLE_SUBS );
 
 	/**
 	 * @brief JSON constructor.
@@ -70,11 +77,5 @@ private:
 };
 
 } // football namespace
-
-template <> struct json_traits<football::CPlayTime> : public json_traits<CPlayTime>
-{
-	///! JSON key for the \copybrief football::CPlayTime::mAvailableSubs
-	static inline constexpr std::string_view AVAILABLE_SUBS = "Available subs";
-};
 
 } // futsim namespace
