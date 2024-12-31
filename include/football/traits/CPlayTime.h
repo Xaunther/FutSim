@@ -19,7 +19,7 @@ class CPlayTime;
 
 template <> struct default_traits<football::CPlayTime>
 {
-private:
+protected:
 	using period_count = types::CPlayTime::period_count;
 	using subs_count = football::types::CPlayTime::subs_count;
 public:

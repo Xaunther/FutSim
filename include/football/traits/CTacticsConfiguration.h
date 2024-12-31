@@ -19,7 +19,7 @@ class CTacticsConfiguration;
 
 template <> struct default_traits<football::CTacticsConfiguration>
 {
-private:
+protected:
 	using tactic_configurations = football::types::CTacticsConfiguration::tactic_configurations;
 	using skill_bonus = football::types::CTacticConfiguration::skill_bonus;
 public:
