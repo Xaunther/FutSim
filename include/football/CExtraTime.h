@@ -1,42 +1,11 @@
 #pragma once
 
 #include "football/CPlayTime.h"
-#include "traits/default.h"
-#include "traits/json.h"
+#include "football/traits/CExtraTime.h"
 
 #include "football/EGoalRule.h"
 
-namespace futsim
-{
-
-namespace football
-{
-class CExtraTime;
-}
-
-template <> struct default_traits<football::CExtraTime>
-{
-protected:
-	using period_count = types::CPlayTime::period_count;
-	using subs_count = football::types::CPlayTime::subs_count;
-public:
-	//! Default \copybrief football::CExtraTime::mPeriodTime
-	static inline constexpr period_count PERIOD_TIME = 15;
-	//! Default \copybrief football::CExtraTime::mAvailableSubs
-	static inline constexpr subs_count AVAILABLE_SUBS = 1;
-	//! Default \copybrief football::CExtraTime::mGoalRule
-	static inline constexpr football::E_GOAL_RULE GOAL_RULE = football::E_GOAL_RULE::NO;
-};
-
-template <> struct json_traits<football::CExtraTime>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Extra time";
-	//! JSON key for the \copybrief football::CExtraTime::mGoalRule
-	static inline constexpr std::string_view GOAL_RULE_KEY = "Goal rule";
-};
-
-namespace football
+namespace futsim::football
 {
 
 /**
@@ -82,6 +51,4 @@ private:
 	E_GOAL_RULE mGoalRule;
 };
 
-} // football namespace
-
-} // futsim namespace
+} // futsim::football namespace
