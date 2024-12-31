@@ -116,10 +116,10 @@ std::vector<std::string> TTacticsConfiguration::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<CTacticsConfiguration>::TACTIC_CONFIGURATIONS } + ":" );
+		result.push_back( std::string{ futsim::json_traits<CTacticsConfiguration>::TACTIC_CONFIGURATIONS_KEY } + ":" );
 		for( const auto& tacticConfiguration : tacticsConfiguration.GetTacticConfigurations() )
 			result.push_back( tacticConfiguration.first );
-		result.push_back( std::string{ futsim::json_traits<CTacticsConfiguration>::FAVOURABLE_TACTIC_SKILL_BONUS } + ": " + std::to_string( tacticsConfiguration.GetFavourableTacticSkillBonus() ) );
+		result.push_back( std::string{ futsim::json_traits<CTacticsConfiguration>::FAVOURABLE_TACTIC_SKILL_BONUS_KEY } + ": " + std::to_string( tacticsConfiguration.GetFavourableTacticSkillBonus() ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, tacticsConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

@@ -36,20 +36,20 @@ CTacticsConfiguration::CTacticsConfiguration(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tactics configuration." )
 
 CTacticsConfiguration::CTacticsConfiguration( const json& aJSON ) try :
-	mTacticConfigurations( CheckTacticConfigurations( aJSON.find( json_traits<CTacticsConfiguration>::TACTIC_CONFIGURATIONS ) != aJSON.cend() ?
-		CreateTacticConfigurationsFromJSON( aJSON.at( json_traits<CTacticsConfiguration>::TACTIC_CONFIGURATIONS ) ) : default_traits<CTacticsConfiguration>::TACTIC_CONFIGURATIONS ) ),
+	mTacticConfigurations( CheckTacticConfigurations( aJSON.find( TACTIC_CONFIGURATIONS_KEY ) != aJSON.cend() ?
+		CreateTacticConfigurationsFromJSON( aJSON.at( TACTIC_CONFIGURATIONS_KEY ) ) : TACTIC_CONFIGURATIONS ) ),
 	mFavourableTacticSkillBonus( CheckNonNegativeness( ValueFromOptionalJSONKey<skill_bonus>(
-		aJSON, json_traits<CTacticsConfiguration>::FAVOURABLE_TACTIC_SKILL_BONUS, default_traits<CTacticsConfiguration>::FAVOURABLE_TACTIC_SKILL_BONUS ), "favourable tactic skill bonus" ) )
+		aJSON, FAVOURABLE_TACTIC_SKILL_BONUS_KEY, FAVOURABLE_TACTIC_SKILL_BONUS ), "favourable tactic skill bonus" ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tactics configuration from JSON." )
 
 void CTacticsConfiguration::JSON( json& aJSON ) const noexcept
 {
-	for( auto& JSONTacticConfigurations = aJSON[ json_traits<CTacticsConfiguration>::TACTIC_CONFIGURATIONS ];
+	for( auto& JSONTacticConfigurations = aJSON[ TACTIC_CONFIGURATIONS_KEY ];
 		const auto & tacticConfiguration : mTacticConfigurations )
 		AddToJSONKey( JSONTacticConfigurations, tacticConfiguration.second, tacticConfiguration.first );
-	AddToJSONKey( aJSON, mFavourableTacticSkillBonus, json_traits<CTacticsConfiguration>::FAVOURABLE_TACTIC_SKILL_BONUS );
+	AddToJSONKey( aJSON, mFavourableTacticSkillBonus, FAVOURABLE_TACTIC_SKILL_BONUS_KEY );
 }
 
 const CTacticsConfiguration::tactic_configurations& CTacticsConfiguration::GetTacticConfigurations() const noexcept
