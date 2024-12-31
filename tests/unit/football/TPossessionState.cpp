@@ -47,11 +47,11 @@ std::vector<std::string> TPossessionState::ObtainedResults() const noexcept
 		CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, false, rng },
 		} )
 	{
-		result.push_back( std::string{ futsim::json_traits<CPossessionState>::OUTCOME } + ": " + std::string{ ToString( possessionState.GetOutcome() ) } );
+		result.push_back( std::string{ futsim::json_traits<CPossessionState>::OUTCOME_KEY } + ": " + std::string{ ToString( possessionState.GetOutcome() ) } );
 		if( possessionState.GetTackler() )
-			result.push_back( std::string{ futsim::json_traits<CPossessionState>::TACKLER } + ": " + *possessionState.GetTackler() );
+			result.push_back( std::string{ futsim::json_traits<CPossessionState>::TACKLER_KEY } + ": " + *possessionState.GetTackler() );
 		if( possessionState.GetPasser() )
-			result.push_back( std::string{ futsim::json_traits<CPossessionState>::PASSER } + ": " + *possessionState.GetPasser() );
+			result.push_back( std::string{ futsim::json_traits<CPossessionState>::PASSER_KEY } + ": " + *possessionState.GetPasser() );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, possessionState );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

@@ -17,11 +17,28 @@ namespace futsim
 
 namespace football
 {
+class CPossessionState;
+}
+
+template <> struct json_traits<football::CPossessionState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Possession state";
+	//! JSON key for the \copybrief football::CPossessionState::mOutcome
+	static inline constexpr std::string_view OUTCOME_KEY = "Outcome";
+	//! JSON key for the \copybrief football::CPossessionState::mTackler
+	static inline constexpr std::string_view TACKLER_KEY = "Tackler";
+	//! JSON key for the \copybrief football::CPossessionState::mPasser
+	static inline constexpr std::string_view PASSER_KEY = "Passer";
+};
+
+namespace football
+{
 
 /**
  * @brief Class that represents the state of a possession draw.
 */
-class CPossessionState : public IJsonable
+class CPossessionState : public IJsonable, protected json_traits<CPossessionState>
 {
 protected:
 	using optional_name = std::optional<futsim::types::CPerson::name_type>;
@@ -122,17 +139,5 @@ CPossessionState::CPossessionState(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the possession state." )
 
 } // football namespace
-
-template <> struct json_traits<football::CPossessionState>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Possession state";
-	//! JSON key for the \copybrief football::CPossessionState::mOutcome
-	static inline constexpr std::string_view OUTCOME = "Outcome";
-	//! JSON key for the \copybrief football::CPossessionState::mTackler
-	static inline constexpr std::string_view TACKLER = "Tackler";
-	//! JSON key for the \copybrief football::CPossessionState::mPasser
-	static inline constexpr std::string_view PASSER = "Passer";
-};
 
 } // futsim namespace
