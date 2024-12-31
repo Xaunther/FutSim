@@ -25,13 +25,23 @@ public:
 	static inline constexpr penalty_count PENALTY_COUNT = 5;
 };
 
+template <> struct json_traits<football::CPenaltyShootoutConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Penalty shootout configuration";
+	//! JSON key for the \copybrief football::CPenaltyShootoutConfiguration::mPenaltySequence
+	static inline constexpr std::string_view SEQUENCE_KEY = "Sequence";
+	//! JSON key for the \copybrief football::CPenaltyShootoutConfiguration::mMinPenaltyCount
+	static inline constexpr std::string_view MIN_PENALTY_COUNT_KEY = "Min penalty count";
+};
+
 namespace football
 {
 
 /**
  * @brief Class to configure a penalty shootout.
 */
-class CPenaltyShootoutConfiguration : public IJsonable
+class CPenaltyShootoutConfiguration : public IJsonable, protected default_traits<CPenaltyShootoutConfiguration>, protected json_traits<CPenaltyShootoutConfiguration>
 {
 protected:
 	using penalty_count = types::CPenaltyShootoutConfiguration::penalty_count;
@@ -43,8 +53,8 @@ public:
 	 * @param aMinPenaltyCount \ref mMinPenaltyCount
 	*/
 	explicit CPenaltyShootoutConfiguration(
-		const E_PENALTY_SEQUENCE& aPenaltySequence = default_traits<CPenaltyShootoutConfiguration>::PENALTY_SEQUENCE,
-		const penalty_count& aMinPenaltyCount = default_traits<CPenaltyShootoutConfiguration>::PENALTY_COUNT ) noexcept;
+		const E_PENALTY_SEQUENCE& aPenaltySequence = PENALTY_SEQUENCE,
+		const penalty_count& aMinPenaltyCount = PENALTY_COUNT ) noexcept;
 
 	/**
 	 * @brief JSON constructor.
@@ -73,15 +83,5 @@ private:
 };
 
 } // football namespace
-
-template <> struct json_traits<football::CPenaltyShootoutConfiguration>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Penalty shootout configuration";
-	//! JSON key for the \copybrief football::CPenaltyShootoutConfiguration::mPenaltySequence
-	static inline constexpr std::string_view SEQUENCE = "Sequence";
-	//! JSON key for the \copybrief football::CPenaltyShootoutConfiguration::mMinPenaltyCount
-	static inline constexpr std::string_view MIN_PENALTY_COUNT = "Min penalty count";
-};
 
 } // futsim namespace
