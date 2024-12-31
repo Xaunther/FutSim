@@ -10,13 +10,30 @@ namespace futsim
 
 namespace football
 {
+class CMatch;
+}
+
+template <> struct json_traits<football::CMatch>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Match";
+	//! JSON key for the \copybrief football::CMatch::mHomeTeam
+	static inline constexpr std::string_view HOME_TEAM_KEY = "Home team";
+	//! JSON key for the \copybrief football::CMatch::mAwayTeam
+	static inline constexpr std::string_view AWAY_TEAM_KEY = "Away team";
+	//! JSON key for the \copybrief football::CMatch::mReferee
+	static inline constexpr std::string_view REFEREE_KEY = "Referee";
+};
+
+namespace football
+{
 
 class CTeamStrategy;
 
 /**
  * @brief Class that defines a football match.
 */
-class CMatch : public IJsonable
+class CMatch : public IJsonable, protected json_traits<CMatch>
 {
 protected:
 	using name_type = types::CTeam::name_type;
@@ -79,17 +96,5 @@ private:
 };
 
 } // football namespace
-
-template <> struct json_traits<football::CMatch>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Match";
-	//! JSON key for the \copybrief football::CMatch::mHomeTeam
-	static inline constexpr std::string_view HOME_TEAM = "Home team";
-	//! JSON key for the \copybrief football::CMatch::mAwayTeam
-	static inline constexpr std::string_view AWAY_TEAM = "Away team";
-	//! JSON key for the \copybrief football::CMatch::mReferee
-	static inline constexpr std::string_view REFEREE = "Referee";
-};
 
 } // futsim namespace

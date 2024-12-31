@@ -179,10 +179,10 @@ std::vector<std::string> TMatch::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<CMatch>::HOME_TEAM } + ": " + std::string{ match.GetHomeTeam().GetName() } );
-		result.push_back( std::string{ futsim::json_traits<CMatch>::AWAY_TEAM } + ": " + std::string{ match.GetAwayTeam().GetName() } );
+		result.push_back( std::string{ futsim::json_traits<CMatch>::HOME_TEAM_KEY } + ": " + std::string{ match.GetHomeTeam().GetName() } );
+		result.push_back( std::string{ futsim::json_traits<CMatch>::AWAY_TEAM_KEY } + ": " + std::string{ match.GetAwayTeam().GetName() } );
 		result.push_back( std::string{ futsim::json_traits<CStadium>::KEY } + ": " + std::string{ match.GetStadium().GetName() } );
-		result.push_back( std::string{ futsim::json_traits<CMatch>::REFEREE } + ": " + std::string{ match.GetReferee() } );
+		result.push_back( std::string{ futsim::json_traits<CMatch>::REFEREE_KEY } + ": " + std::string{ match.GetReferee() } );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, match );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
