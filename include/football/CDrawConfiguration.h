@@ -1,28 +1,14 @@
 #pragma once
 
 #include "IJsonable.h"
-#include "traits/json.h"
+#include "football/traits/CDrawConfiguration.h"
 
 #include "football/CChancesDrawConfiguration.h"
 #include "football/CFoulDrawConfiguration.h"
 #include "football/CGoalDrawConfiguration.h"
 #include "football/CPossessionDrawConfiguration.h"
 
-namespace futsim
-{
-
-namespace football
-{
-class CDrawConfiguration;
-}
-
-template <> struct json_traits<football::CDrawConfiguration>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Draw configuration";
-};
-
-namespace football
+namespace futsim::football
 {
 
 /**
@@ -225,6 +211,4 @@ private:
 	probability mDefaultNearShotGoalProbability;
 };
 
-} // football namespace
-
-} // futsim namespace
+} // futsim::football namespace
