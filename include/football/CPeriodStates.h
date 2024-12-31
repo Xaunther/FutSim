@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IJsonable.h"
-#include "traits/json.h"
+#include "football/traits/CPeriodStates.h"
 
 #include "football/types/CPeriodStates.h"
 
@@ -9,21 +9,7 @@
 #include "football/CPeriodPlayPolicy.h"
 #include "football/CPeriodPolicy.h"
 
-namespace futsim
-{
-
-namespace football
-{
-class CPeriodStates;
-}
-
-template <> struct json_traits<football::CPeriodStates>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Period states";
-};
-
-namespace football
+namespace futsim::football
 {
 
 /**
@@ -103,6 +89,4 @@ CPeriodStates::CPeriodStates(
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the period states." )
 
-} // football namespace
-
-} // futsim namespace
+} // futsim::football namespace
