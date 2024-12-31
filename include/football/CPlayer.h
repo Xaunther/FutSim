@@ -9,11 +9,22 @@ namespace futsim
 
 namespace football
 {
+class CPlayer;
+}
+
+template <> struct json_traits<football::CPlayer>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Player";
+};
+
+namespace football
+{
 
 /**
  * @brief Class that defines a football player.
 */
-class CPlayer : public CPerson
+class CPlayer : public CPerson, protected json_traits<CPlayer>
 {
 public:
 	/**
@@ -50,11 +61,5 @@ private:
 };
 
 } // football namespace
-
-template <> struct json_traits<football::CPlayer>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Player";
-};
 
 } // futsim namespacefootball::
