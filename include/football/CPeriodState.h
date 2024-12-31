@@ -12,11 +12,26 @@ namespace futsim
 
 namespace football
 {
+class CPeriodState;
+}
+
+template <> struct json_traits<football::CPeriodState>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Period state";
+	//! JSON key for the \copybrief football::CPeriodState::mPlays
+	static inline constexpr std::string_view PLAYS_KEY = "Plays";
+	//! JSON key to indicate if the play corresponds to the home team.
+	static inline constexpr std::string_view HOME_TEAM_PLAY_KEY = "Home team play";
+};
+
+namespace football
+{
 
 /**
  * @brief Class that represents the state of a match period.
 */
-class CPeriodState : public IJsonable
+class CPeriodState : public IJsonable, protected json_traits<football::CPeriodState>
 {
 protected:
 	using plays = types::CPeriodState::plays;
@@ -103,15 +118,5 @@ CPeriodState::CPeriodState(
 }
 
 } // football namespace
-
-template <> struct json_traits<football::CPeriodState>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Period state";
-	//! JSON key for the \copybrief football::CPeriodState::mPlays
-	static inline constexpr std::string_view PLAYS = "Plays";
-	//! JSON key to indicate if the play corresponds to the home team.
-	static inline constexpr std::string_view HOME_TEAM_PLAY = "Home team play";
-};
 
 } // futsim namespace
