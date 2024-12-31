@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IJsonable.h"
-#include "traits/json.h"
+#include "football/traits/CPlayState.h"
 
 #include "football/types/CPlayState.h"
 
@@ -10,23 +10,7 @@
 #include "football/CPossessionState.h"
 #include "football/EPlayerSkill.h"
 
-namespace futsim
-{
-
-namespace football
-{
-class CPlayState;
-}
-
-template <> struct json_traits<football::CPlayState>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Play state";
-	//! JSON key for the \copybrief football::CPlayState::mChancesStates
-	static inline constexpr std::string_view CHANCES_KEY = "Chances";
-};
-
-namespace football
+namespace futsim::football
 {
 
 /**
@@ -207,6 +191,4 @@ types::CPlayState::chances_states CreateChances(
 
 } // detail namespace
 
-} // football namespace
-
-} // futsim namespace
+} // futsim::football namespace
