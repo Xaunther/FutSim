@@ -23,10 +23,10 @@ CTacticConfiguration::CTacticConfiguration(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the tactic configuration." )
 
 CTacticConfiguration::CTacticConfiguration( const json& aJSON ) try :
-	mTkBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, json_traits<CTacticConfiguration>::TK_BONUS ) ),
-	mPsBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, json_traits<CTacticConfiguration>::PS_BONUS ) ),
-	mFavourableTactics( ValueFromOptionalJSONKey<ids>( aJSON, json_traits<CTacticConfiguration>::FAVOURABLE_TACTICS, {} ) ),
-	mPositionPenalties( ValueFromOptionalJSONKey<position_penalties>( aJSON, json_traits<CTacticConfiguration>::POSITION_PENALTIES, default_traits<CTacticConfiguration>::POSITION_PENALTIES ) )
+	mTkBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, TK_BONUS_KEY ) ),
+	mPsBonus( ValueFromRequiredJSONKey<skill_bonus>( aJSON, PS_BONUS_KEY ) ),
+	mFavourableTactics( ValueFromOptionalJSONKey<ids>( aJSON, FAVOURABLE_TACTICS_KEY, {} ) ),
+	mPositionPenalties( ValueFromOptionalJSONKey<position_penalties>( aJSON, POSITION_PENALTIES_KEY, POSITION_PENALTIES ) )
 {
 	CalculateBonusesTable();
 }
@@ -34,11 +34,11 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the t
 
 void CTacticConfiguration::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mTkBonus, json_traits<CTacticConfiguration>::TK_BONUS );
-	AddToJSONKey( aJSON, mPsBonus, json_traits<CTacticConfiguration>::PS_BONUS );
+	AddToJSONKey( aJSON, mTkBonus, TK_BONUS_KEY );
+	AddToJSONKey( aJSON, mPsBonus, PS_BONUS_KEY );
 	if( !mFavourableTactics.empty() )
-		AddToJSONKey( aJSON, mFavourableTactics, json_traits<CTacticConfiguration>::FAVOURABLE_TACTICS );
-	AddToJSONKey( aJSON, mPositionPenalties, json_traits<CTacticConfiguration>::POSITION_PENALTIES );
+		AddToJSONKey( aJSON, mFavourableTactics, FAVOURABLE_TACTICS_KEY );
+	AddToJSONKey( aJSON, mPositionPenalties, POSITION_PENALTIES_KEY );
 }
 
 const CTacticConfiguration::skill_bonus& CTacticConfiguration::GetTkBonus() const noexcept

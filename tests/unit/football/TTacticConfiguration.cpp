@@ -73,12 +73,12 @@ std::vector<std::string> TTacticConfiguration::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::TK_BONUS } + ": " + std::to_string( tacticConfiguration.GetTkBonus() ) );
-		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::PS_BONUS } + ": " + std::to_string( tacticConfiguration.GetPsBonus() ) );
-		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::FAVOURABLE_TACTICS } + ": " );
+		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::TK_BONUS_KEY } + ": " + std::to_string( tacticConfiguration.GetTkBonus() ) );
+		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::PS_BONUS_KEY } + ": " + std::to_string( tacticConfiguration.GetPsBonus() ) );
+		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::FAVOURABLE_TACTICS_KEY } + ": " );
 		for( const auto& favourableTactic : tacticConfiguration.GetFavourableTactics() )
 			result.push_back( std::string{ favourableTactic } );
-		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::POSITION_PENALTIES } + ": " );
+		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::POSITION_PENALTIES_KEY } + ": " );
 		for( const auto& positionPenalty : tacticConfiguration.GetPositionPenalties() )
 			result.push_back( std::to_string( positionPenalty ) );
 		result.push_back( "St bonus for GK: " + std::to_string( tacticConfiguration.GetSkillBonus( E_PLAYER_POSITION::GK, E_PLAYER_SKILL::St ) ) );

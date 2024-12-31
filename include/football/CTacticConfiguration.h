@@ -22,13 +22,27 @@ public:
 	static inline constexpr position_penalties POSITION_PENALTIES = { 0, -0.2, -0.4 };
 };
 
+template <> struct json_traits<football::CTacticConfiguration>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Tactic configuration";
+	//! JSON key for the \copybrief football::CTacticConfiguration::mTkBonus
+	static inline constexpr std::string_view TK_BONUS_KEY = "Tk bonus";
+	//! JSON key for the \copybrief football::CTacticConfiguration::mPsBonus
+	static inline constexpr std::string_view PS_BONUS_KEY = "Ps bonus";
+	//! JSON key for the \copybrief football::CTacticConfiguration::mFavourableTactics
+	static inline constexpr std::string_view FAVOURABLE_TACTICS_KEY = "Favourable tactics";
+	//! JSON key for the \copybrief football::CTacticConfiguration::mPositionPenalties
+	static inline constexpr std::string_view POSITION_PENALTIES_KEY = "Position penalties";
+};
+
 namespace football
 {
 
 /**
  * @brief Class that configures a tactic.
 */
-class CTacticConfiguration : public IJsonable
+class CTacticConfiguration : public IJsonable, protected default_traits<CTacticConfiguration>, protected json_traits<CTacticConfiguration>
 {
 protected:
 	using skill_bonus = types::CTacticConfiguration::skill_bonus;
@@ -49,7 +63,7 @@ public:
 		const skill_bonus& aTkBonus,
 		const skill_bonus& aPsBonus,
 		const ids& aFavourableTactics = {},
-		const position_penalties& aPositionPenalties = default_traits<CTacticConfiguration>::POSITION_PENALTIES
+		const position_penalties& aPositionPenalties = POSITION_PENALTIES
 	);
 
 	/**
@@ -105,19 +119,5 @@ private:
 };
 
 } // football namespace
-
-template <> struct json_traits<football::CTacticConfiguration>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Tactic configuration";
-	//! JSON key for the \copybrief football::CTacticConfiguration::mTkBonus
-	static inline constexpr std::string_view TK_BONUS = "Tk bonus";
-	//! JSON key for the \copybrief football::CTacticConfiguration::mPsBonus
-	static inline constexpr std::string_view PS_BONUS = "Ps bonus";
-	//! JSON key for the \copybrief football::CTacticConfiguration::mFavourableTactics
-	static inline constexpr std::string_view FAVOURABLE_TACTICS = "Favourable tactics";
-	//! JSON key for the \copybrief football::CTacticConfiguration::mPositionPenalties
-	static inline constexpr std::string_view POSITION_PENALTIES = "Position penalties";
-};
 
 } // futsim namespace
