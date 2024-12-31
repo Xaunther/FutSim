@@ -112,7 +112,7 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 	{
 		result.push_back( futsim::json_traits<std::decay_t<decltype( matchConfiguration.GetPlayTime() )>>::KEY.data() );
 		result.push_back( futsim::json_traits<std::decay_t<decltype( matchConfiguration.GetLineupConfiguration() )>>::KEY.data() );
-		result.push_back( std::string{ futsim::json_traits<CMatchConfiguration>::APPLY_AMBIENT_FACTOR } + ": " + std::to_string( matchConfiguration.AppliesAmbientFactor() ) );
+		result.push_back( std::string{ futsim::json_traits<CMatchConfiguration>::APPLY_AMBIENT_FACTOR_KEY } + ": " + std::to_string( matchConfiguration.AppliesAmbientFactor() ) );
 		result.push_back( futsim::json_traits<std::decay_t<decltype( matchConfiguration.GetTacticsConfiguration() )>>::KEY.data() );
 		if( matchConfiguration.GetTieCondition() )
 			result.push_back( futsim::json_traits<std::decay_t<decltype( *matchConfiguration.GetTieCondition() )>>::KEY.data() );
