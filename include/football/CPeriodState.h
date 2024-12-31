@@ -1,32 +1,14 @@
 #pragma once
 
 #include "IJsonable.h"
-#include "traits/json.h"
+#include "football/traits/CPeriodState.h"
 
 #include "types/CPeriodState.h"
 
 #include "football/CPlayState.h"
 #include "football/CPeriodPlayPolicy.h"
 
-namespace futsim
-{
-
-namespace football
-{
-class CPeriodState;
-}
-
-template <> struct json_traits<football::CPeriodState>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Period state";
-	//! JSON key for the \copybrief football::CPeriodState::mPlays
-	static inline constexpr std::string_view PLAYS_KEY = "Plays";
-	//! JSON key to indicate if the play corresponds to the home team.
-	static inline constexpr std::string_view HOME_TEAM_PLAY_KEY = "Home team play";
-};
-
-namespace football
+namespace futsim::football
 {
 
 /**
@@ -118,6 +100,4 @@ CPeriodState::CPeriodState(
 	} while( aPeriodPlayPolicy( mPlays, aMatchConfiguration ) );
 }
 
-} // football namespace
-
-} // futsim namespace
+} // futsim::football namespace
