@@ -1,9 +1,10 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "traits/default.h"
+#include "traits/json.h"
 
 #include "types/CTacticConfiguration.h"
-#include "DefaultTraits.h"
 
 namespace futsim
 {

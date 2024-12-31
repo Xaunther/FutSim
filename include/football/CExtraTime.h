@@ -1,6 +1,8 @@
 #pragma once
 
 #include "football/CPlayTime.h"
+#include "traits/default.h"
+#include "traits/json.h"
 
 #include "football/EGoalRule.h"
 

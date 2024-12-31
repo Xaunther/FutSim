@@ -1,10 +1,11 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "traits/default.h"
+#include "traits/json.h"
 
 #include "football/types/CPenaltyShootoutConfiguration.h"
 #include "football/EPenaltySequence.h"
-#include "DefaultTraits.h"
 
 namespace futsim
 {

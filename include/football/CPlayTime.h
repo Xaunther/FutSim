@@ -1,9 +1,10 @@
 #pragma once
 
 #include "../CPlayTime.h"
+#include "traits/default.h"
+#include "traits/json.h"
 
 #include "football/types/CPlayTime.h"
-#include "DefaultTraits.h"
 
 namespace futsim
 {

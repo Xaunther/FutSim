@@ -4,7 +4,6 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/Config.h
 	include/CPerson.h
 	include/CPlayTime.h
-	include/DefaultTraits.h
 	include/ENationality.h
 	include/EnumUtils.h
 	include/ExceptionUtils.h
@@ -13,6 +12,10 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/NameUtils.h
 	include/NumberUtils.h
 	include/ProbabilityUtils.h
+	include/traits/CPerson.h
+	include/traits/CPlayTime.h
+	include/traits/default.h
+	include/traits/json.h
 	include/types/CPerson.h
 	include/types/CPlayTime.h
 	include/types/IJsonable.h

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "traits/json.h"
 
 #include "football/CLineup.h"
 #include "football/types/CTacticConfiguration.h"

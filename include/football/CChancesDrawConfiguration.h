@@ -1,11 +1,12 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "traits/default.h"
+#include "traits/json.h"
 
 #include "football/types/CDrawConfiguration.h"
 #include "football/types/CChancesDrawConfiguration.h"
 #include "CEnumDistribution.h"
-#include "DefaultTraits.h"
 
 namespace futsim
 {

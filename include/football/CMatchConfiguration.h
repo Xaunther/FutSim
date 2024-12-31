@@ -1,6 +1,8 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "traits/default.h"
+#include "traits/json.h"
 
 #include "football/CDrawConfiguration.h"
 #include "football/CExtraTime.h"
