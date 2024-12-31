@@ -1,28 +1,12 @@
 #pragma once
 
 #include "IJsonable.h"
-#include "traits/json.h"
+#include "football/traits/CTeamStrategy.h"
 
 #include "football/CLineup.h"
 #include "football/types/CTacticConfiguration.h"
 
-namespace futsim
-{
-
-namespace football
-{
-class CTeamStrategy;
-}
-
-template <> struct json_traits<football::CTeamStrategy>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Team strategy";
-	//! JSON key for the \copybrief football::CTeamStrategy::mTacticID
-	static inline constexpr std::string_view TACTIC_KEY = "Tactic";
-};
-
-namespace football
+namespace futsim::football
 {
 
 class CMatch;
@@ -115,6 +99,4 @@ private:
 	CLineup mLineup;
 };
 
-} // football namespace
-
-} // futsim namespace
+} // futsim::football namespace
