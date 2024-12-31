@@ -35,16 +35,16 @@ CPlayTime::CPlayTime(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the play time." )
 
 CPlayTime::CPlayTime( const json& aJSON ) try :
-	mPeriodCount( CheckNonZero( ValueFromRequiredJSONKey<period_count>( aJSON, json_traits<CPlayTime>::PERIOD_COUNT ), "number of periods" ) ),
-	mPeriodTime( CheckNonZero( ValueFromRequiredJSONKey<period_time>( aJSON, json_traits<CPlayTime>::PERIOD_TIME ), "length of the period" ) )
+	mPeriodCount( CheckNonZero( ValueFromRequiredJSONKey<period_count>( aJSON, PERIOD_COUNT_KEY ), "number of periods" ) ),
+	mPeriodTime( CheckNonZero( ValueFromRequiredJSONKey<period_time>( aJSON, PERIOD_TIME_KEY ), "length of the period" ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the play time from JSON." )
 
 void CPlayTime::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mPeriodCount, json_traits<CPlayTime>::PERIOD_COUNT );
-	AddToJSONKey( aJSON, mPeriodTime, json_traits<CPlayTime>::PERIOD_TIME );
+	AddToJSONKey( aJSON, mPeriodCount, PERIOD_COUNT_KEY );
+	AddToJSONKey( aJSON, mPeriodTime, PERIOD_TIME_KEY );
 }
 
 const types::CPlayTime::period_count& CPlayTime::GetPeriodCount() const noexcept

@@ -72,8 +72,8 @@ std::vector<std::string> TPlayTime::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<CPlayTime>::PERIOD_COUNT } + ": " + std::to_string( playTime.GetPeriodCount() ) );
-		result.push_back( std::string{ futsim::json_traits<CPlayTime>::PERIOD_TIME } + ": " + std::to_string( playTime.GetPeriodTime() ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayTime>::PERIOD_COUNT_KEY } + ": " + std::to_string( playTime.GetPeriodCount() ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayTime>::PERIOD_TIME_KEY } + ": " + std::to_string( playTime.GetPeriodTime() ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, playTime );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

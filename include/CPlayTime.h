@@ -7,10 +7,22 @@
 namespace futsim
 {
 
+class CPlayTime;
+
+template <> struct json_traits<CPlayTime>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Play time";
+	//! JSON key for the \copybrief CPlayTime::mPeriodCount
+	static inline constexpr std::string_view PERIOD_COUNT_KEY = "Period count";
+	//! JSON key for the \copybrief CPlayTime::mPeriodTime
+	static inline constexpr std::string_view PERIOD_TIME_KEY = "Period time";
+};
+
 /**
  * @brief Class that defines a play time phase of a match.
 */
-class CPlayTime : public IJsonable
+class CPlayTime : public IJsonable, protected json_traits<CPlayTime>
 {
 protected:
 	using period_count = types::CPlayTime::period_count;
@@ -52,16 +64,6 @@ private:
 	period_count mPeriodCount;
 	//! Length of each period.
 	period_time mPeriodTime;
-};
-
-template <> struct json_traits<CPlayTime>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Play time";
-	//! JSON key for the \copybrief CPlayTime::mPeriodCount
-	static inline constexpr std::string_view PERIOD_COUNT = "Period count";
-	//! JSON key for the \copybrief CPlayTime::mPeriodTime
-	static inline constexpr std::string_view PERIOD_TIME = "Period time";
 };
 
 } // futsim namespace
