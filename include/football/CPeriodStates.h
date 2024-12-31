@@ -13,12 +13,23 @@ namespace futsim
 
 namespace football
 {
+class CPeriodStates;
+}
+
+template <> struct json_traits<football::CPeriodStates>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Period states";
+};
+
+namespace football
+{
 
 /**
  * @brief Class that represents the state of series of match periods.
  * @details The periods have the same play policy and alternate the team that kicks off.
 */
-class CPeriodStates : public IJsonable
+class CPeriodStates : public IJsonable, protected json_traits<CPeriodStates>
 {
 protected:
 	using period_states = types::CPeriodStates::period_states;
@@ -92,11 +103,5 @@ CPeriodStates::CPeriodStates(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the period states." )
 
 } // football namespace
-
-template <> struct json_traits<football::CPeriodStates>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Period states";
-};
 
 } // futsim namespace
