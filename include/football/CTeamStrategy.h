@@ -10,6 +10,19 @@ namespace futsim
 
 namespace football
 {
+class CTeamStrategy;
+}
+
+template <> struct json_traits<football::CTeamStrategy>
+{
+	//! JSON key for the class.
+	static inline constexpr std::string_view KEY = "Team strategy";
+	//! JSON key for the \copybrief football::CTeamStrategy::mTacticID
+	static inline constexpr std::string_view TACTIC_KEY = "Tactic";
+};
+
+namespace football
+{
 
 class CMatch;
 class CMatchConfiguration;
@@ -17,7 +30,7 @@ class CMatchConfiguration;
 /**
  * @brief Class that defines a team strategy.
 */
-class CTeamStrategy : public IJsonable
+class CTeamStrategy : public IJsonable, protected json_traits<CTeamStrategy>
 {
 protected:
 	using id = types::CTacticConfiguration::id;
@@ -102,13 +115,5 @@ private:
 };
 
 } // football namespace
-
-template <> struct json_traits<football::CTeamStrategy>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Team strategy";
-	//! JSON key for the \copybrief football::CTeamStrategy::mTacticID
-	static inline constexpr std::string_view TACTIC = "Tactic";
-};
 
 } // futsim namespace
