@@ -24,20 +24,20 @@ CMatch::CMatch(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the match." )
 
 CMatch::CMatch( const json& aJSON ) try :
-	mHomeTeam( ValueFromRequiredJSONKey<CTeam>( aJSON, json_traits<CMatch>::HOME_TEAM ) ),
-	mAwayTeam( ValueFromRequiredJSONKey<CTeam>( aJSON, json_traits<CMatch>::AWAY_TEAM ) ),
+	mHomeTeam( ValueFromRequiredJSONKey<CTeam>( aJSON, HOME_TEAM_KEY ) ),
+	mAwayTeam( ValueFromRequiredJSONKey<CTeam>( aJSON, AWAY_TEAM_KEY ) ),
 	mStadium( ValueFromRequiredJSONKey<CStadium>( aJSON ) ),
-	mReferee( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, json_traits<CMatch>::REFEREE ), "referee name" ) )
+	mReferee( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, REFEREE_KEY ), "referee name" ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the match from JSON." )
 
 void CMatch::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mHomeTeam, json_traits<CMatch>::HOME_TEAM );
-	AddToJSONKey( aJSON, mAwayTeam, json_traits<CMatch>::AWAY_TEAM );
+	AddToJSONKey( aJSON, mHomeTeam, HOME_TEAM_KEY );
+	AddToJSONKey( aJSON, mAwayTeam, AWAY_TEAM_KEY );
 	AddToJSONKey( aJSON, mStadium );
-	AddToJSONKey( aJSON, mReferee, json_traits<CMatch>::REFEREE );
+	AddToJSONKey( aJSON, mReferee, REFEREE_KEY );
 }
 
 const CTeam& CMatch::GetHomeTeam() const noexcept

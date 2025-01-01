@@ -1,19 +1,17 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "football/traits/CStadium.h"
 
 #include "types/CStadium.h"
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 /**
  * @brief Class that defines a football stadium.
 */
-class CStadium : public IJsonable
+class CStadium : public IJsonable, protected json_traits<CStadium>
 {
 protected:
 	using capacity = types::CStadium::capacity;
@@ -64,18 +62,4 @@ private:
 	ambient_factor mAmbientFactor;
 };
 
-} // football namespace
-
-template <> struct json_traits<football::CStadium>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Stadium";
-	//! JSON key for the \copybrief football::CStadium::mName
-	static inline constexpr std::string_view NAME = "Name";
-	//! JSON key for the \copybrief football::CStadium::mCapacity
-	static inline constexpr std::string_view CAPACITY = "Capacity";
-	//! JSON key for the \copybrief football::CStadium::mAmbientFactor
-	static inline constexpr std::string_view AMBIENT_FACTOR = "Ambient factor";
-};
-
-} // futsim namespace
+} // futsim::football namespace

@@ -60,12 +60,12 @@ std::vector<std::string> TChanceState::ObtainedResults() const noexcept
 		CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, false, rng },
 		} )
 	{
-		result.push_back( std::string{ futsim::json_traits<CChanceState>::CHANCE_TYPE } + ": "
+		result.push_back( std::string{ futsim::json_traits<CChanceState>::CHANCE_TYPE_KEY } + ": "
 			+ std::string{ std::visit( []( auto&& aChanceType )
 		{
 			return ToString( aChanceType );
 		}, chanceState.GetChanceType() ) } );
-		result.push_back( std::string{ futsim::json_traits<CChanceState>::OUTCOME } + ": " + std::string{ ToString( chanceState.GetChanceOutcome() ) } );
+		result.push_back( std::string{ futsim::json_traits<CChanceState>::OUTCOME_KEY } + ": " + std::string{ ToString( chanceState.GetChanceOutcome() ) } );
 		PushActor< E_PLAYER_SKILL::St >( result, chanceState );
 		PushActor< E_PLAYER_SKILL::Tk >( result, chanceState );
 		PushActor< E_PLAYER_SKILL::Ps >( result, chanceState );

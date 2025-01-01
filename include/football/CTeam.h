@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "football/traits/CTeam.h"
 
 #include "football/CPlayer.h"
 #include "football/types/CTeam.h"
@@ -8,10 +9,7 @@
 #include <random>
 #include <span>
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 class CLineup;
@@ -19,7 +17,7 @@ class CLineup;
 /**
  * @brief Class that defines a football team.
 */
-class CTeam : public IJsonable
+class CTeam : public IJsonable, protected json_traits<CTeam>
 {
 protected:
 	using name_type = types::CTeam::name_type;
@@ -120,26 +118,4 @@ private:
 	attendance_distribution::param_type mAttendanceDistributionParameters;
 };
 
-} // football namespace
-
-template <> struct json_traits<football::CTeam>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Team";
-	//! JSON key for the \copybrief football::CTeam::mName
-	static inline constexpr std::string_view NAME = "Name";
-	//! JSON key for the \copybrief football::CTeam::mAbbreviation
-	static inline constexpr std::string_view ABBREVIATION = "Abbreviation";
-	//! JSON key for the \copybrief football::CTeam::mManager
-	static inline constexpr std::string_view MANAGER = "Manager";
-	//! JSON key for the \copybrief football::CTeam::mPlayers
-	static inline constexpr std::string_view PLAYERS = "Players";
-	//! JSON key for the \copybrief football::CTeam::mSupportFactor
-	static inline constexpr std::string_view SUPPORT_FACTOR = "Support factor";
-	//! JSON key for the mean attendance.
-	static inline constexpr std::string_view MEAN_ATTENDANCE = "Mean attendance";
-	//! JSON key for the standard deviation of the attendance.
-	static inline constexpr std::string_view STD_DEV_ATTENDANCE = "StdDev attendance";
-};
-
-} // futsim namespace
+} // futsim::football namespace

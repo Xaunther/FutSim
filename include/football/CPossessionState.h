@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "football/traits/CPossessionState.h"
 
 #include "football/types/CPossessionState.h"
 
@@ -12,16 +13,13 @@
 
 #include "ExceptionUtils.h"
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 /**
  * @brief Class that represents the state of a possession draw.
 */
-class CPossessionState : public IJsonable
+class CPossessionState : public IJsonable, protected json_traits<CPossessionState>
 {
 protected:
 	using optional_name = std::optional<futsim::types::CPerson::name_type>;
@@ -121,18 +119,4 @@ CPossessionState::CPossessionState(
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the possession state." )
 
-} // football namespace
-
-template <> struct json_traits<football::CPossessionState>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Possession state";
-	//! JSON key for the \copybrief football::CPossessionState::mOutcome
-	static inline constexpr std::string_view OUTCOME = "Outcome";
-	//! JSON key for the \copybrief football::CPossessionState::mTackler
-	static inline constexpr std::string_view TACKLER = "Tackler";
-	//! JSON key for the \copybrief football::CPossessionState::mPasser
-	static inline constexpr std::string_view PASSER = "Passer";
-};
-
-} // futsim namespace
+} // futsim::football namespace

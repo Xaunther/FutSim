@@ -94,9 +94,9 @@ std::vector<std::string> TFoulDrawConfiguration::ObtainedResults() const noexcep
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<CFoulDrawConfiguration>::AVERAGE_FOULS } + ": " + std::to_string( foulDrawConfiguration.GetAverageFouls() ) );
-		result.push_back( std::string{ futsim::json_traits<CFoulDrawConfiguration>::AVERAGE_YELLOW_CARDS } + ": " + std::to_string( foulDrawConfiguration.GetAverageYellowCards() ) );
-		result.push_back( std::string{ futsim::json_traits<CFoulDrawConfiguration>::AVERAGE_RED_CARDS } + ": " + std::to_string( foulDrawConfiguration.GetAverageRedCards() ) );
+		result.push_back( std::string{ futsim::json_traits<CFoulDrawConfiguration>::AVERAGE_FOULS_KEY } + ": " + std::to_string( foulDrawConfiguration.GetAverageFouls() ) );
+		result.push_back( std::string{ futsim::json_traits<CFoulDrawConfiguration>::AVERAGE_YELLOW_CARDS_KEY } + ": " + std::to_string( foulDrawConfiguration.GetAverageYellowCards() ) );
+		result.push_back( std::string{ futsim::json_traits<CFoulDrawConfiguration>::AVERAGE_RED_CARDS_KEY } + ": " + std::to_string( foulDrawConfiguration.GetAverageRedCards() ) );
 		result.push_back( "Foul probability: " + std::to_string( foulDrawConfiguration.GetFoulProbability() ) );
 		for( const auto& probability : foulDrawConfiguration.CreateFoulDistribution().probabilities() )
 			result.push_back( std::to_string( probability ) );

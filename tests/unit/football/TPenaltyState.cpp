@@ -48,9 +48,9 @@ std::vector<std::string> TPenaltyState::ObtainedResults() const noexcept
 		CMatchConfiguration{}, team.GetPlayer( "Morris" ), team.GetPlayer( "Kaminski" ), false, rng },
 		} )
 	{
-		result.push_back( std::string{ futsim::json_traits<CPenaltyState>::OUTCOME } + ": " + std::string{ ToString( penaltyState.GetChanceOutcome() ) } );
-		result.push_back( std::string{ futsim::json_traits<CPenaltyState>::STOPPER } + ": " + penaltyState.GetGoalkeeper() );
-		result.push_back( std::string{ futsim::json_traits<CPenaltyState>::SHOOTER } + ": " + penaltyState.GetShooter() );
+		result.push_back( std::string{ futsim::json_traits<CPenaltyState>::OUTCOME_KEY } + ": " + std::string{ ToString( penaltyState.GetChanceOutcome() ) } );
+		result.push_back( std::string{ futsim::json_traits<CPenaltyState>::STOPPER_KEY } + ": " + penaltyState.GetGoalkeeper() );
+		result.push_back( std::string{ futsim::json_traits<CPenaltyState>::SHOOTER_KEY } + ": " + penaltyState.GetShooter() );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, penaltyState );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

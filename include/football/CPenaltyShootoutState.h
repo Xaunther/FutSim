@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "football/traits/CPenaltyShootoutState.h"
 
 #include "types/CPenaltyShootoutState.h"
 
@@ -10,10 +11,7 @@
 
 #include "ExceptionUtils.h"
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 namespace detail
@@ -27,7 +25,7 @@ using shooters = std::vector<std::reference_wrapper<const CPlayer>>;
 /**
  * @brief Class that represents the state of a penalty shootout.
 */
-class CPenaltyShootoutState : public IJsonable
+class CPenaltyShootoutState : public IJsonable, protected json_traits<CPenaltyShootoutState>
 {
 protected:
 	using penalty_states = types::CPenaltyShootoutState::penalty_states;
@@ -189,16 +187,4 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the p
 
 } // detail namespace
 
-} // football namespace
-
-template <> struct json_traits<football::CPenaltyShootoutState>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Penalty shootout state";
-	//! JSON key for the \copybrief football::CPenaltyShootoutState::mPenalties
-	static inline constexpr std::string_view PENALTIES = "Penalties";
-	//! JSON key to indicate if the penalty corresponds to the home team.
-	static inline constexpr std::string_view HOME_TEAM_PENALTY = "Home team penalty";
-};
-
-} // futsim namespace
+} // futsim::football namespace

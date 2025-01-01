@@ -1,21 +1,19 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "football/traits/CLineup.h"
 
 #include "football/types/CLineup.h"
 
 #include <random>
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 /**
  * @brief Class that defines a lineup.
 */
-class CLineup : public IJsonable
+class CLineup : public IJsonable, protected json_traits<CLineup>
 {
 protected:
 	using name = types::CLineup::name;
@@ -89,23 +87,4 @@ template <bool tUseSubs> auto CLineup::CreatePlayersView() const noexcept
 		| std::ranges::views::join;
 }
 
-} // football namespace
-
-template <> struct json_traits<football::CLineup>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Lineup";
-	//! JSON key for a position
-	template <football::E_PLAYER_POSITION tPlayerPosition> static inline constexpr std::string_view POSITION{};
-	//! JSON key for the substitutes.
-	static inline constexpr std::string_view SUBS = "Subs";
-};
-
-template <> inline constexpr std::string_view json_traits<football::CLineup>::POSITION<football::E_PLAYER_POSITION::GK> = "GK";
-template <> inline constexpr std::string_view json_traits<football::CLineup>::POSITION<football::E_PLAYER_POSITION::DF> = "DFs";
-template <> inline constexpr std::string_view json_traits<football::CLineup>::POSITION<football::E_PLAYER_POSITION::DM> = "DMs";
-template <> inline constexpr std::string_view json_traits<football::CLineup>::POSITION<football::E_PLAYER_POSITION::MF> = "MFs";
-template <> inline constexpr std::string_view json_traits<football::CLineup>::POSITION<football::E_PLAYER_POSITION::AM> = "AMs";
-template <> inline constexpr std::string_view json_traits<football::CLineup>::POSITION<football::E_PLAYER_POSITION::FW> = "FWs";
-
-} // futsim namespace
+} // futsim::football namespace

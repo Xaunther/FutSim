@@ -72,7 +72,7 @@ std::vector<std::string> TPenaltyShootoutState::ObtainedResults() const noexcept
 		HOME_STRATEGY, AWAY_STRATEGY, false, rng },
 		} )
 	{
-		result.push_back( std::string{ futsim::json_traits<CPenaltyShootoutState>::PENALTIES } + ": "
+		result.push_back( std::string{ futsim::json_traits<CPenaltyShootoutState>::PENALTIES_KEY } + ": "
 			+ std::to_string( penaltyShootoutState.GetPenalties().size() ) );
 
 		futsim::types::IJsonable::json outputJSON;

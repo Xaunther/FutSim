@@ -187,18 +187,18 @@ std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MIN_DFS } + ": " + std::to_string( lineupConfiguration.GetDFRange().min ) );
+		result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MIN_DFS_KEY } + ": " + std::to_string( lineupConfiguration.GetDFRange().min ) );
 		if( lineupConfiguration.GetDFRange().max )
-			result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MAX_DFS } + ": " + std::to_string( *lineupConfiguration.GetDFRange().max ) );
-		result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MIN_MFS } + ": " + std::to_string( lineupConfiguration.GetMFRange().min ) );
+			result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MAX_DFS_KEY } + ": " + std::to_string( *lineupConfiguration.GetDFRange().max ) );
+		result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MIN_MFS_KEY } + ": " + std::to_string( lineupConfiguration.GetMFRange().min ) );
 		if( lineupConfiguration.GetMFRange().max )
-			result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MAX_MFS } + ": " + std::to_string( *lineupConfiguration.GetMFRange().max ) );
-		result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MIN_FWS } + ": " + std::to_string( lineupConfiguration.GetFWRange().min ) );
+			result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MAX_MFS_KEY } + ": " + std::to_string( *lineupConfiguration.GetMFRange().max ) );
+		result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MIN_FWS_KEY } + ": " + std::to_string( lineupConfiguration.GetFWRange().min ) );
 		if( lineupConfiguration.GetFWRange().max )
-			result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MAX_FWS } + ": " + std::to_string( *lineupConfiguration.GetFWRange().max ) );
-		result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MIN_PLAYERS } + ": " + std::to_string( lineupConfiguration.GetMinPlayerCount() ) );
+			result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MAX_FWS_KEY } + ": " + std::to_string( *lineupConfiguration.GetFWRange().max ) );
+		result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::MIN_PLAYERS_KEY } + ": " + std::to_string( lineupConfiguration.GetMinPlayerCount() ) );
 		if( lineupConfiguration.GetBenchedPlayersCount() )
-			result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::BENCHED_PLAYERS } + ": " + std::to_string( *lineupConfiguration.GetBenchedPlayersCount() ) );
+			result.push_back( std::string{ futsim::json_traits<CLineupConfiguration>::BENCHED_PLAYERS_KEY } + ": " + std::to_string( *lineupConfiguration.GetBenchedPlayersCount() ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, lineupConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

@@ -206,15 +206,15 @@ std::vector<std::string> TGoalDrawConfiguration::ObtainedResults() const noexcep
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageGoals() ) );
-		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_PENALTY_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAveragePenaltyGoals() ) );
-		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_DIRECT_FREE_KICK_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageDirectFreeKickGoals() ) );
-		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_INDIRECT_FREE_KICK_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageIndirectFreeKickGoals() ) );
-		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_CORNER_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageCornerGoals() ) );
-		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_FAR_SHOT_GOALS } + ": " + std::to_string( goalDrawConfiguration.GetAverageFarShotGoals() ) );
-		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_GK_GOAL_PROBABILITY } + ": " + std::to_string( goalDrawConfiguration.Get1vs1GKGoalProbability() ) );
-		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_DF_GOAL_PROBABILITY } + ": " + std::to_string( goalDrawConfiguration.Get1vs1DFGoalProbability() ) );
-		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::EXTRA_CORNER_PROBABILITY } + ": " + std::to_string( goalDrawConfiguration.GetExtraCornerProbability() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_GOALS_KEY } + ": " + std::to_string( goalDrawConfiguration.GetAverageGoals() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_PENALTY_GOALS_KEY } + ": " + std::to_string( goalDrawConfiguration.GetAveragePenaltyGoals() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_DIRECT_FREE_KICK_GOALS_KEY } + ": " + std::to_string( goalDrawConfiguration.GetAverageDirectFreeKickGoals() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_INDIRECT_FREE_KICK_GOALS_KEY } + ": " + std::to_string( goalDrawConfiguration.GetAverageIndirectFreeKickGoals() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_CORNER_GOALS_KEY } + ": " + std::to_string( goalDrawConfiguration.GetAverageCornerGoals() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::AVERAGE_FAR_SHOT_GOALS_KEY } + ": " + std::to_string( goalDrawConfiguration.GetAverageFarShotGoals() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_GK_GOAL_PROBABILITY_KEY } + ": " + std::to_string( goalDrawConfiguration.Get1vs1GKGoalProbability() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_DF_GOAL_PROBABILITY_KEY } + ": " + std::to_string( goalDrawConfiguration.Get1vs1DFGoalProbability() ) );
+		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::EXTRA_CORNER_PROBABILITY_KEY } + ": " + std::to_string( goalDrawConfiguration.GetExtraCornerProbability() ) );
 		result.push_back( "Default 1 on 1 vs GK chance outcome distribution" );
 		for( const auto& probability : goalDrawConfiguration.Create1vs1GKOutcomeDistribution( 1, 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );

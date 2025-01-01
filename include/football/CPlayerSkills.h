@@ -1,19 +1,17 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "football/traits/CPlayerSkills.h"
 
 #include "football/types/CPlayerSkills.h"
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 /**
  * @brief Class encapsulating the skill of a football player.
 */
-class CPlayerSkills : public IJsonable
+class CPlayerSkills : public IJsonable, protected json_traits<CPlayerSkills>
 {
 protected:
 	using skill_type = types::CPlayerSkills::skill_type;
@@ -64,19 +62,4 @@ private:
 	experiences mExperiences;
 };
 
-} // football namespace
-
-template <> struct json_traits<football::CPlayerSkills>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Player skills";
-	//! JSON key for a skill.
-	template <football::E_PLAYER_SKILL tPlayerSkill> static inline constexpr std::string_view SKILL{};
-	//! JSON key for a skill experience.
-	template <football::E_PLAYER_SKILL tPlayerSkill> static inline constexpr std::string_view XP{};
-};
-
-FOR_EACH_PLAYER_SKILL( FUTSIM_INSTANTIATE_ENUM_TRAIT, football::CPlayerSkills, SKILL, football::E_PLAYER_SKILL, " skill" )
-FOR_EACH_PLAYER_SKILL( FUTSIM_INSTANTIATE_ENUM_TRAIT, football::CPlayerSkills, XP, football::E_PLAYER_SKILL, " experience" )
-
-} // futsim namespace
+} // futsim::football namespace

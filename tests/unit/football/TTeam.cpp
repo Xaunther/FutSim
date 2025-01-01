@@ -316,14 +316,14 @@ std::vector<std::string> TTeam::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<CTeam>::NAME } + ": " + std::string{ team.GetName() } );
-		result.push_back( std::string{ futsim::json_traits<CTeam>::ABBREVIATION } + ": " + std::string{ team.GetAbbreviation() } );
-		result.push_back( std::string{ futsim::json_traits<CTeam>::MANAGER } + ": " + std::string{ team.GetManager() } );
+		result.push_back( std::string{ futsim::json_traits<CTeam>::NAME_KEY } + ": " + std::string{ team.GetName() } );
+		result.push_back( std::string{ futsim::json_traits<CTeam>::ABBREVIATION_KEY } + ": " + std::string{ team.GetAbbreviation() } );
+		result.push_back( std::string{ futsim::json_traits<CTeam>::MANAGER_KEY } + ": " + std::string{ team.GetManager() } );
 		for( const auto& player : team.GetPlayers() )
 			result.push_back( std::string{ futsim::json_traits<CPlayer>::KEY } + ": " + std::string{ team.GetPlayer( player.GetKnownName() ).GetKnownName() } );
-		result.push_back( std::string{ futsim::json_traits<CTeam>::SUPPORT_FACTOR } + ": " + std::to_string( team.GetSupportFactor() ) );
-		result.push_back( std::string{ futsim::json_traits<CTeam>::MEAN_ATTENDANCE } + ": " + std::to_string( team.GetAttendanceDistributionParameters().mean() ) );
-		result.push_back( std::string{ futsim::json_traits<CTeam>::STD_DEV_ATTENDANCE } + ": " + std::to_string( team.GetAttendanceDistributionParameters().stddev() ) );
+		result.push_back( std::string{ futsim::json_traits<CTeam>::SUPPORT_FACTOR_KEY } + ": " + std::to_string( team.GetSupportFactor() ) );
+		result.push_back( std::string{ futsim::json_traits<CTeam>::MEAN_ATTENDANCE_KEY } + ": " + std::to_string( team.GetAttendanceDistributionParameters().mean() ) );
+		result.push_back( std::string{ futsim::json_traits<CTeam>::STD_DEV_ATTENDANCE_KEY } + ": " + std::to_string( team.GetAttendanceDistributionParameters().stddev() ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, team );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

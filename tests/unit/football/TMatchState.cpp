@@ -69,10 +69,10 @@ std::vector<std::string> TMatchState::ObtainedResults() const noexcept
 		penaltyMatchConfig, homeTeamStrategy, awayTeamStrategy, rng },
 		} )
 	{
-		result.push_back( std::string{ futsim::json_traits<CMatchState>::MANDATORY_PERIOD_STATES } + ": " +
+		result.push_back( std::string{ futsim::json_traits<CMatchState>::MANDATORY_PERIOD_STATES_KEY } + ": " +
 			std::to_string( matchState.GetMandatoryPlayTimeState().GetStates().size() ) );
 		if( matchState.GetExtraTimeState() )
-			result.push_back( std::string{ futsim::json_traits<CMatchState>::EXTRA_PERIOD_STATES } + ": " +
+			result.push_back( std::string{ futsim::json_traits<CMatchState>::EXTRA_PERIOD_STATES_KEY } + ": " +
 				std::to_string( matchState.GetExtraTimeState()->GetStates().size() ) );
 		if( matchState.GetPenaltyShootoutState() )
 			result.push_back( std::string{ futsim::json_traits<CPenaltyShootoutState>::KEY } + ": " +

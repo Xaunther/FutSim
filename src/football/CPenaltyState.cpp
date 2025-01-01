@@ -7,7 +7,7 @@ namespace futsim::football
 
 void CPenaltyState::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, GetChanceOutcome(), json_traits<CPenaltyState>::OUTCOME );
+	AddToJSONKey( aJSON, GetChanceOutcome(), OUTCOME_KEY );
 	JSONActor<E_PLAYER_SKILL::St>( aJSON );
 	JSONActor<E_PLAYER_SKILL::Sh>( aJSON );
 }

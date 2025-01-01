@@ -36,11 +36,11 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the f
 
 CFoulDrawConfiguration::CFoulDrawConfiguration( const json& aJSON ) try :
 	mAverageFouls( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CFoulDrawConfiguration>::AVERAGE_FOULS, default_traits<CFoulDrawConfiguration>::AVERAGE_FOULS ), "average number of fouls" ) ),
+		aJSON, AVERAGE_FOULS_KEY, AVERAGE_FOULS ), "average number of fouls" ) ),
 	mAverageYellowCards( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CFoulDrawConfiguration>::AVERAGE_YELLOW_CARDS, default_traits<CFoulDrawConfiguration>::AVERAGE_YELLOW_CARDS ), "average number of yellow cards" ) ),
+		aJSON, AVERAGE_YELLOW_CARDS_KEY, AVERAGE_YELLOW_CARDS ), "average number of yellow cards" ) ),
 	mAverageRedCards( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CFoulDrawConfiguration>::AVERAGE_RED_CARDS, default_traits<CFoulDrawConfiguration>::AVERAGE_RED_CARDS ), "average number of red cards" ) ),
+		aJSON, AVERAGE_RED_CARDS_KEY, AVERAGE_RED_CARDS ), "average number of red cards" ) ),
 	mFoulProbability( CalculateFoulProbability( mAverageFouls ) ),
 	mFoulDistributionParameters( { mAverageYellowCards, mAverageRedCards, CheckNonNegativeness(
 		mAverageFouls - mAverageYellowCards - mAverageRedCards, "average number of fouls minus the average number of yellow and red cards" ) } )
@@ -50,9 +50,9 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the f
 
 void CFoulDrawConfiguration::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mAverageFouls, json_traits<CFoulDrawConfiguration>::AVERAGE_FOULS );
-	AddToJSONKey( aJSON, mAverageYellowCards, json_traits<CFoulDrawConfiguration>::AVERAGE_YELLOW_CARDS );
-	AddToJSONKey( aJSON, mAverageRedCards, json_traits<CFoulDrawConfiguration>::AVERAGE_RED_CARDS );
+	AddToJSONKey( aJSON, mAverageFouls, AVERAGE_FOULS_KEY );
+	AddToJSONKey( aJSON, mAverageYellowCards, AVERAGE_YELLOW_CARDS_KEY );
+	AddToJSONKey( aJSON, mAverageRedCards, AVERAGE_RED_CARDS_KEY );
 }
 
 const CFoulDrawConfiguration::stat& CFoulDrawConfiguration::GetAverageFouls() const noexcept

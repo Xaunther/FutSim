@@ -59,7 +59,7 @@ std::vector<std::string> TPossessionDrawConfiguration::ObtainedResults() const n
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<CPossessionDrawConfiguration>::KEEP_POSSESSION_PROBABILITY } + ": " + std::to_string( possessionDrawConfiguration.GetKeepPossessionProbability() ) );
+		result.push_back( std::string{ futsim::json_traits<CPossessionDrawConfiguration>::KEEP_POSSESSION_PROBABILITY_KEY } + ": " + std::to_string( possessionDrawConfiguration.GetKeepPossessionProbability() ) );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, possessionDrawConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

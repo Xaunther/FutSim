@@ -29,23 +29,23 @@ CPlayerSkills::CPlayerSkills(
 	mSkills( aSkills ),
 	mExperiences( aExperiences )
 {
-	CheckSkill( GetSkill( E_PLAYER_SKILL::St ), json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::St> );
-	CheckSkill( GetSkill( E_PLAYER_SKILL::Tk ), json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Tk> );
-	CheckSkill( GetSkill( E_PLAYER_SKILL::Ps ), json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Ps> );
-	CheckSkill( GetSkill( E_PLAYER_SKILL::Sh ), json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Sh> );
+	CheckSkill( GetSkill( E_PLAYER_SKILL::St ), SKILL_KEY<E_PLAYER_SKILL::St> );
+	CheckSkill( GetSkill( E_PLAYER_SKILL::Tk ), SKILL_KEY<E_PLAYER_SKILL::Tk> );
+	CheckSkill( GetSkill( E_PLAYER_SKILL::Ps ), SKILL_KEY<E_PLAYER_SKILL::Ps> );
+	CheckSkill( GetSkill( E_PLAYER_SKILL::Sh ), SKILL_KEY<E_PLAYER_SKILL::Sh> );
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player skills." )
 
 CPlayerSkills::CPlayerSkills( const json& aJSON ) try :
-	mSkills( { CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::St> ), json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::St> ),
-		CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Tk> ), json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Tk> ),
-		CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Ps> ), json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Ps> ),
-		CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Sh> ), json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Sh> )
+	mSkills( { CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, SKILL_KEY<E_PLAYER_SKILL::St> ), SKILL_KEY<E_PLAYER_SKILL::St> ),
+		CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, SKILL_KEY<E_PLAYER_SKILL::Tk> ), SKILL_KEY<E_PLAYER_SKILL::Tk> ),
+		CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, SKILL_KEY<E_PLAYER_SKILL::Ps> ), SKILL_KEY<E_PLAYER_SKILL::Ps> ),
+		CheckSkill( ValueFromRequiredJSONKey<skill_type>( aJSON, SKILL_KEY<E_PLAYER_SKILL::Sh> ), SKILL_KEY<E_PLAYER_SKILL::Sh> )
 		} ),
-	mExperiences( { ValueFromRequiredJSONKey<xp_type>( aJSON, json_traits<CPlayerSkills>::XP<E_PLAYER_SKILL::St> ),
-		ValueFromRequiredJSONKey<xp_type>( aJSON, json_traits<CPlayerSkills>::XP<E_PLAYER_SKILL::Tk> ),
-		ValueFromRequiredJSONKey<xp_type>( aJSON, json_traits<CPlayerSkills>::XP<E_PLAYER_SKILL::Ps> ),
-		ValueFromRequiredJSONKey<xp_type>( aJSON, json_traits<CPlayerSkills>::XP<E_PLAYER_SKILL::Sh> )
+	mExperiences( { ValueFromRequiredJSONKey<xp_type>( aJSON, XP_KEY<E_PLAYER_SKILL::St> ),
+		ValueFromRequiredJSONKey<xp_type>( aJSON, XP_KEY<E_PLAYER_SKILL::Tk> ),
+		ValueFromRequiredJSONKey<xp_type>( aJSON, XP_KEY<E_PLAYER_SKILL::Ps> ),
+		ValueFromRequiredJSONKey<xp_type>( aJSON, XP_KEY<E_PLAYER_SKILL::Sh> )
 		} )
 {
 }
@@ -53,14 +53,14 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the p
 
 void CPlayerSkills::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, GetSkill( E_PLAYER_SKILL::St ), json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::St> );
-	AddToJSONKey( aJSON, GetSkill( E_PLAYER_SKILL::Tk ), json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Tk> );
-	AddToJSONKey( aJSON, GetSkill( E_PLAYER_SKILL::Ps ), json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Ps> );
-	AddToJSONKey( aJSON, GetSkill( E_PLAYER_SKILL::Sh ), json_traits<CPlayerSkills>::SKILL<E_PLAYER_SKILL::Sh> );
-	AddToJSONKey( aJSON, GetExperience( E_PLAYER_SKILL::St ), json_traits<CPlayerSkills>::XP<E_PLAYER_SKILL::St> );
-	AddToJSONKey( aJSON, GetExperience( E_PLAYER_SKILL::Tk ), json_traits<CPlayerSkills>::XP<E_PLAYER_SKILL::Tk> );
-	AddToJSONKey( aJSON, GetExperience( E_PLAYER_SKILL::Ps ), json_traits<CPlayerSkills>::XP<E_PLAYER_SKILL::Ps> );
-	AddToJSONKey( aJSON, GetExperience( E_PLAYER_SKILL::Sh ), json_traits<CPlayerSkills>::XP<E_PLAYER_SKILL::Sh> );
+	AddToJSONKey( aJSON, GetSkill( E_PLAYER_SKILL::St ), SKILL_KEY<E_PLAYER_SKILL::St> );
+	AddToJSONKey( aJSON, GetSkill( E_PLAYER_SKILL::Tk ), SKILL_KEY<E_PLAYER_SKILL::Tk> );
+	AddToJSONKey( aJSON, GetSkill( E_PLAYER_SKILL::Ps ), SKILL_KEY<E_PLAYER_SKILL::Ps> );
+	AddToJSONKey( aJSON, GetSkill( E_PLAYER_SKILL::Sh ), SKILL_KEY<E_PLAYER_SKILL::Sh> );
+	AddToJSONKey( aJSON, GetExperience( E_PLAYER_SKILL::St ), XP_KEY<E_PLAYER_SKILL::St> );
+	AddToJSONKey( aJSON, GetExperience( E_PLAYER_SKILL::Tk ), XP_KEY<E_PLAYER_SKILL::Tk> );
+	AddToJSONKey( aJSON, GetExperience( E_PLAYER_SKILL::Ps ), XP_KEY<E_PLAYER_SKILL::Ps> );
+	AddToJSONKey( aJSON, GetExperience( E_PLAYER_SKILL::Sh ), XP_KEY<E_PLAYER_SKILL::Sh> );
 }
 
 const skill_type& CPlayerSkills::GetSkill( const E_PLAYER_SKILL& aPlayerSkill ) const noexcept

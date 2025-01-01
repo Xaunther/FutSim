@@ -1,50 +1,19 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "football/traits/CChancesDrawConfiguration.h"
 
 #include "football/types/CDrawConfiguration.h"
 #include "football/types/CChancesDrawConfiguration.h"
 #include "CEnumDistribution.h"
-#include "DefaultTraits.h"
 
-namespace futsim
-{
-
-namespace football
-{
-class CChancesDrawConfiguration;
-}
-
-template <> struct default_traits<football::CChancesDrawConfiguration>
-{
-protected:
-	using stat = football::types::CDrawConfiguration::stat;
-public:
-	//! Default \copybrief football::CChancesDrawConfiguration::mAverageChances
-	static inline constexpr stat AVERAGE_CHANCES = stat{ 9609 } / 380;
-	//! Default \copybrief football::CChancesDrawConfiguration::mAverageCornerKicks
-	static inline constexpr stat AVERAGE_CORNER_KICKS = stat{ 3830 } / 380;
-	//! Default \copybrief football::CChancesDrawConfiguration::mAverage1vs1GKs
-	static inline constexpr stat AVERAGE_1VS1_GKS = 2;
-	//! Default \copybrief football::CChancesDrawConfiguration::mAverage1vs1DFs
-	static inline constexpr stat AVERAGE_1VS1_DFS = 2.85;
-	//! Default \copybrief football::CChancesDrawConfiguration::mAverageNearShots
-	static inline constexpr stat AVERAGE_NEAR_SHOTS = 3;
-	//! Default \copybrief football::CChancesDrawConfiguration::mAverageSetPieces
-	static inline constexpr stat AVERAGE_SET_PIECES = stat{ 1545 } / 380;
-	//! Default \copybrief football::CChancesDrawConfiguration::mAveragePenalties
-	static inline constexpr stat AVERAGE_PENALTIES = stat{ 104 } / 380;
-	//! Default \copybrief football::CChancesDrawConfiguration::mAverageDirectFreeKicks
-	static inline constexpr stat AVERAGE_DIRECT_FREE_KICKS = stat{ 301 } / 380;
-};
-
-namespace football
+namespace futsim::football
 {
 
 /**
  * @brief Class that configures the draws of the different chances.
 */
-class CChancesDrawConfiguration : public IJsonable
+class CChancesDrawConfiguration : public IJsonable, protected default_traits<CChancesDrawConfiguration>, json_traits<CChancesDrawConfiguration>
 {
 protected:
 	using stat = types::CDrawConfiguration::stat;
@@ -63,14 +32,14 @@ public:
 	 * @param aAverageDirectFreeKicks \ref mAverageDirectFreeKicks
 	*/
 	explicit CChancesDrawConfiguration(
-		const stat& aAverageChances = default_traits<CChancesDrawConfiguration>::AVERAGE_CHANCES,
-		const stat& aAverageCornerKicks = default_traits<CChancesDrawConfiguration>::AVERAGE_CORNER_KICKS,
-		const stat& aAverage1vs1GKs = default_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_GKS,
-		const stat& aAverage1vs1DFs = default_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_DFS,
-		const stat& aAverageNearShots = default_traits<CChancesDrawConfiguration>::AVERAGE_NEAR_SHOTS,
-		const stat& aAverageSetPieces = default_traits<CChancesDrawConfiguration>::AVERAGE_SET_PIECES,
-		const stat& aAveragePenalties = default_traits<CChancesDrawConfiguration>::AVERAGE_PENALTIES,
-		const stat& aAverageDirectFreeKicks = default_traits<CChancesDrawConfiguration>::AVERAGE_DIRECT_FREE_KICKS
+		const stat& aAverageChances = AVERAGE_CHANCES,
+		const stat& aAverageCornerKicks = AVERAGE_CORNER_KICKS,
+		const stat& aAverage1vs1GKs = AVERAGE_1VS1_GKS,
+		const stat& aAverage1vs1DFs = AVERAGE_1VS1_DFS,
+		const stat& aAverageNearShots = AVERAGE_NEAR_SHOTS,
+		const stat& aAverageSetPieces = AVERAGE_SET_PIECES,
+		const stat& aAveragePenalties = AVERAGE_PENALTIES,
+		const stat& aAverageDirectFreeKicks = AVERAGE_DIRECT_FREE_KICKS
 	);
 
 	/**
@@ -138,28 +107,4 @@ private:
 	set_piece_type_draw_distribution::param_type mSetPieceTypeDistributionParameters;
 };
 
-} // football namespace
-
-template <> struct json_traits<football::CChancesDrawConfiguration>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Chances draw configuration";
-	//! JSON key for the \copybrief football::CChancesDrawConfiguration::mAverageChances
-	static inline constexpr std::string_view AVERAGE_CHANCES = "Average chances";
-	//! JSON key for the \copybrief football::CChancesDrawConfiguration::mAverageCornerKicks
-	static inline constexpr std::string_view AVERAGE_CORNER_KICKS = "Average corner kicks";
-	//! JSON key for the \copybrief football::CChancesDrawConfiguration::mAverage1vs1GKs
-	static inline constexpr std::string_view AVERAGE_1VS1_GKS = "Average 1 on 1 vs GK chances";
-	//! JSON key for the \copybrief football::CChancesDrawConfiguration::mAverage1vs1DFs
-	static inline constexpr std::string_view AVERAGE_1VS1_DFS = "Average 1 on 1 vs DF chances";
-	//! JSON key for the \copybrief football::CChancesDrawConfiguration::mAverageNearShots
-	static inline constexpr std::string_view AVERAGE_NEAR_SHOTS = "Average near shots";
-	//! JSON key for the \copybrief football::CChancesDrawConfiguration::mAverageSetPieces
-	static inline constexpr std::string_view AVERAGE_SET_PIECES = "Average set pieces";
-	//! JSON key for the \copybrief football::CChancesDrawConfiguration::mAveragePenalties
-	static inline constexpr std::string_view AVERAGE_PENALTIES = "Average penalties";
-	//! JSON key for the \copybrief football::CChancesDrawConfiguration::mAverageDirectFreeKicks
-	static inline constexpr std::string_view AVERAGE_DIRECT_FREE_KICKS = "Average direct free kicks";
-};
-
-} // futsim namespace
+} // futsim::football namespace

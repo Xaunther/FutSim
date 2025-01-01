@@ -1,22 +1,20 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "football/traits/CDrawConfiguration.h"
 
 #include "football/CChancesDrawConfiguration.h"
 #include "football/CFoulDrawConfiguration.h"
 #include "football/CGoalDrawConfiguration.h"
 #include "football/CPossessionDrawConfiguration.h"
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 /**
  * @brief Class that configures the draws of a match.
 */
-class CDrawConfiguration : public IJsonable
+class CDrawConfiguration : public IJsonable, protected json_traits<CDrawConfiguration>
 {
 protected:
 	using effective_skill = types::CDrawConfiguration::effective_skill;
@@ -213,12 +211,4 @@ private:
 	probability mDefaultNearShotGoalProbability;
 };
 
-} // football namespace
-
-template <> struct json_traits<football::CDrawConfiguration>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Draw configuration";
-};
-
-} // futsim namespace
+} // futsim::football namespace

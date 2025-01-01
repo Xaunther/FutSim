@@ -1,22 +1,20 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "football/traits/CTieCondition.h"
 
 #include "types/CTieCondition.h"
 
 #include <optional>
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 /**
  * @brief Class that defines a tie condition for a match.
  * @details A match resulting in a tie condition should go on to undo the tie.
 */
-class CTieCondition : public IJsonable
+class CTieCondition : public IJsonable, protected json_traits<CTieCondition>
 {
 protected:
 	using goal_difference = types::CTieCondition::goal_difference;
@@ -78,16 +76,4 @@ private:
 	optional_goal_count mHomeTeamGoals;
 };
 
-} // football namespace
-
-template <> struct json_traits<football::CTieCondition>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Tie condition";
-	//! JSON key for the \copybrief football::CTieCondition::mHomeTeamLead
-	static inline constexpr std::string_view HOME_TEAM_LEAD = "Home team lead";
-	//! JSON key for the \copybrief football::CTieCondition::mHomeTeamGoals
-	static inline constexpr std::string_view HOME_TEAM_GOALS = "Home team goals";
-};
-
-} // futsim namespace
+} // futsim::football namespace

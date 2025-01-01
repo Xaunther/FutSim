@@ -1,37 +1,18 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "football/traits/CPenaltyShootoutConfiguration.h"
 
 #include "football/types/CPenaltyShootoutConfiguration.h"
 #include "football/EPenaltySequence.h"
-#include "DefaultTraits.h"
 
-namespace futsim
-{
-
-namespace football
-{
-class CPenaltyShootoutConfiguration;
-}
-
-template <> struct default_traits<football::CPenaltyShootoutConfiguration>
-{
-protected:
-	using penalty_count = football::types::CPenaltyShootoutConfiguration::penalty_count;
-public:
-	//! Default \copybrief football::CPenaltyShootoutConfiguration::mPenaltySequence
-	static inline constexpr football::E_PENALTY_SEQUENCE PENALTY_SEQUENCE = football::E_PENALTY_SEQUENCE::AB;
-	//! Default \copybrief football::CPenaltyShootoutConfiguration::mMinPenaltyCount
-	static inline constexpr penalty_count PENALTY_COUNT = 5;
-};
-
-namespace football
+namespace futsim::football
 {
 
 /**
  * @brief Class to configure a penalty shootout.
 */
-class CPenaltyShootoutConfiguration : public IJsonable
+class CPenaltyShootoutConfiguration : public IJsonable, protected default_traits<CPenaltyShootoutConfiguration>, protected json_traits<CPenaltyShootoutConfiguration>
 {
 protected:
 	using penalty_count = types::CPenaltyShootoutConfiguration::penalty_count;
@@ -43,8 +24,8 @@ public:
 	 * @param aMinPenaltyCount \ref mMinPenaltyCount
 	*/
 	explicit CPenaltyShootoutConfiguration(
-		const E_PENALTY_SEQUENCE& aPenaltySequence = default_traits<CPenaltyShootoutConfiguration>::PENALTY_SEQUENCE,
-		const penalty_count& aMinPenaltyCount = default_traits<CPenaltyShootoutConfiguration>::PENALTY_COUNT ) noexcept;
+		const E_PENALTY_SEQUENCE& aPenaltySequence = PENALTY_SEQUENCE,
+		const penalty_count& aMinPenaltyCount = PENALTY_COUNT ) noexcept;
 
 	/**
 	 * @brief JSON constructor.
@@ -72,16 +53,4 @@ private:
 	penalty_count mMinPenaltyCount;
 };
 
-} // football namespace
-
-template <> struct json_traits<football::CPenaltyShootoutConfiguration>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Penalty shootout configuration";
-	//! JSON key for the \copybrief football::CPenaltyShootoutConfiguration::mPenaltySequence
-	static inline constexpr std::string_view SEQUENCE = "Sequence";
-	//! JSON key for the \copybrief football::CPenaltyShootoutConfiguration::mMinPenaltyCount
-	static inline constexpr std::string_view MIN_PENALTY_COUNT = "Min penalty count";
-};
-
-} // futsim namespace
+} // futsim::football namespace

@@ -49,10 +49,10 @@ template void CPenaltyShootoutState::score::Add<false>() noexcept;
 
 void CPenaltyShootoutState::JSON( json& aJSON ) const noexcept
 {
-	for( auto& JSONPenalties = aJSON[ json_traits<CPenaltyShootoutState>::PENALTIES ]; const auto & penalty : mPenalties )
+	for( auto& JSONPenalties = aJSON[ PENALTIES_KEY ]; const auto & penalty : mPenalties )
 	{
 		json elementJSON;
-		AddToJSONKey( elementJSON, penalty.homeTeam, json_traits<CPenaltyShootoutState>::HOME_TEAM_PENALTY );
+		AddToJSONKey( elementJSON, penalty.homeTeam, HOME_TEAM_PENALTY_KEY );
 		AddToJSON( elementJSON, penalty.state );
 		JSONPenalties.push_back( std::move( elementJSON ) );
 	}

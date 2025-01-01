@@ -34,21 +34,21 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the c
 
 CChancesDrawConfiguration::CChancesDrawConfiguration( const json& aJSON ) try :
 	mAverageChances( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CChancesDrawConfiguration>::AVERAGE_CHANCES, default_traits<CChancesDrawConfiguration>::AVERAGE_CHANCES ), "average number of chances" ) ),
+		aJSON, AVERAGE_CHANCES_KEY, AVERAGE_CHANCES ), "average number of chances" ) ),
 	mAverageCornerKicks( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CChancesDrawConfiguration>::AVERAGE_CORNER_KICKS, default_traits<CChancesDrawConfiguration>::AVERAGE_CORNER_KICKS ), "average number of corner kicks" ) ),
+		aJSON, AVERAGE_CORNER_KICKS_KEY, AVERAGE_CORNER_KICKS ), "average number of corner kicks" ) ),
 	mAverage1vs1GKs( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_GKS, default_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_GKS ), "average number of 1 on 1 vs GK chances" ) ),
+		aJSON, AVERAGE_1VS1_GKS_KEY, AVERAGE_1VS1_GKS ), "average number of 1 on 1 vs GK chances" ) ),
 	mAverage1vs1DFs( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_DFS, default_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_DFS ), "average number of 1 on 1 vs DF chances" ) ),
+		aJSON, AVERAGE_1VS1_DFS_KEY, AVERAGE_1VS1_DFS ), "average number of 1 on 1 vs DF chances" ) ),
 	mAverageNearShots( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CChancesDrawConfiguration>::AVERAGE_NEAR_SHOTS, default_traits<CChancesDrawConfiguration>::AVERAGE_NEAR_SHOTS ), "average number of near shots" ) ),
+		aJSON, AVERAGE_NEAR_SHOTS_KEY, AVERAGE_NEAR_SHOTS ), "average number of near shots" ) ),
 	mAverageSetPieces( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CChancesDrawConfiguration>::AVERAGE_SET_PIECES, default_traits<CChancesDrawConfiguration>::AVERAGE_SET_PIECES ), "average number of set pieces" ) ),
+		aJSON, AVERAGE_SET_PIECES_KEY, AVERAGE_SET_PIECES ), "average number of set pieces" ) ),
 	mAveragePenalties( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CChancesDrawConfiguration>::AVERAGE_PENALTIES, default_traits<CChancesDrawConfiguration>::AVERAGE_PENALTIES ), "average number of penalties" ) ),
+		aJSON, AVERAGE_PENALTIES_KEY, AVERAGE_PENALTIES ), "average number of penalties" ) ),
 	mAverageDirectFreeKicks( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CChancesDrawConfiguration>::AVERAGE_DIRECT_FREE_KICKS, default_traits<CChancesDrawConfiguration>::AVERAGE_DIRECT_FREE_KICKS ), "average number of direct free kicks" ) ),
+		aJSON, AVERAGE_DIRECT_FREE_KICKS_KEY, AVERAGE_DIRECT_FREE_KICKS ), "average number of direct free kicks" ) ),
 	mSetPieceTypeDistributionParameters( { mAveragePenalties, mAverageDirectFreeKicks, CheckNonNegativeness(
 		mAverageSetPieces - mAveragePenalties - mAverageDirectFreeKicks,
 		"average number of set pieces minus the average number of penalties and direct free kicks" ) } )
@@ -58,14 +58,14 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the c
 
 void CChancesDrawConfiguration::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mAverageChances, json_traits<CChancesDrawConfiguration>::AVERAGE_CHANCES );
-	AddToJSONKey( aJSON, mAverageCornerKicks, json_traits<CChancesDrawConfiguration>::AVERAGE_CORNER_KICKS );
-	AddToJSONKey( aJSON, mAverage1vs1GKs, json_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_GKS );
-	AddToJSONKey( aJSON, mAverage1vs1DFs, json_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_DFS );
-	AddToJSONKey( aJSON, mAverageNearShots, json_traits<CChancesDrawConfiguration>::AVERAGE_NEAR_SHOTS );
-	AddToJSONKey( aJSON, mAverageSetPieces, json_traits<CChancesDrawConfiguration>::AVERAGE_SET_PIECES );
-	AddToJSONKey( aJSON, mAveragePenalties, json_traits<CChancesDrawConfiguration>::AVERAGE_PENALTIES );
-	AddToJSONKey( aJSON, mAverageDirectFreeKicks, json_traits<CChancesDrawConfiguration>::AVERAGE_DIRECT_FREE_KICKS );
+	AddToJSONKey( aJSON, mAverageChances, AVERAGE_CHANCES_KEY );
+	AddToJSONKey( aJSON, mAverageCornerKicks, AVERAGE_CORNER_KICKS_KEY );
+	AddToJSONKey( aJSON, mAverage1vs1GKs, AVERAGE_1VS1_GKS_KEY );
+	AddToJSONKey( aJSON, mAverage1vs1DFs, AVERAGE_1VS1_DFS_KEY );
+	AddToJSONKey( aJSON, mAverageNearShots, AVERAGE_NEAR_SHOTS_KEY );
+	AddToJSONKey( aJSON, mAverageSetPieces, AVERAGE_SET_PIECES_KEY );
+	AddToJSONKey( aJSON, mAveragePenalties, AVERAGE_PENALTIES_KEY );
+	AddToJSONKey( aJSON, mAverageDirectFreeKicks, AVERAGE_DIRECT_FREE_KICKS_KEY );
 }
 
 const CChancesDrawConfiguration::stat& CChancesDrawConfiguration::GetAverageChances() const noexcept

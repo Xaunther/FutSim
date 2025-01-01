@@ -54,7 +54,7 @@ std::vector<std::string> TPlayState::ObtainedResults() const noexcept
 		if( playState.GetFoulState() )
 			result.push_back( std::string{ futsim::json_traits<CFoulState>::KEY } + ": "
 				+ std::string{ ToString( ( *playState.GetFoulState() ).GetOutcome() ) } );
-		result.push_back( std::string{ futsim::json_traits<CPlayState>::CHANCES } );
+		result.push_back( std::string{ futsim::json_traits<CPlayState>::CHANCES_KEY } );
 		for( const auto& chance : playState.GetChancesStates() )
 			result.push_back( std::string{ ToString( chance.GetChanceOutcome() ) } );
 

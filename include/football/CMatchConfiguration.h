@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "football/traits/CMatchConfiguration.h"
 
 #include "football/CDrawConfiguration.h"
 #include "football/CExtraTime.h"
@@ -11,21 +12,7 @@
 #include "football/CTacticsConfiguration.h"
 #include "football/CTieCondition.h"
 
-namespace futsim
-{
-
-namespace football
-{
-class CMatchConfiguration;
-}
-
-template <> struct default_traits<football::CMatchConfiguration>
-{
-	//! Default \copybrief football::CMatchConfiguration::mApplyAmbientFactor
-	static inline constexpr bool APPLY_AMBIENT_FACTOR = true;
-};
-
-namespace football
+namespace futsim::football
 {
 
 class CTeamStrategy;
@@ -33,7 +20,7 @@ class CTeamStrategy;
 /**
  * @brief Class that configures a football match.
 */
-class CMatchConfiguration : public IJsonable
+class CMatchConfiguration : public IJsonable, protected default_traits<CMatchConfiguration>, protected json_traits<CMatchConfiguration>
 {
 protected:
 	using optional_tie_condition = types::CMatchConfiguration::optional_tie_condition;
@@ -55,7 +42,7 @@ public:
 	explicit CMatchConfiguration(
 		const CPlayTime& aPlayTime = CPlayTime{},
 		const CLineupConfiguration& aLineupConfiguration = CLineupConfiguration{},
-		const bool aApplyAmbientFactor = default_traits<CMatchConfiguration>::APPLY_AMBIENT_FACTOR,
+		const bool aApplyAmbientFactor = APPLY_AMBIENT_FACTOR,
 		const CTacticsConfiguration& aTacticsConfiguration = CTacticsConfiguration{},
 		const optional_tie_condition& aTieCondition = {},
 		const optional_extra_time& aExtraTime = {},
@@ -125,14 +112,4 @@ private:
 	CDrawConfiguration mDrawConfiguration;
 };
 
-} // football namespace
-
-template <> struct json_traits<football::CMatchConfiguration>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Match configuration";
-	//! JSON key for the \copybrief football::CMatchConfiguration::mApplyAmbientFactor
-	static inline constexpr std::string_view APPLY_AMBIENT_FACTOR = "Apply ambient factor";
-};
-
-} // futsim namespace
+} // futsim::football namespace

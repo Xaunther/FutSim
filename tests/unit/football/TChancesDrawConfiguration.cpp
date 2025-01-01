@@ -165,14 +165,14 @@ std::vector<std::string> TChancesDrawConfiguration::ObtainedResults() const noex
 			}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_CHANCES } + ": " + std::to_string( chancesDrawConfiguration.GetAverageChances() ) );
-		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_CORNER_KICKS } + ": " + std::to_string( chancesDrawConfiguration.GetAverageCornerKicks() ) );
-		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_GKS } + ": " + std::to_string( chancesDrawConfiguration.GetAverage1vs1GKs() ) );
-		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_DFS } + ": " + std::to_string( chancesDrawConfiguration.GetAverage1vs1DFs() ) );
-		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_NEAR_SHOTS } + ": " + std::to_string( chancesDrawConfiguration.GetAverageNearShots() ) );
-		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_SET_PIECES } + ": " + std::to_string( chancesDrawConfiguration.GetAverageSetPieces() ) );
-		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_PENALTIES } + ": " + std::to_string( chancesDrawConfiguration.GetAveragePenalties() ) );
-		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_DIRECT_FREE_KICKS } + ": " + std::to_string( chancesDrawConfiguration.GetAverageDirectFreeKicks() ) );
+		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_CHANCES_KEY } + ": " + std::to_string( chancesDrawConfiguration.GetAverageChances() ) );
+		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_CORNER_KICKS_KEY } + ": " + std::to_string( chancesDrawConfiguration.GetAverageCornerKicks() ) );
+		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_GKS_KEY } + ": " + std::to_string( chancesDrawConfiguration.GetAverage1vs1GKs() ) );
+		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_1VS1_DFS_KEY } + ": " + std::to_string( chancesDrawConfiguration.GetAverage1vs1DFs() ) );
+		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_NEAR_SHOTS_KEY } + ": " + std::to_string( chancesDrawConfiguration.GetAverageNearShots() ) );
+		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_SET_PIECES_KEY } + ": " + std::to_string( chancesDrawConfiguration.GetAverageSetPieces() ) );
+		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_PENALTIES_KEY } + ": " + std::to_string( chancesDrawConfiguration.GetAveragePenalties() ) );
+		result.push_back( std::string{ futsim::json_traits<CChancesDrawConfiguration>::AVERAGE_DIRECT_FREE_KICKS_KEY } + ": " + std::to_string( chancesDrawConfiguration.GetAverageDirectFreeKicks() ) );
 		for( const auto& probability : chancesDrawConfiguration.CreateSetPieceTypeDistribution().probabilities() )
 			result.push_back( std::to_string( probability ) );
 		futsim::types::IJsonable::json outputJSON;

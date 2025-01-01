@@ -73,7 +73,7 @@ CTeamStrategy::CTeamStrategy(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the team strategy." )
 
 CTeamStrategy::CTeamStrategy( const json& aJSON ) try :
-	mTacticID( ValueFromRequiredJSONKey<id>( aJSON, json_traits<CTeamStrategy>::TACTIC ) ),
+	mTacticID( ValueFromRequiredJSONKey<id>( aJSON, TACTIC_KEY ) ),
 	mLineup( ValueFromRequiredJSONKey<CLineup>( aJSON ) )
 {
 }
@@ -81,7 +81,7 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the t
 
 void CTeamStrategy::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mTacticID, json_traits<CTeamStrategy>::TACTIC );
+	AddToJSONKey( aJSON, mTacticID, TACTIC_KEY );
 	AddToJSONKey( aJSON, mLineup );
 }
 

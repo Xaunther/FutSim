@@ -40,23 +40,23 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the g
 
 CGoalDrawConfiguration::CGoalDrawConfiguration( const json& aJSON ) try :
 	mAverageGoals( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_GOALS, default_traits<CGoalDrawConfiguration>::AVERAGE_GOALS ), "average number of goals" ) ),
+		aJSON, AVERAGE_GOALS_KEY, AVERAGE_GOALS ), "average number of goals" ) ),
 	mAveragePenaltyGoals( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_PENALTY_GOALS, default_traits<CGoalDrawConfiguration>::AVERAGE_PENALTY_GOALS ), "average number of penalty goals" ) ),
+		aJSON, AVERAGE_PENALTY_GOALS_KEY, AVERAGE_PENALTY_GOALS ), "average number of penalty goals" ) ),
 	mAverageDirectFreeKickGoals( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_DIRECT_FREE_KICK_GOALS, default_traits<CGoalDrawConfiguration>::AVERAGE_DIRECT_FREE_KICK_GOALS ), "average number of direct free kick goals" ) ),
+		aJSON, AVERAGE_DIRECT_FREE_KICK_GOALS_KEY, AVERAGE_DIRECT_FREE_KICK_GOALS ), "average number of direct free kick goals" ) ),
 	mAverageIndirectFreeKickGoals( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_INDIRECT_FREE_KICK_GOALS, default_traits<CGoalDrawConfiguration>::AVERAGE_INDIRECT_FREE_KICK_GOALS ), "average number of indirect free kick goals" ) ),
+		aJSON, AVERAGE_INDIRECT_FREE_KICK_GOALS_KEY, AVERAGE_INDIRECT_FREE_KICK_GOALS ), "average number of indirect free kick goals" ) ),
 	mAverageCornerGoals( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_CORNER_GOALS, default_traits<CGoalDrawConfiguration>::AVERAGE_CORNER_GOALS ), "average number of corner kick goals" ) ),
+		aJSON, AVERAGE_CORNER_GOALS_KEY, AVERAGE_CORNER_GOALS ), "average number of corner kick goals" ) ),
 	mAverageFarShotGoals( CheckNonNegativeness( ValueFromOptionalJSONKey<stat>(
-		aJSON, json_traits<CGoalDrawConfiguration>::AVERAGE_FAR_SHOT_GOALS, default_traits<CGoalDrawConfiguration>::AVERAGE_FAR_SHOT_GOALS ), "average number of far shot goals" ) ),
+		aJSON, AVERAGE_FAR_SHOT_GOALS_KEY, AVERAGE_FAR_SHOT_GOALS ), "average number of far shot goals" ) ),
 	m1vs1GKGoalProbability( CheckProbability( ValueFromOptionalJSONKey<probability>(
-		aJSON, json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_GK_GOAL_PROBABILITY, default_traits<CGoalDrawConfiguration>::ONE_VS_ONE_GK_GOAL_PROBABILITY ), "probability to score in a 1 on 1 vs GK chance" ) ),
+		aJSON, ONE_VS_ONE_GK_GOAL_PROBABILITY_KEY, ONE_VS_ONE_GK_GOAL_PROBABILITY ), "probability to score in a 1 on 1 vs GK chance" ) ),
 	m1vs1DFGoalProbability( CheckProbability( ValueFromOptionalJSONKey<probability>(
-		aJSON, json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_DF_GOAL_PROBABILITY, default_traits<CGoalDrawConfiguration>::ONE_VS_ONE_DF_GOAL_PROBABILITY ), "probability to score in a 1 on 1 vs DF chance" ) ),
+		aJSON, ONE_VS_ONE_DF_GOAL_PROBABILITY_KEY, ONE_VS_ONE_DF_GOAL_PROBABILITY ), "probability to score in a 1 on 1 vs DF chance" ) ),
 	mExtraCornerProbability( CheckProbability( ValueFromOptionalJSONKey<probability>(
-		aJSON, json_traits<CGoalDrawConfiguration>::EXTRA_CORNER_PROBABILITY, default_traits<CGoalDrawConfiguration>::EXTRA_CORNER_PROBABILITY ), "probability to be awarded an extra corner" ) )
+		aJSON, EXTRA_CORNER_PROBABILITY_KEY, EXTRA_CORNER_PROBABILITY ), "probability to be awarded an extra corner" ) )
 {
 	CheckProbability( mExtraCornerProbability + m1vs1GKGoalProbability,
 		"joint probability of getting an extra corner or scoring in a 1 on 1 vs GK chance" );
@@ -67,15 +67,15 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the g
 
 void CGoalDrawConfiguration::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mAverageGoals, json_traits<CGoalDrawConfiguration>::AVERAGE_GOALS );
-	AddToJSONKey( aJSON, mAveragePenaltyGoals, json_traits<CGoalDrawConfiguration>::AVERAGE_PENALTY_GOALS );
-	AddToJSONKey( aJSON, mAverageDirectFreeKickGoals, json_traits<CGoalDrawConfiguration>::AVERAGE_DIRECT_FREE_KICK_GOALS );
-	AddToJSONKey( aJSON, mAverageIndirectFreeKickGoals, json_traits<CGoalDrawConfiguration>::AVERAGE_INDIRECT_FREE_KICK_GOALS );
-	AddToJSONKey( aJSON, mAverageCornerGoals, json_traits<CGoalDrawConfiguration>::AVERAGE_CORNER_GOALS );
-	AddToJSONKey( aJSON, mAverageFarShotGoals, json_traits<CGoalDrawConfiguration>::AVERAGE_FAR_SHOT_GOALS );
-	AddToJSONKey( aJSON, m1vs1GKGoalProbability, json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_GK_GOAL_PROBABILITY );
-	AddToJSONKey( aJSON, m1vs1DFGoalProbability, json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_DF_GOAL_PROBABILITY );
-	AddToJSONKey( aJSON, mExtraCornerProbability, json_traits<CGoalDrawConfiguration>::EXTRA_CORNER_PROBABILITY );
+	AddToJSONKey( aJSON, mAverageGoals, AVERAGE_GOALS_KEY );
+	AddToJSONKey( aJSON, mAveragePenaltyGoals, AVERAGE_PENALTY_GOALS_KEY );
+	AddToJSONKey( aJSON, mAverageDirectFreeKickGoals, AVERAGE_DIRECT_FREE_KICK_GOALS_KEY );
+	AddToJSONKey( aJSON, mAverageIndirectFreeKickGoals, AVERAGE_INDIRECT_FREE_KICK_GOALS_KEY );
+	AddToJSONKey( aJSON, mAverageCornerGoals, AVERAGE_CORNER_GOALS_KEY );
+	AddToJSONKey( aJSON, mAverageFarShotGoals, AVERAGE_FAR_SHOT_GOALS_KEY );
+	AddToJSONKey( aJSON, m1vs1GKGoalProbability, ONE_VS_ONE_GK_GOAL_PROBABILITY_KEY );
+	AddToJSONKey( aJSON, m1vs1DFGoalProbability, ONE_VS_ONE_DF_GOAL_PROBABILITY_KEY );
+	AddToJSONKey( aJSON, mExtraCornerProbability, EXTRA_CORNER_PROBABILITY_KEY );
 }
 
 const CGoalDrawConfiguration::stat& CGoalDrawConfiguration::GetAverageGoals() const noexcept

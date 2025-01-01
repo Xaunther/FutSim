@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IJsonable.h"
+#include "football/traits/CFoulState.h"
 
 #include "types/CPerson.h"
 #include "types/CFoulDrawConfiguration.h"
@@ -8,16 +9,13 @@
 #include "football/CMatchConfiguration.h"
 #include "football/CTeamStrategy.h"
 
-namespace futsim
-{
-
-namespace football
+namespace futsim::football
 {
 
 /**
  * @brief Class that represents the state of a foul.
 */
-class CFoulState : public IJsonable
+class CFoulState : public IJsonable, protected json_traits<CFoulState>
 {
 protected:
 	using name_type = futsim::types::CPerson::name_type;
@@ -67,16 +65,4 @@ CFoulState::CFoulState(
 {
 }
 
-} // football namespace
-
-template <> struct json_traits<football::CFoulState>
-{
-	//! JSON key for the class.
-	static inline constexpr std::string_view KEY = "Foul state";
-	//! JSON key for the \copybrief football::CFoulState::mCommitter
-	static inline constexpr std::string_view COMMIITER = "Committer";
-	//! JSON key for the \copybrief football::CFoulState::mOutcome
-	static inline constexpr std::string_view OUTCOME = "Outcome";
-};
-
-} // futsim namespace
+} // futsim::football namespace

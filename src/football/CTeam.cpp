@@ -71,28 +71,28 @@ CTeam::CTeam(
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the team." )
 
 CTeam::CTeam( const json& aJSON ) try :
-	mName( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, json_traits<CTeam>::NAME ), "name" ) ),
-	mAbbreviation( CheckAbbreviation( ValueFromRequiredJSONKey<name_type>( aJSON, json_traits<CTeam>::ABBREVIATION ) ) ),
-	mManager( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, json_traits<CTeam>::MANAGER ), "manager name" ) ),
+	mName( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, NAME_KEY ), "name" ) ),
+	mAbbreviation( CheckAbbreviation( ValueFromRequiredJSONKey<name_type>( aJSON, ABBREVIATION_KEY ) ) ),
+	mManager( CheckName( ValueFromRequiredJSONKey<name_type>( aJSON, MANAGER_KEY ), "manager name" ) ),
 	mPlayers( CreatePlayersFromJSON( aJSON ) ),
 	mNameIndexMap( CreateNameIndexMap( mPlayers ) ),
-	mSupportFactor( CheckPositiveness( ValueFromRequiredJSONKey<support_factor>( aJSON, json_traits<CTeam>::SUPPORT_FACTOR ), "support factor" ) ),
-	mAttendanceDistributionParameters( CheckNonNegativeness( ValueFromRequiredJSONKey<double>( aJSON, json_traits<CTeam>::MEAN_ATTENDANCE ), "mean attendance" ),
-		CheckPositiveness( ValueFromRequiredJSONKey<double>( aJSON, json_traits<CTeam>::STD_DEV_ATTENDANCE ), "standard deviation of the attendance" ) )
+	mSupportFactor( CheckPositiveness( ValueFromRequiredJSONKey<support_factor>( aJSON, SUPPORT_FACTOR_KEY ), "support factor" ) ),
+	mAttendanceDistributionParameters( CheckNonNegativeness( ValueFromRequiredJSONKey<double>( aJSON, MEAN_ATTENDANCE_KEY ), "mean attendance" ),
+		CheckPositiveness( ValueFromRequiredJSONKey<double>( aJSON, STD_DEV_ATTENDANCE_KEY ), "standard deviation of the attendance" ) )
 {
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the team from JSON." )
 
 void CTeam::JSON( json& aJSON ) const noexcept
 {
-	AddToJSONKey( aJSON, mName, json_traits<CTeam>::NAME );
-	AddToJSONKey( aJSON, mAbbreviation, json_traits<CTeam>::ABBREVIATION );
-	AddToJSONKey( aJSON, mManager, json_traits<CTeam>::MANAGER );
+	AddToJSONKey( aJSON, mName, NAME_KEY );
+	AddToJSONKey( aJSON, mAbbreviation, ABBREVIATION_KEY );
+	AddToJSONKey( aJSON, mManager, MANAGER_KEY );
 	if( !mPlayers.empty() )
-		AddArrayToJSONKey( aJSON, mPlayers, json_traits<CTeam>::PLAYERS );
-	AddToJSONKey( aJSON, mSupportFactor, json_traits<CTeam>::SUPPORT_FACTOR );
-	AddToJSONKey( aJSON, mAttendanceDistributionParameters.mean(), json_traits<CTeam>::MEAN_ATTENDANCE );
-	AddToJSONKey( aJSON, mAttendanceDistributionParameters.stddev(), json_traits<CTeam>::STD_DEV_ATTENDANCE );
+		AddArrayToJSONKey( aJSON, mPlayers, PLAYERS_KEY );
+	AddToJSONKey( aJSON, mSupportFactor, SUPPORT_FACTOR_KEY );
+	AddToJSONKey( aJSON, mAttendanceDistributionParameters.mean(), MEAN_ATTENDANCE_KEY );
+	AddToJSONKey( aJSON, mAttendanceDistributionParameters.stddev(), STD_DEV_ATTENDANCE_KEY );
 }
 
 std::string_view CTeam::GetName() const noexcept
@@ -163,7 +163,7 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the a
 types::CTeam::players CreatePlayersFromJSON( const futsim::types::IJsonable::json& aJSON ) try
 {
 	types::CTeam::players result;
-	for( const auto& JSONPlayer : ValueFromOptionalJSONKey<futsim::types::IJsonable::json>( aJSON, json_traits<CTeam>::PLAYERS ) )
+	for( const auto& JSONPlayer : ValueFromOptionalJSONKey<futsim::types::IJsonable::json>( aJSON, json_traits<CTeam>::PLAYERS_KEY ) )
 		result.emplace_back( ValueFromJSON<types::CTeam::players::value_type>( JSONPlayer ) );
 	return result;
 }

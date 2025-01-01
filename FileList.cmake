@@ -4,7 +4,6 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/Config.h
 	include/CPerson.h
 	include/CPlayTime.h
-	include/DefaultTraits.h
 	include/ENationality.h
 	include/EnumUtils.h
 	include/ExceptionUtils.h
@@ -13,6 +12,10 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/NameUtils.h
 	include/NumberUtils.h
 	include/ProbabilityUtils.h
+	include/traits/CPerson.h
+	include/traits/CPlayTime.h
+	include/traits/default.h
+	include/traits/json.h
 	include/types/CPerson.h
 	include/types/CPlayTime.h
 	include/types/IJsonable.h
@@ -61,6 +64,35 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/IExtraTimePeriodPolicy.h
 	include/football/IPeriodPlayPolicy.h
 	include/football/IPeriodPolicy.h
+	include/football/traits/CChancesDrawConfiguration.h
+	include/football/traits/CChanceState.h
+	include/football/traits/CDrawConfiguration.h
+	include/football/traits/CExtraTime.h
+	include/football/traits/CFoulDrawConfiguration.h
+	include/football/traits/CFoulState.h
+	include/football/traits/CGoalDrawConfiguration.h
+	include/football/traits/CLineupConfiguration.h
+	include/football/traits/CLineup.h
+	include/football/traits/CMatchConfiguration.h
+	include/football/traits/CMatch.h
+	include/football/traits/CMatchState.h
+	include/football/traits/CPenaltyShootoutConfiguration.h
+	include/football/traits/CPenaltyShootoutState.h
+	include/football/traits/CPenaltyState.h
+	include/football/traits/CPeriodState.h
+	include/football/traits/CPeriodStates.h
+	include/football/traits/CPlayer.h
+	include/football/traits/CPlayerSkills.h
+	include/football/traits/CPlayState.h
+	include/football/traits/CPlayTime.h
+	include/football/traits/CPossessionDrawConfiguration.h
+	include/football/traits/CPossessionState.h
+	include/football/traits/CStadium.h
+	include/football/traits/CTacticConfiguration.h
+	include/football/traits/CTacticsConfiguration.h
+	include/football/traits/CTeam.h
+	include/football/traits/CTeamStrategy.h
+	include/football/traits/CTieCondition.h
 	include/football/types/CChancesDrawConfiguration.h
 	include/football/types/CChanceState.h
 	include/football/types/CDrawConfiguration.h
