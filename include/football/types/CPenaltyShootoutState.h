@@ -27,6 +27,18 @@ using penalty_states = std::vector<penalty<>>;
 //! Aggregate for a score.
 struct score
 {
+	inline constexpr score operator+( const score& aOther ) const noexcept
+	{
+		return score{ *this } += aOther;
+	}
+
+	inline constexpr score& operator+=( const score& aOther ) noexcept
+	{
+		home += aOther.home;
+		away += aOther.away;
+		return *this;
+	}
+
 	//! Home score.
 	unsigned int home = 0;
 	//! Away score.

@@ -100,9 +100,7 @@ CMatchState::CMatchState(
 						CExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::NO>{} };
 					break;
 				}
-				const auto extraTimeScore = mExtraTimeState->CountScore();
-				score.home += extraTimeScore.home;
-				score.away += extraTimeScore.away;
+				score += mExtraTimeState->CountScore();
 
 				if( tieCondition( score.home, score.away ) )
 					mPenaltyShootoutState = CPenaltyShootoutState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
