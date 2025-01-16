@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "football/types/CTieCondition.h"
+
 namespace futsim::football
 {
 
@@ -40,9 +42,9 @@ struct score
 	}
 
 	//! Home score.
-	unsigned int home = 0;
+	types::CTieCondition::goal_count home = 0;
 	//! Away score.
-	unsigned int away = 0;
+	types::CTieCondition::goal_count away = 0;
 };
 
 } // types::CPenaltyShootoutState namespace
