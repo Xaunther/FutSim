@@ -30,18 +30,13 @@ class CPenaltyShootoutState : public IJsonable, protected json_traits<CPenaltySh
 protected:
 	using penalty_states = types::CPenaltyShootoutState::penalty_states;
 	//! Aggregate for the score of each team, calculated as scored penalties + opposite team misses.
-	struct score
+	struct score : public types::CPenaltyShootoutState::score
 	{
 		/**
 		 * @brief Adds a score for the given team.
 		 * @tparam tHomeTeam Whether the score is added to the home team.
 		*/
 		template <bool tHomeTeam> void Add() noexcept;
-
-		//! Home score.
-		unsigned int home = 0;
-		//! Away score.
-		unsigned int away = 0;
 	};
 
 public:

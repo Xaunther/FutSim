@@ -21,12 +21,17 @@ const CPeriodState::plays& CPeriodState::GetPlays() const noexcept
 	return mPlays;
 }
 
-CPeriodState::goal_count CPeriodState::CountScoredGoals( const bool aHomeTeam ) const noexcept
+types::CPenaltyShootoutState::score CPeriodState::CountScore() const noexcept
 {
-	return static_cast<goal_count>( std::ranges::count_if( mPlays, [ &aHomeTeam ]( const auto& aPlay )
+	types::CPenaltyShootoutState::score result;
+
+	std::ranges::for_each( mPlays, [ &result ]( const auto& aPlay )
 	{
-		return aPlay.homeTeam == aHomeTeam && aPlay.state.IsGoalScored();
-	} ) );
+		if( aPlay.state.IsGoalScored() )
+			++( aPlay.homeTeam ? result.home : result.away );
+	} );
+
+	return result;
 }
 
 void CPeriodState::PushPlayState( CPlayState&& aPlayState, const bool aHomeTeamAttack ) noexcept

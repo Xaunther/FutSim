@@ -4,6 +4,7 @@
 #include "football/traits/CPeriodState.h"
 
 #include "types/CPeriodState.h"
+#include "types/CPenaltyShootoutState.h"
 
 #include "football/CPlayState.h"
 #include "football/CPeriodPlayPolicy.h"
@@ -17,6 +18,7 @@ namespace futsim::football
 class CPeriodState : public IJsonable, protected json_traits<football::CPeriodState>
 {
 protected:
+	using play = types::CPeriodState::play<>;
 	using plays = types::CPeriodState::plays;
 	using goal_count = types::CTieCondition::goal_count;
 
@@ -53,10 +55,9 @@ public:
 	const plays& GetPlays() const noexcept;
 
 	/**
-	 * @brief Counts the goals scored by the given team.
-	 * @param aHomeTeam Whether to count the home team goals.
-	*/
-	goal_count CountScoredGoals( const bool aHomeTeam ) const noexcept;
+	 * @brief Calculates the score.
+	 */
+	types::CPenaltyShootoutState::score CountScore() const noexcept;
 
 protected:
 	/**

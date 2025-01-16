@@ -16,12 +16,12 @@ const CPeriodStates::period_states& CPeriodStates::GetStates() const noexcept
 	return mStates;
 }
 
-CPeriodStates::goal_count CPeriodStates::CountScoredGoals( const bool aHomeTeam ) const noexcept
+types::CPenaltyShootoutState::score CPeriodStates::CountScore() const noexcept
 {
-	return std::accumulate( mStates.cbegin(), mStates.cend(), goal_count{ 0 }, [ &aHomeTeam ]
-	( const auto& aSum, const auto& aPeriodState )
+	return std::accumulate( mStates.cbegin(), mStates.cend(), types::CPenaltyShootoutState::score{}, []
+	( const auto& aScore, const auto& aPeriodState )
 	{
-		return aSum + aPeriodState.CountScoredGoals( aHomeTeam );
+		return aScore + aPeriodState.CountScore();
 	} );
 }
 
