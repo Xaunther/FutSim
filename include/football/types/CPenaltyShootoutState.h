@@ -24,6 +24,15 @@ template <typename T = football::CPenaltyState> struct penalty
 //! Type for the penalty states.
 using penalty_states = std::vector<penalty<>>;
 
+//! Aggregate for a score.
+struct score
+{
+	//! Home score.
+	unsigned int home = 0;
+	//! Away score.
+	unsigned int away = 0;
+};
+
 } // types::CPenaltyShootoutState namespace
 
 } // futsim::football namespace
