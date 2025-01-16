@@ -29,6 +29,19 @@ CPeriodState::goal_count CPeriodState::CountScoredGoals( const bool aHomeTeam ) 
 	} ) );
 }
 
+types::CPenaltyShootoutState::score CPeriodState::CountScore() const noexcept
+{
+	types::CPenaltyShootoutState::score result;
+
+	std::ranges::for_each( mPlays, [ &result ]( const auto& aPlay )
+	{
+		if( aPlay.state.IsGoalScored() )
+			++( aPlay.homeTeam ? result.home : result.away );
+	} );
+
+	return result;
+}
+
 void CPeriodState::PushPlayState( CPlayState&& aPlayState, const bool aHomeTeamAttack ) noexcept
 {
 	auto homeTeamPlay = aPlayState.GetPossessionState().GetOutcome() == types::CPossessionDrawConfiguration::E_POSSESSION_DRAW_OUTCOME::COUNTER_ATTACK ?
