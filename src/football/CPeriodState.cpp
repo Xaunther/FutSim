@@ -21,14 +21,6 @@ const CPeriodState::plays& CPeriodState::GetPlays() const noexcept
 	return mPlays;
 }
 
-CPeriodState::goal_count CPeriodState::CountScoredGoals( const bool aHomeTeam ) const noexcept
-{
-	return static_cast<goal_count>( std::ranges::count_if( mPlays, [ &aHomeTeam ]( const auto& aPlay )
-	{
-		return aPlay.homeTeam == aHomeTeam && aPlay.state.IsGoalScored();
-	} ) );
-}
-
 types::CPenaltyShootoutState::score CPeriodState::CountScore() const noexcept
 {
 	types::CPenaltyShootoutState::score result;

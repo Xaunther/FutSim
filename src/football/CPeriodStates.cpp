@@ -24,15 +24,6 @@ const CPeriodStates::period_states& CPeriodStates::GetStates() const noexcept
 	return mStates;
 }
 
-CPeriodStates::goal_count CPeriodStates::CountScoredGoals( const bool aHomeTeam ) const noexcept
-{
-	return std::accumulate( mStates.cbegin(), mStates.cend(), goal_count{ 0 }, [ &aHomeTeam ]
-	( const auto& aSum, const auto& aPeriodState )
-	{
-		return aSum + aPeriodState.CountScoredGoals( aHomeTeam );
-	} );
-}
-
 types::CPenaltyShootoutState::score CPeriodStates::CountScore() const noexcept
 {
 	return std::accumulate( mStates.cbegin(), mStates.cend(), types::CPenaltyShootoutState::score{}, []

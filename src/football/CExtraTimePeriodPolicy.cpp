@@ -25,9 +25,8 @@ bool CExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>::DoOperator( const period_
 		return false;
 
 	// We only need to check the goals scored in the last period
-	const auto& homeScoredGoals = aPeriodStates.back().CountScoredGoals( true );
-	const auto& awayScoredGoals = aPeriodStates.back().CountScoredGoals( false );
-	return homeScoredGoals == awayScoredGoals && ( !aMatchConfiguration.GetTieCondition()->GetHomeTeamGoals() || homeScoredGoals == 0 );
+	const auto score = aPeriodStates.back().CountScore();
+	return score.home == score.away && ( !aMatchConfiguration.GetTieCondition()->GetHomeTeamGoals() || score.home == 0 );
 }
 
 FOR_EACH_GOAL_RULE( EXPLICIT_INSTANTIATE_STRUCT_EXTRA_TIME_PERIOD_POLICY )

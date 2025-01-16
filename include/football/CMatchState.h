@@ -79,9 +79,8 @@ CMatchState::CMatchState(
 	if( aMatchConfiguration.GetTieCondition() )
 	{
 		const auto& tieCondition = *aMatchConfiguration.GetTieCondition();
-		auto homeTeamGoals = mMandatoryPlayTimeState.CountScoredGoals( true );
-		auto awayTeamGoals = mMandatoryPlayTimeState.CountScoredGoals( false );
-		if( tieCondition( homeTeamGoals, awayTeamGoals ) )
+		auto score = mMandatoryPlayTimeState.CountScore();
+		if( tieCondition( score.home, score.away ) )
 		{
 			if( aMatchConfiguration.GetExtraTime() )
 			{
@@ -101,10 +100,11 @@ CMatchState::CMatchState(
 						CExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::NO>{} };
 					break;
 				}
-				homeTeamGoals += mExtraTimeState->CountScoredGoals( true );
-				awayTeamGoals += mExtraTimeState->CountScoredGoals( false );
+				const auto extraTimeScore = mExtraTimeState->CountScore();
+				score.home += extraTimeScore.home;
+				score.away += extraTimeScore.away;
 
-				if( tieCondition( homeTeamGoals, awayTeamGoals ) )
+				if( tieCondition( score.home, score.away ) )
 					mPenaltyShootoutState = CPenaltyShootoutState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
 					std::bernoulli_distribution{}( aGenerator ), aGenerator };
 			}

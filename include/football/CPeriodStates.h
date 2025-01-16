@@ -55,12 +55,6 @@ public:
 	const period_states& GetStates() const noexcept;
 
 	/**
-	 * @brief Counts the goals scored by the given team.
-	 * @param aHomeTeam Whether to count the home team goals.
-	*/
-	goal_count CountScoredGoals( const bool aHomeTeam ) const noexcept;
-
-	/**
 	 * @brief Calculates the score.
 	 */
 	types::CPenaltyShootoutState::score CountScore() const noexcept;
