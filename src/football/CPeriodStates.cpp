@@ -6,6 +6,14 @@
 namespace futsim::football
 {
 
+namespace
+{
+
+const types::CPenaltyShootoutState::score operator+( const types::CPenaltyShootoutState::score& aLHS,
+		const types::CPenaltyShootoutState::score& aRHS );
+
+} // anonymous namespace
+
 void CPeriodStates::JSON( json& aJSON ) const noexcept
 {
 	AddKeyArrayToJSON( aJSON, mStates );
@@ -24,5 +32,25 @@ CPeriodStates::goal_count CPeriodStates::CountScoredGoals( const bool aHomeTeam 
 		return aSum + aPeriodState.CountScoredGoals( aHomeTeam );
 	} );
 }
+
+types::CPenaltyShootoutState::score CPeriodStates::CountScore() const noexcept
+{
+	return std::accumulate( mStates.cbegin(), mStates.cend(), types::CPenaltyShootoutState::score{}, []
+	( const auto& aScore, const auto& aPeriodState )
+	{
+		return aScore + aPeriodState.CountScore();
+	} );
+}
+
+namespace
+{
+
+const types::CPenaltyShootoutState::score operator+( const types::CPenaltyShootoutState::score& aLHS,
+		const types::CPenaltyShootoutState::score& aRHS )
+{
+	return types::CPenaltyShootoutState::score{ aLHS.home + aRHS.home, aLHS.away + aRHS.away };
+}
+
+} // anonymous namespace
 
 } // futsim::football namespace

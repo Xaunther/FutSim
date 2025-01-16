@@ -60,6 +60,11 @@ public:
 	*/
 	goal_count CountScoredGoals( const bool aHomeTeam ) const noexcept;
 
+	/**
+	 * @brief Calculates the score.
+	 */
+	types::CPenaltyShootoutState::score CountScore() const noexcept;
+
 private:
 	//! Period states.
 	period_states mStates;
