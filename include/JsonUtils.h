@@ -85,21 +85,13 @@ template<is_not_json_constructible T>
 inline T ValueFromJSONString( const std::string_view& aJSONString );
 
 /**
- * @brief Helper function to construct a jsonable class from a key in a JSON string.
+ * @brief Helper function to construct a class from a key in a JSON string.
  * @param aJSONString JSON string.
  * @param aArgs Extra arguments to be forwarded to the JSON constructor.
  * @param aKeyName Name of the key to search.
 */
-template<is_json_constructible T>
+template<typename T>
 inline T ValueFromJSONKeyString( const std::string_view& aJSONString, const std::string_view aKeyName = json_traits<T>::KEY, auto&&... aArgs );
-
-/**
- * @brief Helper function to construct a non-jsonable type from a key in a JSON string.
- * @param aJSONString JSON string.
- * @param aKeyName Name of the key to search.
-*/
-template<is_not_json_constructible T>
-inline T ValueFromJSONKeyString( const std::string_view& aJSONString, const std::string_view aKeyName );
 
 /**
  * @brief Helper function to add a jsonable object to a JSON object.
@@ -216,16 +208,10 @@ inline T ValueFromJSONString( const std::string_view& aJSONString )
 	return ValueFromJSON<T>( nlohmann::json::parse( aJSONString ) );
 }
 
-template<is_json_constructible T>
+template<typename T>
 inline T ValueFromJSONKeyString( const std::string_view& aJSONString, const std::string_view aKeyName, auto&&... aArgs )
 {
-	return ValueFromRequiredJSONKey<T>( nlohmann::json::parse( aJSONString ), std::forward<decltype( aArgs )>( aArgs )..., aKeyName );
-}
-
-template<is_not_json_constructible T>
-inline T ValueFromJSONKeyString( const std::string_view& aJSONString, const std::string_view aKeyName )
-{
-	return ValueFromRequiredJSONKey<T>( nlohmann::json::parse( aJSONString ), aKeyName );
+	return ValueFromRequiredJSONKey<T>( nlohmann::json::parse( aJSONString ), aKeyName, std::forward<decltype( aArgs )>( aArgs )... );
 }
 
 inline void AddToJSON( is_json_type auto& aJSON, const is_jsonable auto& aObject, auto&&... aArgs ) noexcept
