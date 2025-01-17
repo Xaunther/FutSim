@@ -30,8 +30,7 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the f
 void CExtraTime::JSON( json& aJSON ) const noexcept
 {
 	CPlayTime::JSON( aJSON );
-	if( mGoalRule != GOAL_RULE )
-		AddToJSONKey( aJSON, mGoalRule, GOAL_RULE_KEY );
+	AddToOptionalJSONKey( aJSON, mGoalRule, GOAL_RULE_KEY, GOAL_RULE );
 }
 
 const E_GOAL_RULE& CExtraTime::GetGoalRule() const noexcept
