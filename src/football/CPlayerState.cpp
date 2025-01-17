@@ -1,7 +1,23 @@
 #include "football/CPlayerState.h"
 
+#include "JsonUtils.h"
+
 namespace futsim::football
 {
+
+void CPlayerState::JSON( json& aJSON ) const noexcept
+{
+	AddToOptionalJSONKey( aJSON, mMinutesPlayed, MINUTES_PLAYED_KEY );
+	AddToOptionalJSONKey( aJSON, mSaves, SAVES_KEY );
+	AddToOptionalJSONKey( aJSON, mTackles, TACKLES_KEY );
+	AddToOptionalJSONKey( aJSON, mPasses, PASSES_KEY );
+	AddToOptionalJSONKey( aJSON, mShots, SHOTS_KEY );
+	AddToOptionalJSONKey( aJSON, mAssists, ASSISTS_KEY );
+	AddToOptionalJSONKey( aJSON, mGoals, GOALS_KEY );
+	AddToOptionalJSONKey( aJSON, mFoulsCommitted, FOULS_COMMITTED );
+	AddToOptionalJSONKey( aJSON, mYellowCards, YELLOW_CARDS_KEY );
+	AddToOptionalJSONKey( aJSON, mRedCards, RED_CARDS_KEY );
+}
 
 const CPlayerState::counter& CPlayerState::GetMinutesPlayed() const noexcept
 {

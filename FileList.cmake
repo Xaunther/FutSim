@@ -84,6 +84,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/traits/CPeriodStates.h
 	include/football/traits/CPlayer.h
 	include/football/traits/CPlayerSkills.h
+	include/football/traits/CPlayerState.h
 	include/football/traits/CPlayState.h
 	include/football/traits/CPlayTime.h
 	include/football/traits/CPossessionDrawConfiguration.h

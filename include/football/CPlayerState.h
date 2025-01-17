@@ -3,6 +3,7 @@
 #include "IJsonable.h"
 
 #include "football/types/CPlayerState.h"
+#include "football/traits/CPlayerState.h"
 
 namespace futsim::football
 {
@@ -10,10 +11,15 @@ namespace futsim::football
 /**
  * @brief Class encapsulating the state of a football player.
 */
-class CPlayerState : public IJsonable
+class CPlayerState : public IJsonable, protected json_traits<football::CPlayerState>
 {
 protected:
 	using counter = types::CPlayerState::counter;
+
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
 
 public:
 	//! Retrieves the \copybrief mMinutesPlayed
