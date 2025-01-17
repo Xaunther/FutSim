@@ -160,6 +160,17 @@ inline void AddToJSONKey( is_json_type auto& aJSON, const T& aObject, const std:
 inline void AddToJSONKey( is_json_type auto& aJSON, const is_not_jsonable auto& aObject, const std::string_view aKeyName ) noexcept;
 
 /**
+ * @brief Helper function to add an optional key to a JSON object.
+ * @param aJSON JSON object.
+ * @param aObject Value to add.
+ * @param aKeyName Name of the key under which to add it.
+ * @param aIgnoreValue Value for which the key is not created.
+ * @param aArgs Arguments to be forwarded to the ToJSON method.
+*/
+template<typename T>
+inline void AddToOptionalJSONKey( is_json_type auto& aJSON, const T& aObject, const std::string_view aKeyName = json_traits<T>::KEY, const T& aIgnoreValue = T{}, auto&&... aArgs ) noexcept;
+
+/**
  * @brief Helper function to add a container with keys to a JSON object.
  * @param aJSON JSON object.
  * @param aContainer Container to add.
@@ -282,6 +293,13 @@ inline void AddToJSONKey( is_json_type auto& aJSON, const T& aObject, const std:
 inline void AddToJSONKey( is_json_type auto& aJSON, const is_not_jsonable auto& aObject, const std::string_view aKeyName ) noexcept
 {
 	AddToJSON( aJSON[ aKeyName ], aObject );
+}
+
+template<typename T>
+inline void AddToOptionalJSONKey( is_json_type auto& aJSON, const T& aObject, const std::string_view aKeyName, const T& aIgnoreValue, auto&&... aArgs ) noexcept
+{
+	if( aObject != aIgnoreValue )
+		AddToJSONKey( aJSON, aObject, aKeyName, std::forward<decltype( aArgs )>( aArgs )... );
 }
 
 inline void AddArrayToJSONKey( is_json_type auto& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept
