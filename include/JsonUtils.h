@@ -70,19 +70,12 @@ template<is_not_json_constructible T>
 inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName, const T& aDefaultValue = T{} );
 
 /**
- * @brief Helper function to construct a jsonable class from a JSON string.
+ * @brief Helper function to construct a class from a JSON string.
  * @param aJSONString JSON string.
  * @param aArgs Extra arguments to be forwarded to the JSON constructor.
 */
-template<is_json_constructible T>
+template<typename T>
 inline T ValueFromJSONString( const std::string_view& aJSONString, auto&&... aArgs );
-
-/**
- * @brief Helper function to construct a non-jsonable type from a JSON string.
- * @param aJSONString JSON string.
-*/
-template<is_not_json_constructible T>
-inline T ValueFromJSONString( const std::string_view& aJSONString );
 
 /**
  * @brief Helper function to construct a class from a key in a JSON string.
@@ -196,16 +189,10 @@ inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::st
 	return found != aJSON.cend() ? ValueFromJSON<T>( *found ) : aDefaultValue;
 }
 
-template<is_json_constructible T>
+template<typename T>
 inline T ValueFromJSONString( const std::string_view& aJSONString, auto&&... aArgs )
 {
 	return ValueFromJSON<T>( nlohmann::json::parse( aJSONString ), std::forward<decltype( aArgs )>( aArgs )... );
-}
-
-template<is_not_json_constructible T>
-inline T ValueFromJSONString( const std::string_view& aJSONString )
-{
-	return ValueFromJSON<T>( nlohmann::json::parse( aJSONString ) );
 }
 
 template<typename T>
