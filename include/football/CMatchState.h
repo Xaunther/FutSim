@@ -95,7 +95,7 @@ CMatchState::CMatchState(
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
 						CExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::GOLDEN_GOAL>{} };
 					break;
-				default:
+				case E_GOAL_RULE::NO: default:
 					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
 						CExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::NO>{} };
 					break;
