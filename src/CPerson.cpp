@@ -37,8 +37,7 @@ void CPerson::JSON( json& aJSON ) const noexcept
 {
 	AddToJSONKey( aJSON, mFirstName, FIRST_NAME_KEY );
 	AddToJSONKey( aJSON, mSurnames, SURNAMES_KEY );
-	if( mKnownName != mSurnames )
-		AddToJSONKey( aJSON, mKnownName, KNOWN_NAME_KEY );
+	AddToOptionalJSONKey( aJSON, mKnownName, KNOWN_NAME_KEY, mSurnames );
 	AddToJSONKey( aJSON, mAge, AGE_KEY );
 	AddToJSONKey( aJSON, mNationality, NATIONALITY_KEY );
 }
