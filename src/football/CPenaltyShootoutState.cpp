@@ -93,7 +93,7 @@ std::function<bool( const bool, const std::size_t& )> NextHomeTeamShoot( const E
 	{
 	case E_PENALTY_SEQUENCE::AB:
 		return &football::NextHomeTeamShoot<E_PENALTY_SEQUENCE::AB>;
-	default:
+	case E_PENALTY_SEQUENCE::ABBA: default:
 		return &football::NextHomeTeamShoot<E_PENALTY_SEQUENCE::ABBA>;
 	}
 }
