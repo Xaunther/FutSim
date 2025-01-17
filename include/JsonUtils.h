@@ -148,16 +148,8 @@ inline void AddKeyArrayToJSON( is_json_type auto& aJSON, const auto& aContainer,
  * @param aArgs Arguments to be forwarded to the ToJSON method.
  * @todo Remove template in favour of auto once MSVC allows to use decltype on local arguments (compiler bug).
 */
-template<is_jsonable T>
+template<typename T>
 inline void AddToJSONKey( is_json_type auto& aJSON, const T& aObject, const std::string_view aKeyName = json_traits<T>::KEY, auto&&... aArgs ) noexcept;
-
-/**
- * @brief Helper function to add a non-jsonable type to a JSON object.
- * @param aJSON JSON object.
- * @param aObject Value to add.
- * @param aKeyName Name of the key under which to add it.
-*/
-inline void AddToJSONKey( is_json_type auto& aJSON, const is_not_jsonable auto& aObject, const std::string_view aKeyName ) noexcept;
 
 /**
  * @brief Helper function to add an optional key to a JSON object.
@@ -284,15 +276,10 @@ inline void AddKeyArrayToJSON( is_json_type auto& aJSON, const auto& aContainer,
 	AddToJSON( aJSON, arrayJSON );
 }
 
-template<is_jsonable T>
+template<typename T>
 inline void AddToJSONKey( is_json_type auto& aJSON, const T& aObject, const std::string_view aKeyName, auto&&... aArgs ) noexcept
 {
 	AddToJSON( aJSON[ aKeyName ], aObject, std::forward<decltype( aArgs )>( aArgs )... );
-}
-
-inline void AddToJSONKey( is_json_type auto& aJSON, const is_not_jsonable auto& aObject, const std::string_view aKeyName ) noexcept
-{
-	AddToJSON( aJSON[ aKeyName ], aObject );
 }
 
 template<typename T>
