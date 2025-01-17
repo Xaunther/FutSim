@@ -18,7 +18,6 @@ namespace futsim::football
 class CPeriodState : public IJsonable, protected json_traits<football::CPeriodState>
 {
 protected:
-	using play = types::CPeriodState::play<>;
 	using plays = types::CPeriodState::plays;
 	using goal_count = types::CTieCondition::goal_count;
 
