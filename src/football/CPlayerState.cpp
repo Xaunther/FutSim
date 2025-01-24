@@ -119,4 +119,9 @@ void CPlayerState::AddSave() noexcept
 	++mSaves;
 }
 
+void CPlayerState::AddTackle() noexcept
+{
+	++mTackles;
+}
+
 } // futsim::football namespace

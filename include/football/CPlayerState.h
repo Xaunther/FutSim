@@ -77,6 +77,9 @@ public:
 	//! Adds a save.
 	void AddSave() noexcept;
 
+	//! Adds a tackle.
+	void AddTackle() noexcept;
+
 private:
 	//! Minutes played.
 	counter mMinutesPlayed = 0;
