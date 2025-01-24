@@ -80,6 +80,12 @@ public:
 	//! Adds a tackle.
 	void AddTackle() noexcept;
 
+	/**
+	 * @brief Adds a pass.
+	 * @param aIsAssist If the pass is an assist.
+	 */
+	void AddPass( bool aIsAssist ) noexcept;
+
 private:
 	//! Minutes played.
 	counter mMinutesPlayed = 0;

@@ -124,4 +124,11 @@ void CPlayerState::AddTackle() noexcept
 	++mTackles;
 }
 
+void CPlayerState::AddPass( bool aIsAssist ) noexcept
+{
+	++mPasses;
+	if( aIsAssist )
+		++mAssists;
+}
+
 } // futsim::football namespace
