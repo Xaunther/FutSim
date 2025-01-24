@@ -90,4 +90,9 @@ const CPlayerState::counter& CPlayerState::GetRedCards() const noexcept
 	return mRedCards;
 }
 
+void CPlayerState::AddMinutePlayed() noexcept
+{
+	++mMinutesPlayed;
+}
+
 } // futsim::football namespace

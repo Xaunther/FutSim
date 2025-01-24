@@ -63,6 +63,9 @@ public:
 	//! Retrieves the \copybrief mRedCards
 	const counter& GetRedCards() const noexcept;
 
+	//! Adds a minute of play.
+	void AddMinutePlayed() noexcept;
+
 private:
 	//! Minutes played.
 	counter mMinutesPlayed = 0;
