@@ -61,11 +61,14 @@ std::vector<std::string> TPlayerState::ObtainedResults() const noexcept
 		result.push_back( std::string{ futsim::json_traits<CPlayerState>::ASSISTS_KEY } + ": " + std::to_string( playerState.GetAssists() ) );
 		result.push_back( std::string{ futsim::json_traits<CPlayerState>::GOALS_KEY } + ": " + std::to_string( playerState.GetGoals() ) );
 		result.push_back( std::string{ futsim::json_traits<CPlayerState>::FOULS_COMMITTED } + ": " + std::to_string( playerState.GetFoulsCommitted() ) );
-		result.push_back( std::string{ futsim::json_traits<CPlayerState>::YELLOW_CARDS_KEY } + ": " + std::to_string( playerState.GetYellowCards() ) );	
-		result.push_back( std::string{ futsim::json_traits<CPlayerState>::RED_CARDS_KEY } + ": " + std::to_string( playerState.GetRedCards() ) );	
-		futsim::types::IJsonable::json outputJSON;
-		AddToJSONKey( outputJSON, playerState );
-		result.push_back( outputJSON.dump( 1, '\t' ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerState>::YELLOW_CARDS_KEY } + ": " + std::to_string( playerState.GetYellowCards() ) );
+		result.push_back( std::string{ futsim::json_traits<CPlayerState>::RED_CARDS_KEY } + ": " + std::to_string( playerState.GetRedCards() ) );
+		if( playerState )
+		{
+			futsim::types::IJsonable::json outputJSON;
+			AddToJSONKey( outputJSON, playerState );
+			result.push_back( outputJSON.dump( 1, '\t' ) );
+		}
 	}
 
 	return result;
@@ -84,9 +87,6 @@ std::vector<std::string> TPlayerState::ExpectedResults() const noexcept
 		"Fouls committed: 0",
 		"Yellow cards: 0",
 		"Red cards: 0",
-		"{\n"
-		"	\"Player state\": null\n"
-		"}",
 		"Minutes played: 0",
 		"Saves: 0",
 		"Tackles: 0",
@@ -97,9 +97,6 @@ std::vector<std::string> TPlayerState::ExpectedResults() const noexcept
 		"Fouls committed: 0",
 		"Yellow cards: 0",
 		"Red cards: 0",
-		"{\n"
-		"	\"Player state\": null\n"
-		"}",
 		"Minutes played: 5",
 		"Saves: 3",
 		"Tackles: 3",
