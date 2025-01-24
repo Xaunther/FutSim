@@ -47,6 +47,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CPeriodStates.h
 	include/football/CPlayer.h
 	include/football/CPlayerSkills.h
+	include/football/CPlayerState.h
 	include/football/CPlayState.h
 	include/football/CPlayTime.h
 	include/football/CPossessionDrawConfiguration.h
@@ -83,6 +84,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/traits/CPeriodStates.h
 	include/football/traits/CPlayer.h
 	include/football/traits/CPlayerSkills.h
+	include/football/traits/CPlayerState.h
 	include/football/traits/CPlayState.h
 	include/football/traits/CPlayTime.h
 	include/football/traits/CPossessionDrawConfiguration.h
@@ -107,6 +109,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/types/CPeriodState.h
 	include/football/types/CPeriodStates.h
 	include/football/types/CPlayerSkills.h
+	include/football/types/CPlayerState.h
 	include/football/types/CPlayState.h
 	include/football/types/CPlayTime.h
 	include/football/types/CPossessionDrawConfiguration.h
@@ -151,6 +154,7 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CPeriodState.cpp
 	src/football/CPeriodStates.cpp
 	src/football/CPlayerSkills.cpp
+	src/football/CPlayerState.cpp
 	src/football/CPlayer.cpp
 	src/football/CPlayState.cpp
 	src/football/CPlayTime.cpp

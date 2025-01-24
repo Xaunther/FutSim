@@ -28,6 +28,7 @@ SET(FUTSIM_TESTS_UNIT_FOOTBALL_SOURCE
 	unit/football/TPeriodStates.cpp
 	unit/football/TPlayer.cpp
 	unit/football/TPlayerSkills.cpp
+	unit/football/TPlayerState.cpp
 	unit/football/TPlayState.cpp
 	unit/football/TPlayTime.cpp
 	unit/football/TPossessionDrawConfiguration.cpp
