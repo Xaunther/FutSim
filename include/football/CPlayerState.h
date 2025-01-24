@@ -74,6 +74,9 @@ public:
 	 */
 	void AddFoul( const CFoulState& aFoulState ) noexcept;
 
+	//! Adds a save.
+	void AddSave() noexcept;
+
 private:
 	//! Minutes played.
 	counter mMinutesPlayed = 0;

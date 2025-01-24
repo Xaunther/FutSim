@@ -114,4 +114,9 @@ void CPlayerState::AddFoul( const CFoulState& aFoulState ) noexcept
 	}
 }
 
+void CPlayerState::AddSave() noexcept
+{
+	++mSaves;
+}
+
 } // futsim::football namespace
