@@ -76,32 +76,41 @@ public:
 	//! Retrieves the \copybrief mRedCards
 	const counter& GetRedCards() const noexcept;
 
-	//! Adds a minute of play.
-	void AddMinutePlayed() noexcept;
+	/**
+	 * @brief Adds a minute of play.
+	 * @return The object itself.
+	 */
+	CPlayerState& AddMinutePlayed() noexcept;
 
 	/**
 	 * @brief Adds a foul.
 	 * @param aFoulState State of the foul to be added.
 	 */
-	void AddFoul( const CFoulState& aFoulState ) noexcept;
+	CPlayerState& AddFoul( const CFoulState& aFoulState ) noexcept;
 
-	//! Adds a save.
-	void AddSave() noexcept;
+	/**
+	 * @brief Adds a save.
+	 * @return The object itself.
+	 */
+	CPlayerState& AddSave() noexcept;
 
-	//! Adds a tackle.
-	void AddTackle() noexcept;
+	/**
+	 * @brief Adds a tackle.
+	 * @return The object itself.
+	 */
+	CPlayerState& AddTackle() noexcept;
 
 	/**
 	 * @brief Adds a pass.
 	 * @param aIsAssist If the pass is an assist.
 	 */
-	void AddPass( bool aIsAssist ) noexcept;
+	CPlayerState& AddPass( bool aIsAssist ) noexcept;
 
 	/**
 	 * @brief Adds a shot.
 	 * @param aIsGoal If the shot is a goal.
 	 */
-	void AddShot( bool aIsGoal ) noexcept;
+	CPlayerState& AddShot( bool aIsGoal ) noexcept;
 
 private:
 	//! Minutes played.

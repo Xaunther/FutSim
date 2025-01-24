@@ -108,12 +108,13 @@ const CPlayerState::counter& CPlayerState::GetRedCards() const noexcept
 	return mRedCards;
 }
 
-void CPlayerState::AddMinutePlayed() noexcept
+CPlayerState& CPlayerState::AddMinutePlayed() noexcept
 {
 	++mMinutesPlayed;
+	return *this;
 }
 
-void CPlayerState::AddFoul( const CFoulState& aFoulState ) noexcept
+CPlayerState& CPlayerState::AddFoul( const CFoulState& aFoulState ) noexcept
 {
 	using types::CFoulDrawConfiguration::E_FOUL_DRAW_OUTCOME;
 	++mFoulsCommitted;
@@ -121,37 +122,41 @@ void CPlayerState::AddFoul( const CFoulState& aFoulState ) noexcept
 	{
 	case E_FOUL_DRAW_OUTCOME::YELLOW_CARD :
 		++mYellowCards;
-		break;
+		return *this;
 	case E_FOUL_DRAW_OUTCOME::RED_CARD :
 		++mRedCards;
-		break;
+		return *this;
 	case E_FOUL_DRAW_OUTCOME::NO_CARD: default :
-		break;
+		return *this;
 	}
 }
 
-void CPlayerState::AddSave() noexcept
+CPlayerState& CPlayerState::AddSave() noexcept
 {
 	++mSaves;
+	return *this;
 }
 
-void CPlayerState::AddTackle() noexcept
+CPlayerState& CPlayerState::AddTackle() noexcept
 {
 	++mTackles;
+	return *this;
 }
 
-void CPlayerState::AddPass( bool aIsAssist ) noexcept
+CPlayerState& CPlayerState::AddPass( bool aIsAssist ) noexcept
 {
 	++mPasses;
 	if( aIsAssist )
 		++mAssists;
+	return *this;
 }
 
-void CPlayerState::AddShot( bool aIsGoal ) noexcept
+CPlayerState& CPlayerState::AddShot( bool aIsGoal ) noexcept
 {
 	++mShots;
 	if( aIsGoal )
 		++mGoals;
+	return *this;
 }
 
 } // futsim::football namespace
