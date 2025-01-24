@@ -36,6 +36,11 @@ protected:
 
 public:
 	/**
+	 * @brief Indicates if the player has played
+	 */
+	explicit operator bool() const noexcept;
+
+	/**
 	 * @brief Addition operators.
 	 * @param aOther Other state to add to this one.
 	 * @{

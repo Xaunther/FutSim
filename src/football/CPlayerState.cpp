@@ -37,6 +37,11 @@ void CPlayerState::JSON( json& aJSON ) const noexcept
 	AddToOptionalJSONKey( aJSON, mRedCards, RED_CARDS_KEY );
 }
 
+CPlayerState::operator bool() const noexcept
+{
+	return mMinutesPlayed != 0;
+}
+
 CPlayerState CPlayerState::operator+( const CPlayerState& aOther ) const noexcept
 {
 	return CPlayerState{ *this } += aOther;
