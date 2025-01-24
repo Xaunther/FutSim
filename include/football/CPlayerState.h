@@ -8,6 +8,8 @@
 namespace futsim::football
 {
 
+class CFoulState;
+
 /**
  * @brief Class encapsulating the state of a football player.
 */
@@ -65,6 +67,12 @@ public:
 
 	//! Adds a minute of play.
 	void AddMinutePlayed() noexcept;
+
+	/**
+	 * @brief Adds a foul.
+	 * @param aFoulState State of the foul to be added.
+	 */
+	void AddFoul( const CFoulState& aFoulState ) noexcept;
 
 private:
 	//! Minutes played.

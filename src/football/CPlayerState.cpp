@@ -1,5 +1,7 @@
 #include "football/CPlayerState.h"
 
+#include "football/CFoulState.h"
+
 #include "JsonUtils.h"
 
 namespace futsim::football
@@ -93,6 +95,23 @@ const CPlayerState::counter& CPlayerState::GetRedCards() const noexcept
 void CPlayerState::AddMinutePlayed() noexcept
 {
 	++mMinutesPlayed;
+}
+
+void CPlayerState::AddFoul( const CFoulState& aFoulState ) noexcept
+{
+	using types::CFoulDrawConfiguration::E_FOUL_DRAW_OUTCOME;
+	++mFoulsCommitted;
+	switch( aFoulState.GetOutcome() )
+	{
+	case E_FOUL_DRAW_OUTCOME::YELLOW_CARD :
+		++mYellowCards;
+		break;
+	case E_FOUL_DRAW_OUTCOME::RED_CARD :
+		++mRedCards;
+		break;
+	case E_FOUL_DRAW_OUTCOME::NO_CARD: default :
+		break;
+	}
 }
 
 } // futsim::football namespace
