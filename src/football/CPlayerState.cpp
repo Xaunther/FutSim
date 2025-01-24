@@ -2,10 +2,26 @@
 
 #include "football/CFoulState.h"
 
+#include "ExceptionUtils.h"
 #include "JsonUtils.h"
 
 namespace futsim::football
 {
+
+CPlayerState::CPlayerState( const json& aJSON ) try :
+	mMinutesPlayed( ValueFromOptionalJSONKey<counter>( aJSON, MINUTES_PLAYED_KEY ) ),
+	mSaves( ValueFromOptionalJSONKey<counter>( aJSON, SAVES_KEY ) ),
+	mTackles( ValueFromOptionalJSONKey<counter>( aJSON, TACKLES_KEY ) ),
+	mPasses( ValueFromOptionalJSONKey<counter>( aJSON, PASSES_KEY ) ),
+	mShots( ValueFromOptionalJSONKey<counter>( aJSON, SHOTS_KEY ) ),
+	mAssists( ValueFromOptionalJSONKey<counter>( aJSON, ASSISTS_KEY ) ),
+	mGoals( ValueFromOptionalJSONKey<counter>( aJSON, GOALS_KEY ) ),
+	mFoulsCommitted( ValueFromOptionalJSONKey<counter>( aJSON, FOULS_COMMITTED ) ),
+	mYellowCards( ValueFromOptionalJSONKey<counter>( aJSON, YELLOW_CARDS_KEY ) ),
+	mRedCards( ValueFromOptionalJSONKey<counter>( aJSON, RED_CARDS_KEY ) )
+{
+}
+FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the player state from JSON." )
 
 void CPlayerState::JSON( json& aJSON ) const noexcept
 {

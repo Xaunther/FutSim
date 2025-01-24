@@ -22,6 +22,12 @@ public:
 	//! Default constructor.
 	explicit CPlayerState() = default;
 
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	*/
+	explicit CPlayerState( const json& aJSON );	
+
 protected:
 	/**
 	 * @copydoc IJsonable::ToJSON
