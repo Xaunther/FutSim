@@ -18,6 +18,11 @@ class CPlayerState : public IJsonable, protected json_traits<football::CPlayerSt
 protected:
 	using counter = types::CPlayerState::counter;
 
+public:
+	//! Default constructor.
+	explicit CPlayerState() = default;
+
+protected:
 	/**
 	 * @copydoc IJsonable::ToJSON
 	*/
