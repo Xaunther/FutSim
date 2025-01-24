@@ -86,6 +86,12 @@ public:
 	 */
 	void AddPass( bool aIsAssist ) noexcept;
 
+	/**
+	 * @brief Adds a shot.
+	 * @param aIsGoal If the shot is a goal.
+	 */
+	void AddShot( bool aIsGoal ) noexcept;
+
 private:
 	//! Minutes played.
 	counter mMinutesPlayed = 0;

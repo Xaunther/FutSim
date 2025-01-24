@@ -131,4 +131,11 @@ void CPlayerState::AddPass( bool aIsAssist ) noexcept
 		++mAssists;
 }
 
+void CPlayerState::AddShot( bool aIsGoal ) noexcept
+{
+	++mShots;
+	if( aIsGoal )
+		++mGoals;
+}
+
 } // futsim::football namespace
