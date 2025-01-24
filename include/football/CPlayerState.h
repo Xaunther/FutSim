@@ -22,6 +22,17 @@ protected:
 	void JSON( json& aJSON ) const noexcept override;
 
 public:
+	/**
+	 * @brief Addition operators.
+	 * @param aOther Other state to add to this one.
+	 * @{
+	 */
+	CPlayerState operator+( const CPlayerState& aOther ) const noexcept;
+	CPlayerState& operator+=( const CPlayerState& aOther ) noexcept;
+	/**
+	 * @}
+	 */
+
 	//! Retrieves the \copybrief mMinutesPlayed
 	const counter& GetMinutesPlayed() const noexcept;
 

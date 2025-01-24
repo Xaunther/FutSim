@@ -19,6 +19,27 @@ void CPlayerState::JSON( json& aJSON ) const noexcept
 	AddToOptionalJSONKey( aJSON, mRedCards, RED_CARDS_KEY );
 }
 
+CPlayerState CPlayerState::operator+( const CPlayerState& aOther ) const noexcept
+{
+	return CPlayerState{ *this } += aOther;
+}
+
+CPlayerState& CPlayerState::operator+=( const CPlayerState& aOther ) noexcept
+{
+	mMinutesPlayed += aOther.mMinutesPlayed;
+	mSaves += aOther.mSaves;
+	mTackles += aOther.mTackles;
+	mPasses += aOther.mPasses;
+	mShots += aOther.mShots;
+	mAssists += aOther.mAssists;
+	mGoals += aOther.mGoals;
+	mFoulsCommitted += aOther.mFoulsCommitted;
+	mYellowCards += aOther.mYellowCards;
+	mRedCards += aOther.mRedCards;
+	
+	return *this;
+}
+
 const CPlayerState::counter& CPlayerState::GetMinutesPlayed() const noexcept
 {
 	return mMinutesPlayed;
