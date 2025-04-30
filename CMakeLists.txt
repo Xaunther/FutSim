@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 
 # FutSim project data
-project(FutSim VERSION 0.1 DESCRIPTION "A football command-line simulator" HOMEPAGE_URL "https://github.com/Xaunther/FutSim" LANGUAGES CXX)
+project(FutSim DESCRIPTION "A football command-line simulator" HOMEPAGE_URL "https://github.com/Xaunther/FutSim" LANGUAGES CXX)
 
 # C++ 20 required
 set(CMAKE_CXX_STANDARD 20)
@@ -39,6 +39,9 @@ set(CMAKE_CXX_FLAGS_RELEASE "-Os")
 
 # Find json package
 find_package(nlohmann_json 3.11 REQUIRED)
+
+# Find git package
+find_package(Git)
 
 # Function to add a new object module
 function(add_futsim_object_module MODULE_NAME SOURCES)
@@ -96,7 +99,7 @@ set(FUTSIM_NATIONALITY_STRING_MAP "${FUTSIM_NATIONALITY_STRING_MAP}}")
 include(FileList.cmake)
 
 # Add configuration files
-configure_file(${FUTSIM_INCLUDE_DIR}/Config.h.in ${FUTSIM_INCLUDE_DIR}/Config.h)
+# configure_file(${FUTSIM_INCLUDE_DIR}/Config.h.in ${FUTSIM_INCLUDE_DIR}/Config.h)
 configure_file(${FUTSIM_INCLUDE_DIR}/ENationality.h.in ${FUTSIM_INCLUDE_DIR}/ENationality.h)
 
 # Include directories
@@ -127,6 +130,26 @@ foreach(FUTSIM_MODULE ${FUTSIM_MODULES})
 		add_futsim_module(${PROJECT_NAME}_${FUTSIM_MODULE} SHARED ${FUTSIM_${FUTSIM_MODULE}_OBJECTS})
 	endif()
 endforeach(FUTSIM_MODULE)
+
+# Set version file path
+set( VERSION_FILE ${FUTSIM_DIR}/VERSION )
+
+# Configure Config.h
+add_custom_target(Config ALL
+		COMMAND ${CMAKE_COMMAND} -D SRC=${FUTSIM_INCLUDE_DIR}/Config.h.in
+		-D DST=${FUTSIM_INCLUDE_DIR}/Config.h
+		-D VERSION_FILE=${VERSION_FILE}
+		-P ${FUTSIM_DIR}/GenerateVersionHeader.cmake
+		)
+add_dependencies(FutSim_CORE_Objects Config)
+
+# Print build version
+add_custom_target(PrintBuild ALL
+		COMMAND ${CMAKE_COMMAND} -D GIT_EXECUTABLE=${GIT_EXECUTABLE}
+		-D VERSION_FILE=${VERSION_FILE}
+		-P ${FUTSIM_DIR}/PrintVersion.cmake
+		)
+add_dependencies(Config PrintBuild)
 
 # Build documentation
 if(BUILD_DOCUMENTATION)

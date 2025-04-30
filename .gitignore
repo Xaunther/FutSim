@@ -37,3 +37,6 @@
 # VS
 *.vs
 CMakeSettings.json
+
+# Version file
+VERSION
