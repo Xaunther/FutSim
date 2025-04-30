@@ -134,22 +134,22 @@ endforeach(FUTSIM_MODULE)
 # Set version file path
 set( VERSION_FILE ${FUTSIM_DIR}/VERSION )
 
-# Configure Config.h
-add_custom_target(Config ALL
-		COMMAND ${CMAKE_COMMAND} -D SRC=${FUTSIM_INCLUDE_DIR}/Config.h.in
-		-D DST=${FUTSIM_INCLUDE_DIR}/Config.h
-		-D VERSION_FILE=${VERSION_FILE}
-		-P ${FUTSIM_DIR}/GenerateVersionHeader.cmake
-		)
-add_dependencies(FutSim_CORE_Objects Config)
-
 # Print build version
 add_custom_target(PrintBuild ALL
 		COMMAND ${CMAKE_COMMAND} -D GIT_EXECUTABLE=${GIT_EXECUTABLE}
 		-D VERSION_FILE=${VERSION_FILE}
 		-P ${FUTSIM_DIR}/PrintVersion.cmake
 		)
-add_dependencies(Config PrintBuild)
+
+# Configure Config.h
+add_custom_target(Config ALL
+		COMMAND ${CMAKE_COMMAND} -D SRC=${FUTSIM_INCLUDE_DIR}/Config.h.in
+		-D DST=${FUTSIM_INCLUDE_DIR}/Config.h
+		-D VERSION_FILE=${VERSION_FILE}
+		-P ${FUTSIM_DIR}/GenerateVersionHeader.cmake
+		DEPENDS PrintBuild
+		)
+add_dependencies(FutSim_CORE_Objects Config)
 
 # Build documentation
 if(BUILD_DOCUMENTATION)

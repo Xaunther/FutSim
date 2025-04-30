@@ -41,5 +41,6 @@ add_custom_target(Config_doc ALL
 		-D DOC_PATH=${CMAKE_CURRENT_SOURCE_DIR}
 		-D CONTENT_PATH=${CONTENT_PATH}
 		-P ${FUTSIM_DIR}/GenerateVersionHeader.cmake
+		DEPENDS PrintBuild
 		)
 add_dependencies(doc_doxygen Config_doc)
