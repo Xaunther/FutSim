@@ -131,6 +131,7 @@ foreach(FUTSIM_MODULE ${FUTSIM_MODULES})
 	endif()
 endforeach(FUTSIM_MODULE)
 
+# Configure Config.h
 add_custom_target(Config ALL
 		COMMAND ${CMAKE_COMMAND} -D SRC=${FUTSIM_INCLUDE_DIR}/Config.h.in
 		-D DST=${FUTSIM_INCLUDE_DIR}/Config.h
