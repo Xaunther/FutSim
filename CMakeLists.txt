@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 
 # FutSim project data
-project(FutSim VERSION 0.1 DESCRIPTION "A football command-line simulator" HOMEPAGE_URL "https://github.com/Xaunther/FutSim" LANGUAGES CXX)
+project(FutSim DESCRIPTION "A football command-line simulator" HOMEPAGE_URL "https://github.com/Xaunther/FutSim" LANGUAGES CXX)
 
 # C++ 20 required
 set(CMAKE_CXX_STANDARD 20)
@@ -96,7 +96,7 @@ set(FUTSIM_NATIONALITY_STRING_MAP "${FUTSIM_NATIONALITY_STRING_MAP}}")
 include(FileList.cmake)
 
 # Add configuration files
-configure_file(${FUTSIM_INCLUDE_DIR}/Config.h.in ${FUTSIM_INCLUDE_DIR}/Config.h)
+# configure_file(${FUTSIM_INCLUDE_DIR}/Config.h.in ${FUTSIM_INCLUDE_DIR}/Config.h)
 configure_file(${FUTSIM_INCLUDE_DIR}/ENationality.h.in ${FUTSIM_INCLUDE_DIR}/ENationality.h)
 
 # Include directories
@@ -127,6 +127,15 @@ foreach(FUTSIM_MODULE ${FUTSIM_MODULES})
 		add_futsim_module(${PROJECT_NAME}_${FUTSIM_MODULE} SHARED ${FUTSIM_${FUTSIM_MODULE}_OBJECTS})
 	endif()
 endforeach(FUTSIM_MODULE)
+
+find_package(Git)
+add_custom_target(Config ALL
+		COMMAND ${CMAKE_COMMAND} -D SRC=${FUTSIM_INCLUDE_DIR}/Config.h.in
+		-D DST=${FUTSIM_INCLUDE_DIR}/Config.h
+		-D GIT_EXECUTABLE=${GIT_EXECUTABLE}
+		-P ${FUTSIM_DIR}/GenerateVersionHeader.cmake
+		)
+add_dependencies(FutSim_CORE_Objects Config)
 
 # Build documentation
 if(BUILD_DOCUMENTATION)
