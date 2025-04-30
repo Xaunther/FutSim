@@ -34,6 +34,7 @@ add_custom_target(Config_doc ALL
 		COMMAND ${CMAKE_COMMAND} -D SRC=${DOXYGEN_IN}
 		-D DST=${DOXYGEN_OUT}
 		-D GIT_EXECUTABLE=${GIT_EXECUTABLE}
+		-D VERSION_FILE=${VERSION_FILE}
 		-P ${FUTSIM_DIR}/GenerateVersionHeader.cmake
 		)
 add_dependencies(doc_doxygen Config_doc)
