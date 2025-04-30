@@ -40,6 +40,9 @@ set(CMAKE_CXX_FLAGS_RELEASE "-Os")
 # Find json package
 find_package(nlohmann_json 3.11 REQUIRED)
 
+# Find git package
+find_package(Git)
+
 # Function to add a new object module
 function(add_futsim_object_module MODULE_NAME SOURCES)
 	add_Library(${MODULE_NAME}_Objects OBJECT ${SOURCES} ${ARGN})
@@ -128,7 +131,6 @@ foreach(FUTSIM_MODULE ${FUTSIM_MODULES})
 	endif()
 endforeach(FUTSIM_MODULE)
 
-find_package(Git)
 add_custom_target(Config ALL
 		COMMAND ${CMAKE_COMMAND} -D SRC=${FUTSIM_INCLUDE_DIR}/Config.h.in
 		-D DST=${FUTSIM_INCLUDE_DIR}/Config.h
