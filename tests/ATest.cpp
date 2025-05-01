@@ -29,9 +29,9 @@ ATest::~ATest()
 
 void ATest::Run() const
 {
-	this->TestExceptions();
+	TestExceptions();
 
-	CheckResults( this->ObtainedResults(), this->ExpectedResults() );
+	CheckResults( ObtainedResults(), ExpectedResults() );
 }
 
 void ATest::CheckException( const std::function<void()>& aFunction, const std::string_view aExpectedErrorMsg )
