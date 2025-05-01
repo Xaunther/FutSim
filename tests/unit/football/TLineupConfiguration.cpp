@@ -18,20 +18,20 @@ void TLineupConfiguration::TestExceptions() const
 	// Test member constructor
 	CheckException( []()
 	{
-		CLineupConfiguration{ types::CLineupConfiguration::player_count_range{ 1, 0 } };
+		CLineupConfiguration{ types::CLineupConfiguration::player_count_range{ .min=1, .max=0 } };
 	},
 		"The maximum number of DFs cannot be smaller than the minimum number." );
 	CheckException( []()
 	{
 		CLineupConfiguration{ futsim::default_traits<CLineupConfiguration>::DF_RANGE,
-		types::CLineupConfiguration::player_count_range{ 1, 0 } };
+		types::CLineupConfiguration::player_count_range{ .min=1, .max=0 } };
 	},
 		"The maximum number of MFs cannot be smaller than the minimum number." );
 	CheckException( []()
 	{
 		CLineupConfiguration{ futsim::default_traits<CLineupConfiguration>::DF_RANGE,
 		futsim::default_traits<CLineupConfiguration>::MF_RANGE,
-		types::CLineupConfiguration::player_count_range{ 1, 0 } };
+		types::CLineupConfiguration::player_count_range{ .min=1, .max=0 } };
 	},
 		"The maximum number of FWs cannot be smaller than the minimum number." );
 	CheckException( []()

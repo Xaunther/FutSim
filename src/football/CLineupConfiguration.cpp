@@ -57,15 +57,16 @@ FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the l
 
 CLineupConfiguration::CLineupConfiguration( const json& aJSON ) try :
 	mDFRange( aJSON.contains( MIN_DFS_KEY ) || aJSON.contains( MAX_DFS_KEY ) ?
-		CheckRange( { ValueFromRequiredJSONKey<player_count_range::min_type>( aJSON, MIN_DFS_KEY ),
-			ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, MAX_DFS_KEY ) }, "DF" ) : DF_RANGE ),
+		CheckRange( { .min=ValueFromRequiredJSONKey<player_count_range::min_type>( aJSON, MIN_DFS_KEY ),
+			.max=ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, MAX_DFS_KEY ) }, "DF" ) : DF_RANGE ),
 	mMFRange( aJSON.contains( MIN_MFS_KEY ) || aJSON.contains( MAX_MFS_KEY ) ?
-		CheckRange( { ValueFromRequiredJSONKey<player_count_range::min_type>( aJSON, MIN_MFS_KEY ),
-			ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, MAX_MFS_KEY ) }, "MF" ) : MF_RANGE ),
+		CheckRange( { .min=ValueFromRequiredJSONKey<player_count_range::min_type>( aJSON, MIN_MFS_KEY ),
+			.max=ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, MAX_MFS_KEY ) }, "MF" ) : MF_RANGE ),
 	mFWRange( aJSON.contains( MIN_FWS_KEY ) || aJSON.contains( MAX_FWS_KEY ) ?
-		CheckRange( { ValueFromRequiredJSONKey<player_count_range::min_type>( aJSON, MIN_FWS_KEY ),
-			ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, MAX_FWS_KEY ) }, "FW" ) : FW_RANGE ),
-	mMinPlayerCount( CheckRange( { ValueFromOptionalJSONKey<player_count>( aJSON, MIN_PLAYERS_KEY, MIN_PLAYERS ), MAX_PLAYERS }, "player" ).min ),
+		CheckRange( { .min=ValueFromRequiredJSONKey<player_count_range::min_type>( aJSON, MIN_FWS_KEY ),
+			.max=ValueFromOptionalJSONKey<player_count_range::max_type>( aJSON, MAX_FWS_KEY ) }, "FW" ) : FW_RANGE ),
+	mMinPlayerCount( CheckRange( { .min=ValueFromOptionalJSONKey<player_count>( aJSON, MIN_PLAYERS_KEY, MIN_PLAYERS ),
+			.max=MAX_PLAYERS }, "player" ).min ),
 	mBenchedPlayersCount( ValueFromOptionalJSONKey<optional_player_count>( aJSON, BENCHED_PLAYERS_KEY ) )
 {
 }
@@ -120,7 +121,7 @@ const CLineup& CLineupConfiguration::CheckLineup( const CLineup& aLineup ) const
 		+ aLineup.GetPlayers< E_PLAYER_POSITION::AM >().size(), mMFRange, "DM+MF+AM" );
 	CheckLineupPosition( aLineup.GetPlayers< E_PLAYER_POSITION::FW >().size(), mFWRange, "FW" );
 	CheckMaxLineupPosition( aLineup.GetSubs().size(), mBenchedPlayersCount, "subs" );
-	CheckLineupPosition( std::ranges::distance( aLineup.CreatePlayersView<false>() ), { mMinPlayerCount, MAX_PLAYERS }, "players" );
+	CheckLineupPosition( std::ranges::distance( aLineup.CreatePlayersView<false>() ), { .min=mMinPlayerCount, .max=MAX_PLAYERS }, "players" );
 	return aLineup;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error checking the lineup against the configuration." )
