@@ -69,7 +69,7 @@ template <E_PLAYER_SKILL tPlayerSkill> const CChanceState::optional_name& CChanc
 		return mShooter;
 	else
 	{
-		static optional_name EMPTY;
+		static const optional_name EMPTY;
 		return EMPTY;
 	}
 }
