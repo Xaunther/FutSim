@@ -37,7 +37,7 @@ CTieCondition::CTieCondition(
 	const goal_count aAwayGoals,
 	bool aUseAwayGoalsRule
 ) noexcept :
-	mHomeTeamLead( aHomeGoals - aAwayGoals ),
+	mHomeTeamLead( static_cast<goal_difference>( aHomeGoals - aAwayGoals ) ),
 	mHomeTeamGoals( aUseAwayGoalsRule ? aHomeGoals : optional_goal_count{} )
 {
 }

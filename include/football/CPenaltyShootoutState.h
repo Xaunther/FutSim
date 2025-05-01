@@ -175,7 +175,7 @@ shooters CreateShooters( const CTeam& aTeam, const auto& aCurrentPlayers, const 
 	{
 		return aPlayer.GetPlayerSkills().GetSkill( E_PLAYER_SKILL::Sh );
 	} );
-	result.erase( result.cbegin() + aShootersCount, result.cend() );
+	result.erase( result.cbegin() + static_cast<shooters::difference_type>( aShootersCount ), result.cend() );
 	return result;
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the penalty shooters." )
