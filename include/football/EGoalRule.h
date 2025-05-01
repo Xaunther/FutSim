@@ -16,8 +16,10 @@ enum class E_GOAL_RULE {
 	FOR_EACH_GOAL_RULE( FUTSIM_LIST_ENUM )
 };
 
+// NOLINTBEGIN(*-avoid-c-arrays)
 FUTSIM_SERIALIZE_ENUM( E_GOAL_RULE, {
 	FOR_EACH_GOAL_RULE( FUTSIM_LIST_ENUM_ID, E_GOAL_RULE )
 	} )
+// NOLINTEND(*-avoid-c-arrays)
 
 } // futsim::football namespace

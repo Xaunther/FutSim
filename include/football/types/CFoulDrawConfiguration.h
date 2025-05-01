@@ -20,11 +20,13 @@ enum class E_FOUL_DRAW_OUTCOME {
 //! Type for the foul draw.
 using foul_draw_distribution = CEnumDistribution<E_FOUL_DRAW_OUTCOME, int>;
 
+// NOLINTBEGIN(*-avoid-c-arrays)
 FUTSIM_SERIALIZE_ENUM( E_FOUL_DRAW_OUTCOME, {
 	{E_FOUL_DRAW_OUTCOME::YELLOW_CARD, "Yellow card"},
 	{E_FOUL_DRAW_OUTCOME::RED_CARD, "Red card"},
 	{E_FOUL_DRAW_OUTCOME::NO_CARD, "No card"},
 	} );
+// NOLINTEND(*-avoid-c-arrays)
 
 } // football::types::CFoulDrawConfiguration namespace
 

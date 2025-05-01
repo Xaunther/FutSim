@@ -17,7 +17,7 @@ struct player_count_range
 	using min_type = player_count;
 	using max_type = optional_player_count;
 	//! Minimum number of players.
-	min_type min;
+	min_type min = 0;
 	//! Maximum number of players, if any.
 	max_type max;
 };

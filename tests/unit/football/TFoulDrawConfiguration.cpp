@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TFoulDrawConfiguration )
 
-void TFoulDrawConfiguration::TestExceptions() const
+void TFoulDrawConfiguration::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -77,7 +77,7 @@ void TFoulDrawConfiguration::TestExceptions() const
 	}
 }
 
-std::vector<std::string> TFoulDrawConfiguration::ObtainedResults() const noexcept
+std::vector<std::string> TFoulDrawConfiguration::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& foulDrawConfiguration : {
@@ -107,7 +107,7 @@ std::vector<std::string> TFoulDrawConfiguration::ObtainedResults() const noexcep
 	return result;
 }
 
-std::vector<std::string> TFoulDrawConfiguration::ExpectedResults() const noexcept
+std::vector<std::string> TFoulDrawConfiguration::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Average fouls: 21.565789",

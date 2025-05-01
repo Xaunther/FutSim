@@ -27,6 +27,7 @@ using goal_draw_distribution = CEnumDistribution<E_CHANCE_OUTCOME, int>;
 //! Type for the position draw.
 using position_draw_distribution = CEnumDistribution<E_PLAYER_POSITION, int>;
 
+// NOLINTBEGIN(*-avoid-c-arrays)
 FUTSIM_SERIALIZE_ENUM( E_CHANCE_OUTCOME, {
 	{E_CHANCE_OUTCOME::GOAL, "Goal"},
 	{E_CHANCE_OUTCOME::EXTRA_CORNER_FROM_GK, "Extra corner from goalkeeper"},
@@ -35,6 +36,7 @@ FUTSIM_SERIALIZE_ENUM( E_CHANCE_OUTCOME, {
 	{E_CHANCE_OUTCOME::KEEP_POSSESSION_FROM_DF, "Keep possession from defender"},
 	{E_CHANCE_OUTCOME::LOSE_POSSESSION, "Lose possession"},
 	} );
+// NOLINTEND(*-avoid-c-arrays)
 
 } // football::types::CGoalDrawConfiguration namespace
 

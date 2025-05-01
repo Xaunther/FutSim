@@ -13,7 +13,7 @@ class CMatchConfiguration;
 class IExtraTimePeriodPlayPolicy : public IPeriodPlayPolicy
 {
 protected:
-	virtual bool DoOperator( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const override = 0;
+	bool DoOperator( const plays& aPlays, const CMatchConfiguration& aMatchConfiguration ) const override = 0;
 
 public:
 	/**

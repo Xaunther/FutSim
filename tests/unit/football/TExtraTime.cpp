@@ -11,11 +11,11 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TExtraTime )
 
-void TExtraTime::TestExceptions() const
+void TExtraTime::TestExceptions()
 {
 }
 
-std::vector<std::string> TExtraTime::ObtainedResults() const noexcept
+std::vector<std::string> TExtraTime::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -47,7 +47,7 @@ std::vector<std::string> TExtraTime::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TExtraTime::ExpectedResults() const noexcept
+std::vector<std::string> TExtraTime::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Goal rule: No",

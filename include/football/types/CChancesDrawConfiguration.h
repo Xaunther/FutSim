@@ -31,6 +31,7 @@ using set_piece_type_draw_distribution = CEnumDistribution<E_SET_PIECE_TYPE, int
 //! Type for the chance type draw.
 using chance_type_draw_distribution = CEnumDistribution<E_CHANCE_TYPE, int>;
 
+// NOLINTBEGIN(*-avoid-c-arrays)
 FUTSIM_SERIALIZE_ENUM( E_SET_PIECE_TYPE, {
 	{E_SET_PIECE_TYPE::PENALTY, "Penalty"},
 	{E_SET_PIECE_TYPE::DIRECT_FREE_KICK, "Direct free kick"},
@@ -44,6 +45,7 @@ FUTSIM_SERIALIZE_ENUM( E_CHANCE_TYPE, {
 	{E_CHANCE_TYPE::NEAR_SHOT, "Near shot"},
 	{E_CHANCE_TYPE::FAR_SHOT, "Far shot"},
 	} );
+// NOLINTEND(*-avoid-c-arrays)
 
 } // football::types::CChancesDrawConfiguration namespace
 

@@ -13,11 +13,11 @@ constexpr bool PRINT_OUTPUT = false;
 
 INITIALIZE_TEST( TMatchState )
 
-void TMatchState::TestExceptions() const
+void TMatchState::TestExceptions()
 {
 }
 
-std::vector<std::string> TMatchState::ObtainedResults() const noexcept
+std::vector<std::string> TMatchState::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -86,7 +86,7 @@ std::vector<std::string> TMatchState::ObtainedResults() const noexcept
 	return PRINT_OUTPUT ? result : std::vector<std::string>{};
 }
 
-std::vector<std::string> TMatchState::ExpectedResults() const noexcept
+std::vector<std::string> TMatchState::ExpectedResults() noexcept
 {
 	return {};
 }

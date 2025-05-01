@@ -11,11 +11,11 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TPossessionState )
 
-void TPossessionState::TestExceptions() const
+void TPossessionState::TestExceptions()
 {
 }
 
-std::vector<std::string> TPossessionState::ObtainedResults() const noexcept
+std::vector<std::string> TPossessionState::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -59,7 +59,7 @@ std::vector<std::string> TPossessionState::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TPossessionState::ExpectedResults() const noexcept
+std::vector<std::string> TPossessionState::ExpectedResults() noexcept
 {
 	return std::vector<std::string>{
 		"Outcome: Keep possession",

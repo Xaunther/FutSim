@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TStadium )
 
-void TStadium::TestExceptions() const
+void TStadium::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -68,7 +68,7 @@ void TStadium::TestExceptions() const
 	}, "The ambient factor cannot be negative." );
 }
 
-std::vector<std::string> TStadium::ObtainedResults() const noexcept
+std::vector<std::string> TStadium::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -101,7 +101,7 @@ std::vector<std::string> TStadium::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TStadium::ExpectedResults() const noexcept
+std::vector<std::string> TStadium::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Name: Camp Nou",

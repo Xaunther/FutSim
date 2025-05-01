@@ -12,7 +12,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TMatchConfiguration )
 
-void TMatchConfiguration::TestExceptions() const
+void TMatchConfiguration::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -77,7 +77,7 @@ void TMatchConfiguration::TestExceptions() const
 	}
 }
 
-std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
+std::vector<std::string> TMatchConfiguration::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -110,16 +110,16 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( futsim::json_traits<std::decay_t<decltype( matchConfiguration.GetPlayTime() )>>::KEY.data() );
-		result.push_back( futsim::json_traits<std::decay_t<decltype( matchConfiguration.GetLineupConfiguration() )>>::KEY.data() );
+		result.emplace_back( futsim::json_traits<std::decay_t<decltype( matchConfiguration.GetPlayTime() )>>::KEY );
+		result.emplace_back( futsim::json_traits<std::decay_t<decltype( matchConfiguration.GetLineupConfiguration() )>>::KEY );
 		result.push_back( std::string{ futsim::json_traits<CMatchConfiguration>::APPLY_AMBIENT_FACTOR_KEY } + ": " + std::to_string( matchConfiguration.AppliesAmbientFactor() ) );
-		result.push_back( futsim::json_traits<std::decay_t<decltype( matchConfiguration.GetTacticsConfiguration() )>>::KEY.data() );
+		result.emplace_back( futsim::json_traits<std::decay_t<decltype( matchConfiguration.GetTacticsConfiguration() )>>::KEY );
 		if( matchConfiguration.GetTieCondition() )
-			result.push_back( futsim::json_traits<std::decay_t<decltype( *matchConfiguration.GetTieCondition() )>>::KEY.data() );
+			result.emplace_back( futsim::json_traits<std::decay_t<decltype( *matchConfiguration.GetTieCondition() )>>::KEY );
 		if( matchConfiguration.GetExtraTime() )
-			result.push_back( futsim::json_traits<std::decay_t<decltype( *matchConfiguration.GetExtraTime() )>>::KEY.data() );
+			result.emplace_back( futsim::json_traits<std::decay_t<decltype( *matchConfiguration.GetExtraTime() )>>::KEY );
 		if( matchConfiguration.GetPenaltyShootoutConfiguration() )
-			result.push_back( futsim::json_traits<std::decay_t<decltype( *matchConfiguration.GetPenaltyShootoutConfiguration() )>>::KEY.data() );
+			result.emplace_back( futsim::json_traits<std::decay_t<decltype( *matchConfiguration.GetPenaltyShootoutConfiguration() )>>::KEY );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, matchConfiguration );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
@@ -128,7 +128,7 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TMatchConfiguration::ExpectedResults() const noexcept
+std::vector<std::string> TMatchConfiguration::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Play time",

@@ -44,7 +44,7 @@ public:
 	explicit CPerson( const json& aJSON );
 
 	//! Virtual destructor for base class.
-	virtual ~CPerson() override = default;
+	~CPerson() override = default;
 
 protected:
 	/**

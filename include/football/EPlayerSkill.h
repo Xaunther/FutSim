@@ -17,8 +17,10 @@ enum class E_PLAYER_SKILL {
 	FOR_EACH_PLAYER_SKILL( FUTSIM_LIST_ENUM )
 };
 
+// NOLINTBEGIN(*-avoid-c-arrays)
 FUTSIM_SERIALIZE_ENUM( E_PLAYER_SKILL, {
 	FOR_EACH_PLAYER_SKILL( FUTSIM_LIST_ENUM_ID, E_PLAYER_SKILL )
 	} )
+// NOLINTEND(*-avoid-c-arrays)
 
 } // futsim::football namespace

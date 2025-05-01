@@ -13,7 +13,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TGoalDrawConfiguration )
 
-void TGoalDrawConfiguration::TestExceptions() const
+void TGoalDrawConfiguration::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -183,7 +183,7 @@ void TGoalDrawConfiguration::TestExceptions() const
 	}, "The joint probability of getting an extra corner or scoring in a 1 on 1 vs DF chance cannot be greater than 1." );
 }
 
-std::vector<std::string> TGoalDrawConfiguration::ObtainedResults() const noexcept
+std::vector<std::string> TGoalDrawConfiguration::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& goalDrawConfiguration : {
@@ -215,16 +215,16 @@ std::vector<std::string> TGoalDrawConfiguration::ObtainedResults() const noexcep
 		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_GK_GOAL_PROBABILITY_KEY } + ": " + std::to_string( goalDrawConfiguration.Get1vs1GKGoalProbability() ) );
 		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_DF_GOAL_PROBABILITY_KEY } + ": " + std::to_string( goalDrawConfiguration.Get1vs1DFGoalProbability() ) );
 		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::EXTRA_CORNER_PROBABILITY_KEY } + ": " + std::to_string( goalDrawConfiguration.GetExtraCornerProbability() ) );
-		result.push_back( "Default 1 on 1 vs GK chance outcome distribution" );
+		result.emplace_back( "Default 1 on 1 vs GK chance outcome distribution" );
 		for( const auto& probability : goalDrawConfiguration.Create1vs1GKOutcomeDistribution( 1, 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "1.1 attacker advantage 1 on 1 vs GK chance outcome distribution" );
+		result.emplace_back( "1.1 attacker advantage 1 on 1 vs GK chance outcome distribution" );
 		for( const auto& probability : goalDrawConfiguration.Create1vs1GKOutcomeDistribution( 1, 1.1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Default 1 on 1 vs DF chance outcome distribution" );
+		result.emplace_back( "Default 1 on 1 vs DF chance outcome distribution" );
 		for( const auto& probability : goalDrawConfiguration.Create1vs1DFOutcomeDistribution( 1, 1, 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "1.1 attacker advantage 1 on 1 vs DF chance outcome distribution" );
+		result.emplace_back( "1.1 attacker advantage 1 on 1 vs DF chance outcome distribution" );
 		for( const auto& probability : goalDrawConfiguration.Create1vs1DFOutcomeDistribution( 1, 1, 1.1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
 		futsim::types::IJsonable::json outputJSON;
@@ -234,7 +234,7 @@ std::vector<std::string> TGoalDrawConfiguration::ObtainedResults() const noexcep
 	return result;
 }
 
-std::vector<std::string> TGoalDrawConfiguration::ExpectedResults() const noexcept
+std::vector<std::string> TGoalDrawConfiguration::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Average goals: 2.734211",

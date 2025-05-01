@@ -11,11 +11,11 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TPlayTime )
 
-void TPlayTime::TestExceptions() const
+void TPlayTime::TestExceptions()
 {
 }
 
-std::vector<std::string> TPlayTime::ObtainedResults() const noexcept
+std::vector<std::string> TPlayTime::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -53,7 +53,7 @@ std::vector<std::string> TPlayTime::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TPlayTime::ExpectedResults() const noexcept
+std::vector<std::string> TPlayTime::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Available subs: 5",

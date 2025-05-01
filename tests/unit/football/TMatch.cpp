@@ -12,7 +12,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TMatch )
 
-void TMatch::TestExceptions() const
+void TMatch::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -145,7 +145,7 @@ void TMatch::TestExceptions() const
 	}
 }
 
-std::vector<std::string> TMatch::ObtainedResults() const noexcept
+std::vector<std::string> TMatch::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& match : {
@@ -190,7 +190,7 @@ std::vector<std::string> TMatch::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TMatch::ExpectedResults() const noexcept
+std::vector<std::string> TMatch::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Home team: Luton Town FC",

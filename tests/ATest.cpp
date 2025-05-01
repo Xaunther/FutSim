@@ -27,11 +27,11 @@ ATest::~ATest()
 	mObtainedStream.close();
 }
 
-void ATest::Run() const
+void ATest::Run()
 {
-	this->TestExceptions();
+	TestExceptions();
 
-	CheckResults( this->ObtainedResults(), this->ExpectedResults() );
+	CheckResults( ObtainedResults(), ExpectedResults() );
 }
 
 void ATest::CheckException( const std::function<void()>& aFunction, const std::string_view aExpectedErrorMsg )
@@ -54,8 +54,7 @@ void ATest::CheckException( const std::function<void()>& aFunction, const std::s
 				<< e.what() << "\n";
 			throw std::invalid_argument{ ss.str() };
 		}
-		else
-			return;
+		return;
 	}
 	std::stringstream ss;
 	ss << "No exception was thrown when the following exception message was expected:\n"
@@ -63,7 +62,7 @@ void ATest::CheckException( const std::function<void()>& aFunction, const std::s
 	throw std::invalid_argument{ ss.str() };
 }
 
-void ATest::CheckResults( const std::vector<std::string>& aObtained, const std::vector<std::string>& aExpected ) const
+void ATest::CheckResults( const std::vector<std::string>& aObtained, const std::vector<std::string>& aExpected )
 {
 	if( aObtained != aExpected )
 	{

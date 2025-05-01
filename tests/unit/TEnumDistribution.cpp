@@ -20,17 +20,19 @@ enum class myEnum
 	C
 };
 
+// NOLINTBEGIN(*-avoid-c-arrays)
 FUTSIM_STRING_ENUM( myEnum, {
 	{ myEnum::A, "A" },
 	{ myEnum::B, "B" },
 	{ myEnum::C, "C" },
 	} );
+// NOLINTEND(*-avoid-c-arrays)
 
-void TEnumDistribution::TestExceptions() const
+void TEnumDistribution::TestExceptions()
 {
 }
 
-std::vector<std::string> TEnumDistribution::ObtainedResults() const noexcept
+std::vector<std::string> TEnumDistribution::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -47,7 +49,7 @@ std::vector<std::string> TEnumDistribution::ObtainedResults() const noexcept
 	{
 		result.push_back( "min: " + std::string{ ToString( enumDistribution.min() ) } );
 		result.push_back( "max: " + std::string{ ToString( enumDistribution.max() ) } );
-		result.push_back( "Probabilities:" );
+		result.emplace_back( "Probabilities:" );
 		std::ranges::transform( enumDistribution.probabilities(), std::back_inserter( result ),
 			[]( const auto& aProbability )
 		{
@@ -59,7 +61,7 @@ std::vector<std::string> TEnumDistribution::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TEnumDistribution::ExpectedResults() const noexcept
+std::vector<std::string> TEnumDistribution::ExpectedResults() noexcept
 {
 	return std::vector<std::string>{
 		"min: A",

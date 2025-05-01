@@ -15,7 +15,7 @@ class IExtraTimePeriodPolicy : public IPeriodPolicy
 protected:
 	using period_states = types::CPeriodStates::period_states;
 
-	virtual bool DoOperator( const period_states& aPeriodStates,
+	bool DoOperator( const period_states& aPeriodStates,
 		const CMatchConfiguration& aMatchConfiguration ) const override = 0;
 
 public:

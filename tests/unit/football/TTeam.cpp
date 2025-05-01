@@ -13,7 +13,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TTeam )
 
-void TTeam::TestExceptions() const
+void TTeam::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -251,7 +251,7 @@ void TTeam::TestExceptions() const
 	}
 }
 
-std::vector<std::string> TTeam::ObtainedResults() const noexcept
+std::vector<std::string> TTeam::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& team : {
@@ -332,7 +332,7 @@ std::vector<std::string> TTeam::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TTeam::ExpectedResults() const noexcept
+std::vector<std::string> TTeam::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Name: Luton Town FC",

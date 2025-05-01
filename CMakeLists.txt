@@ -37,6 +37,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DJSON_USE_IMPLICIT_CONVERSIONS=0")
 
 set(CMAKE_CXX_FLAGS_RELEASE "-Os")
 
+# Always export compile commands
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Find json package
 find_package(nlohmann_json 3.11 REQUIRED)
 

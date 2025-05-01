@@ -5,7 +5,7 @@
 
 #include "football/types/CLineup.h"
 
-#include <random>
+#include <ranges>
 
 namespace futsim::football
 {

@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TLineup )
 
-void TLineup::TestExceptions() const
+void TLineup::TestExceptions()
 {
 	// Test JSON constructor
 	CheckException( []()
@@ -22,7 +22,7 @@ void TLineup::TestExceptions() const
 	}, "key 'GK' not found" );
 }
 
-std::vector<std::string> TLineup::ObtainedResults() const noexcept
+std::vector<std::string> TLineup::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -62,10 +62,10 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 		result.push_back( std::string{ futsim::json_traits<CLineup>::SUBS_KEY } + ":" );
 		for( const auto& player : lineup.GetSubs() )
 			result.push_back( player );
-		result.push_back( "Playing players:" );
+		result.emplace_back( "Playing players:" );
 		for( const auto& player : lineup.CreatePlayersView<false>() )
 			result.push_back( player );
-		result.push_back( "All players:" );
+		result.emplace_back( "All players:" );
 		for( const auto& player : lineup.CreatePlayersView<true>() )
 			result.push_back( player );
 		futsim::types::IJsonable::json outputJSON;
@@ -75,7 +75,7 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TLineup::ExpectedResults() const noexcept
+std::vector<std::string> TLineup::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"GK: Kelleher",

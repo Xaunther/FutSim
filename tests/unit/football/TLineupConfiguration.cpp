@@ -13,25 +13,25 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TLineupConfiguration )
 
-void TLineupConfiguration::TestExceptions() const
+void TLineupConfiguration::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
 	{
-		CLineupConfiguration{ types::CLineupConfiguration::player_count_range{ 1, 0 } };
+		CLineupConfiguration{ types::CLineupConfiguration::player_count_range{ .min=1, .max=0 } };
 	},
 		"The maximum number of DFs cannot be smaller than the minimum number." );
 	CheckException( []()
 	{
 		CLineupConfiguration{ futsim::default_traits<CLineupConfiguration>::DF_RANGE,
-		types::CLineupConfiguration::player_count_range{ 1, 0 } };
+		types::CLineupConfiguration::player_count_range{ .min=1, .max=0 } };
 	},
 		"The maximum number of MFs cannot be smaller than the minimum number." );
 	CheckException( []()
 	{
 		CLineupConfiguration{ futsim::default_traits<CLineupConfiguration>::DF_RANGE,
 		futsim::default_traits<CLineupConfiguration>::MF_RANGE,
-		types::CLineupConfiguration::player_count_range{ 1, 0 } };
+		types::CLineupConfiguration::player_count_range{ .min=1, .max=0 } };
 	},
 		"The maximum number of FWs cannot be smaller than the minimum number." );
 	CheckException( []()
@@ -165,7 +165,7 @@ void TLineupConfiguration::TestExceptions() const
 	}
 }
 
-std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
+std::vector<std::string> TLineupConfiguration::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& lineupConfiguration : {
@@ -206,7 +206,7 @@ std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TLineupConfiguration::ExpectedResults() const noexcept
+std::vector<std::string> TLineupConfiguration::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Min DFs: 3",

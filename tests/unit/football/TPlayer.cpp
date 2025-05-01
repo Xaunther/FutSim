@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TPlayer )
 
-void TPlayer::TestExceptions() const
+void TPlayer::TestExceptions()
 {
 	// Test JSON constructor
 	CheckException( []()
@@ -27,7 +27,7 @@ void TPlayer::TestExceptions() const
 	}, "key 'Player skills' not found" );
 }
 
-std::vector<std::string> TPlayer::ObtainedResults() const noexcept
+std::vector<std::string> TPlayer::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -72,7 +72,7 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( futsim::json_traits<std::decay_t<decltype( player.GetPlayerSkills() )>>::KEY.data() );
+		result.emplace_back( futsim::json_traits<std::decay_t<decltype( player.GetPlayerSkills() )>>::KEY );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, player );
 		result.push_back( outputJSON.dump( 1, '\t' ) );
@@ -81,7 +81,7 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TPlayer::ExpectedResults() const noexcept
+std::vector<std::string> TPlayer::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Player skills",
