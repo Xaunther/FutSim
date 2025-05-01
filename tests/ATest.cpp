@@ -54,8 +54,7 @@ void ATest::CheckException( const std::function<void()>& aFunction, const std::s
 				<< e.what() << "\n";
 			throw std::invalid_argument{ ss.str() };
 		}
-		else
-			return;
+		return;
 	}
 	std::stringstream ss;
 	ss << "No exception was thrown when the following exception message was expected:\n"
