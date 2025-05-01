@@ -1,6 +1,5 @@
 ---
 Checks:          'clang-diagnostic-*,clang-analyzer-*,clang-analyzer-*,cppcoreguidelines-*,llvm-*,misc-*,modernize-*,performance-*,portability-*,-llvm-namespace-comment,-modernize-use-trailing-return-type,-misc-include-cleaner,-llvm-header-guard,-modernize-use-nodiscard,-cppcoreguidelines-special-member-functions,-llvm-include-order,-cppcoreguidelines-avoid-magic-numbers,-performance-enum-size,-cppcoreguidelines-macro-usage,-cppcoreguidelines-avoid-do-while,-misc-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic'
-WarningsAsErrors: ''
 HeaderFileExtensions:
   - ''
   - h
@@ -12,8 +11,6 @@ ImplementationFileExtensions:
   - cc
   - cpp
   - cxx
-HeaderFilterRegex: ''
-ExcludeHeaderFilterRegex: ''
 FormatStyle:     none
 CheckOptions:
   cert-dcl16-c.NewSuffixes: 'L;LL;LU;LLU'
