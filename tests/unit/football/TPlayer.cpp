@@ -72,7 +72,7 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 			}
 		} )" ) } )
 	{
-		result.push_back( futsim::json_traits<std::decay_t<decltype( player.GetPlayerSkills() )>>::KEY.data() );
+		result.emplace_back( futsim::json_traits<std::decay_t<decltype( player.GetPlayerSkills() )>>::KEY );
 		futsim::types::IJsonable::json outputJSON;
 		AddToJSONKey( outputJSON, player );
 		result.push_back( outputJSON.dump( 1, '\t' ) );

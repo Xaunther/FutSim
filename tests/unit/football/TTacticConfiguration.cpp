@@ -77,7 +77,7 @@ std::vector<std::string> TTacticConfiguration::ObtainedResults() const noexcept
 		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::PS_BONUS_KEY } + ": " + std::to_string( tacticConfiguration.GetPsBonus() ) );
 		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::FAVOURABLE_TACTICS_KEY } + ": " );
 		for( const auto& favourableTactic : tacticConfiguration.GetFavourableTactics() )
-			result.push_back( std::string{ favourableTactic } );
+			result.emplace_back( favourableTactic );
 		result.push_back( std::string{ futsim::json_traits<CTacticConfiguration>::POSITION_PENALTIES_KEY } + ": " );
 		for( const auto& positionPenalty : tacticConfiguration.GetPositionPenalties() )
 			result.push_back( std::to_string( positionPenalty ) );

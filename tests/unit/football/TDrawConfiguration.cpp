@@ -353,75 +353,75 @@ std::vector<std::string> TDrawConfiguration::ObtainedResults() const noexcept
 			"Draw configuration": {}
 		} )" ) } )
 	{
-		result.push_back( std::string{ futsim::json_traits<std::decay_t<decltype( drawConfiguration.GetPossessionDrawConfiguration() )>>::KEY } );
-		result.push_back( std::string{ futsim::json_traits<std::decay_t<decltype( drawConfiguration.GetFoulDrawConfiguration() )>>::KEY } );
-		result.push_back( std::string{ futsim::json_traits<std::decay_t<decltype( drawConfiguration.GetChancesDrawConfiguration() )>>::KEY } );
-		result.push_back( std::string{ futsim::json_traits<std::decay_t<decltype( drawConfiguration.GetGoalDrawConfiguration() )>>::KEY } );
+		result.emplace_back( futsim::json_traits<std::decay_t<decltype( drawConfiguration.GetPossessionDrawConfiguration() )>>::KEY );
+		result.emplace_back( futsim::json_traits<std::decay_t<decltype( drawConfiguration.GetFoulDrawConfiguration() )>>::KEY );
+		result.emplace_back( futsim::json_traits<std::decay_t<decltype( drawConfiguration.GetChancesDrawConfiguration() )>>::KEY );
+		result.emplace_back( futsim::json_traits<std::decay_t<decltype( drawConfiguration.GetGoalDrawConfiguration() )>>::KEY );
 
-		result.push_back( "Possession distribution:" );
+		result.emplace_back( "Possession distribution:" );
 		for( const auto& probability : drawConfiguration.CreatePossessionDistribution( 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Possession distribution with attacking advantage:" );
+		result.emplace_back( "Possession distribution with attacking advantage:" );
 		for( const auto& probability : drawConfiguration.CreatePossessionDistribution( 1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Foul distribution:" );
+		result.emplace_back( "Foul distribution:" );
 		for( const auto& probability : drawConfiguration.CreateFoulDistribution().probabilities() )
 			result.push_back( std::to_string( probability ) );
 		result.push_back( "Set piece distribution probability: " + std::to_string( drawConfiguration.CreateSetPieceDistribution().p() ) );
 		result.push_back( "Chance distribution probability: " + std::to_string( drawConfiguration.CreateChanceDistribution( 1, 1 ).p() ) );
 		result.push_back( "Chance distribution with attacking advantage probability: " + std::to_string( drawConfiguration.CreateChanceDistribution( 1, 1.1 ).p() ) );
-		result.push_back( "Set piece type distribution:" );
+		result.emplace_back( "Set piece type distribution:" );
 		for( const auto& probability : drawConfiguration.CreateSetPieceTypeDistribution().probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Chance type distribution:" );
+		result.emplace_back( "Chance type distribution:" );
 		for( const auto& probability : drawConfiguration.CreateChanceTypeDistribution().probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Penalty outcome distribution:" );
+		result.emplace_back( "Penalty outcome distribution:" );
 		for( const auto& probability : drawConfiguration.CreatePenaltyOutcomeDistribution( 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Penalty outcome distribution with attacking advantage:" );
+		result.emplace_back( "Penalty outcome distribution with attacking advantage:" );
 		for( const auto& probability : drawConfiguration.CreatePenaltyOutcomeDistribution( 1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Direct free kick outcome distribution:" );
+		result.emplace_back( "Direct free kick outcome distribution:" );
 		for( const auto& probability : drawConfiguration.CreateDirectFreeKickOutcomeDistribution( 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Direct free kick outcome distribution with attacking advantage:" );
+		result.emplace_back( "Direct free kick outcome distribution with attacking advantage:" );
 		for( const auto& probability : drawConfiguration.CreateDirectFreeKickOutcomeDistribution( 1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Indirect free kick outcome distribution:" );
+		result.emplace_back( "Indirect free kick outcome distribution:" );
 		for( const auto& probability : drawConfiguration.CreateIndirectFreeKickOutcomeDistribution( 1, 1, 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Indirect free kick outcome distribution with attacking advantage:" );
+		result.emplace_back( "Indirect free kick outcome distribution with attacking advantage:" );
 		for( const auto& probability : drawConfiguration.CreateIndirectFreeKickOutcomeDistribution( 1, 1, 1.1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Corner outcome distribution:" );
+		result.emplace_back( "Corner outcome distribution:" );
 		for( const auto& probability : drawConfiguration.CreateCornerOutcomeDistribution( 1, 1, 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Corner outcome distribution with attacking advantage:" );
+		result.emplace_back( "Corner outcome distribution with attacking advantage:" );
 		for( const auto& probability : drawConfiguration.CreateCornerOutcomeDistribution( 1, 1, 1.1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Far shot outcome distribution:" );
+		result.emplace_back( "Far shot outcome distribution:" );
 		for( const auto& probability : drawConfiguration.CreateFarShotOutcomeDistribution( 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Far shot outcome distribution with attacking advantage:" );
+		result.emplace_back( "Far shot outcome distribution with attacking advantage:" );
 		for( const auto& probability : drawConfiguration.CreateFarShotOutcomeDistribution( 1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "1 on 1 vs GK outcome distribution:" );
+		result.emplace_back( "1 on 1 vs GK outcome distribution:" );
 		for( const auto& probability : drawConfiguration.Create1vs1GKOutcomeDistribution( 1, 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "1 on 1 vs GK outcome distribution with attacking advantage:" );
+		result.emplace_back( "1 on 1 vs GK outcome distribution with attacking advantage:" );
 		for( const auto& probability : drawConfiguration.Create1vs1GKOutcomeDistribution( 1, 1.1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "1 on 1 vs DF outcome distribution:" );
+		result.emplace_back( "1 on 1 vs DF outcome distribution:" );
 		for( const auto& probability : drawConfiguration.Create1vs1DFOutcomeDistribution( 1, 1, 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "1 on 1 vs DF outcome distribution with attacking advantage:" );
+		result.emplace_back( "1 on 1 vs DF outcome distribution with attacking advantage:" );
 		for( const auto& probability : drawConfiguration.Create1vs1DFOutcomeDistribution( 1, 1, 1.1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Near shot outcome distribution:" );
+		result.emplace_back( "Near shot outcome distribution:" );
 		for( const auto& probability : drawConfiguration.CreateNearShotOutcomeDistribution( 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Near shot outcome distribution with attacking advantage:" );
+		result.emplace_back( "Near shot outcome distribution with attacking advantage:" );
 		for( const auto& probability : drawConfiguration.CreateNearShotOutcomeDistribution( 1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
 

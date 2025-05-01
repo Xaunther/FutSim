@@ -215,16 +215,16 @@ std::vector<std::string> TGoalDrawConfiguration::ObtainedResults() const noexcep
 		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_GK_GOAL_PROBABILITY_KEY } + ": " + std::to_string( goalDrawConfiguration.Get1vs1GKGoalProbability() ) );
 		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::ONE_VS_ONE_DF_GOAL_PROBABILITY_KEY } + ": " + std::to_string( goalDrawConfiguration.Get1vs1DFGoalProbability() ) );
 		result.push_back( std::string{ futsim::json_traits<CGoalDrawConfiguration>::EXTRA_CORNER_PROBABILITY_KEY } + ": " + std::to_string( goalDrawConfiguration.GetExtraCornerProbability() ) );
-		result.push_back( "Default 1 on 1 vs GK chance outcome distribution" );
+		result.emplace_back( "Default 1 on 1 vs GK chance outcome distribution" );
 		for( const auto& probability : goalDrawConfiguration.Create1vs1GKOutcomeDistribution( 1, 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "1.1 attacker advantage 1 on 1 vs GK chance outcome distribution" );
+		result.emplace_back( "1.1 attacker advantage 1 on 1 vs GK chance outcome distribution" );
 		for( const auto& probability : goalDrawConfiguration.Create1vs1GKOutcomeDistribution( 1, 1.1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "Default 1 on 1 vs DF chance outcome distribution" );
+		result.emplace_back( "Default 1 on 1 vs DF chance outcome distribution" );
 		for( const auto& probability : goalDrawConfiguration.Create1vs1DFOutcomeDistribution( 1, 1, 1, 1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
-		result.push_back( "1.1 attacker advantage 1 on 1 vs DF chance outcome distribution" );
+		result.emplace_back( "1.1 attacker advantage 1 on 1 vs DF chance outcome distribution" );
 		for( const auto& probability : goalDrawConfiguration.Create1vs1DFOutcomeDistribution( 1, 1, 1.1, 1.1 ).probabilities() )
 			result.push_back( std::to_string( probability ) );
 		futsim::types::IJsonable::json outputJSON;

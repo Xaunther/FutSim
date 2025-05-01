@@ -62,10 +62,10 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 		result.push_back( std::string{ futsim::json_traits<CLineup>::SUBS_KEY } + ":" );
 		for( const auto& player : lineup.GetSubs() )
 			result.push_back( player );
-		result.push_back( "Playing players:" );
+		result.emplace_back( "Playing players:" );
 		for( const auto& player : lineup.CreatePlayersView<false>() )
 			result.push_back( player );
-		result.push_back( "All players:" );
+		result.emplace_back( "All players:" );
 		for( const auto& player : lineup.CreatePlayersView<true>() )
 			result.push_back( player );
 		futsim::types::IJsonable::json outputJSON;

@@ -49,7 +49,7 @@ std::vector<std::string> TEnumDistribution::ObtainedResults() const noexcept
 	{
 		result.push_back( "min: " + std::string{ ToString( enumDistribution.min() ) } );
 		result.push_back( "max: " + std::string{ ToString( enumDistribution.max() ) } );
-		result.push_back( "Probabilities:" );
+		result.emplace_back( "Probabilities:" );
 		std::ranges::transform( enumDistribution.probabilities(), std::back_inserter( result ),
 			[]( const auto& aProbability )
 		{
