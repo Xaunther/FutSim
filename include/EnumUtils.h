@@ -1,6 +1,10 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include <algorithm>
+#include <string>
+#include <string_view>
+#include <type_traits>
+#include <nlohmann/detail/macro_scope.hpp>
 
 namespace futsim
 {

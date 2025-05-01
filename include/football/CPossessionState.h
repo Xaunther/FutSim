@@ -3,6 +3,8 @@
 #include "IJsonable.h"
 #include "football/traits/CPossessionState.h"
 
+#include <numeric>
+
 #include "football/types/CPossessionState.h"
 
 #include "football/CMatch.h"
