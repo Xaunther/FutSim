@@ -65,12 +65,12 @@ void CPlayerSkills::JSON( json& aJSON ) const noexcept
 
 const skill_type& CPlayerSkills::GetSkill( const E_PLAYER_SKILL& aPlayerSkill ) const noexcept
 {
-	return mSkills[ static_cast<std::size_t>( aPlayerSkill ) ];
+	return mSkills[ static_cast<std::size_t>( aPlayerSkill ) ]; // NOLINT(cppcoreguidelines-pro-bounds-constant-array-index)
 }
 
 const xp_type& CPlayerSkills::GetExperience( const E_PLAYER_SKILL& aPlayerSkill ) const noexcept
 {
-	return mExperiences[ static_cast<std::size_t>( aPlayerSkill ) ];
+	return mExperiences[ static_cast<std::size_t>( aPlayerSkill ) ]; // NOLINT(cppcoreguidelines-pro-bounds-constant-array-index)
 }
 
 namespace

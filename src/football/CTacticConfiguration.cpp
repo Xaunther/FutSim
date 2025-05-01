@@ -65,7 +65,7 @@ const CTacticConfiguration::skill_bonus& CTacticConfiguration::GetSkillBonus(
 	const E_PLAYER_POSITION& aPlayerPosition, const E_PLAYER_SKILL& aPlayerSkill ) const noexcept
 {
 	return mBonusesTable[ static_cast<bonuses_table::size_type>( aPlayerPosition ) ]
-		[ static_cast<bonuses_table::value_type::size_type>( aPlayerSkill ) ];
+		[ static_cast<bonuses_table::value_type::size_type>( aPlayerSkill ) ]; // NOLINT(cppcoreguidelines-pro-bounds-constant-array-index)
 }
 
 CTacticConfiguration::skill_bonus& CTacticConfiguration::SkillBonus(
