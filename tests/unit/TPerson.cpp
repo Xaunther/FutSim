@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TPerson )
 
-void TPerson::TestExceptions() const
+void TPerson::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -78,7 +78,7 @@ void TPerson::TestExceptions() const
 	}, "key 'Nationality' not found" );
 }
 
-std::vector<std::string> TPerson::ObtainedResults() const noexcept
+std::vector<std::string> TPerson::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -116,7 +116,7 @@ std::vector<std::string> TPerson::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TPerson::ExpectedResults() const noexcept
+std::vector<std::string> TPerson::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"First name: Lorenzo",

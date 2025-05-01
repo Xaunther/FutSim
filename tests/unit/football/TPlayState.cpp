@@ -13,11 +13,11 @@ constexpr bool PRINT_OUTPUT = false;
 
 INITIALIZE_TEST( TPlayState )
 
-void TPlayState::TestExceptions() const
+void TPlayState::TestExceptions()
 {
 }
 
-std::vector<std::string> TPlayState::ObtainedResults() const noexcept
+std::vector<std::string> TPlayState::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -68,7 +68,7 @@ std::vector<std::string> TPlayState::ObtainedResults() const noexcept
 	return PRINT_OUTPUT ? result : std::vector<std::string>{};
 }
 
-std::vector<std::string> TPlayState::ExpectedResults() const noexcept
+std::vector<std::string> TPlayState::ExpectedResults() noexcept
 {
 	return {};
 }

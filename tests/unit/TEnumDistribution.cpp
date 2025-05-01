@@ -28,11 +28,11 @@ FUTSIM_STRING_ENUM( myEnum, {
 	} );
 // NOLINTEND(*-avoid-c-arrays)
 
-void TEnumDistribution::TestExceptions() const
+void TEnumDistribution::TestExceptions()
 {
 }
 
-std::vector<std::string> TEnumDistribution::ObtainedResults() const noexcept
+std::vector<std::string> TEnumDistribution::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -61,7 +61,7 @@ std::vector<std::string> TEnumDistribution::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TEnumDistribution::ExpectedResults() const noexcept
+std::vector<std::string> TEnumDistribution::ExpectedResults() noexcept
 {
 	return std::vector<std::string>{
 		"min: A",

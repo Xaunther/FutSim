@@ -15,7 +15,7 @@ constexpr bool PRINT_OUTPUT = false;
 
 INITIALIZE_TEST( TPeriodStates )
 
-void TPeriodStates::TestExceptions() const
+void TPeriodStates::TestExceptions()
 {
 	// Test CheckMatchConfiguration
 	CheckException( []()
@@ -25,7 +25,7 @@ void TPeriodStates::TestExceptions() const
 		"The match configuration cannot be used for the default extra time period play policy." );
 }
 
-std::vector<std::string> TPeriodStates::ObtainedResults() const noexcept
+std::vector<std::string> TPeriodStates::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -81,7 +81,7 @@ std::vector<std::string> TPeriodStates::ObtainedResults() const noexcept
 	return PRINT_OUTPUT ? result : std::vector<std::string>{};
 }
 
-std::vector<std::string> TPeriodStates::ExpectedResults() const noexcept
+std::vector<std::string> TPeriodStates::ExpectedResults() noexcept
 {
 	return {};
 }

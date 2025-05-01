@@ -25,11 +25,11 @@ void PushActor( auto& aResult, const CChanceState& aChanceState )
 
 } // anonymous namespace
 
-void TChanceState::TestExceptions() const
+void TChanceState::TestExceptions()
 {
 }
 
-std::vector<std::string> TChanceState::ObtainedResults() const noexcept
+std::vector<std::string> TChanceState::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	std::mt19937 rng{ 1234 };
@@ -77,7 +77,7 @@ std::vector<std::string> TChanceState::ObtainedResults() const noexcept
 	return PRINT_OUTPUT ? result : std::vector<std::string>{};
 }
 
-std::vector<std::string> TChanceState::ExpectedResults() const noexcept
+std::vector<std::string> TChanceState::ExpectedResults() noexcept
 {
 	return {};
 }

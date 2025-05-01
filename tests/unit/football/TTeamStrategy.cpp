@@ -14,7 +14,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TTeamStrategy )
 
-void TTeamStrategy::TestExceptions() const
+void TTeamStrategy::TestExceptions()
 {
 	// Test JSON constructor
 	CheckException( []()
@@ -33,7 +33,7 @@ void TTeamStrategy::TestExceptions() const
 	}, "key 'Lineup' not found" );
 }
 
-std::vector<std::string> TTeamStrategy::ObtainedResults() const noexcept
+std::vector<std::string> TTeamStrategy::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& teamStrategy : {
@@ -105,7 +105,7 @@ std::vector<std::string> TTeamStrategy::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TTeamStrategy::ExpectedResults() const noexcept
+std::vector<std::string> TTeamStrategy::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Tactic: A",

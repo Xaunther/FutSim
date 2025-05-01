@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TPlayerSkills )
 
-void TPlayerSkills::TestExceptions() const
+void TPlayerSkills::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -155,7 +155,7 @@ void TPlayerSkills::TestExceptions() const
 	}, "key 'Sh experience' not found" );
 }
 
-std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
+std::vector<std::string> TPlayerSkills::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -203,7 +203,7 @@ std::vector<std::string> TPlayerSkills::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TPlayerSkills::ExpectedResults() const noexcept
+std::vector<std::string> TPlayerSkills::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"St skill: 1",

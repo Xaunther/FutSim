@@ -13,11 +13,11 @@ constexpr bool PRINT_OUTPUT = false;
 
 INITIALIZE_TEST( TPenaltyState )
 
-void TPenaltyState::TestExceptions() const
+void TPenaltyState::TestExceptions()
 {
 }
 
-std::vector<std::string> TPenaltyState::ObtainedResults() const noexcept
+std::vector<std::string> TPenaltyState::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	std::mt19937 rng{ 1234 };
@@ -58,7 +58,7 @@ std::vector<std::string> TPenaltyState::ObtainedResults() const noexcept
 	return PRINT_OUTPUT ? result : std::vector<std::string>{};
 }
 
-std::vector<std::string> TPenaltyState::ExpectedResults() const noexcept
+std::vector<std::string> TPenaltyState::ExpectedResults() noexcept
 {
 	return {};
 }

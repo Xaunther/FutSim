@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TTieCondition )
 
-void TTieCondition::TestExceptions() const
+void TTieCondition::TestExceptions()
 {
 	// Test member constructor.
 	CheckException( []()
@@ -31,7 +31,7 @@ void TTieCondition::TestExceptions() const
 	}, "The home team goals cannot be smaller than the home team lead." );
 }
 
-std::vector<std::string> TTieCondition::ObtainedResults() const noexcept
+std::vector<std::string> TTieCondition::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -67,7 +67,7 @@ std::vector<std::string> TTieCondition::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TTieCondition::ExpectedResults() const noexcept
+std::vector<std::string> TTieCondition::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Home team lead: 0",

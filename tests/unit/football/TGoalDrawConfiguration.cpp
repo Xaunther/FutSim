@@ -13,7 +13,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TGoalDrawConfiguration )
 
-void TGoalDrawConfiguration::TestExceptions() const
+void TGoalDrawConfiguration::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -183,7 +183,7 @@ void TGoalDrawConfiguration::TestExceptions() const
 	}, "The joint probability of getting an extra corner or scoring in a 1 on 1 vs DF chance cannot be greater than 1." );
 }
 
-std::vector<std::string> TGoalDrawConfiguration::ObtainedResults() const noexcept
+std::vector<std::string> TGoalDrawConfiguration::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& goalDrawConfiguration : {
@@ -234,7 +234,7 @@ std::vector<std::string> TGoalDrawConfiguration::ObtainedResults() const noexcep
 	return result;
 }
 
-std::vector<std::string> TGoalDrawConfiguration::ExpectedResults() const noexcept
+std::vector<std::string> TGoalDrawConfiguration::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Average goals: 2.734211",

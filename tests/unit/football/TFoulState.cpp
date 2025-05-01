@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TFoulState )
 
-void TFoulState::TestExceptions() const
+void TFoulState::TestExceptions()
 {
 	std::mt19937 rng{ 1234 };
 	// Test constructor
@@ -19,7 +19,7 @@ void TFoulState::TestExceptions() const
 		throw std::invalid_argument{ "The foul committer must be Ter Stegen." };
 }
 
-std::vector<std::string> TFoulState::ObtainedResults() const noexcept
+std::vector<std::string> TFoulState::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -38,7 +38,7 @@ std::vector<std::string> TFoulState::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TFoulState::ExpectedResults() const noexcept
+std::vector<std::string> TFoulState::ExpectedResults() noexcept
 {
 	return std::vector<std::string>{
 		"Committer: Ter Stegen",

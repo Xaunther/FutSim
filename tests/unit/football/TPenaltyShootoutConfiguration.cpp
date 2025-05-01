@@ -11,11 +11,11 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TPenaltyShootoutConfiguration )
 
-void TPenaltyShootoutConfiguration::TestExceptions() const
+void TPenaltyShootoutConfiguration::TestExceptions()
 {
 }
 
-std::vector<std::string> TPenaltyShootoutConfiguration::ObtainedResults() const noexcept
+std::vector<std::string> TPenaltyShootoutConfiguration::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -52,7 +52,7 @@ std::vector<std::string> TPenaltyShootoutConfiguration::ObtainedResults() const 
 	return result;
 }
 
-std::vector<std::string> TPenaltyShootoutConfiguration::ExpectedResults() const noexcept
+std::vector<std::string> TPenaltyShootoutConfiguration::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Sequence: AB",

@@ -27,7 +27,7 @@ ATest::~ATest()
 	mObtainedStream.close();
 }
 
-void ATest::Run() const
+void ATest::Run()
 {
 	TestExceptions();
 
@@ -62,7 +62,7 @@ void ATest::CheckException( const std::function<void()>& aFunction, const std::s
 	throw std::invalid_argument{ ss.str() };
 }
 
-void ATest::CheckResults( const std::vector<std::string>& aObtained, const std::vector<std::string>& aExpected ) const
+void ATest::CheckResults( const std::vector<std::string>& aObtained, const std::vector<std::string>& aExpected )
 {
 	if( aObtained != aExpected )
 	{

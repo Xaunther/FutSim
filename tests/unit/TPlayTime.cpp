@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TPlayTime )
 
-void TPlayTime::TestExceptions() const
+void TPlayTime::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -59,7 +59,7 @@ void TPlayTime::TestExceptions() const
 	}, "The length of the period cannot be zero." );
 }
 
-std::vector<std::string> TPlayTime::ObtainedResults() const noexcept
+std::vector<std::string> TPlayTime::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -82,7 +82,7 @@ std::vector<std::string> TPlayTime::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TPlayTime::ExpectedResults() const noexcept
+std::vector<std::string> TPlayTime::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Period count: 2",

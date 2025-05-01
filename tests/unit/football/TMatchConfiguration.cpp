@@ -12,7 +12,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TMatchConfiguration )
 
-void TMatchConfiguration::TestExceptions() const
+void TMatchConfiguration::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -77,7 +77,7 @@ void TMatchConfiguration::TestExceptions() const
 	}
 }
 
-std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
+std::vector<std::string> TMatchConfiguration::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -128,7 +128,7 @@ std::vector<std::string> TMatchConfiguration::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TMatchConfiguration::ExpectedResults() const noexcept
+std::vector<std::string> TMatchConfiguration::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Play time",

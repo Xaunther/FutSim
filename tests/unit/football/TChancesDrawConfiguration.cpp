@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TChancesDrawConfiguration )
 
-void TChancesDrawConfiguration::TestExceptions() const
+void TChancesDrawConfiguration::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -143,7 +143,7 @@ void TChancesDrawConfiguration::TestExceptions() const
 	}, "The average number of set pieces minus the average number of penalties and direct free kicks cannot be negative." );
 }
 
-std::vector<std::string> TChancesDrawConfiguration::ObtainedResults() const noexcept
+std::vector<std::string> TChancesDrawConfiguration::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& chancesDrawConfiguration : {
@@ -182,7 +182,7 @@ std::vector<std::string> TChancesDrawConfiguration::ObtainedResults() const noex
 	return result;
 }
 
-std::vector<std::string> TChancesDrawConfiguration::ExpectedResults() const noexcept
+std::vector<std::string> TChancesDrawConfiguration::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Average chances: 25.286842",

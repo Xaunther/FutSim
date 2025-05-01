@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TPlayer )
 
-void TPlayer::TestExceptions() const
+void TPlayer::TestExceptions()
 {
 	// Test JSON constructor
 	CheckException( []()
@@ -27,7 +27,7 @@ void TPlayer::TestExceptions() const
 	}, "key 'Player skills' not found" );
 }
 
-std::vector<std::string> TPlayer::ObtainedResults() const noexcept
+std::vector<std::string> TPlayer::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -81,7 +81,7 @@ std::vector<std::string> TPlayer::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TPlayer::ExpectedResults() const noexcept
+std::vector<std::string> TPlayer::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Player skills",

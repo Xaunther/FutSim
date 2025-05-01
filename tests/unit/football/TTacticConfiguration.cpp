@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TTacticConfiguration )
 
-void TTacticConfiguration::TestExceptions() const
+void TTacticConfiguration::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -45,7 +45,7 @@ void TTacticConfiguration::TestExceptions() const
 	}, "The Sh bonus for DF cannot be negative." );
 }
 
-std::vector<std::string> TTacticConfiguration::ObtainedResults() const noexcept
+std::vector<std::string> TTacticConfiguration::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& tacticConfiguration : {
@@ -104,7 +104,7 @@ std::vector<std::string> TTacticConfiguration::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TTacticConfiguration::ExpectedResults() const noexcept
+std::vector<std::string> TTacticConfiguration::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Tk bonus: 0.000000",

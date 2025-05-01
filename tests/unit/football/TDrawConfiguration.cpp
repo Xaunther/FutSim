@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TDrawConfiguration )
 
-void TDrawConfiguration::TestExceptions() const
+void TDrawConfiguration::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -344,7 +344,7 @@ void TDrawConfiguration::TestExceptions() const
 	}, "The joint probability of scoring or getting an extra corner from a direct free kick cannot be greater than 1." );
 }
 
-std::vector<std::string> TDrawConfiguration::ObtainedResults() const noexcept
+std::vector<std::string> TDrawConfiguration::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& drawConfiguration : {
@@ -432,7 +432,7 @@ std::vector<std::string> TDrawConfiguration::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TDrawConfiguration::ExpectedResults() const noexcept
+std::vector<std::string> TDrawConfiguration::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Possession draw configuration",

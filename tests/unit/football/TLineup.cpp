@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TLineup )
 
-void TLineup::TestExceptions() const
+void TLineup::TestExceptions()
 {
 	// Test JSON constructor
 	CheckException( []()
@@ -22,7 +22,7 @@ void TLineup::TestExceptions() const
 	}, "key 'GK' not found" );
 }
 
-std::vector<std::string> TLineup::ObtainedResults() const noexcept
+std::vector<std::string> TLineup::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -75,7 +75,7 @@ std::vector<std::string> TLineup::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TLineup::ExpectedResults() const noexcept
+std::vector<std::string> TLineup::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"GK: Kelleher",

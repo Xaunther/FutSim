@@ -43,7 +43,7 @@ types::CLineup::names{ "Lockyer", "Kaboré", "Bell" },
 
 INITIALIZE_TEST( TPenaltyShootoutState )
 
-void TPenaltyShootoutState::TestExceptions() const
+void TPenaltyShootoutState::TestExceptions()
 {
 	std::mt19937 rng{ 1234 };
 	// Test constructor
@@ -55,7 +55,7 @@ void TPenaltyShootoutState::TestExceptions() const
 		"The match configuration must include a penalty shootout configuration." );
 }
 
-std::vector<std::string> TPenaltyShootoutState::ObtainedResults() const noexcept
+std::vector<std::string> TPenaltyShootoutState::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -83,7 +83,7 @@ std::vector<std::string> TPenaltyShootoutState::ObtainedResults() const noexcept
 	return PRINT_OUTPUT ? result : std::vector<std::string>{};
 }
 
-std::vector<std::string> TPenaltyShootoutState::ExpectedResults() const noexcept
+std::vector<std::string> TPenaltyShootoutState::ExpectedResults() noexcept
 {
 	return {};
 }

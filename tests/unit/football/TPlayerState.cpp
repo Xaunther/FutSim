@@ -13,11 +13,11 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TPlayerState )
 
-void TPlayerState::TestExceptions() const
+void TPlayerState::TestExceptions()
 {
 }
 
-std::vector<std::string> TPlayerState::ObtainedResults() const noexcept
+std::vector<std::string> TPlayerState::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 
@@ -74,7 +74,7 @@ std::vector<std::string> TPlayerState::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TPlayerState::ExpectedResults() const noexcept
+std::vector<std::string> TPlayerState::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Minutes played: 0",

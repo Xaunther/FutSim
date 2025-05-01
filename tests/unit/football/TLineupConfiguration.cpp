@@ -13,7 +13,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TLineupConfiguration )
 
-void TLineupConfiguration::TestExceptions() const
+void TLineupConfiguration::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -165,7 +165,7 @@ void TLineupConfiguration::TestExceptions() const
 	}
 }
 
-std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
+std::vector<std::string> TLineupConfiguration::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& lineupConfiguration : {
@@ -206,7 +206,7 @@ std::vector<std::string> TLineupConfiguration::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TLineupConfiguration::ExpectedResults() const noexcept
+std::vector<std::string> TLineupConfiguration::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Min DFs: 3",

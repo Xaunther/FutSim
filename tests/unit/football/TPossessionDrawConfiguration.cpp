@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TPossessionDrawConfiguration )
 
-void TPossessionDrawConfiguration::TestExceptions() const
+void TPossessionDrawConfiguration::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -42,7 +42,7 @@ void TPossessionDrawConfiguration::TestExceptions() const
 	}, "The probability to keep possession cannot be greater than 1." );
 }
 
-std::vector<std::string> TPossessionDrawConfiguration::ObtainedResults() const noexcept
+std::vector<std::string> TPossessionDrawConfiguration::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& possessionDrawConfiguration : {
@@ -67,7 +67,7 @@ std::vector<std::string> TPossessionDrawConfiguration::ObtainedResults() const n
 	return result;
 }
 
-std::vector<std::string> TPossessionDrawConfiguration::ExpectedResults() const noexcept
+std::vector<std::string> TPossessionDrawConfiguration::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Keep possession probability: 0.642063",

@@ -11,7 +11,7 @@ using namespace nlohmann;
 
 INITIALIZE_TEST( TTacticsConfiguration )
 
-void TTacticsConfiguration::TestExceptions() const
+void TTacticsConfiguration::TestExceptions()
 {
 	// Test member constructor
 	CheckException( []()
@@ -90,7 +90,7 @@ void TTacticsConfiguration::TestExceptions() const
 	}, "The favourable tactic skill bonus cannot be negative" );
 }
 
-std::vector<std::string> TTacticsConfiguration::ObtainedResults() const noexcept
+std::vector<std::string> TTacticsConfiguration::ObtainedResults() noexcept
 {
 	std::vector<std::string> result;
 	for( const auto& tacticsConfiguration : {
@@ -127,7 +127,7 @@ std::vector<std::string> TTacticsConfiguration::ObtainedResults() const noexcept
 	return result;
 }
 
-std::vector<std::string> TTacticsConfiguration::ExpectedResults() const noexcept
+std::vector<std::string> TTacticsConfiguration::ExpectedResults() noexcept
 {
 	std::vector<std::string> result{
 		"Tactic configurations:",
