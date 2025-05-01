@@ -9,7 +9,7 @@ namespace futsim
 #define FUTSIM_STRING_ENUM(ENUM_TYPE, ...) \
 	inline std::string_view ToString(const ENUM_TYPE& aEnum) \
 	{ \
-		static_assert(std::is_enum<ENUM_TYPE>::value, #ENUM_TYPE " must be an enum!"); \
+		static_assert(std::is_enum_v<ENUM_TYPE>, #ENUM_TYPE " must be an enum!"); \
 		static const struct{ ENUM_TYPE value; std::string description; } enumStrings[] = __VA_ARGS__; \
 		return (*std::ranges::find_if(enumStrings, \
 				[&aEnum](const auto& aEnumString){return aEnumString.value == aEnum;})).description; \
