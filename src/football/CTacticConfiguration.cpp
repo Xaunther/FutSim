@@ -71,6 +71,7 @@ const CTacticConfiguration::skill_bonus& CTacticConfiguration::GetSkillBonus(
 CTacticConfiguration::skill_bonus& CTacticConfiguration::SkillBonus(
 	const E_PLAYER_POSITION& aPlayerPosition, const E_PLAYER_SKILL& aPlayerSkill ) noexcept
 {
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
 	return const_cast<CTacticConfiguration::skill_bonus&>( GetSkillBonus( aPlayerPosition, aPlayerSkill ) );
 }
 
