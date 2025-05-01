@@ -251,7 +251,7 @@ types::CGoalDrawConfiguration::E_CHANCE_OUTCOME DrawOutcome( const types::CChanc
 	using enum types::CChancesDrawConfiguration::E_SET_PIECE_TYPE;
 	using enum types::CChancesDrawConfiguration::E_CHANCE_TYPE;
 	using enum E_PLAYER_SKILL;
-	if( const auto chance = std::get_if<types::CChancesDrawConfiguration::E_SET_PIECE_TYPE>( &aChanceType ) )
+	if( const auto* chance = std::get_if<types::CChancesDrawConfiguration::E_SET_PIECE_TYPE>( &aChanceType ) )
 	{
 		switch( *chance )
 		{
