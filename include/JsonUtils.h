@@ -2,6 +2,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include "traits/json.h"
+
 namespace futsim
 {
 
