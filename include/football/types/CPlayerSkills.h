@@ -2,6 +2,8 @@
 
 #include "football/EPlayerSkill.h"
 
+#include <array>
+
 /**
  * @brief Types defined for \ref CPlayerSkills.
 */
