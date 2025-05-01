@@ -20,11 +20,13 @@ enum class myEnum
 	C
 };
 
+// NOLINTBEGIN(*-avoid-c-arrays)
 FUTSIM_STRING_ENUM( myEnum, {
 	{ myEnum::A, "A" },
 	{ myEnum::B, "B" },
 	{ myEnum::C, "C" },
 	} );
+// NOLINTEND(*-avoid-c-arrays)
 
 void TEnumDistribution::TestExceptions() const
 {
