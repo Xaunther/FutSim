@@ -20,17 +20,14 @@ function(add_futsim_test MODULE_NAME)
 		string(REPLACE ".cpp" "" TEST_NAME ${TEST_SOURCE})
 		get_filename_component(TEST_NAME ${TEST_NAME} NAME)
 		add_executable(${MODULE_NAME}_${TEST_NAME} ${TEST_SOURCE})
-		target_link_libraries(${MODULE_NAME}_${TEST_NAME} PRIVATE ${PARENT_PROJECT_NAME}_${MODULE_NAME}_Static ${PROJECT_NAME}_TESTS_ENGINE_Static)
+		target_link_libraries(${MODULE_NAME}_${TEST_NAME} PRIVATE ${PARENT_PROJECT_NAME}_${MODULE_NAME}_Static ${PARENT_PROJECT_NAME}_${PROJECT_NAME}_ENGINE_Static)
 		add_test(NAME ${MODULE_NAME}_${TEST_NAME} COMMAND ${MODULE_NAME}_${TEST_NAME})
 	endforeach()
 endfunction()
 
-foreach(FUTSIM_MODULE ENGINE)
-	add_futsim_object_module(${PROJECT_NAME}_${FUTSIM_MODULE} "${FUTSIM_TESTS_${FUTSIM_MODULE}_SOURCE}")
-	set(FUTSIM_${FUTSIM_MODULE}_OBJECTS $<TARGET_OBJECTS:${PROJECT_NAME}_${FUTSIM_MODULE}_Objects>)
-	# Final build step. All objects must have been appended to FUTSIM_OBJECTS.
-	add_futsim_module(${PROJECT_NAME}_${FUTSIM_MODULE} STATIC ${FUTSIM_${FUTSIM_MODULE}_OBJECTS})
-endforeach(FUTSIM_MODULE)
+# Add module for test engine
+add_futsim_object_module(${PARENT_PROJECT_NAME}_${PROJECT_NAME}_ENGINE "${FUTSIM_TESTS_ENGINE_SOURCE}")
+add_futsim_module(${PARENT_PROJECT_NAME}_${PROJECT_NAME}_ENGINE STATIC $<TARGET_OBJECTS:${PARENT_PROJECT_NAME}_${PROJECT_NAME}_ENGINE_Objects>)
 
 foreach(FUTSIM_MODULE ${FUTSIM_MODULES})
 	add_futsim_test(${FUTSIM_MODULE})
