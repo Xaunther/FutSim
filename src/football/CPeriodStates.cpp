@@ -1,5 +1,4 @@
 #include "football/CPeriodStates.h"
-#include "football/IExtraTimePeriodPlayPolicy.h"
 
 #include "JsonUtils.h"
 

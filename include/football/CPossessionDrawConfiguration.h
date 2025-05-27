@@ -4,10 +4,11 @@
 #include "football/traits/CPossessionDrawConfiguration.h"
 
 #include "football/types/CDrawConfiguration.h"
-#include "football/types/CPossessionDrawConfiguration.h"
 
 namespace futsim::football
 {
+
+class CPossessionDrawConfiguration;
 
 /**
  * @brief Class that configures the possession draw.

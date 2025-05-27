@@ -4,7 +4,6 @@
 
 #include <array>
 #include <functional>
-#include <iostream>
 #include <string>
 
 #include "EnumUtils.h"

@@ -8,7 +8,6 @@
 #include "NumberUtils.h"
 
 #include <regex>
-#include <set>
 
 namespace futsim::football
 {

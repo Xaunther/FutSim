@@ -3,7 +3,6 @@
 #include "IJsonable.h"
 #include "football/traits/CTacticsConfiguration.h"
 
-#include "football/CTacticConfiguration.h"
 #include "football/types/CTacticsConfiguration.h"
 
 namespace futsim::football
