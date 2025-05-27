@@ -58,6 +58,13 @@ protected:
 	*/
 	void JSON( json& aJSON ) const noexcept override;
 
+public:
+	//! Conversion to variant.
+	//! @{
+	inline constexpr operator variant&() noexcept{ return mRule; }
+	inline constexpr operator const variant&() const noexcept{ return mRule; }
+	//! @}
+
 private:
 	//! Goal rule contained.
 	variant mRule;
