@@ -52,6 +52,12 @@ public:
 	 */
 	explicit CGoalRule( const json& aJSON );
 
+protected:
+	/**
+	 * @copydoc IJsonable::ToJSON
+	*/
+	void JSON( json& aJSON ) const noexcept override;
+
 private:
 	//! Goal rule contained.
 	variant mRule;

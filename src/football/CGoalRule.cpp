@@ -32,6 +32,11 @@ CGoalRule::CGoalRule( const json& aJSON ) try :
 }
 FUTSIM_CATCH_AND_RETHROW_EXCEPTION( std::invalid_argument, "Error creating the goal rule." )
 
+void CGoalRule::JSON( json& aJSON ) const noexcept
+{
+	AddToJSON( aJSON, std::visit( []( auto&& aRule ) -> std::string_view { return aRule; }, mRule ) );
+}
+
 namespace
 {
 
