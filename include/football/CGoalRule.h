@@ -46,6 +46,12 @@ public:
 	 */
 	template <has_type_c<variant> T = NO> CGoalRule( const T& aRule = {} ) noexcept;
 
+	/**
+	 * @brief JSON constructor.
+	 * @param aJSON JSON object.
+	 */
+	explicit CGoalRule( const json& aJSON );
+
 private:
 	//! Goal rule contained.
 	variant mRule;
