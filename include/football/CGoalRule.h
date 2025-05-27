@@ -3,6 +3,8 @@
 #include "IJsonable.h"
 #include "football/traits/CGoalRule.h"
 
+#include "traits/has_type.h"
+
 #include <variant>
 
 namespace futsim::football
@@ -37,6 +39,12 @@ public:
 
 	//! Type for the goal rule variant.
 	using variant = std::variant<NO, SILVER_GOAL, GOLDEN_GOAL>;
+
+	/**
+	 * @brief Member constructor.
+	 * @param aRule \ref mRule
+	 */
+	template <has_type_c<variant> T = NO> CGoalRule( const T& aRule = {} ) noexcept;
 
 private:
 	//! Goal rule contained.
