@@ -3,8 +3,6 @@
 #include "traits/default.h"
 #include "traits/json.h"
 
-#include "football/EGoalRule.h"
-
 #include <string_view>
 
 namespace futsim

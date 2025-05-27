@@ -58,7 +58,6 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CTacticsConfiguration.h
 	include/football/CTeam.h
 	include/football/CTieCondition.h
-	include/football/EGoalRule.h
 	include/football/EPenaltySequence.h
 	include/football/EPlayerPosition.h
 	include/football/EPlayerSkill.h
