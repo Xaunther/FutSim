@@ -37,6 +37,10 @@ public:
 
 	//! Type for the goal rule variant.
 	using variant = std::variant<NO, SILVER_GOAL, GOLDEN_GOAL>;
+
+private:
+	//! Goal rule contained.
+	variant mRule;
 };
 
 } // futsim::football namespace
