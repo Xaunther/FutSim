@@ -32,6 +32,7 @@ SET(FUTSIM_FOOTBALL_EXTERNAL_HEADERS
 	include/football/CFoulDrawConfiguration.h
 	include/football/CFoulState.h
 	include/football/CGoalDrawConfiguration.h
+	include/football/CGoalRule.h
 	include/football/CLineup.h
 	include/football/CLineupConfiguration.h
 	include/football/CMatch.h
@@ -141,6 +142,7 @@ SET(FUTSIM_FOOTBALL_SOURCE
 	src/football/CFoulDrawConfiguration.cpp
 	src/football/CFoulState.cpp
 	src/football/CGoalDrawConfiguration.cpp
+	src/football/CGoalRule.cpp
 	src/football/CLineup.cpp
 	src/football/CLineupConfiguration.cpp
 	src/football/CMatch.cpp
