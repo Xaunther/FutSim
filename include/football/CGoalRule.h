@@ -21,6 +21,8 @@ public:
 	{
 		//! Conversion to string.
 		inline constexpr operator std::string_view() const noexcept{ return CGoalRule::NO_KEY; }
+		//! Define comparisor operators.
+		auto operator<=>( const NO& ) const = default;
 	};
 
 	//! Class for a silver goal rule.
@@ -28,6 +30,8 @@ public:
 	{
 		//! Conversion to string.
 		inline constexpr operator std::string_view() const noexcept{ return CGoalRule::SILVER_GOAL_KEY; }
+		//! Define comparisor operators.
+		auto operator<=>( const SILVER_GOAL& ) const = default;
 	};
 
 	//! Class for a golden goal rule.
@@ -35,6 +39,8 @@ public:
 	{
 		//! Conversion to string.
 		inline constexpr operator std::string_view() const noexcept{ return CGoalRule::GOLDEN_GOAL_KEY; }
+		//! Define comparisor operators.
+		auto operator<=>( const GOLDEN_GOAL& ) const = default;
 	};
 
 	//! Type for the goal rule variant.
@@ -64,6 +70,11 @@ public:
 	inline constexpr operator variant&() noexcept{ return mRule; }
 	inline constexpr operator const variant&() const noexcept{ return mRule; }
 	//! @}
+
+	/**
+	 * @brief Define comparisor operators.
+	 */
+	auto operator<=>( const CGoalRule& ) const = default;
 
 private:
 	//! Goal rule contained.

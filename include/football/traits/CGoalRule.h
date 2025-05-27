@@ -25,6 +25,11 @@ template <> struct json_traits<football::CGoalRule>
 	static inline constexpr std::string_view SILVER_GOAL_KEY = "Silver goal";
 	//! JSON key for the golden goal rule.
 	static inline constexpr std::string_view GOLDEN_GOAL_KEY = "Golden goal";
+
+	/**
+	 * @brief Define comparisor operators.
+	 */
+	auto operator<=>( const json_traits<football::CGoalRule>& ) const = default;
 };
 
 } // futsim namespace
