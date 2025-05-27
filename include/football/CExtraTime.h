@@ -3,7 +3,7 @@
 #include "football/CPlayTime.h"
 #include "football/traits/CExtraTime.h"
 
-#include "football/EGoalRule.h"
+#include "football/CGoalRule.h"
 
 namespace futsim::football
 {
@@ -28,7 +28,7 @@ public:
 		const period_count& aPeriodCount = PERIOD_COUNT,
 		const period_time& aPeriodTime = PERIOD_TIME,
 		const subs_count& aAvailableSubs = AVAILABLE_SUBS,
-		const E_GOAL_RULE& aGoalRule = GOAL_RULE );
+		const CGoalRule& aGoalRule = {} );
 
 	/**
 	 * @brief JSON constructor.
@@ -44,11 +44,11 @@ protected:
 
 public:
 	//! Retrieves the \copybrief mGoalRule
-	const E_GOAL_RULE& GetGoalRule() const noexcept;
+	const CGoalRule& GetGoalRule() const noexcept;
 
 private:
 	//! Goal rule.
-	E_GOAL_RULE mGoalRule;
+	CGoalRule mGoalRule;
 };
 
 } // futsim::football namespace

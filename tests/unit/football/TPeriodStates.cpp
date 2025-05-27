@@ -51,21 +51,21 @@ std::vector<std::string> TPeriodStates::ObtainedResults() noexcept
 	const CMatchConfiguration extraTimeMatchConfig{ CPlayTime{}, CLineupConfiguration{}, true,
 		CTacticsConfiguration{}, CTieCondition{}, CExtraTime{}, CPenaltyShootoutConfiguration{} };
 	const CMatchConfiguration goldenGoalMatchConfig{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, CTieCondition{},
-		CExtraTime{ futsim::default_traits<CPlayTime>::PERIOD_COUNT, 200, futsim::default_traits<CExtraTime>::AVAILABLE_SUBS, E_GOAL_RULE::GOLDEN_GOAL },
+		CExtraTime{ futsim::default_traits<CPlayTime>::PERIOD_COUNT, 200, futsim::default_traits<CExtraTime>::AVAILABLE_SUBS, CGoalRule::GOLDEN_GOAL{} },
 		CPenaltyShootoutConfiguration{} };
 	const CMatchConfiguration silverGoalMatchConfig{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, CTieCondition{},
-		CExtraTime{ 20, 15, futsim::default_traits<CExtraTime>::AVAILABLE_SUBS, E_GOAL_RULE::SILVER_GOAL },
+		CExtraTime{ 20, 15, futsim::default_traits<CExtraTime>::AVAILABLE_SUBS, CGoalRule::SILVER_GOAL{} },
 		CPenaltyShootoutConfiguration{} };
 
 	for( const auto& periodStates : {
 		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, CMatchConfiguration{},
 		homeTeamStrategy, awayTeamStrategy, rng },
 		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, extraTimeMatchConfig,
-		homeTeamStrategy, awayTeamStrategy, rng, CExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::NO>{} },
+		homeTeamStrategy, awayTeamStrategy, rng, CExtraTimePeriodPlayPolicy<CGoalRule::NO>{}, CExtraTimePeriodPolicy<CGoalRule::NO>{} },
 		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, goldenGoalMatchConfig,
-		homeTeamStrategy, awayTeamStrategy, rng, CExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>{} },
+		homeTeamStrategy, awayTeamStrategy, rng, CExtraTimePeriodPlayPolicy<CGoalRule::GOLDEN_GOAL>{}, CExtraTimePeriodPolicy<CGoalRule::SILVER_GOAL>{} },
 		CPeriodStates{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" }, silverGoalMatchConfig,
-		homeTeamStrategy, awayTeamStrategy, rng, CExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>{} },
+		homeTeamStrategy, awayTeamStrategy, rng, CExtraTimePeriodPlayPolicy<CGoalRule::NO>{}, CExtraTimePeriodPolicy<CGoalRule::SILVER_GOAL>{} },
 		} )
 	{
 		result.push_back( std::string{ futsim::json_traits<CPeriodStates>::KEY } + ": "

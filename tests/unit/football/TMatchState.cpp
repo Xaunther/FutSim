@@ -44,10 +44,10 @@ std::vector<std::string> TMatchState::ObtainedResults() noexcept
 	const CMatchConfiguration extraTimeMatchConfig{ CPlayTime{ 1, 1 }, CLineupConfiguration{}, true,
 		CTacticsConfiguration{}, CTieCondition{}, CExtraTime{}, CPenaltyShootoutConfiguration{} };
 	const CMatchConfiguration goldenGoalMatchConfig{ CPlayTime{ 1, 1 }, CLineupConfiguration{}, true, CTacticsConfiguration{}, CTieCondition{},
-		CExtraTime{ futsim::default_traits<CPlayTime>::PERIOD_COUNT, 200, futsim::default_traits<CExtraTime>::AVAILABLE_SUBS, E_GOAL_RULE::GOLDEN_GOAL },
+		CExtraTime{ futsim::default_traits<CPlayTime>::PERIOD_COUNT, 200, futsim::default_traits<CExtraTime>::AVAILABLE_SUBS, CGoalRule::GOLDEN_GOAL{} },
 		CPenaltyShootoutConfiguration{} };
 	const CMatchConfiguration silverGoalMatchConfig{ CPlayTime{ 1, 1 }, CLineupConfiguration{}, true, CTacticsConfiguration{}, CTieCondition{},
-		CExtraTime{ 20, 15, futsim::default_traits<CExtraTime>::AVAILABLE_SUBS, E_GOAL_RULE::SILVER_GOAL },
+		CExtraTime{ 20, 15, futsim::default_traits<CExtraTime>::AVAILABLE_SUBS, CGoalRule::SILVER_GOAL{} },
 		CPenaltyShootoutConfiguration{} };
 	const CMatchConfiguration penaltyMatchConfig{ CPlayTime{ 1, 1 }, CLineupConfiguration{}, true, CTacticsConfiguration{}, CTieCondition{},
 		{}, CPenaltyShootoutConfiguration{} };

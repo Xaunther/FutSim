@@ -84,22 +84,10 @@ CMatchState::CMatchState(
 		{
 			if( aMatchConfiguration.GetExtraTime() )
 			{
-				const auto& extraTime = *aMatchConfiguration.GetExtraTime();
-				switch( extraTime.GetGoalRule() )
-				{
-				case E_GOAL_RULE::SILVER_GOAL:
-					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-						CExtraTimePeriodPlayPolicy<E_GOAL_RULE::SILVER_GOAL>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>{} };
-					break;
-				case E_GOAL_RULE::GOLDEN_GOAL:
-					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-						CExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::GOLDEN_GOAL>{} };
-					break;
-				case E_GOAL_RULE::NO: default:
-					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-						CExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{}, CExtraTimePeriodPolicy<E_GOAL_RULE::NO>{} };
-					break;
-				}
+				std::visit( [&]( auto&& aRule ){
+						mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
+						CExtraTimePeriodPlayPolicy<std::decay_t<decltype(aRule)>>{}, CExtraTimePeriodPolicy<std::decay_t<decltype(aRule)>>{} };
+						}, static_cast<CGoalRule::variant>( (*aMatchConfiguration.GetExtraTime()).GetGoalRule() ) );
 				score += mExtraTimeState->CountScore();
 
 				if( tieCondition( score.home, score.away ) )

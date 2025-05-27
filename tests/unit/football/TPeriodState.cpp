@@ -50,7 +50,7 @@ std::vector<std::string> TPeriodState::ObtainedResults() noexcept
 	const CMatchConfiguration extraTimeMatchConfig{ CPlayTime{}, CLineupConfiguration{}, true,
 		CTacticsConfiguration{}, CTieCondition{}, CExtraTime{}, CPenaltyShootoutConfiguration{} };
 	const CMatchConfiguration goldenGoalMatchConfig{ CPlayTime{}, CLineupConfiguration{}, true, CTacticsConfiguration{}, CTieCondition{},
-		CExtraTime{ futsim::default_traits<CPlayTime>::PERIOD_COUNT, 200, futsim::default_traits<CExtraTime>::AVAILABLE_SUBS, E_GOAL_RULE::GOLDEN_GOAL },
+		CExtraTime{ futsim::default_traits<CPlayTime>::PERIOD_COUNT, 200, futsim::default_traits<CExtraTime>::AVAILABLE_SUBS, CGoalRule::GOLDEN_GOAL{} },
 		CPenaltyShootoutConfiguration{} };
 
 	for( const auto& periodState : {
@@ -59,9 +59,9 @@ std::vector<std::string> TPeriodState::ObtainedResults() noexcept
 		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
 		CMatchConfiguration{}, homeTeamStrategy, awayTeamStrategy, false, rng },
 		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
-		extraTimeMatchConfig, homeTeamStrategy, awayTeamStrategy, true, rng, CExtraTimePeriodPlayPolicy<E_GOAL_RULE::NO>{} },
+		extraTimeMatchConfig, homeTeamStrategy, awayTeamStrategy, true, rng, CExtraTimePeriodPlayPolicy<CGoalRule::NO>{} },
 		CPeriodState{ CMatch{ team, team, CStadium{ "The New Lawn", 5147, 1 }, "Michael Oliver" },
-		goldenGoalMatchConfig, homeTeamStrategy, awayTeamStrategy, false, rng, CExtraTimePeriodPlayPolicy<E_GOAL_RULE::GOLDEN_GOAL>{} },
+		goldenGoalMatchConfig, homeTeamStrategy, awayTeamStrategy, false, rng, CExtraTimePeriodPlayPolicy<CGoalRule::GOLDEN_GOAL>{} },
 		} )
 	{
 		result.push_back( std::string{ futsim::json_traits<CPeriodState>::PLAYS_KEY } + ": "
