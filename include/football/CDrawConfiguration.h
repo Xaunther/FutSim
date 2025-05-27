@@ -3,6 +3,8 @@
 #include "IJsonable.h"
 #include "football/traits/CDrawConfiguration.h"
 
+#include "football/types/CPossessionDrawConfiguration.h"
+
 #include "football/CChancesDrawConfiguration.h"
 #include "football/CFoulDrawConfiguration.h"
 #include "football/CGoalDrawConfiguration.h"

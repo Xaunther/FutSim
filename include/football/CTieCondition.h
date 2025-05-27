@@ -5,8 +5,6 @@
 
 #include "types/CTieCondition.h"
 
-#include <optional>
-
 namespace futsim::football
 {
 

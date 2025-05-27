@@ -4,8 +4,6 @@
 
 #include "JsonUtils.h"
 
-#include <iostream>
-
 using namespace futsim;
 using namespace nlohmann;
 

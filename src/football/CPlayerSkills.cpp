@@ -3,8 +3,6 @@
 #include "ExceptionUtils.h"
 #include "JsonUtils.h"
 
-#include <iostream>
-
 namespace futsim::football
 {
 

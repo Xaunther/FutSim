@@ -1,7 +1,6 @@
 #include "football/CPeriodPlayPolicy.h"
 
 #include "football/CMatchConfiguration.h"
-#include "football/CPlayState.h"
 
 namespace futsim::football
 {

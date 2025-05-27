@@ -1,8 +1,8 @@
 #pragma once
 
-#include "IJsonable.h"
-
 #include "traits/json.h"
+
+#include <string_view>
 
 namespace futsim
 {
