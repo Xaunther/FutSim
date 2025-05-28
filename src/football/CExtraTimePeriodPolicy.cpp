@@ -6,11 +6,7 @@
 namespace futsim::football
 {
 
-//! Macro to explicitly instantiate CExtraTimePeriodPlayPolicy struct
-#define EXPLICIT_INSTANTIATE_STRUCT_EXTRA_TIME_PERIOD_POLICY(name, ... ) \
-	template class CExtraTimePeriodPolicy<E_GOAL_RULE::name>; \
-
-template <E_GOAL_RULE GOAL_RULE>
+template <typename GOAL_RULE>
 bool CExtraTimePeriodPolicy<GOAL_RULE>::DoOperator( const period_states& aPeriodStates,
 	const CMatchConfiguration& aMatchConfiguration ) const
 {
@@ -18,7 +14,7 @@ bool CExtraTimePeriodPolicy<GOAL_RULE>::DoOperator( const period_states& aPeriod
 }
 
 template <>
-bool CExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>::DoOperator( const period_states& aPeriodStates,
+bool CExtraTimePeriodPolicy<CGoalRule::SILVER_GOAL>::DoOperator( const period_states& aPeriodStates,
 	const CMatchConfiguration& aMatchConfiguration ) const
 {
 	if( !IExtraTimePeriodPolicy::DoOperator( aPeriodStates, aMatchConfiguration ) )
@@ -29,6 +25,8 @@ bool CExtraTimePeriodPolicy<E_GOAL_RULE::SILVER_GOAL>::DoOperator( const period_
 	return score.home == score.away && ( !aMatchConfiguration.GetTieCondition()->GetHomeTeamGoals() || score.home == 0 );
 }
 
-FOR_EACH_GOAL_RULE( EXPLICIT_INSTANTIATE_STRUCT_EXTRA_TIME_PERIOD_POLICY )
+template class CExtraTimePeriodPolicy<CGoalRule ::NO>;
+template class CExtraTimePeriodPolicy<CGoalRule ::SILVER_GOAL>;
+template class CExtraTimePeriodPolicy<CGoalRule ::GOLDEN_GOAL>;
 
 } // futsim::football namespace
