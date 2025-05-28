@@ -80,23 +80,17 @@ CMatchState::CMatchState(
 	{
 		const auto& tieCondition = *aMatchConfiguration.GetTieCondition();
 		auto score = mMandatoryPlayTimeState.CountScore();
-		if( tieCondition( score.home, score.away ) )
+		if( tieCondition( score.home, score.away ) && aMatchConfiguration.GetExtraTime() )
 		{
-			if( aMatchConfiguration.GetExtraTime() )
-			{
-				std::visit( [&]( auto&& aRule ){
-						mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
-						CExtraTimePeriodPlayPolicy<std::decay_t<decltype(aRule)>>{}, CExtraTimePeriodPolicy<std::decay_t<decltype(aRule)>>{} };
-						}, static_cast<CGoalRule::variant>( (*aMatchConfiguration.GetExtraTime()).GetGoalRule() ) );
-				score += mExtraTimeState->CountScore();
+			std::visit( [&]( auto&& aRule ){
+					mExtraTimeState = CPeriodStates{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy, aGenerator,
+					CExtraTimePeriodPlayPolicy<std::decay_t<decltype(aRule)>>{}, CExtraTimePeriodPolicy<std::decay_t<decltype(aRule)>>{} };
+					}, static_cast<CGoalRule::variant>( (*aMatchConfiguration.GetExtraTime()).GetGoalRule() ) );
+			score += mExtraTimeState->CountScore();
 
-				if( tieCondition( score.home, score.away ) )
-					mPenaltyShootoutState = CPenaltyShootoutState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
-					std::bernoulli_distribution{}( aGenerator ), aGenerator };
-			}
-			else
-				mPenaltyShootoutState = CPenaltyShootoutState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
-				std::bernoulli_distribution{}( aGenerator ), aGenerator };
+		if( tieCondition( score.home, score.away ) )
+			mPenaltyShootoutState = CPenaltyShootoutState{ aMatch, aMatchConfiguration, aHomeTeamStrategy, aAwayTeamStrategy,
+			std::bernoulli_distribution{}( aGenerator ), aGenerator };
 		}
 	}
 }
