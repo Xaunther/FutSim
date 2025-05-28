@@ -14,6 +14,7 @@ SET(FUTSIM_CORE_EXTERNAL_HEADERS
 	include/traits/CPerson.h
 	include/traits/CPlayTime.h
 	include/traits/default.h
+	include/traits/has_type.h
 	include/traits/json.h
 	include/types/CPerson.h
 	include/types/CPlayTime.h
