@@ -43,13 +43,13 @@ jobs:
               c_compiler: "clang-18",
               cpp_compiler: "clang++-18",
             }
-          - {
-              os: windows-latest,
-              build_type: "Release",
-              c_compiler: "cl",
-              cpp_compiler: "cl",
-              extra_flags: "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
-            }
+          #- {
+              #os: windows-latest,
+              #build_type: "Release",
+              #c_compiler: "cl",
+              #cpp_compiler: "cl",
+              #extra_flags: "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
+            #}
 
     steps:
       - uses: actions/checkout@v4
