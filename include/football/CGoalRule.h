@@ -50,6 +50,7 @@ public:
 	 * @brief Member constructor.
 	 * @param aRule \ref mRule
 	 */
+	// cppcheck-suppress noExplicitConstructor
 	template <has_type_c<variant> T = NO> CGoalRule( const T& aRule = {} ) noexcept;
 
 	/**
