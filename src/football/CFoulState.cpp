@@ -1,6 +1,5 @@
 #include "football/CFoulState.h"
 
-#include "ExceptionUtils.h"
 #include "JsonUtils.h"
 
 namespace futsim::football
