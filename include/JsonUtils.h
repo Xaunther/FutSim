@@ -11,7 +11,7 @@ namespace futsim
 template<typename T> concept is_json_type = std::convertible_to <T, nlohmann::json>;
 
 //! Concept for a type that can be constructed from a JSON object.
-template<typename T> concept is_json_constructible = std::is_constructible_v<T, nlohmann::json>;
+template<typename T, typename... Args> concept is_json_constructible = std::is_constructible_v<T, nlohmann::json, Args...>;
 
 //! Concept for a type that cannot be constructed from a JSON object.
 template<typename T> concept is_not_json_constructible = is_json_constructible<T> == false;
@@ -33,8 +33,8 @@ template<typename T> concept is_not_jsonable = is_jsonable<T> == false;
  * @param aJSON JSON object.
  * @param aArgs Extra arguments to be forwarded to the JSON constructor.
 */
-template<is_json_constructible T>
-inline T ValueFromJSON( const is_json_type auto& aJSON, auto&&... aArgs );
+template<typename T, typename ...Args>
+inline T ValueFromJSON( const is_json_type auto& aJSON, Args&&... aArgs ) requires is_json_constructible<T, Args...>;
 
 /**
  * @brief Helper function to construct a non-jsonable type from a JSON object.
@@ -59,8 +59,9 @@ inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::st
  * @param aKeyName Name of the key to search.
  * @param aDefaultValue Default value is key is not found.
 */
-template<is_json_constructible T>
-inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName = json_traits<T>::KEY, const T& aDefaultValue = T{}, auto&&... aArgs );
+template<typename T, typename ...Args>
+inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName = json_traits<T>::KEY,
+		const T& aDefaultValue = T{}, Args&&... aArgs ) requires is_json_constructible<T, Args...>;
 
 /**
  * @brief Helper function to construct a non-jsonable type under an optional key in a JSON object.
@@ -158,8 +159,8 @@ inline void AddArrayToJSONKey( is_json_type auto& aJSON, const auto& aContainer,
 */
 inline void AddKeyArrayToJSONKey( is_json_type auto& aJSON, const auto& aContainer, const std::string_view aKeyName, auto&&... aArgs ) noexcept;
 
-template<is_json_constructible T>
-inline T ValueFromJSON( const is_json_type auto& aJSON, auto&&... aArgs )
+template<typename T, typename ...Args>
+inline T ValueFromJSON( const is_json_type auto& aJSON, Args&&... aArgs ) requires is_json_constructible<T, Args...>
 {
 	return T( aJSON, std::forward<decltype( aArgs )>( aArgs )... );
 }
@@ -176,8 +177,9 @@ inline T ValueFromRequiredJSONKey( const is_json_type auto& aJSON, const std::st
 	return ValueFromJSON<T>( aJSON.at( aKeyName ), std::forward<decltype( aArgs )>( aArgs )... );
 }
 
-template<is_json_constructible T>
-inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName, const T& aDefaultValue, auto&&... aArgs )
+template<typename T, typename ...Args>
+inline T ValueFromOptionalJSONKey( const is_json_type auto& aJSON, const std::string_view aKeyName,
+		const T& aDefaultValue, Args&&... aArgs ) requires is_json_constructible<T, Args...>
 {
 	const auto& found = aJSON.find( aKeyName );
 	return found != aJSON.cend() ? ValueFromJSON<T>( *found, std::forward<decltype( aArgs )>( aArgs )... ) : aDefaultValue;
